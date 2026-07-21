@@ -257,7 +257,7 @@
                             {{-- SECURITY (Module 1): XSS Prevention — {{ }} auto-escapes output --}}
                             {{ Auth::user()->name }}
                             <span class="badge bg-{{ Auth::user()->role === 'admin' ? 'danger' : (Auth::user()->role === 'ngo' ? 'purple' : 'primary') }} ms-1">
-                                {{ ucfirst(Auth::user()->role) }}
+                                {{ Auth::user()->role === 'ngo' ? 'NGO' : ucfirst(Auth::user()->role) }}
                             </span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
