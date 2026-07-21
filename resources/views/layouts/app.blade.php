@@ -299,8 +299,7 @@
 <!-- Footer -->
 <footer class="py-4 mt-5">
     <div class="container text-center">
-        <p class="mb-1">🌾 <strong>NutriShare</strong> — Surplus Food Redistribution Platform</p>
-        <p class="mb-0 small">SDG 2: Zero Hunger | BMIT3173 Integrative Programming</p>
+        <p class="mb-1 text-muted" style="font-size: 0.95rem;">🌾 <strong>NutriShare</strong> — Surplus Food Redistribution Platform</p>
     </div>
 </footer>
 

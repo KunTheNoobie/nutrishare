@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriShare — Zero Hunger</title>
+    <title>NutriShare</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -144,7 +144,6 @@
     <div class="glow"></div>
     
     <div class="container">
-        <div class="badge-top">SDG 2: Zero Hunger</div>
         <h1>Redistribute. <br><span>NutriShare.</span></h1>
         <p class="subtitle">A brilliantly simple platform connecting food donors with NGOs to instantly eliminate surplus food waste.</p>
         
