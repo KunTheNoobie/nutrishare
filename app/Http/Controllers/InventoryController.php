@@ -81,6 +81,13 @@ class InventoryController extends Controller
 
         $foodItem = FoodItem::create($validated);
 
+        if (!empty($validated['inventory_location_id'])) {
+            $location = \App\Models\InventoryLocation::find($validated['inventory_location_id']);
+            if ($location) {
+                $location->increment('current_occupancy', $validated['quantity']);
+            }
+        }
+
         // Attach allergen tags (Many-to-Many)
         if ($request->has('allergen_tags')) {
             $foodItem->allergenTags()->sync($request->input('allergen_tags'));

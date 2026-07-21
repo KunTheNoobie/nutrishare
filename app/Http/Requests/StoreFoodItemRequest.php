@@ -29,4 +29,21 @@ class StoreFoodItemRequest extends FormRequest
             'allergen_tags.*' => 'exists:allergen_tags,id',
         ];
     }
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $locationId = $this->input('inventory_location_id');
+            $quantity = (float) $this->input('quantity');
+
+            if ($locationId && $quantity > 0) {
+                $location = \App\Models\InventoryLocation::find($locationId);
+                if ($location && $location->capacity !== null) {
+                    $remaining = $location->availableCapacity();
+                    if ($quantity > $remaining) {
+                        $validator->errors()->add('quantity', "Quantity exceeds available capacity. Only {$remaining} remaining in this location.");
+                    }
+                }
+            }
+        });
+    }
 }
