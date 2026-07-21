@@ -1,14 +1,72 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DonationController;
+use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\ClaimController;
+use App\Http\Controllers\InventoryController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes — NutriShare
 |--------------------------------------------------------------------------
-| Routes will be populated in Step 5: Controllers & Views
 */
 
+// ── Public Routes ──
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+// ── Authentication Routes ──
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
+
+// ── Authenticated Routes ──
+Route::middleware('auth')->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // ─── Module 1: Donation Management (Liew Yi Ler) ───
+    Route::resource('donations', DonationController::class);
+
+    // ─── Module 2: NGO Verification & Trust (Cheon Jie Han) ───
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/verification', [VerificationController::class, 'index'])->name('verification.index');
+        Route::post('/verification/{document}/review', [VerificationController::class, 'review'])->name('verification.review');
+    });
+
+    Route::middleware('role:ngo')->group(function () {
+        Route::post('/verification/upload', [VerificationController::class, 'upload'])->name('verification.upload');
+    });
+
+    Route::get('/users/{user}/reviews', [VerificationController::class, 'reviews'])->name('reviews.show');
+    Route::post('/users/{user}/reviews', [VerificationController::class, 'submitReview'])->name('reviews.submit');
+
+    // ─── Module 3: Claims & Logistics (Hiew Li Wei) ───
+    Route::get('/claims/browse', [ClaimController::class, 'browse'])->name('claims.browse');
+    Route::get('/claims', [ClaimController::class, 'index'])->name('claims.index');
+    Route::post('/claims', [ClaimController::class, 'store'])->name('claims.store');
+    Route::get('/claims/{claim}', [ClaimController::class, 'show'])->name('claims.show');
+    Route::post('/claims/{claim}/transition', [ClaimController::class, 'transition'])->name('claims.transition');
+    Route::post('/claims/{claim}/vehicle', [ClaimController::class, 'assignVehicle'])->name('claims.vehicle');
+    Route::post('/claims/{claim}/receipt', [ClaimController::class, 'generateReceipt'])->name('claims.receipt');
+    Route::post('/claims/{claim}/distribution', [ClaimController::class, 'logDistribution'])->name('claims.distribution');
+
+    // ─── Module 4: Inventory & Food Safety (Wong Men Jing) ───
+    Route::resource('inventory', InventoryController::class)->parameters(['inventory' => 'inventoryLocation']);
+    Route::post('/inventory/food-items', [InventoryController::class, 'addFoodItem'])->name('inventory.add-food-item');
+    Route::get('/inventory/signed-link/{donation}', [InventoryController::class, 'generateSignedClaimLink'])->name('inventory.signed-link');
+
+    // SECURITY (Module 4): Signed route for parameter tampering prevention
+    Route::get('/inventory/quick-claim/{donation}', [InventoryController::class, 'quickClaim'])
+        ->name('inventory.quick-claim')
+        ->middleware('signed');
+});
