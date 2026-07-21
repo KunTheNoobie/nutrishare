@@ -141,7 +141,7 @@
             </span>
         </div>
         @empty
-        <p class="text-muted text-center py-4">No claims yet. <a href="{{ route('claims.browse') }}">Browse available donations!</a></p>
+        <p class="text-muted text-center py-4">No claims yet. <a href="{{ route('donations.index') }}">Browse available donations!</a></p>
         @endforelse
     </div>
 </div>
