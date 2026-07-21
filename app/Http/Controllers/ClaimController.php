@@ -88,7 +88,7 @@ class ClaimController extends Controller
             'plate_number' => 'required|string|max:20',
             'vehicle_type' => 'required|in:van,truck,car,motorcycle',
             'driver_name' => 'required|string|max:255',
-            'driver_phone' => 'nullable|string|max:20',
+            'driver_phone' => 'required|string|max:20',
             'capacity_kg' => 'nullable|numeric|min:0',
         ]);
 

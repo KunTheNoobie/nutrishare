@@ -23,14 +23,16 @@
                     @csrf
                     <div class="mb-3">
                         <label class="form-label">Rating</label>
-                        <select name="rating" class="form-select" required>
+                        <select name="rating" class="form-select @error('rating') is-invalid @enderror" required>
                             @for($i = 5; $i >= 1; $i--)
-                            <option value="{{ $i }}">{{ $i }} ⭐</option>
+                            <option value="{{ $i }}" {{ old('rating') == $i ? 'selected' : '' }}>{{ $i }} ⭐</option>
                             @endfor
                         </select>
+                        @error('rating')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-3">
-                        <textarea name="comment" class="form-control" rows="3" placeholder="Your review..."></textarea>
+                        <textarea name="comment" class="form-control @error('comment') is-invalid @enderror" rows="3" placeholder="Your review..." required>{{ old('comment') }}</textarea>
+                        @error('comment')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <button type="submit" class="btn btn-ns-primary btn-sm w-100">Submit Review</button>
                 </form>

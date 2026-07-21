@@ -119,21 +119,25 @@
                 <form method="POST" action="{{ route('claims.vehicle', $claim) }}">
                     @csrf
                     <div class="mb-2">
-                        <input type="text" name="plate_number" class="form-control form-control-sm" placeholder="Plate Number" required>
+                        <input type="text" name="plate_number" class="form-control form-control-sm @error('plate_number') is-invalid @enderror" placeholder="Plate Number" value="{{ old('plate_number') }}" required>
+                        @error('plate_number')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <select name="vehicle_type" class="form-select form-select-sm" required>
-                            <option value="van">Van</option>
-                            <option value="truck">Truck</option>
-                            <option value="car">Car</option>
-                            <option value="motorcycle">Motorcycle</option>
+                        <select name="vehicle_type" class="form-select form-select-sm @error('vehicle_type') is-invalid @enderror" required>
+                            <option value="van" {{ old('vehicle_type') == 'van' ? 'selected' : '' }}>Van</option>
+                            <option value="truck" {{ old('vehicle_type') == 'truck' ? 'selected' : '' }}>Truck</option>
+                            <option value="car" {{ old('vehicle_type') == 'car' ? 'selected' : '' }}>Car</option>
+                            <option value="motorcycle" {{ old('vehicle_type') == 'motorcycle' ? 'selected' : '' }}>Motorcycle</option>
                         </select>
+                        @error('vehicle_type')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <input type="text" name="driver_name" class="form-control form-control-sm" placeholder="Driver Name" required>
+                        <input type="text" name="driver_name" class="form-control form-control-sm @error('driver_name') is-invalid @enderror" placeholder="Driver Name" value="{{ old('driver_name') }}" required>
+                        @error('driver_name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <input type="text" name="driver_phone" class="form-control form-control-sm" placeholder="Driver Phone">
+                        <input type="text" name="driver_phone" class="form-control form-control-sm @error('driver_phone') is-invalid @enderror" placeholder="Driver Phone" value="{{ old('driver_phone') }}" required>
+                        @error('driver_phone')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <button type="submit" class="btn btn-outline-primary btn-sm w-100">Assign Vehicle</button>
                 </form>
@@ -149,18 +153,25 @@
                 <form method="POST" action="{{ route('claims.receipt', $claim) }}">
                     @csrf
                     <div class="mb-2">
-                        <input type="number" step="0.01" name="quantity_collected" class="form-control form-control-sm" placeholder="Quantity Collected" required>
+                        <input type="number" step="0.01" name="quantity_collected" class="form-control form-control-sm @error('quantity_collected') is-invalid @enderror" placeholder="Quantity Collected" value="{{ old('quantity_collected') }}" required>
+                        @error('quantity_collected')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <select name="unit" class="form-select form-select-sm" required>
-                            <option value="kg">kg</option><option value="litres">litres</option><option value="items">items</option><option value="boxes">boxes</option>
+                        <select name="unit" class="form-select form-select-sm @error('unit') is-invalid @enderror" required>
+                            <option value="kg" {{ old('unit') == 'kg' ? 'selected' : '' }}>kg</option>
+                            <option value="litres" {{ old('unit') == 'litres' ? 'selected' : '' }}>litres</option>
+                            <option value="items" {{ old('unit') == 'items' ? 'selected' : '' }}>items</option>
+                            <option value="boxes" {{ old('unit') == 'boxes' ? 'selected' : '' }}>boxes</option>
                         </select>
+                        @error('unit')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <input type="text" name="collected_by" class="form-control form-control-sm" placeholder="Collected By" required>
+                        <input type="text" name="collected_by" class="form-control form-control-sm @error('collected_by') is-invalid @enderror" placeholder="Collected By" value="{{ old('collected_by') }}" required>
+                        @error('collected_by')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <textarea name="condition_notes" class="form-control form-control-sm" rows="2" placeholder="Condition Notes"></textarea>
+                        <textarea name="condition_notes" class="form-control form-control-sm @error('condition_notes') is-invalid @enderror" rows="2" placeholder="Condition Notes">{{ old('condition_notes') }}</textarea>
+                        @error('condition_notes')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <button type="submit" class="btn btn-outline-success btn-sm w-100">Generate Receipt</button>
                 </form>
@@ -176,21 +187,28 @@
                 <form method="POST" action="{{ route('claims.distribution', $claim) }}">
                     @csrf
                     <div class="mb-2">
-                        <input type="number" name="beneficiaries_count" class="form-control form-control-sm" placeholder="Beneficiaries Count" required min="1">
+                        <input type="number" name="beneficiaries_count" class="form-control form-control-sm @error('beneficiaries_count') is-invalid @enderror" placeholder="Beneficiaries Count" value="{{ old('beneficiaries_count') }}" required min="1">
+                        @error('beneficiaries_count')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <input type="text" name="distribution_location" class="form-control form-control-sm" placeholder="Distribution Location" required>
+                        <input type="text" name="distribution_location" class="form-control form-control-sm @error('distribution_location') is-invalid @enderror" placeholder="Distribution Location" value="{{ old('distribution_location') }}" required>
+                        @error('distribution_location')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <input type="number" step="0.01" name="quantity_distributed" class="form-control form-control-sm" placeholder="Quantity" required>
+                        <input type="number" step="0.01" name="quantity_distributed" class="form-control form-control-sm @error('quantity_distributed') is-invalid @enderror" placeholder="Quantity" value="{{ old('quantity_distributed') }}" required>
+                        @error('quantity_distributed')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <select name="unit" class="form-select form-select-sm">
-                            <option value="kg">kg</option><option value="litres">litres</option><option value="items">items</option>
+                        <select name="unit" class="form-select form-select-sm @error('unit') is-invalid @enderror" required>
+                            <option value="kg" {{ old('unit') == 'kg' ? 'selected' : '' }}>kg</option>
+                            <option value="litres" {{ old('unit') == 'litres' ? 'selected' : '' }}>litres</option>
+                            <option value="items" {{ old('unit') == 'items' ? 'selected' : '' }}>items</option>
                         </select>
+                        @error('unit')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <textarea name="notes" class="form-control form-control-sm" rows="2" placeholder="Notes"></textarea>
+                        <textarea name="notes" class="form-control form-control-sm @error('notes') is-invalid @enderror" rows="2" placeholder="Notes">{{ old('notes') }}</textarea>
+                        @error('notes')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <button type="submit" class="btn btn-outline-info btn-sm w-100">Submit Log</button>
                 </form>
