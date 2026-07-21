@@ -1,6 +1,10 @@
 @extends('layouts.app')
 @section('title', $donation->title)
 
+@push('styles')
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+@endpush
+
 @section('content')
 <div class="row">
     <div class="col-md-8">
@@ -33,9 +37,14 @@
                         <strong><i class="bi bi-calendar"></i> Expires:</strong>
                         {{ $donation->expiry_date->format('d M Y, h:i A') }}
                     </div>
-                    <div class="col-md-6">
-                        <strong><i class="bi bi-geo-alt"></i> Pickup:</strong>
+                    <div class="col-md-12">
+                        <strong><i class="bi bi-geo-alt"></i> Pickup Location:</strong>
                         {{ $donation->pickup_address }}
+                        @if($donation->latitude && $donation->longitude)
+                            <div id="map" style="height: 250px; width: 100%;" class="mt-2 rounded border"></div>
+                            <input type="hidden" id="donation_lat" value="{{ $donation->latitude }}">
+                            <input type="hidden" id="donation_lng" value="{{ $donation->longitude }}">
+                        @endif
                     </div>
                     <div class="col-md-6">
                         <strong><i class="bi bi-person"></i> Donor:</strong>
@@ -99,26 +108,32 @@
         @endif
 
         @if(Auth::user()->isNgo() && $donation->status === 'available')
-        <div class="card mb-3">
-            <div class="card-header">Claim this Donation</div>
-            <div class="card-body">
-                <form method="POST" action="{{ route('claims.store') }}">
-                    @csrf
-                    <input type="hidden" name="donation_id" value="{{ $donation->id }}">
-                    <div class="mb-3">
-                        <label class="form-label">Justification</label>
-                        <textarea name="justification" class="form-control" rows="3" required placeholder="Why does your NGO need this donation?"></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Pickup Date</label>
-                        <input type="datetime-local" name="pickup_scheduled_at" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-ns-primary w-100">
-                        <i class="bi bi-hand-thumbs-up"></i> Submit Claim
-                    </button>
-                </form>
+            @if(Auth::user()->isVerified())
+            <div class="card mb-3 shadow-sm animate-slide-up">
+                <div class="card-header"><i class="bi bi-hand-thumbs-up text-apple-success"></i> Claim this Donation</div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('claims.store') }}">
+                        @csrf
+                        <input type="hidden" name="donation_id" value="{{ $donation->id }}">
+                        <div class="mb-3">
+                            <label class="form-label text-muted small">Justification</label>
+                            <textarea name="justification" class="form-control" rows="3" required placeholder="Why does your NGO need this donation?"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted small">Pickup Date</label>
+                            <input type="datetime-local" name="pickup_scheduled_at" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-ns-primary w-100 py-2 fw-medium">
+                            Submit Claim
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
+            @else
+            <div class="alert alert-warning shadow-sm animate-slide-up">
+                <i class="bi bi-exclamation-triangle"></i> <strong>Account Pending Verification.</strong> You cannot claim donations until an administrator verifies your NGO account.
+            </div>
+            @endif
         @endif
 
         <!-- Claims on this donation -->
@@ -140,4 +155,27 @@
         @endif
     </div>
 </div>
+
+@if($donation->latitude && $donation->longitude)
+@push('scripts')
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const lat = parseFloat(document.getElementById('donation_lat').value);
+    const lng = parseFloat(document.getElementById('donation_lng').value);
+    
+    if (document.getElementById('map')) {
+        const map = L.map('map').setView([lat, lng], 15);
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+        }).addTo(map);
+        
+        L.marker([lat, lng]).addTo(map)
+            .bindPopup("<b>{{ addslashes($donation->title) }}</b><br>Pickup Location")
+            .openPopup();
+    }
+});
+</script>
+@endpush
+@endif
 @endsection

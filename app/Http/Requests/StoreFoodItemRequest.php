@@ -3,18 +3,19 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreFoodItemRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user() && ($this->user()->isDonor() || $this->user()->isAdmin());
+        return Auth::check();
     }
 
     public function rules(): array
     {
         return [
-            'donation_id' => 'required|exists:donations,id',
+            'donation_id' => 'nullable|exists:donations,id',
             'inventory_location_id' => 'nullable|exists:inventory_locations,id',
             'category_id' => 'nullable|exists:categories,id',
             'name' => 'required|string|max:255',

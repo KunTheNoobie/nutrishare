@@ -69,8 +69,9 @@ class InventoryController extends Controller
         $inventoryLocation->load(['foodItems.category', 'foodItems.allergenTags']);
         $categories = Category::all();
         $allergenTags = AllergenTag::all();
+        $donations = Auth::user()->donations()->get();
 
-        return view('inventory.show', compact('inventoryLocation', 'categories', 'allergenTags'));
+        return view('inventory.show', compact('inventoryLocation', 'categories', 'allergenTags', 'donations'));
     }
 
     /** Add a food item to inventory. */
