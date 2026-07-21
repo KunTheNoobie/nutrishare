@@ -3,154 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriShare — Surplus Food Redistribution Platform</title>
+    <title>NutriShare — Zero Hunger</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --apple-bg: #000000;
+            --apple-text: #f5f5f7;
+            --apple-text-muted: #86868b;
+            --apple-accent: #2997ff;
+            --apple-accent-hover: #0071e3;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            color: #e2e8f0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--apple-bg);
+            color: var(--apple-text);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
+            -webkit-font-smoothing: antialiased;
             position: relative;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        /* Floating abstract shapes */
-        .shape {
-            position: absolute;
-            filter: blur(80px);
-            z-index: 0;
-            animation: float 10s ease-in-out infinite;
-        }
-        .shape-1 {
-            width: 400px; height: 400px;
-            background: rgba(34, 197, 94, 0.3);
-            border-radius: 50%;
-            top: -100px; left: -100px;
-        }
-        .shape-2 {
-            width: 500px; height: 500px;
-            background: rgba(59, 130, 246, 0.2);
-            border-radius: 50%;
-            bottom: -150px; right: -100px;
-            animation-delay: -5s;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-30px) scale(1.05); }
-        }
         
+        /* Subtle glow in background */
+        .glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(41,151,255,0.1) 0%, rgba(0,0,0,0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
         .container {
             position: relative;
             z-index: 1;
             text-align: center;
-            padding: 4rem;
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            max-width: 800px;
-            width: 90%;
+            max-width: 900px;
+            padding: 2rem;
             transform: translateY(20px);
             opacity: 0;
-            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes slideUpFade {
             to { transform: translateY(0); opacity: 1; }
         }
-        h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 4.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #4ade80, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-        .subtitle {
-            font-size: 1.25rem;
-            color: #cbd5e1;
-            margin-bottom: 3rem;
-            line-height: 1.6;
-            font-weight: 300;
-        }
-        .badge {
+        
+        .badge-top {
             display: inline-block;
-            padding: 0.75rem 2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 999px;
-            color: #94a3b8;
-            font-size: 0.875rem;
-            font-weight: 500;
+            color: var(--apple-text-muted);
+            font-size: 0.75rem;
+            font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 6px 16px;
+            border-radius: 980px;
+            animation: fadeIn 1.5s ease forwards;
+            opacity: 0;
         }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+            color: var(--apple-text);
+        }
+        h1 span {
+            background: linear-gradient(90deg, #2997ff, #32d74b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--apple-text-muted);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+            line-height: 1.4;
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+        }
+        
         .cta-buttons {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             justify-content: center;
-            margin-bottom: 2rem;
         }
+        
         .btn {
             text-decoration: none;
-            padding: 1rem 2.5rem;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 1.125rem;
+            padding: 14px 28px;
+            border-radius: 980px;
+            font-size: 1.05rem;
+            font-weight: 500;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
+        
         .btn-primary {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            color: white;
-            box-shadow: 0 10px 20px -10px rgba(34, 197, 94, 0.5);
+            background-color: var(--apple-text);
+            color: var(--apple-bg);
         }
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 25px -10px rgba(34, 197, 94, 0.6);
+            background-color: #d1d1d6;
+            transform: scale(1.02);
         }
+        
         .btn-outline {
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
+            background-color: transparent;
+            color: var(--apple-text);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 3.5rem; }
+            .subtitle { font-size: 1.25rem; }
+            .cta-buttons { flex-direction: column; }
         }
     </style>
 </head>
 <body>
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
+    <div class="glow"></div>
     
     <div class="container">
-        <h1>🌾 NutriShare</h1>
-        <p class="subtitle">A stunning, modern platform designed to connect food donors with NGOs to redistribute surplus food efficiently. Join us in achieving <strong>SDG 2: Zero Hunger</strong>.</p>
+        <div class="badge-top">SDG 2: Zero Hunger</div>
+        <h1>Redistribute. <br><span>NutriShare.</span></h1>
+        <p class="subtitle">A brilliantly simple platform connecting food donors with NGOs to instantly eliminate surplus food waste.</p>
         
         <div class="cta-buttons">
-            <a href="/login" class="btn btn-outline">Sign In</a>
-            <a href="/register" class="btn btn-primary">Join the Movement</a>
+            <a href="{{ route('register') }}" class="btn btn-primary">Join the Movement</a>
+            <a href="{{ route('login') }}" class="btn btn-outline">Sign In</a>
         </div>
-
-        <span class="badge">Laravel 11 • MVC • Eloquent ORM</span>
     </div>
 </body>
 </html>

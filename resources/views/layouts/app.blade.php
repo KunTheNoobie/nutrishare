@@ -11,114 +11,169 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --ns-primary: #10b981;
-            --ns-primary-dark: #059669;
-            --ns-dark: #0f172a;
-            --ns-darker: #020617;
-            --ns-surface: rgba(30, 41, 59, 0.7);
+            --apple-bg: #000000;
+            --apple-surface: #111111;
+            --apple-border: #333333;
+            --apple-text: #f5f5f7;
+            --apple-text-muted: #86868b;
+            --apple-accent: #2997ff;
+            --apple-accent-hover: #0071e3;
+            --apple-danger: #ff3b30;
+            --apple-success: #34c759;
         }
+        
         body { 
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            font-family: 'Inter', sans-serif;
-            color: #e2e8f0;
+            background-color: var(--apple-bg);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: var(--apple-text);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            -webkit-font-smoothing: antialiased;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        
+        /* Apple-style floating blurry navbar */
         .navbar { 
-            background: rgba(15, 23, 42, 0.8) !important;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.72) !important;
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem 0;
+            padding: 0.75rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1030;
         }
-        .navbar-brand { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.5rem; color: #10b981 !important; }
-        .nav-link { font-weight: 500; color: #cbd5e1 !important; transition: all 0.2s; }
-        .nav-link:hover { color: #10b981 !important; transform: translateY(-1px); }
+        .navbar-brand { 
+            font-weight: 600; 
+            font-size: 1.25rem; 
+            color: var(--apple-text) !important; 
+            letter-spacing: -0.01em;
+        }
+        .nav-link { 
+            font-weight: 400; 
+            font-size: 0.85rem;
+            color: var(--apple-text-muted) !important; 
+            transition: color 0.3s ease; 
+        }
+        .nav-link:hover { color: var(--apple-text) !important; }
+        
+        /* Buttons */
         .btn-ns-primary {
-            background: linear-gradient(135deg, var(--ns-primary), var(--ns-primary-dark));
-            color: white; border: none; border-radius: 8px; padding: 8px 24px; font-weight: 600;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            background-color: var(--apple-text);
+            color: var(--apple-bg);
+            border: none; 
+            border-radius: 980px; 
+            padding: 8px 24px; 
+            font-weight: 500;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
         }
-        .btn-ns-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4); color: white; }
-        .card { 
-            background: var(--ns-surface);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 16px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+        .btn-ns-primary:hover { 
+            background-color: #d1d1d6; 
+            color: var(--apple-bg);
+            transform: scale(1.02);
+        }
+
+        .btn-ns-accent {
+            background-color: var(--apple-accent);
             color: white;
+            border: none; 
+            border-radius: 980px; 
+            padding: 10px 24px; 
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        .btn-ns-accent:hover { 
+            background-color: var(--apple-accent-hover); 
+            color: white;
+        }
+        
+        /* Forms & Cards */
+        .card { 
+            background: var(--apple-surface);
+            border: 1px solid var(--apple-border); 
+            border-radius: 18px; 
+            color: var(--apple-text);
         }
         .card-header { 
-            background: rgba(255, 255, 255, 0.05); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px 16px 0 0 !important; 
+            background: transparent; 
+            border-bottom: 1px solid var(--apple-border);
+            border-radius: 18px 18px 0 0 !important; 
             font-weight: 600; 
-            padding: 1.25rem;
+            padding: 1.5rem;
         }
         .form-control, .form-select {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            border-radius: 8px;
-            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--apple-border);
+            color: var(--apple-text);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
         .form-control:focus, .form-select:focus {
-            background: rgba(15, 23, 42, 0.8);
-            border-color: var(--ns-primary);
-            color: white;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--apple-accent);
+            color: var(--apple-text);
+            box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.2);
         }
-        .form-label { color: #cbd5e1; font-weight: 500; }
-        .text-muted { color: #94a3b8 !important; }
-        .badge-donor { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
-        .badge-ngo { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
-        .badge-admin { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .form-label { color: var(--apple-text-muted); font-weight: 400; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .text-muted { color: var(--apple-text-muted) !important; }
+        
+        /* Badges */
+        .badge { font-weight: 500; padding: 0.4em 0.8em; border-radius: 6px; }
+        .badge-donor { background: rgba(41, 151, 255, 0.15); color: var(--apple-accent); }
+        .badge-ngo { background: rgba(52, 199, 89, 0.15); color: var(--apple-success); }
+        .badge-admin { background: rgba(255, 59, 48, 0.15); color: var(--apple-danger); }
         
         /* Form Validation Aesthetics */
-        .invalid-feedback { color: #f87171; font-weight: 500; font-size: 0.875rem; margin-top: 0.5rem; }
-        .alert-danger {
-            background: rgba(239, 68, 68, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #fca5a5;
+        .invalid-feedback { color: var(--apple-danger); font-weight: 400; font-size: 0.8rem; margin-top: 0.5rem; }
+        .alert {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+            font-size: 0.9rem;
+        }
+        .alert-danger {
+            background: rgba(255, 59, 48, 0.1);
+            border: 1px solid rgba(255, 59, 48, 0.2);
+            color: #ff453a;
         }
         .alert-success {
-            background: rgba(16, 185, 129, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #6ee7b7;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+            background: rgba(52, 199, 89, 0.1);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+            color: #32d74b;
         }
-        .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+        .btn-close { filter: invert(1) grayscale(100%) brightness(200%); opacity: 0.5; }
+        .btn-close:hover { opacity: 1; }
 
-        main { flex-grow: 1; }
-        footer { background: transparent; color: #64748b; border-top: 1px solid rgba(255, 255, 255, 0.05); }
+        /* Animations */
+        .animate-slide-up {
+            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes slideUpFade {
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        main { flex-grow: 1; display: flex; flex-direction: column; }
+        footer { background: transparent; color: var(--apple-text-muted); border-top: 1px solid var(--apple-border); font-size: 0.8rem; }
+        
+        a { color: var(--apple-accent); text-decoration: none; transition: opacity 0.2s; }
+        a:hover { color: var(--apple-accent); opacity: 0.8; }
     </style>
     @stack('styles')
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark py-2">
+<nav class="navbar navbar-expand-lg py-3">
     <div class="container-fluid px-4">
         <a class="navbar-brand" href="{{ route('home') }}">🌾 NutriShare</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">

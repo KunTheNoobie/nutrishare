@@ -2,9 +2,9 @@
 @section('title', 'Register')
 
 @section('content')
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-4">
     <div class="col-md-6 col-lg-5">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm animate-slide-up">
             <div class="card-header text-center">
                 <h4 class="mb-0"><i class="bi bi-person-plus"></i> Create Account</h4>
             </div>
