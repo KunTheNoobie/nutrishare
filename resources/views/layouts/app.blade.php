@@ -9,36 +9,87 @@
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --ns-primary: #16a34a;
-            --ns-primary-dark: #15803d;
+            --ns-primary: #10b981;
+            --ns-primary-dark: #059669;
             --ns-dark: #0f172a;
             --ns-darker: #020617;
+            --ns-surface: rgba(30, 41, 59, 0.7);
         }
-        body { background-color: #f8fafc; font-family: 'Segoe UI', system-ui, sans-serif; }
-        .navbar { background: linear-gradient(135deg, var(--ns-dark), var(--ns-primary-dark)); }
-        .navbar-brand { font-weight: 800; color: #4ade80 !important; }
+        body { 
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .navbar { 
+            background: rgba(15, 23, 42, 0.8) !important;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
+        }
+        .navbar-brand { font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1.5rem; color: #10b981 !important; }
+        .nav-link { font-weight: 500; color: #cbd5e1 !important; transition: all 0.2s; }
+        .nav-link:hover { color: #10b981 !important; transform: translateY(-1px); }
         .btn-ns-primary {
             background: linear-gradient(135deg, var(--ns-primary), var(--ns-primary-dark));
-            color: white; border: none; border-radius: 8px; padding: 8px 20px; font-weight: 600;
+            color: white; border: none; border-radius: 8px; padding: 8px 24px; font-weight: 600;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
         }
-        .btn-ns-primary:hover { background: var(--ns-primary-dark); color: white; transform: translateY(-1px); }
-        .card { border: none; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-        .card-header { background: var(--ns-dark); color: #e2e8f0; border-radius: 12px 12px 0 0 !important; font-weight: 600; }
-        .badge-donor { background: #3b82f6; }
-        .badge-ngo { background: #8b5cf6; }
-        .badge-admin { background: #ef4444; }
-        .status-available { color: #16a34a; }
-        .status-claimed { color: #f59e0b; }
-        .status-collected { color: #3b82f6; }
-        .status-expired { color: #ef4444; }
-        .sidebar { min-height: calc(100vh - 56px); background: white; border-right: 1px solid #e2e8f0; }
-        .sidebar .nav-link { color: #475569; padding: 10px 20px; border-radius: 8px; margin: 2px 8px; }
-        .sidebar .nav-link:hover, .sidebar .nav-link.active { background: #f0fdf4; color: var(--ns-primary); }
-        .sidebar .nav-link i { width: 24px; }
-        footer { background: var(--ns-darker); color: #94a3b8; }
+        .btn-ns-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4); color: white; }
+        .card { 
+            background: var(--ns-surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 16px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            color: white;
+        }
+        .card-header { 
+            background: rgba(255, 255, 255, 0.05); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px 16px 0 0 !important; 
+            font-weight: 600; 
+            padding: 1.25rem;
+        }
+        .form-control, .form-select {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+        }
+        .form-control:focus, .form-select:focus {
+            background: rgba(15, 23, 42, 0.8);
+            border-color: var(--ns-primary);
+            color: white;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+        }
+        .form-label { color: #cbd5e1; font-weight: 500; }
+        .text-muted { color: #94a3b8 !important; }
+        .badge-donor { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .badge-ngo { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .badge-admin { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+        
+        main { flex-grow: 1; }
+        footer { background: transparent; color: #64748b; border-top: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
     @stack('styles')
 </head>

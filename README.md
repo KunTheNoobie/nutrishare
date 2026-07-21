@@ -433,3 +433,8 @@ This project is developed for academic purposes as part of the **BMIT3173 Integr
 ---
 
 **Built with ❤️ for SDG 2: Zero Hunger**
+
+## UI/UX Aesthetics
+- **Glassmorphism Design**: Modern translucent components with background blur and gradient overlays.
+- **Modern Typography**: Integrated 'Outfit' and 'Inter' Google Fonts.
+- **Vibrant Animations**: Smooth, floating geometric shapes and micro-animations on interactive elements to wow users.
