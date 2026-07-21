@@ -88,6 +88,28 @@
         .badge-ngo { background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
         .badge-admin { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
         
+        /* Form Validation Aesthetics */
+        .invalid-feedback { color: #f87171; font-weight: 500; font-size: 0.875rem; margin-top: 0.5rem; }
+        .alert-danger {
+            background: rgba(239, 68, 68, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.1);
+        }
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+        }
+        .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+
         main { flex-grow: 1; }
         footer { background: transparent; color: #64748b; border-top: 1px solid rgba(255, 255, 255, 0.05); }
     </style>
