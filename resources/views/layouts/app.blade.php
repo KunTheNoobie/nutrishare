@@ -205,6 +205,21 @@
         a { color: var(--apple-accent); text-decoration: none; transition: opacity 0.2s; }
         a:hover { color: var(--apple-accent); opacity: 0.8; }
     </style>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/style.css" rel="stylesheet">
+    <style>
+        /* Custom Simple-DataTables Dark Theme for Apple Aesthetic */
+        .datatable-wrapper.no-header .datatable-container { border-top: none; }
+        .datatable-table { color: var(--apple-text); border-collapse: separate; border-spacing: 0; }
+        .datatable-table > thead > tr > th { border-bottom: 1px solid var(--apple-border); color: var(--apple-text-muted); font-weight: 500; }
+        .datatable-table > tbody > tr > td { border-bottom: 1px solid var(--apple-border); vertical-align: middle; }
+        .datatable-table > tbody > tr:hover { background-color: rgba(255,255,255,0.02); }
+        .datatable-input { background: var(--apple-surface); border: 1px solid var(--apple-border); color: var(--apple-text); border-radius: 6px; padding: 0.375rem 0.75rem; }
+        .datatable-selector { background: var(--apple-surface); border: 1px solid var(--apple-border); color: var(--apple-text); border-radius: 6px; padding: 0.375rem 1.75rem 0.375rem 0.75rem; }
+        .datatable-pagination a { color: var(--apple-accent); background: transparent; border: 1px solid transparent; border-radius: 6px; }
+        .datatable-pagination a:hover { background: var(--apple-surface); border-color: var(--apple-border); }
+        .datatable-pagination .active a { background: var(--apple-accent); color: var(--apple-bg); }
+        .datatable-sorter::before, .datatable-sorter::after { opacity: 0.4; }
+    </style>
     @stack('styles')
 </head>
 <body>
@@ -225,9 +240,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('donations.index') }}"><i class="bi bi-gift"></i> Donations</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('claims.browse') }}"><i class="bi bi-hand-thumbs-up"></i> Browse & Claim</a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('inventory.index') }}"><i class="bi bi-box-seam"></i> Inventory</a>
                     </li>
@@ -304,7 +317,21 @@
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Initialize all tables with class 'datatable'
+        const dataTables = document.querySelectorAll(".datatable");
+        dataTables.forEach(table => {
+            new simpleDatatables.DataTable(table, {
+                searchable: true,
+                fixedHeight: true,
+                perPage: 10
+            });
+        });
+    });
+</script>
 @stack('scripts')
 </body>
 </html>

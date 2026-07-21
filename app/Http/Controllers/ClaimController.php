@@ -22,17 +22,6 @@ use Illuminate\Support\Facades\Auth;
  */
 class ClaimController extends Controller
 {
-    /** Browse available donations for claiming. */
-    public function browse()
-    {
-        $donations = Donation::with('donor')
-            ->active()
-            ->orderBy('created_at', 'desc')
-            ->paginate(12);
-
-        return view('claims.browse', compact('donations'));
-    }
-
     /** List user's claims. */
     public function index()
     {

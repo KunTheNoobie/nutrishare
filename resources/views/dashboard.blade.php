@@ -90,7 +90,7 @@
     <div class="col-md-4">
         <div class="card shadow-sm h-100 d-flex justify-content-center align-items-center">
             <div class="card-body text-center py-4 w-100 d-flex flex-column justify-content-center">
-                <a href="{{ route('claims.browse') }}" class="btn btn-ns-primary w-100">
+                <a href="{{ route('donations.index') }}" class="btn btn-ns-primary w-100">
                     <i class="bi bi-search"></i> Browse Donations
                 </a>
             </div>
@@ -189,7 +189,7 @@
     <div class="card-header"><i class="bi bi-journal-text text-apple-accent"></i> Recent System Logs</div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-dark table-hover table-sm border-dark">
+            <table class="table table-dark table-hover border-dark datatable">
                 <thead><tr><th class="text-muted fw-normal">Time</th><th class="text-muted fw-normal">User</th><th class="text-muted fw-normal">Action</th><th class="text-muted fw-normal">Description</th><th class="text-muted fw-normal">Level</th></tr></thead>
                 <tbody>
                 @forelse($recentLogs as $log)

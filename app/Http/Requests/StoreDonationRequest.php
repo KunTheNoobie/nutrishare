@@ -26,7 +26,8 @@ class StoreDonationRequest extends FormRequest
             'latitude' => 'nullable|numeric|between:-90,90',
             'longitude' => 'nullable|numeric|between:-180,180',
             'expiry_date' => 'required|date|after:today',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'image_url' => 'nullable|url|max:1000',
         ];
     }
 

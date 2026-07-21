@@ -57,7 +57,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/users/{user}/reviews', [VerificationController::class, 'submitReview'])->name('reviews.submit');
 
     // ─── Module 3: Claims & Logistics (Hiew Li Wei) ───
-    Route::get('/claims/browse', [ClaimController::class, 'browse'])->name('claims.browse');
     Route::get('/claims', [ClaimController::class, 'index'])->name('claims.index');
     Route::post('/claims', [ClaimController::class, 'store'])->name('claims.store');
     Route::get('/claims/{claim}', [ClaimController::class, 'show'])->name('claims.show');

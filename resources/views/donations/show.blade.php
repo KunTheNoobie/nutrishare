@@ -13,7 +13,16 @@
             </div>
             <div class="card-body">
                 {{-- SECURITY (Module 1): All user content escaped via {{ }} to prevent XSS --}}
-                <p>{{ $donation->description }}</p>
+                @if($donation->image_path)
+                <div class="mb-4 text-center">
+                    @if(Str::startsWith($donation->image_path, ['http://', 'https://']))
+                        <img src="{{ $donation->image_path }}" class="img-fluid rounded shadow-sm" alt="Donation Image" style="max-height: 400px; object-fit: cover;">
+                    @else
+                        <img src="{{ asset('storage/' . $donation->image_path) }}" class="img-fluid rounded shadow-sm" alt="Donation Image" style="max-height: 400px; object-fit: cover;">
+                    @endif
+                </div>
+                @endif
+                <p style="font-size: 1.05rem; line-height: 1.6;">{{ $donation->description }}</p>
 
                 <div class="row g-3 mt-2">
                     <div class="col-md-6">

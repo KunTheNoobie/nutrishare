@@ -27,8 +27,19 @@ class DonationController extends Controller
     /** Display all donations (with search/filter). */
     public function index(Request $request)
     {
-        // SECURITY (Module 1): Eloquent parameterized queries prevent SQLi
-        $donations = $this->repository->findActiveDonations($request->all());
+        // Donors see their own donations, NGOs see active available donations
+        if (Auth::user()->isDonor()) {
+            $query = Donation::with(['foodItems'])->where('user_id', Auth::id());
+            
+            if (!empty($request->search)) {
+                $query->where('title', 'LIKE', '%' . $request->search . '%');
+            }
+            
+            $donations = $query->orderBy('created_at', 'desc')->paginate(15);
+        } else {
+            // SECURITY (Module 1): Eloquent parameterized queries prevent SQLi
+            $donations = $this->repository->findActiveDonations($request->all());
+        }
 
         return view('donations.index', compact('donations'));
     }
@@ -50,6 +61,8 @@ class DonationController extends Controller
 
         if ($request->hasFile('image')) {
             $validated['image_path'] = $request->file('image')->store('donations', 'public');
+        } elseif ($request->filled('image_url')) {
+            $validated['image_path'] = $request->image_url;
         }
 
         // Creating the donation triggers the Observer Pattern (DonationObserver)
@@ -82,6 +95,8 @@ class DonationController extends Controller
 
         if ($request->hasFile('image')) {
             $validated['image_path'] = $request->file('image')->store('donations', 'public');
+        } elseif ($request->filled('image_url')) {
+            $validated['image_path'] = $request->image_url;
         }
 
         $donation->update($validated);
