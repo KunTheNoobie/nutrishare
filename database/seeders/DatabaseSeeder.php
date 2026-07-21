@@ -34,5 +34,7 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('Password1!'),
             'role' => 'donor',
         ]);
+
+        $this->call(DemoDataSeeder::class);
     }
 }
