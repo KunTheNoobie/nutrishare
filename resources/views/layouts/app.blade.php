@@ -130,6 +130,15 @@
         .badge-donor { background: rgba(41, 151, 255, 0.15); color: var(--apple-accent); }
         .badge-ngo { background: rgba(52, 199, 89, 0.15); color: var(--apple-success); }
         .badge-admin { background: rgba(255, 59, 48, 0.15); color: var(--apple-danger); }
+        .badge-success { background: rgba(52, 199, 89, 0.15); color: var(--apple-success); border: 1px solid rgba(52, 199, 89, 0.3); }
+        .badge-warning { background: rgba(255, 149, 0, 0.15); color: #ff9f0a; border: 1px solid rgba(255, 149, 0, 0.3); }
+        .badge-danger { background: rgba(255, 59, 48, 0.15); color: var(--apple-danger); border: 1px solid rgba(255, 59, 48, 0.3); }
+        
+        /* Text Utilities */
+        .text-apple-accent { color: var(--apple-accent) !important; }
+        .text-apple-success { color: var(--apple-success) !important; }
+        .text-apple-warning { color: #ff9f0a !important; }
+        .text-apple-danger { color: var(--apple-danger) !important; }
         
         /* Form Validation Aesthetics */
         .invalid-feedback { color: var(--apple-danger); font-weight: 400; font-size: 0.8rem; margin-top: 0.5rem; }
