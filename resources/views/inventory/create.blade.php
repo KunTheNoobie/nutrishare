@@ -2,10 +2,12 @@
 @section('title', 'Add Inventory Location')
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header"><h4 class="mb-0"><i class="bi bi-plus-circle"></i> Register Inventory Location</h4></div>
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm animate-slide-up">
+            <div class="card-header text-center">
+                <h4 class="mb-0"><i class="bi bi-plus-circle text-apple-accent"></i> Register Inventory Location</h4>
+            </div>
             <div class="card-body p-4">
                 <form method="POST" action="{{ route('inventory.store') }}">
                     @csrf
@@ -22,16 +24,18 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <label for="storage_type" class="form-label">Storage Type</label>
-                            <select class="form-select" id="storage_type" name="storage_type" required>
+                            <select class="form-select @error('storage_type') is-invalid @enderror" id="storage_type" name="storage_type" required>
                                 <option value="dry">🌡️ Dry</option>
                                 <option value="cold">❄️ Cold</option>
                                 <option value="frozen">🧊 Frozen</option>
                                 <option value="ambient">🌤️ Ambient</option>
                             </select>
+                            @error('storage_type')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-md-6">
                             <label for="capacity" class="form-label">Capacity (kg)</label>
-                            <input type="number" step="0.01" class="form-control" id="capacity" name="capacity" value="{{ old('capacity') }}">
+                            <input type="number" step="0.01" class="form-control @error('capacity') is-invalid @enderror" id="capacity" name="capacity" value="{{ old('capacity') }}">
+                            @error('capacity')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>
                     <button type="submit" class="btn btn-ns-primary w-100"><i class="bi bi-check"></i> Register Location</button>

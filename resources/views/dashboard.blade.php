@@ -8,7 +8,7 @@
         <h2>Welcome, {{ $user->name }}!</h2>
         <p class="text-muted mb-0">
             <span class="badge badge-{{ $user->role === 'admin' ? 'admin' : ($user->role === 'ngo' ? 'ngo' : 'donor') }}">
-                {{ ucfirst($user->role) }}
+                {{ $user->role === 'ngo' ? 'NGO' : ucfirst($user->role) }}
             </span>
             @if($user->isNgo())
                 <span class="badge badge-{{ $user->isVerified() ? 'success' : 'warning' }}">
@@ -105,19 +105,21 @@
         <p class="text-muted">Upload your NGO license to get verified by an admin.</p>
         <form method="POST" action="{{ route('verification.upload') }}" enctype="multipart/form-data">
             @csrf
-            <div class="row g-3 align-items-center">
+            <div class="row g-3 align-items-start">
                 <div class="col-md-4">
-                    <select name="document_type" class="form-select" required>
+                    <select name="document_type" class="form-select @error('document_type') is-invalid @enderror" required>
                         <option value="license">NGO License</option>
                         <option value="registration_cert">Registration Certificate</option>
                         <option value="tax_exempt">Tax Exemption Letter</option>
                     </select>
+                    @error('document_type')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-5">
-                    <input type="file" name="document" class="form-control" accept=".pdf,.jpg,.jpeg,.png" required>
+                    <input type="file" name="document" class="form-control @error('document') is-invalid @enderror" accept=".pdf,.jpg,.jpeg,.png" required>
+                    @error('document')<div class="invalid-feedback">{{ $message }}</div>@enderror
                 </div>
                 <div class="col-md-3">
-                    <button type="submit" class="btn btn-ns-primary w-100" style="background-color: #ff9f0a; color: #111;">Upload</button>
+                    <button type="submit" class="btn btn-ns-primary w-100">Upload Document</button>
                 </div>
             </div>
         </form>

@@ -2,11 +2,11 @@
 @section('title', 'Publish Donation')
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="mb-0"><i class="bi bi-plus-circle"></i> Publish New Donation</h4>
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-7">
+        <div class="card shadow-sm animate-slide-up">
+            <div class="card-header text-center">
+                <h4 class="mb-0"><i class="bi bi-plus-circle text-apple-accent"></i> Publish New Donation</h4>
             </div>
             <div class="card-body p-4">
                 {{-- SECURITY (Module 3): @csrf prevents CSRF attacks --}}
@@ -60,12 +60,13 @@
                         @error('expiry_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="image" class="form-label">Photo (Optional)</label>
-                        <input type="file" class="form-control" id="image" name="image" accept="image/jpeg,image/png">
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/jpeg,image/png">
+                        @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
-                    <button type="submit" class="btn btn-ns-primary w-100">
+                    <button type="submit" class="btn btn-ns-primary w-100 py-2" style="font-weight: 500;">
                         <i class="bi bi-megaphone"></i> Publish Donation
                     </button>
                 </form>

@@ -161,6 +161,33 @@
         .btn-close { filter: invert(1) grayscale(100%) brightness(200%); opacity: 0.5; }
         .btn-close:hover { opacity: 1; }
 
+        /* Input specific overrides */
+        ::placeholder {
+            color: var(--apple-text-muted) !important;
+            opacity: 0.8 !important;
+        }
+        select option {
+            background-color: var(--apple-surface);
+            color: var(--apple-text);
+        }
+        input[type="file"]::file-selector-button {
+            background-color: var(--apple-text);
+            color: var(--apple-bg);
+            border: none;
+            border-radius: 6px;
+            padding: 0.5rem 1rem;
+            margin-right: 1rem;
+            font-weight: 500;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        input[type="file"]::file-selector-button:hover {
+            background-color: #d1d1d6;
+        }
+        
+        .form-text { color: #a1a1aa !important; }
+
         /* Animations */
         .animate-slide-up {
             animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
