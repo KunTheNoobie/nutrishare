@@ -108,8 +108,8 @@
                     </div>
                     
                     <div class="mb-3">
-                        <select name="category_id" class="form-select @error('category_id') is-invalid @enderror">
-                            <option value="">-- Select Category (Optional) --</option>
+                        <select name="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
+                            <option value="">-- Select Category --</option>
                             @foreach($categories as $cat)
                             <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
                             @endforeach

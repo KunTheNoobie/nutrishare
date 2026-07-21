@@ -17,7 +17,7 @@ class StoreFoodItemRequest extends FormRequest
         return [
             'donation_id' => 'nullable|exists:donations,id',
             'inventory_location_id' => 'nullable|exists:inventory_locations,id',
-            'category_id' => 'nullable|exists:categories,id',
+            'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
             'quantity' => 'required|numeric|min:0.01',
