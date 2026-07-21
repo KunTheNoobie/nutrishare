@@ -117,11 +117,13 @@
                         <input type="hidden" name="donation_id" value="{{ $donation->id }}">
                         <div class="mb-3">
                             <label class="form-label text-muted small">Justification</label>
-                            <textarea name="justification" class="form-control" rows="3" required placeholder="Why does your NGO need this donation?"></textarea>
+                            <textarea name="justification" class="form-control @error('justification') is-invalid @enderror" rows="3" required placeholder="Why does your NGO need this donation?">{{ old('justification') }}</textarea>
+                            @error('justification')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
                             <label class="form-label text-muted small">Pickup Date</label>
-                            <input type="datetime-local" name="pickup_scheduled_at" class="form-control" required>
+                            <input type="datetime-local" name="pickup_scheduled_at" class="form-control @error('pickup_scheduled_at') is-invalid @enderror" value="{{ old('pickup_scheduled_at') }}" required>
+                            @error('pickup_scheduled_at')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <button type="submit" class="btn btn-ns-primary w-100 py-2 fw-medium">
                             Submit Claim
