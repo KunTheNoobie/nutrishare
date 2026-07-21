@@ -277,7 +277,7 @@ GET /api/claim/details?requestID=CLM-001&timestamp=2024-01-15T10:30:00+08:00&cla
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR-USERNAME/nutrishare.git
+git clone https://github.com/KunTheNoobie/nutrishare.git
 cd nutrishare
 
 # 2. Install PHP dependencies
@@ -348,7 +348,7 @@ The project follows **conventional commits** with granular, meaningful commit me
 
 ```bash
 # Add remote repository
-git remote add origin https://github.com/YOUR-USERNAME/nutrishare.git
+git remote add origin https://github.com/KunTheNoobie/nutrishare.git
 
 # Push all commits to main branch
 git branch -M main
