@@ -196,7 +196,7 @@ class DemoDataSeeder extends Seeder
         }
 
         // 6. Create Premium Inventory Locations for NGOs
-        InventoryLocation::create([
+        $inventory1 = InventoryLocation::create([
             'user_id' => $ngo1->id,
             'name' => 'Metro City Main Pantry',
             'address' => '100 Community Way, Metro City',
@@ -222,5 +222,110 @@ class DemoDataSeeder extends Seeder
             'capacity' => 300.00,
             'current_occupancy' => 85.00
         ]);
+
+        // 7. Seed Missing Tables to ensure 100% database coverage
+        
+        // Allergen_tags <-> food_items (Pivot table)
+        $nutTag = \App\Models\AllergenTag::where('name', 'Contains Nuts')->first();
+        $dairyTag = \App\Models\AllergenTag::where('name', 'Dairy')->first();
+        foreach (\App\Models\FoodItem::all() as $item) {
+            $item->allergenTags()->sync([$nutTag->id, $dairyTag->id]);
+        }
+
+        // VerificationDocument
+        \App\Models\VerificationDocument::create([
+            'user_id' => $ngo1->id,
+            'document_type' => 'license',
+            'file_path' => 'documents/license_ngo1.pdf',
+            'original_filename' => 'NGO_License.pdf',
+            'status' => 'approved',
+            'admin_remarks' => 'Verified against state registry.',
+            'reviewed_by' => 1,
+            'reviewed_at' => Carbon::now()->subDays(5)
+        ]);
+
+        // Review
+        \App\Models\Review::create([
+            'reviewer_id' => $donor1->id,
+            'reviewee_id' => $ngo1->id,
+            'rating' => 5,
+            'comment' => 'Excellent communication and punctual pickup!'
+        ]);
+
+        // NotificationTemplate
+        $template = \App\Models\NotificationTemplate::create([
+            'name' => 'Donation Claimed',
+            'subject' => 'Your donation was claimed!',
+            'body' => 'Great news! {{ngo_name}} has claimed your donation: {{donation_title}}.',
+            'channel' => 'database'
+        ]);
+
+        // Notification
+        \App\Models\Notification::create([
+            'user_id' => $donor3->id,
+            'notification_template_id' => $template->id,
+            'donation_id' => $claimedDonation ? $claimedDonation->id : null,
+            'title' => 'Your donation was claimed!',
+            'message' => 'Great news! Community Hope Foundation has claimed your donation.',
+            'channel' => 'database',
+            'is_read' => false,
+            'sent_at' => Carbon::now()
+        ]);
+
+        // SystemLog
+        \App\Models\SystemLog::create([
+            'user_id' => $donor1->id,
+            'action' => 'donation.created',
+            'description' => 'User created a new premium organic donation.',
+            'ip_address' => '192.168.1.100',
+            'user_agent' => 'Mozilla/5.0 Professional',
+            'level' => 'info'
+        ]);
+
+        // Report
+        \App\Models\Report::create([
+            'user_id' => 1,
+            'title' => 'Q3 Sustainability Impact Report',
+            'content' => 'This quarter, NutriShare facilitated the rescue of over 500kg of food, feeding 2,000 beneficiaries and reducing CO2 emissions by 1.2 tons.',
+            'type' => 'sdg_impact',
+            'report_date' => Carbon::now()
+        ]);
+
+        if ($claimedDonation) {
+            $claim = \App\Models\Claim::where('donation_id', $claimedDonation->id)->first();
+            
+            // Vehicle
+            \App\Models\Vehicle::create([
+                'claim_id' => $claim->id,
+                'plate_number' => 'NTR-9901',
+                'vehicle_type' => 'Refrigerated Van',
+                'driver_name' => 'John Doe',
+                'driver_phone' => '+1 (555) 999-8888',
+                'capacity_kg' => 1000.00
+            ]);
+
+            // CollectionReceipt
+            \App\Models\CollectionReceipt::create([
+                'claim_id' => $claim->id,
+                'receipt_number' => 'RCPT-'.date('Ymd').'-001',
+                'quantity_collected' => $claimedDonation->quantity,
+                'unit' => $claimedDonation->unit,
+                'collected_by' => 'John Doe',
+                'condition_notes' => 'Items received in excellent condition.',
+                'signature_path' => 'signatures/sig_001.png',
+                'collected_at' => Carbon::now()->addHours(2)
+            ]);
+
+            // DistributionLog
+            \App\Models\DistributionLog::create([
+                'claim_id' => $claim->id,
+                'beneficiaries_count' => 50,
+                'distribution_location' => 'Downtown Shelter Main Hall',
+                'notes' => 'Distributed during breakfast service.',
+                'quantity_distributed' => $claimedDonation->quantity,
+                'unit' => $claimedDonation->unit,
+                'distributed_at' => Carbon::now()->addHours(4)
+            ]);
+        }
     }
 }
