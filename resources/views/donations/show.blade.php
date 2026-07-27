@@ -171,12 +171,14 @@
             <div class="card-header">Claims ({{ $donation->claims->count() }})</div>
             <div class="card-body">
                 @foreach($donation->claims as $claim)
-                <div class="py-2 border-bottom">
-                    <strong>{{ $claim->user->organization_name ?? $claim->user->name }}</strong>
-                    <br><span class="badge bg-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : 'secondary') }}">
-                        {{ ucfirst($claim->status) }}
-                    </span>
-                    <a href="{{ route('claims.show', $claim) }}" class="btn btn-sm btn-link">View</a>
+                <div class="py-3 border-bottom d-flex justify-content-between align-items-center" style="border-color: var(--apple-border) !important;">
+                    <div>
+                        <strong class="d-block mb-1 text-light">{{ $claim->user->organization_name ?? $claim->user->name }}</strong>
+                        <span class="badge badge-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : 'secondary') }}">
+                            {{ ucfirst($claim->status) }}
+                        </span>
+                    </div>
+                    <a href="{{ route('claims.show', $claim) }}" class="btn btn-sm btn-outline-light">View Details</a>
                 </div>
                 @endforeach
             </div>
