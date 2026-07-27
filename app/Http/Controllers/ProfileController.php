@@ -22,8 +22,7 @@ class ProfileController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'phone' => ['nullable', 'string', 'max:20'],
-            'address' => ['nullable', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:20'],
             'notification_preference' => ['required', Rule::in(['email', 'sms', 'both'])],
         ];
 

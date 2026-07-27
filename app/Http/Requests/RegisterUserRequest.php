@@ -33,7 +33,6 @@ class RegisterUserRequest extends FormRequest
             'role' => 'required|in:donor,ngo',
             'organization_name' => 'required_if:role,ngo|nullable|string|max:255',
             'phone' => 'required|string|max:20',
-            'address' => 'nullable|string|max:500',
             'notification_preference' => 'nullable|in:email,sms,both',
         ];
     }
