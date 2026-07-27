@@ -241,9 +241,11 @@
                         <a class="nav-link" href="{{ route('donations.index') }}"><i class="bi bi-gift"></i> Donations</a>
                     </li>
 
+                    @if(Auth::user()->isNgo() || Auth::user()->isAdmin())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('inventory.index') }}"><i class="bi bi-box-seam"></i> Inventory</a>
                     </li>
+                    @endif
                 @endauth
             </ul>
             <ul class="navbar-nav">

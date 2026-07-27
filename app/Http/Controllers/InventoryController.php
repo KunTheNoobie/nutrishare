@@ -24,6 +24,15 @@ use Illuminate\Support\Facades\URL;
  */
 class InventoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::check() && Auth::user()->isDonor()) {
+                abort(403, 'Unauthorized action. Inventory is managed by NGOs and Admins.');
+            }
+            return $next($request);
+        });
+    }
     /** List inventory locations. */
     public function index()
     {

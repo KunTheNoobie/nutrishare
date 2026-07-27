@@ -36,6 +36,9 @@ class StoreDonationRequest extends FormRequest
         return [
             'expiry_date.after' => 'The expiry date must be a time in the future.',
             'quantity.min' => 'Quantity must be at least 0.01.',
+            'image.uploaded' => 'The image could not be uploaded. It might exceed the server limits (try an image under 5MB).',
+            'image.max' => 'The image size must not exceed 5MB.',
+            'image.image' => 'The uploaded file must be a valid image (JPEG, PNG, GIF).',
         ];
     }
 }

@@ -239,9 +239,12 @@
                 </strong>
                 <br><small class="text-muted">By {{ $donation->donor->name }} &nbsp;&middot;&nbsp; {{ $donation->quantity }} {{ $donation->unit }}</small>
             </div>
-            <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
-                {{ ucfirst($donation->status) }}
-            </span>
+            <div>
+                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} mb-2 d-block text-center">
+                    {{ ucfirst($donation->status) }}
+                </span>
+                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light w-100">View Details</a>
+            </div>
         </div>
         @empty
         <p class="text-muted text-center py-4">No donations on the platform yet.</p>
