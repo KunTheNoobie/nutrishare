@@ -72,14 +72,16 @@
 
                     <div class="d-flex align-items-center gap-3 mt-4">
                         <button type="submit" class="btn btn-ns-primary">Save Profile</button>
+                        @if($user->profile_photo_path)
+                            <button type="submit" form="removePhotoForm" class="btn btn-outline-danger">Remove Photo</button>
+                        @endif
                     </div>
                 </form>
                 
                 @if($user->profile_photo_path)
-                <form method="POST" action="{{ route('profile.photo.destroy') }}" class="mt-3">
+                <form id="removePhotoForm" method="POST" action="{{ route('profile.photo.destroy') }}" class="d-none">
                     @csrf
                     @method('delete')
-                    <button type="submit" class="btn btn-sm btn-outline-danger">Remove Photo</button>
                 </form>
                 @endif
             </div>
