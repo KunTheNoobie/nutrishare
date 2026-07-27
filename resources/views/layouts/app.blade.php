@@ -62,32 +62,41 @@
         }
         .nav-link:hover { color: var(--apple-text) !important; }
         
-        /* Buttons */
+        /* Global Button Overrides for Consistency */
+        .btn {
+            border-radius: 980px !important;
+            font-weight: 500 !important;
+            font-family: 'Inter', -apple-system, sans-serif !important;
+            padding: 10px 24px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-sm {
+            padding: 6px 16px !important;
+            font-size: 0.85rem !important;
+        }
+        .btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Custom Button Colors */
         .btn-ns-primary {
             background-color: var(--apple-text);
             color: var(--apple-bg);
             border: none; 
-            border-radius: 980px; 
-            padding: 8px 24px; 
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
         }
         .btn-ns-primary:hover { 
             background-color: #d1d1d6; 
             color: var(--apple-bg);
-            transform: scale(1.02);
         }
 
         .btn-ns-accent {
             background-color: var(--apple-accent);
             color: white;
             border: none; 
-            border-radius: 980px; 
-            padding: 10px 24px; 
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
         }
         .btn-ns-accent:hover { 
             background-color: var(--apple-accent-hover); 
