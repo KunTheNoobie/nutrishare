@@ -84,10 +84,12 @@
                         <div class="tab-content" id="photoTabContent">
                             <div class="tab-pane fade show active" id="upload" role="tabpanel">
                                 <div class="input-group">
-                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/jpeg,image/png,image/gif">
-                                    <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('image').value=''" title="Clear selected file"><i class="bi bi-x-lg"></i></button>
+                                    <input type="file" class="form-control @error('images') is-invalid @enderror @error('images.*') is-invalid @enderror" id="image" name="images[]" accept="image/jpeg,image/png,image/gif" multiple>
+                                    <button class="btn btn-outline-secondary" type="button" id="clearFileBtn" title="Clear selected file"><i class="bi bi-x-lg"></i></button>
                                 </div>
-                                @error('image')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                                <div class="text-muted small mt-1">You can upload up to 5 images (Max 100MB each).</div>
+                                @error('images')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                                @error('images.*')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="tab-pane fade" id="url" role="tabpanel">
                                 <input type="url" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" placeholder="https://example.com/image.jpg">
@@ -223,6 +225,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     addressInput.value = data.display_name;
                 }
             });
+    }
+
+    const clearFileBtn = document.getElementById('clearFileBtn');
+    if (clearFileBtn) {
+        clearFileBtn.addEventListener('click', function() {
+            document.getElementById('image').value = '';
+        });
     }
 });
 </script>

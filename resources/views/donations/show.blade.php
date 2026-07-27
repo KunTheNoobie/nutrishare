@@ -17,12 +17,33 @@
             </div>
             <div class="card-body">
                 {{-- SECURITY (Module 1): All user content escaped via {{ }} to prevent XSS --}}
-                @if($donation->image_path)
-                <div class="mb-4 text-center">
-                    @if(Str::startsWith($donation->image_path, ['http://', 'https://']))
-                        <img src="{{ $donation->image_path }}" class="img-fluid rounded shadow-sm w-100" alt="Donation Image" style="height: 400px; object-fit: cover;">
-                    @else
-                        <img src="{{ asset('storage/' . $donation->image_path) }}" class="img-fluid rounded shadow-sm w-100" alt="Donation Image" style="height: 400px; object-fit: cover;">
+                @if($donation->image_paths && count($donation->image_paths) > 0)
+                <div id="donationImageCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        @foreach($donation->image_paths as $index => $path)
+                            <button type="button" data-bs-target="#donationImageCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
+                        @endforeach
+                    </div>
+                    <div class="carousel-inner rounded shadow-sm">
+                        @foreach($donation->image_paths as $index => $path)
+                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                @if(Str::startsWith($path, ['http://', 'https://']))
+                                    <img src="{{ $path }}" class="d-block w-100" alt="Donation Image {{ $index + 1 }}" style="height: 400px; object-fit: cover;">
+                                @else
+                                    <img src="{{ asset('storage/' . $path) }}" class="d-block w-100" alt="Donation Image {{ $index + 1 }}" style="height: 400px; object-fit: cover;">
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                    @if(count($donation->image_paths) > 1)
+                    <button class="carousel-control-prev" type="button" data-bs-target="#donationImageCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#donationImageCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                     @endif
                 </div>
                 @endif

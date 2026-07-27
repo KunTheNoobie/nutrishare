@@ -73,21 +73,25 @@
                     <div class="mb-4">
                         <label class="form-label">Image (Optional)</label>
 
-                        @if($donation->image_path)
+                        @if($donation->image_paths && count($donation->image_paths) > 0)
                         <div class="mb-3 p-3 rounded border" style="background: var(--apple-surface);">
-                            <div class="d-flex align-items-center gap-3">
-                                @if(Str::startsWith($donation->image_path, ['http://', 'https://']))
-                                    <img src="{{ $donation->image_path }}" class="rounded" style="height: 60px; width: 60px; object-fit: cover;" alt="Current">
-                                @else
-                                    <img src="{{ asset('storage/' . $donation->image_path) }}" class="rounded" style="height: 60px; width: 60px; object-fit: cover;" alt="Current">
-                                @endif
-                                <div class="flex-grow-1">
-                                    <div class="text-muted small">Current image attached</div>
+                            <div class="text-muted small mb-2">Current images attached</div>
+                            <div class="row g-2">
+                                @foreach($donation->image_paths as $index => $path)
+                                <div class="col-auto">
+                                    <div class="d-flex flex-column align-items-center gap-1 border p-2 rounded" style="background: rgba(0,0,0,0.2);">
+                                        @if(Str::startsWith($path, ['http://', 'https://']))
+                                            <img src="{{ $path }}" class="rounded" style="height: 60px; width: 60px; object-fit: cover;" alt="Current">
+                                        @else
+                                            <img src="{{ asset('storage/' . $path) }}" class="rounded" style="height: 60px; width: 60px; object-fit: cover;" alt="Current">
+                                        @endif
+                                        <div class="form-check m-0">
+                                            <input class="form-check-input" type="checkbox" name="remove_images[]" id="remove_image_{{ $index }}" value="{{ $path }}">
+                                            <label class="form-check-label text-danger small" style="font-size: 0.75rem;" for="remove_image_{{ $index }}">Remove</label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remove_image" id="remove_image" value="1">
-                                    <label class="form-check-label text-danger small" for="remove_image">Remove</label>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         @endif
@@ -103,13 +107,27 @@
                         <div class="tab-content" id="photoTabContent">
                             <div class="tab-pane fade show active" id="upload" role="tabpanel">
                                 <div class="input-group">
-                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/jpeg,image/png,image/gif">
+                                    <input type="file" class="form-control @error('images') is-invalid @enderror @error('images.*') is-invalid @enderror" id="image" name="images[]" accept="image/jpeg,image/png,image/gif" multiple>
                                     <button class="btn btn-outline-secondary" type="button" id="clearFileBtn" title="Clear selected file"><i class="bi bi-x-lg"></i></button>
                                 </div>
-                                @error('image')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                                <div class="text-muted small mt-1">You can upload up to 5 images (Max 100MB each).</div>
+                                @error('images')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                                @error('images.*')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="tab-pane fade" id="url" role="tabpanel">
-                                <input type="url" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" value="{{ $donation->image_path && Str::startsWith($donation->image_path, 'http') ? $donation->image_path : '' }}" placeholder="https://example.com/image.jpg">
+                                @php
+                                    $hasUrl = false;
+                                    $urlVal = '';
+                                    if ($donation->image_paths) {
+                                        foreach($donation->image_paths as $path) {
+                                            if(Str::startsWith($path, 'http')) {
+                                                $urlVal = $path;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                @endphp
+                                <input type="url" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" value="{{ $urlVal }}" placeholder="https://example.com/image.jpg">
                                 @error('image_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>

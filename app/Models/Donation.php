@@ -28,7 +28,7 @@ class Donation extends Model
         'longitude',
         'expiry_date',
         'status',
-        'image_path',
+        'image_paths',
     ];
 
     protected function casts(): array
@@ -38,6 +38,7 @@ class Donation extends Model
             'quantity' => 'decimal:2',
             'latitude' => 'decimal:7',
             'longitude' => 'decimal:7',
+            'image_paths' => 'array',
         ];
     }
 

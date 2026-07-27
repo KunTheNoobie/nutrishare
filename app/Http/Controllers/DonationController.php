@@ -59,11 +59,19 @@ class DonationController extends Controller
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
 
-        if ($request->hasFile('image')) {
-            $validated['image_path'] = $request->file('image')->store('donations', 'public');
-        } elseif ($request->filled('image_url')) {
-            $validated['image_path'] = $request->image_url;
+        $imagePaths = [];
+
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePaths[] = $image->store('donations', 'public');
+            }
         }
+        
+        if ($request->filled('image_url')) {
+            $imagePaths[] = $request->image_url;
+        }
+
+        $validated['image_paths'] = empty($imagePaths) ? null : $imagePaths;
 
         // Creating the donation triggers the Observer Pattern (DonationObserver)
         $donation = Donation::create($validated);
@@ -93,24 +101,33 @@ class DonationController extends Controller
 
         $validated = $request->validated();
 
-        // Handle image removal checkbox
-        if ($request->boolean('remove_image')) {
-            if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
+        $imagePaths = $donation->image_paths ?? [];
+
+        // Handle image removals
+        if ($request->has('remove_images') && is_array($request->input('remove_images'))) {
+            $toRemove = $request->input('remove_images');
+            foreach ($toRemove as $path) {
+                if (!str_starts_with($path, 'http')) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($path);
+                }
+                $imagePaths = array_diff($imagePaths, [$path]);
             }
-            $validated['image_path'] = null;
-        } elseif ($request->hasFile('image')) {
-            // Delete old local file if replacing
-            if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
-            }
-            $validated['image_path'] = $request->file('image')->store('donations', 'public');
-        } elseif ($request->filled('image_url')) {
-            if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
-            }
-            $validated['image_path'] = $request->image_url;
+            $imagePaths = array_values($imagePaths); // Re-index array
         }
+
+        // Add new uploaded images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imagePaths[] = $image->store('donations', 'public');
+            }
+        }
+        
+        // Add new URL image
+        if ($request->filled('image_url')) {
+            $imagePaths[] = $request->image_url;
+        }
+
+        $validated['image_paths'] = empty($imagePaths) ? null : $imagePaths;
 
         $donation->update($validated);
 
