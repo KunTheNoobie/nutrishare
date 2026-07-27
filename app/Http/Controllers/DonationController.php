@@ -60,7 +60,11 @@ class DonationController extends Controller
         $validated['user_id'] = Auth::id();
 
         if ($request->hasFile('image')) {
-            $validated['image_path'] = $request->file('image')->store('donations', 'public');
+            $path = $request->file('image')->store('donations', 'public');
+            $validated['image_path'] = $path;
+            // Fail-safe copy directly into public/storage/donations for Windows local dev servers
+            @mkdir(public_path('storage/donations'), 0777, true);
+            @copy(storage_path('app/public/' . $path), public_path('storage/' . $path));
         } elseif ($request->filled('image_url')) {
             $validated['image_path'] = $request->image_url;
         }
@@ -97,17 +101,23 @@ class DonationController extends Controller
         if ($request->boolean('remove_image')) {
             if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
+                @unlink(public_path('storage/' . $donation->image_path));
             }
             $validated['image_path'] = null;
         } elseif ($request->hasFile('image')) {
             // Delete old local file if replacing
             if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
+                @unlink(public_path('storage/' . $donation->image_path));
             }
-            $validated['image_path'] = $request->file('image')->store('donations', 'public');
+            $path = $request->file('image')->store('donations', 'public');
+            $validated['image_path'] = $path;
+            @mkdir(public_path('storage/donations'), 0777, true);
+            @copy(storage_path('app/public/' . $path), public_path('storage/' . $path));
         } elseif ($request->filled('image_url')) {
             if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
+                @unlink(public_path('storage/' . $donation->image_path));
             }
             $validated['image_path'] = $request->image_url;
         }

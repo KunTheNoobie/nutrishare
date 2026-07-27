@@ -127,8 +127,11 @@
 </div>
 @endif
 
-<div class="card shadow-sm animate-slide-up">
-    <div class="card-header"><i class="bi bi-hand-thumbs-up text-apple-success"></i> Recent Claims</div>
+<div class="card shadow-sm animate-slide-up mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-hand-thumbs-up text-apple-success"></i> My Recent Claims</span>
+        <a href="{{ route('claims.index') }}" class="btn btn-sm btn-outline-secondary">View All Claims</a>
+    </div>
     <div class="card-body">
         @forelse($claims as $claim)
         <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
@@ -142,6 +145,28 @@
         </div>
         @empty
         <p class="text-muted text-center py-4">No claims yet. <a href="{{ route('donations.index') }}">Browse available donations!</a></p>
+        @endforelse
+    </div>
+</div>
+
+<div class="card shadow-sm animate-slide-up">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-gift text-apple-accent"></i> Recent Available Donations</span>
+        <a href="{{ route('donations.index') }}" class="btn btn-sm btn-outline-secondary">Explore All Donations</a>
+    </div>
+    <div class="card-body">
+        @forelse($recentDonations as $donation)
+        <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
+            <div>
+                <strong style="font-size: 1.05rem;">
+                    <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-white">{{ $donation->title }}</a>
+                </strong>
+                <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; {{ $donation->pickup_address }} &nbsp;&middot;&nbsp; Expires: {{ $donation->expiry_date->format('d M Y') }}</small>
+            </div>
+            <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-ns-primary">View</a>
+        </div>
+        @empty
+        <p class="text-muted text-center py-4">No active donations available at the moment.</p>
         @endforelse
     </div>
 </div>
@@ -182,6 +207,28 @@
                 </a>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="card shadow-sm animate-slide-up mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-gift text-apple-accent"></i> Recent Donations</span>
+        <a href="{{ route('donations.index') }}" class="btn btn-sm btn-outline-secondary">View All Donations</a>
+    </div>
+    <div class="card-body">
+        @forelse($recentDonations as $donation)
+        <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
+            <div>
+                <strong style="font-size: 1.05rem;">
+                    <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-white">{{ $donation->title }}</a>
+                </strong>
+                <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; Donor: {{ $donation->donor?->name }} &nbsp;&middot;&nbsp; Expires: {{ $donation->expiry_date->format('d M Y') }}</small>
+            </div>
+            <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-ns-primary">View</a>
+        </div>
+        @empty
+        <p class="text-muted text-center py-4">No active donations found.</p>
+        @endforelse
     </div>
 </div>
 
