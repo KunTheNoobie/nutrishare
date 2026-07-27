@@ -30,7 +30,7 @@
                                 @php
                                     $imgSrc = Str::startsWith($path, ['http://', 'https://']) ? $path : asset('storage/' . $path);
                                 @endphp
-                                <a href="javascript:void(0);" onclick="document.getElementById('modalImage').src='{{ $imgSrc }}';" data-bs-toggle="modal" data-bs-target="#imageModal" title="Click to view full image">
+                                <a href="javascript:void(0);" onclick="window.openModalImage({{ $index }})" data-bs-toggle="modal" data-bs-target="#imageModal" title="Click to view full image">
                                     <img src="{{ $imgSrc }}" class="d-block w-100" alt="Donation Image {{ $index + 1 }}" style="height: 400px; object-fit: cover;">
                                 </a>
                             </div>
@@ -187,17 +187,69 @@
 
 <!-- Image Modal -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
         <div class="modal-content bg-transparent border-0 shadow-none">
             <div class="modal-header border-0 pb-0 justify-content-end">
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center pt-0">
-                <img id="modalImage" src="" class="img-fluid rounded shadow" alt="Full Image" style="max-height: 80vh;">
+            <div class="modal-body text-center pt-0 position-relative">
+                <button class="btn btn-dark position-absolute top-50 start-0 translate-middle-y ms-2 ms-md-4" id="modalPrevBtn" style="border-radius: 50%; width: 45px; height: 45px; z-index: 1055; opacity: 0.8; display: none;">
+                    <i class="bi bi-chevron-left fs-5"></i>
+                </button>
+                
+                <img id="modalImage" src="" class="img-fluid rounded shadow" alt="Full Image" style="max-height: 85vh;">
+                
+                <button class="btn btn-dark position-absolute top-50 end-0 translate-middle-y me-2 me-md-4" id="modalNextBtn" style="border-radius: 50%; width: 45px; height: 45px; z-index: 1055; opacity: 0.8; display: none;">
+                    <i class="bi bi-chevron-right fs-5"></i>
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+@if($donation->image_paths && count($donation->image_paths) > 0)
+@push('scripts')
+<script>
+    const modalImages = [
+        @foreach($donation->image_paths as $path)
+            '{{ Str::startsWith($path, ["http://", "https://"]) ? $path : asset("storage/" . $path) }}',
+        @endforeach
+    ];
+    let currentModalIndex = 0;
+
+    window.openModalImage = function(index) {
+        currentModalIndex = index;
+        updateModalImage();
+    };
+
+    function updateModalImage() {
+        if(modalImages.length > 0) {
+            document.getElementById('modalImage').src = modalImages[currentModalIndex];
+            
+            const showButtons = modalImages.length > 1;
+            document.getElementById('modalPrevBtn').style.display = showButtons ? 'block' : 'none';
+            document.getElementById('modalNextBtn').style.display = showButtons ? 'block' : 'none';
+        }
+    }
+
+    if (document.getElementById('modalPrevBtn')) {
+        document.getElementById('modalPrevBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            currentModalIndex = (currentModalIndex - 1 + modalImages.length) % modalImages.length;
+            updateModalImage();
+        });
+    }
+
+    if (document.getElementById('modalNextBtn')) {
+        document.getElementById('modalNextBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            currentModalIndex = (currentModalIndex + 1) % modalImages.length;
+            updateModalImage();
+        });
+    }
+</script>
+@endpush
+@endif
 
 @if($donation->latitude && $donation->longitude)
 @push('scripts')
