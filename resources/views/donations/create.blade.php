@@ -166,9 +166,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (data && data.length > 0) {
                         data.forEach(item => {
                             const li = document.createElement('li');
-                            li.className = 'list-group-item list-group-item-action text-dark';
+                            li.className = 'list-group-item list-group-item-action';
                             li.style.cursor = 'pointer';
+                            li.style.backgroundColor = 'var(--apple-surface)';
+                            li.style.color = 'var(--apple-text)';
+                            li.style.border = '1px solid var(--apple-border)';
                             li.textContent = item.display_name;
+                            li.addEventListener('mouseenter', () => { li.style.backgroundColor = 'rgba(255,255,255,0.1)'; });
+                            li.addEventListener('mouseleave', () => { li.style.backgroundColor = 'var(--apple-surface)'; });
                             li.addEventListener('click', () => {
                                 const lat = parseFloat(item.lat);
                                 const lng = parseFloat(item.lon);
