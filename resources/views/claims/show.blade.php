@@ -25,12 +25,23 @@
                 <p><strong>Justification:</strong> {{ $claim->justification }}</p>
 
                 <!-- State Pattern Info -->
+                @php
+                    $user = Auth::user();
+                    $isDonorOrAdmin = $user->isAdmin() || $user->isModerator() || $claim->donation->user_id === $user->id;
+                    $isClaimOwner = $user->isAdmin() || $user->isModerator() || $claim->user_id === $user->id;
+                    
+                    $availableActions = array_filter($stateObject->allowedActions(), function($action) use ($isDonorOrAdmin, $isClaimOwner) {
+                        if (in_array($action, ['approve', 'reject'])) return $isDonorOrAdmin;
+                        if ($action === 'cancel') return $isClaimOwner;
+                        return true;
+                    });
+                @endphp
                 <div class="alert alert-info">
                     <strong>Current State:</strong> {{ ucfirst($stateObject->getStateName()) }}
-                    @if(count($stateObject->allowedActions()) > 0)
-                        | <strong>Available Actions:</strong> {{ implode(', ', $stateObject->allowedActions()) }}
+                    @if(count($availableActions) > 0)
+                        | <strong>Available Actions for You:</strong> {{ implode(', ', $availableActions) }}
                     @else
-                        | <em>No further transitions (terminal state)</em>
+                        | <em>No further actions available</em>
                     @endif
                 </div>
             </div>
@@ -92,18 +103,6 @@
 
     <div class="col-md-4">
         <!-- State Transition Actions -->
-        @php
-            $user = Auth::user();
-            $isDonorOrAdmin = $user->isAdmin() || $user->isModerator() || $claim->donation->user_id === $user->id;
-            $isClaimOwner = $user->isAdmin() || $user->isModerator() || $claim->user_id === $user->id;
-            
-            $availableActions = array_filter($stateObject->allowedActions(), function($action) use ($isDonorOrAdmin, $isClaimOwner) {
-                if (in_array($action, ['approve', 'reject'])) return $isDonorOrAdmin;
-                if ($action === 'cancel') return $isClaimOwner;
-                return true;
-            });
-        @endphp
-
         @if(count($availableActions) > 0)
         <div class="card mb-3">
             <div class="card-header">Actions</div>
