@@ -54,12 +54,17 @@
         @forelse($donations as $donation)
         <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
             <div>
-                <strong style="font-size: 1.05rem;">{{ $donation->title }}</strong>
+                <strong style="font-size: 1.05rem;">
+                    <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
+                </strong>
                 <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; Expires: {{ $donation->expiry_date->format('d M Y') }}</small>
             </div>
-            <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
-                {{ ucfirst($donation->status) }}
-            </span>
+            <div>
+                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} mb-2 d-block text-center">
+                    {{ ucfirst($donation->status) }}
+                </span>
+                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light w-100">View Details</a>
+            </div>
         </div>
         @empty
         <p class="text-muted text-center py-4">No donations yet. <a href="{{ route('donations.create') }}">Create your first donation!</a></p>
