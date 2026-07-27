@@ -195,7 +195,12 @@
                     <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; {{ $donation->pickup_address }}</small>
                 </div>
             </div>
-            <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light">View Details</a>
+            <div>
+                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} mb-2 d-block text-center">
+                    {{ ucfirst($donation->status) }}
+                </span>
+                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light w-100">View Details</a>
+            </div>
         </div>
         @empty
         <p class="text-muted text-center py-4">No available donations at the moment.</p>
