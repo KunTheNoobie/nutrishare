@@ -53,11 +53,23 @@
     <div class="card-body">
         @forelse($donations as $donation)
         <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
-            <div>
-                <strong style="font-size: 1.05rem;">
-                    <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
-                </strong>
-                <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; Expires: {{ $donation->expiry_date->format('d M Y') }}</small>
+            <div class="d-flex align-items-center gap-3">
+                @if($donation->image_paths && count($donation->image_paths) > 0)
+                    @php
+                        $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
+                    @endphp
+                    <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" alt="Thumbnail">
+                @else
+                    <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; background: rgba(255,255,255,0.05);">
+                        <i class="bi bi-basket text-muted fs-4"></i>
+                    </div>
+                @endif
+                <div>
+                    <strong style="font-size: 1.05rem;">
+                        <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
+                    </strong>
+                    <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; Expires: {{ $donation->expiry_date->format('d M Y') }}</small>
+                </div>
             </div>
             <div>
                 <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} mb-2 d-block text-center">
@@ -156,11 +168,23 @@
     <div class="card-body">
         @forelse($recentDonations as $donation)
         <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
-            <div>
-                <strong style="font-size: 1.05rem;">
-                    <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
-                </strong>
-                <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; {{ $donation->pickup_address }}</small>
+            <div class="d-flex align-items-center gap-3">
+                @if($donation->image_paths && count($donation->image_paths) > 0)
+                    @php
+                        $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
+                    @endphp
+                    <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" alt="Thumbnail">
+                @else
+                    <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; background: rgba(255,255,255,0.05);">
+                        <i class="bi bi-basket text-muted fs-4"></i>
+                    </div>
+                @endif
+                <div>
+                    <strong style="font-size: 1.05rem;">
+                        <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
+                    </strong>
+                    <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; {{ $donation->pickup_address }}</small>
+                </div>
             </div>
             <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light">View Details</a>
         </div>
@@ -238,11 +262,23 @@
     <div class="card-body">
         @forelse($recentDonations as $donation)
         <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
-            <div>
-                <strong style="font-size: 1.05rem;">
-                    <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
-                </strong>
-                <br><small class="text-muted">By {{ $donation->donor->name }} &nbsp;&middot;&nbsp; {{ $donation->quantity }} {{ $donation->unit }}</small>
+            <div class="d-flex align-items-center gap-3">
+                @if($donation->image_paths && count($donation->image_paths) > 0)
+                    @php
+                        $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
+                    @endphp
+                    <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" alt="Thumbnail">
+                @else
+                    <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; background: rgba(255,255,255,0.05);">
+                        <i class="bi bi-basket text-muted fs-4"></i>
+                    </div>
+                @endif
+                <div>
+                    <strong style="font-size: 1.05rem;">
+                        <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
+                    </strong>
+                    <br><small class="text-muted">By {{ $donation->donor->name }} &nbsp;&middot;&nbsp; {{ $donation->quantity }} {{ $donation->unit }}</small>
+                </div>
             </div>
             <div>
                 <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} mb-2 d-block text-center">

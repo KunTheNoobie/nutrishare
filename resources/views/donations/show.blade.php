@@ -27,11 +27,12 @@
                     <div class="carousel-inner rounded shadow-sm">
                         @foreach($donation->image_paths as $index => $path)
                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                                @if(Str::startsWith($path, ['http://', 'https://']))
-                                    <img src="{{ $path }}" class="d-block w-100" alt="Donation Image {{ $index + 1 }}" style="height: 400px; object-fit: cover;">
-                                @else
-                                    <img src="{{ asset('storage/' . $path) }}" class="d-block w-100" alt="Donation Image {{ $index + 1 }}" style="height: 400px; object-fit: cover;">
-                                @endif
+                                @php
+                                    $imgSrc = Str::startsWith($path, ['http://', 'https://']) ? $path : asset('storage/' . $path);
+                                @endphp
+                                <a href="{{ $imgSrc }}" target="_blank" title="Click to view full image">
+                                    <img src="{{ $imgSrc }}" class="d-block w-100" alt="Donation Image {{ $index + 1 }}" style="height: 400px; object-fit: cover;">
+                                </a>
                             </div>
                         @endforeach
                     </div>

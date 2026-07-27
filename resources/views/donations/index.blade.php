@@ -33,6 +33,12 @@
     @forelse($donations as $donation)
     <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm h-100">
+            @if($donation->image_paths && count($donation->image_paths) > 0)
+                @php
+                    $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
+                @endphp
+                <img src="{{ $thumbSrc }}" class="card-img-top" alt="Donation Image" style="height: 150px; object-fit: cover;">
+            @endif
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     {{-- SECURITY (Module 1): XSS Prevention — all user content escaped --}}
