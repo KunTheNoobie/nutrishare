@@ -5,7 +5,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4 animate-slide-up">
     <h2>
         <i class="bi bi-basket text-apple-accent"></i> 
-        @if(Auth::user()->isDonor()) My Donations @else Available Donations @endif
+        @if(Auth::user()->isDonor()) My Donations @elseif(Auth::user()->isAdmin()) Platform Donations @else Available Donations @endif
     </h2>
     @if(Auth::user()->isDonor() || Auth::user()->isAdmin())
     <a href="{{ route('donations.create') }}" class="btn btn-ns-primary">
@@ -18,12 +18,24 @@
 <div class="card shadow-sm mb-4 animate-slide-up">
     <div class="card-body p-2">
         <form method="GET" action="{{ route('donations.index') }}" class="row g-2 align-items-center m-0" id="searchForm">
-            <div class="col-12 position-relative">
+            <div class="col-md-{{ Auth::user()->isAdmin() ? '9' : '12' }} position-relative">
                 <i class="bi bi-search text-apple-accent position-absolute" style="left: 15px; top: 50%; transform: translateY(-50%);"></i>
-                <input type="text" name="search" id="searchInput" class="form-control border-0 bg-transparent" placeholder="Search donations..."
+                <input type="text" name="search" id="searchInput" class="form-control border-0 bg-transparent" placeholder="Search donations or donors..."
                        value="{{ request('search') }}" style="box-shadow: none; padding-left: 40px; padding-right: 40px;">
                 <i class="bi bi-x-circle-fill text-muted position-absolute" id="clearSearch" style="right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; display: none;"></i>
             </div>
+            @if(Auth::user()->isAdmin())
+            <div class="col-md-3">
+                <select name="status" id="statusFilter" class="form-select border-0 bg-transparent text-light" style="box-shadow: none;">
+                    <option value="all" class="text-dark">All Statuses</option>
+                    <option value="available" class="text-dark" {{ request('status') === 'available' ? 'selected' : '' }}>Available</option>
+                    <option value="claimed" class="text-dark" {{ request('status') === 'claimed' ? 'selected' : '' }}>Claimed</option>
+                    <option value="collected" class="text-dark" {{ request('status') === 'collected' ? 'selected' : '' }}>Collected</option>
+                    <option value="completed" class="text-dark" {{ request('status') === 'completed' ? 'selected' : '' }}>Completed</option>
+                    <option value="expired" class="text-dark" {{ request('status') === 'expired' ? 'selected' : '' }}>Expired</option>
+                </select>
+            </div>
+            @endif
         </form>
     </div>
 </div>
@@ -43,7 +55,7 @@
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     {{-- SECURITY (Module 1): XSS Prevention — all user content escaped --}}
                     <h5 class="card-title mb-0" style="font-weight: 600;">{{ $donation->title }}</h5>
-                    <span class="badge badge-{{ $donation->status === 'available' ? 'success' : 'secondary' }}">
+                    <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
                         {{ ucfirst($donation->status) }}
                     </span>
                 </div>
@@ -51,6 +63,9 @@
                 <div class="mb-2" style="font-size: 0.85rem; color: #a1a1aa;">
                     <div class="mb-1"><i class="bi bi-box text-apple-accent"></i> {{ $donation->quantity }} {{ $donation->unit }}</div>
                     <div class="mb-1"><i class="bi bi-geo-alt text-apple-accent"></i> {{ Str::limit($donation->pickup_address, 40) }}</div>
+                    @if(Auth::user()->isAdmin())
+                    <div class="mb-1"><i class="bi bi-person text-apple-accent"></i> Donor: {{ $donation->donor->name }}</div>
+                    @endif
                     <div><i class="bi bi-calendar text-apple-accent"></i> Expires: {{ $donation->expiry_date->format('d M Y') }}</div>
                 </div>
             </div>
@@ -106,11 +121,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function triggerSearch() {
         const query = searchInput.value;
+        const statusDropdown = document.getElementById('statusFilter');
+        const status = statusDropdown ? statusDropdown.value : 'all';
+        
         const url = new URL(window.location.href);
         if(query) {
             url.searchParams.set('search', query);
         } else {
             url.searchParams.delete('search');
+        }
+        
+        if (status && status !== 'all') {
+            url.searchParams.set('status', status);
+        } else {
+            url.searchParams.delete('status');
         }
         
         fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
@@ -127,6 +151,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 window.history.pushState({}, '', url);
             });
+    }
+
+    const statusDropdown = document.getElementById('statusFilter');
+    if (statusDropdown) {
+        statusDropdown.addEventListener('change', triggerSearch);
     }
 });
 </script>

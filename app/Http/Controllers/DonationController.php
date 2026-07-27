@@ -27,12 +27,28 @@ class DonationController extends Controller
     /** Display all donations (with search/filter). */
     public function index(Request $request)
     {
-        // Donors see their own donations, NGOs see active available donations
         if (Auth::user()->isDonor()) {
             $query = Donation::with(['foodItems'])->where('user_id', Auth::id());
             
             if (!empty($request->search)) {
                 $query->where('title', 'LIKE', '%' . $request->search . '%');
+            }
+            
+            $donations = $query->orderBy('created_at', 'desc')->paginate(15);
+        } elseif (Auth::user()->isAdmin()) {
+            $query = Donation::with(['donor', 'foodItems']);
+            
+            if (!empty($request->search)) {
+                $query->where(function($q) use ($request) {
+                    $q->where('title', 'LIKE', '%' . $request->search . '%')
+                      ->orWhereHas('donor', function ($donorQuery) use ($request) {
+                          $donorQuery->where('name', 'LIKE', '%' . $request->search . '%');
+                      });
+                });
+            }
+            
+            if (!empty($request->status) && $request->status !== 'all') {
+                $query->where('status', $request->status);
             }
             
             $donations = $query->orderBy('created_at', 'desc')->paginate(15);
