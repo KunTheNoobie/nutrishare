@@ -20,9 +20,9 @@
                 @if($donation->image_path)
                 <div class="mb-4 text-center">
                     @if(Str::startsWith($donation->image_path, ['http://', 'https://']))
-                        <img src="{{ $donation->image_path }}" class="img-fluid rounded shadow-sm" alt="Donation Image" style="max-height: 400px; object-fit: cover;">
+                        <img src="{{ $donation->image_path }}" class="img-fluid rounded shadow-sm w-100" alt="Donation Image" style="height: 400px; object-fit: cover;">
                     @else
-                        <img src="{{ asset('storage/' . $donation->image_path) }}" class="img-fluid rounded shadow-sm" alt="Donation Image" style="max-height: 400px; object-fit: cover;">
+                        <img src="{{ asset('storage/' . $donation->image_path) }}" class="img-fluid rounded shadow-sm w-100" alt="Donation Image" style="height: 400px; object-fit: cover;">
                     @endif
                 </div>
                 @endif
