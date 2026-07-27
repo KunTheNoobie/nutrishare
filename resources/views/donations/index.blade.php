@@ -26,7 +26,7 @@
             </div>
             @if(Auth::user()->isAdmin())
             <div class="col-md-3">
-                <select name="status" id="statusFilter" class="form-select">
+                <select name="status" id="statusFilter" class="form-select border-0 bg-transparent text-light" style="box-shadow: none; border-left: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0;">
                     <option value="all">All Statuses</option>
                     <option value="available" {{ request('status') === 'available' ? 'selected' : '' }}>Available</option>
                     <option value="claimed" {{ request('status') === 'claimed' ? 'selected' : '' }}>Claimed</option>
