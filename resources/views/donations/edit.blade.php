@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label">Photo (Optional)</label>
+                        <label class="form-label">Image (Optional)</label>
 
                         @if($donation->image_path)
                         <div class="mb-3 p-3 rounded border" style="background: var(--apple-surface);">

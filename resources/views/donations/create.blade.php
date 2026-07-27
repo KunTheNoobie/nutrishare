@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label">Photo (Optional)</label>
+                        <label class="form-label">Image (Optional)</label>
                         <ul class="nav nav-tabs mb-3" id="photoTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab" style="color: var(--apple-text);">Upload File</button>
