@@ -30,9 +30,15 @@ class PasswordResetController extends Controller
             $request->only('email')
         );
 
-        return $status === Password::RESET_LINK_SENT
-                    ? back()->with(['status' => __($status)])
-                    : back()->withErrors(['email' => __($status)]);
+        if ($status === Password::RESET_LINK_SENT) {
+            $user = User::where('email', $request->email)->first();
+            $token = Password::broker()->createToken($user);
+            $url = route('password.reset', ['token' => $token, 'email' => $user->email]);
+            
+            return back()->with(['status' => __($status), 'reset_url' => $url]);
+        }
+
+        return back()->withErrors(['email' => __($status)]);
     }
 
     /**

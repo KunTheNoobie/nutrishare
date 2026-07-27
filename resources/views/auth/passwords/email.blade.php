@@ -12,6 +12,10 @@
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
+                        @if(session('reset_url'))
+                            <hr>
+                            <strong>Local Dev Mode:</strong> <a href="{{ session('reset_url') }}" class="alert-link text-decoration-underline">Click here to instantly reset your password</a>
+                        @endif
                     </div>
                 @endif
 
