@@ -82,8 +82,11 @@
                         </ul>
                         <div class="tab-content" id="photoTabContent">
                             <div class="tab-pane fade show active" id="upload" role="tabpanel">
-                                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/jpeg,image/png,image/gif">
-                                @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <div class="input-group">
+                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/jpeg,image/png,image/gif">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('image').value=''" title="Clear selected file"><i class="bi bi-x-lg"></i></button>
+                                </div>
+                                @error('image')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="tab-pane fade" id="url" role="tabpanel">
                                 <input type="url" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" placeholder="https://example.com/image.jpg">

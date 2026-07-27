@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
 
     // ─── Module 1: Donation Management (Liew Yi Ler) ───
     Route::resource('donations', DonationController::class);
+    Route::delete('/donations/{donation}/remove-image', [DonationController::class, 'removeImage'])->name('donations.remove-image');
 
     // ─── Module 2: NGO Verification & Trust (Cheon Jie Han) ───
     Route::middleware('role:admin')->group(function () {

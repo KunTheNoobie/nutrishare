@@ -24,6 +24,16 @@
                     @else
                         <img src="{{ asset('storage/' . $donation->image_path) }}" class="img-fluid rounded shadow-sm" alt="Donation Image" style="max-height: 400px; object-fit: cover;">
                     @endif
+                    @if(Auth::id() === $donation->user_id)
+                    <div class="mt-2">
+                        <form method="POST" action="{{ route('donations.remove-image', $donation) }}" class="d-inline">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to remove this image?')">
+                                <i class="bi bi-trash"></i> Remove Image
+                            </button>
+                        </form>
+                    </div>
+                    @endif
                 </div>
                 @endif
                 <p style="font-size: 1.05rem; line-height: 1.6;">{{ $donation->description }}</p>

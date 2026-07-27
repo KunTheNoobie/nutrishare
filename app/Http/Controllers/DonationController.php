@@ -93,9 +93,22 @@ class DonationController extends Controller
 
         $validated = $request->validated();
 
-        if ($request->hasFile('image')) {
+        // Handle image removal checkbox
+        if ($request->boolean('remove_image')) {
+            if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
+            }
+            $validated['image_path'] = null;
+        } elseif ($request->hasFile('image')) {
+            // Delete old local file if replacing
+            if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
+            }
             $validated['image_path'] = $request->file('image')->store('donations', 'public');
         } elseif ($request->filled('image_url')) {
+            if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
+            }
             $validated['image_path'] = $request->image_url;
         }
 
@@ -105,7 +118,7 @@ class DonationController extends Controller
             ->with('success', 'Donation updated successfully.');
     }
 
-    /** Delete donation. */
+    /** Delete donation (soft delete). */
     public function destroy(Donation $donation)
     {
         $this->authorize('delete', $donation);
@@ -113,5 +126,21 @@ class DonationController extends Controller
 
         return redirect()->route('donations.index')
             ->with('success', 'Donation deleted successfully.');
+    }
+
+    /** Remove the image from a donation. */
+    public function removeImage(Donation $donation)
+    {
+        $this->authorize('update', $donation);
+
+        // Delete local file if it exists
+        if ($donation->image_path && !str_starts_with($donation->image_path, 'http')) {
+            \Illuminate\Support\Facades\Storage::disk('public')->delete($donation->image_path);
+        }
+
+        $donation->update(['image_path' => null]);
+
+        return redirect()->route('donations.show', $donation)
+            ->with('success', 'Image removed successfully.');
     }
 }

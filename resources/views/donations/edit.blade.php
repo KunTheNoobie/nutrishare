@@ -71,6 +71,26 @@
 
                     <div class="mb-4">
                         <label class="form-label">Photo (Optional)</label>
+
+                        @if($donation->image_path)
+                        <div class="mb-3 p-3 rounded border" style="background: var(--apple-surface);">
+                            <div class="d-flex align-items-center gap-3">
+                                @if(Str::startsWith($donation->image_path, ['http://', 'https://']))
+                                    <img src="{{ $donation->image_path }}" class="rounded" style="height: 60px; width: 60px; object-fit: cover;" alt="Current">
+                                @else
+                                    <img src="{{ asset('storage/' . $donation->image_path) }}" class="rounded" style="height: 60px; width: 60px; object-fit: cover;" alt="Current">
+                                @endif
+                                <div class="flex-grow-1">
+                                    <div class="text-muted small">Current image attached</div>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remove_image" id="remove_image" value="1">
+                                    <label class="form-check-label text-danger small" for="remove_image">Remove</label>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
                         <ul class="nav nav-tabs mb-3" id="photoTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab" style="color: var(--apple-text);">Upload File</button>
@@ -81,14 +101,14 @@
                         </ul>
                         <div class="tab-content" id="photoTabContent">
                             <div class="tab-pane fade show active" id="upload" role="tabpanel">
-                                <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/jpeg,image/png,image/gif">
-                                @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                                @if($donation->image_path && !Str::startsWith($donation->image_path, 'http'))
-                                    <div class="mt-2 text-muted small">Current image will be kept if you don't upload a new one.</div>
-                                @endif
+                                <div class="input-group">
+                                    <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/jpeg,image/png,image/gif">
+                                    <button class="btn btn-outline-secondary" type="button" id="clearFileBtn" title="Clear selected file"><i class="bi bi-x-lg"></i></button>
+                                </div>
+                                @error('image')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                             </div>
                             <div class="tab-pane fade" id="url" role="tabpanel">
-                                <input type="url" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" value="{{ Str::startsWith($donation->image_path, 'http') ? $donation->image_path : '' }}" placeholder="https://example.com/image.jpg">
+                                <input type="url" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" value="{{ $donation->image_path && Str::startsWith($donation->image_path, 'http') ? $donation->image_path : '' }}" placeholder="https://example.com/image.jpg">
                                 @error('image_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
                             </div>
                         </div>
@@ -174,6 +194,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     addressInput.value = data.display_name;
                 }
             });
+    }
+
+    // Clear file input button
+    const clearBtn = document.getElementById('clearFileBtn');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            document.getElementById('image').value = '';
+        });
     }
 });
 </script>
