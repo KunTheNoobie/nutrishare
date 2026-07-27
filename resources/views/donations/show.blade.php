@@ -30,7 +30,7 @@
                                 @php
                                     $imgSrc = Str::startsWith($path, ['http://', 'https://']) ? $path : asset('storage/' . $path);
                                 @endphp
-                                <a href="{{ $imgSrc }}" target="_blank" title="Click to view full image">
+                                <a href="javascript:void(0);" onclick="document.getElementById('modalImage').src='{{ $imgSrc }}';" data-bs-toggle="modal" data-bs-target="#imageModal" title="Click to view full image">
                                     <img src="{{ $imgSrc }}" class="d-block w-100" alt="Donation Image {{ $index + 1 }}" style="height: 400px; object-fit: cover;">
                                 </a>
                             </div>
@@ -182,6 +182,20 @@
             </div>
         </div>
         @endif
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0 shadow-none">
+            <div class="modal-header border-0 pb-0 justify-content-end">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pt-0">
+                <img id="modalImage" src="" class="img-fluid rounded shadow" alt="Full Image" style="max-height: 80vh;">
+            </div>
+        </div>
     </div>
 </div>
 
