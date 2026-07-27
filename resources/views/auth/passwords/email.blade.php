@@ -13,12 +13,11 @@
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
                         @if(session('reset_url'))
-                            <hr>
-                            <strong>Local Dev Mode:</strong> <a href="{{ session('reset_url') }}" class="alert-link text-decoration-underline">Click here to instantly reset your password</a>
+                            <hr style="border-color: rgba(52, 199, 89, 0.3);">
+                            <strong class="text-light">Local Dev Mode:</strong> <a href="{{ session('reset_url') }}" class="text-white text-decoration-underline" style="font-weight: 500;">Click here to instantly reset your password</a>
                         @endif
                     </div>
-                @endif
-
+                @else
                 <form method="POST" action="{{ route('password.email') }}">
                     @csrf
 
@@ -35,6 +34,7 @@
                         Send Password Reset Link
                     </button>
                 </form>
+                @endif
 
                 <div class="text-center mt-3">
                     <a href="{{ route('login') }}" class="text-muted" style="font-size: 0.9rem;">Back to Login</a>
