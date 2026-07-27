@@ -38,12 +38,29 @@ class ClaimController extends Controller
     public function store(StoreClaimRequest $request)
     {
         $validated = $request->validated();
+
+        $donation = Donation::findOrFail($validated['donation_id']);
+
+        if ($donation->status !== 'available') {
+            return back()->with('error', 'This donation is no longer available for claiming.');
+        }
+
+        // Prevent duplicate pending or approved claims from the same NGO
+        $existingClaim = Claim::where('donation_id', $donation->id)
+            ->where('user_id', Auth::id())
+            ->whereIn('status', ['pending', 'approved', 'collected'])
+            ->first();
+
+        if ($existingClaim) {
+            return back()->with('error', 'You have already submitted a claim for this donation.');
+        }
+
         $validated['user_id'] = Auth::id();
 
         $claim = Claim::create($validated);
 
         return redirect()->route('claims.show', $claim)
-            ->with('success', 'Claim submitted successfully. Awaiting approval.');
+            ->with('success', 'Claim submitted successfully. Awaiting donor approval.');
     }
 
     /** Show claim details. */
@@ -60,13 +77,28 @@ class ClaimController extends Controller
 
     /**
      * Transition claim state (State Pattern).
-     * Actions: approve, reject, collect
+     * Actions: approve, reject, collect, cancel
      */
     public function transition(Request $request, Claim $claim)
     {
         $this->authorize('update', $claim);
 
         $action = $request->validate(['action' => 'required|in:approve,reject,collect,cancel'])['action'];
+
+        $user = Auth::user();
+
+        // Enforce strict role authorization per transition action
+        if (in_array($action, ['approve', 'reject'])) {
+            // ONLY the donor who created the donation (or Admin/Moderator) can approve/reject
+            if (!$user->isAdmin() && !$user->isModerator() && $claim->donation->user_id !== $user->id) {
+                abort(403, 'Unauthorized. Only the Donor who published this donation (or an Admin/Moderator) can approve or reject claims.');
+            }
+        } elseif ($action === 'cancel') {
+            // ONLY the NGO who submitted the claim (or Admin/Moderator) can cancel
+            if (!$user->isAdmin() && !$user->isModerator() && $claim->user_id !== $user->id) {
+                abort(403, 'Unauthorized. Only the NGO who submitted this claim can cancel it.');
+            }
+        }
 
         $success = $claim->transitionTo($action);
 

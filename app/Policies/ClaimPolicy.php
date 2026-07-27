@@ -31,8 +31,8 @@ class ClaimPolicy
      */
     public function view(User $user, Claim $claim): bool
     {
-        // Admin can view all
-        if ($user->isAdmin()) {
+        // Admin or Moderator can view all
+        if ($user->isAdmin() || $user->isModerator()) {
             return true;
         }
 
@@ -60,15 +60,16 @@ class ClaimPolicy
 
     /**
      * Determine if the user can update the claim.
-     * IDOR Prevention: Only the claim owner (NGO) or admin can update.
      */
     public function update(User $user, Claim $claim): bool
     {
-        if ($user->isAdmin()) {
+        if ($user->isAdmin() || $user->isModerator()) {
             return true;
         }
 
-        return $user->isNgo() && $claim->user_id === $user->id;
+        // Donor of the donation or NGO who owns the claim can access show/update pages
+        return ($user->isDonor() && $claim->donation->user_id === $user->id) 
+            || ($user->isNgo() && $claim->user_id === $user->id);
     }
 
     /**
@@ -76,7 +77,7 @@ class ClaimPolicy
      */
     public function delete(User $user, Claim $claim): bool
     {
-        if ($user->isAdmin()) {
+        if ($user->isAdmin() || $user->isModerator()) {
             return true;
         }
 

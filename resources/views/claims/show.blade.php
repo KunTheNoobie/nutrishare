@@ -92,11 +92,23 @@
 
     <div class="col-md-4">
         <!-- State Transition Actions -->
-        @if(count($stateObject->allowedActions()) > 0)
+        @php
+            $user = Auth::user();
+            $isDonorOrAdmin = $user->isAdmin() || $user->isModerator() || $claim->donation->user_id === $user->id;
+            $isClaimOwner = $user->isAdmin() || $user->isModerator() || $claim->user_id === $user->id;
+            
+            $availableActions = array_filter($stateObject->allowedActions(), function($action) use ($isDonorOrAdmin, $isClaimOwner) {
+                if (in_array($action, ['approve', 'reject'])) return $isDonorOrAdmin;
+                if ($action === 'cancel') return $isClaimOwner;
+                return true;
+            });
+        @endphp
+
+        @if(count($availableActions) > 0)
         <div class="card mb-3">
             <div class="card-header">Actions</div>
             <div class="card-body">
-                @foreach($stateObject->allowedActions() as $action)
+                @foreach($availableActions as $action)
                 <form method="POST" action="{{ route('claims.transition', $claim) }}" class="mb-2">
                     @csrf
                     <input type="hidden" name="action" value="{{ $action }}">
