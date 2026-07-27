@@ -49,13 +49,14 @@
                         </div>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 position-relative">
                         <label for="pickup_address" class="form-label">Pickup Address & Location</label>
                         <div class="input-group">
                             <input type="text" class="form-control @error('pickup_address') is-invalid @enderror"
-                                   id="pickup_address" name="pickup_address" value="{{ old('pickup_address', $donation->pickup_address) }}" required placeholder="Search or click on map...">
-                            <button class="btn btn-outline-secondary" type="button" id="searchAddressBtn"><i class="bi bi-search"></i> Search</button>
+                                   id="pickup_address" name="pickup_address" value="{{ old('pickup_address', $donation->pickup_address) }}" required placeholder="Type to search address..." autocomplete="off">
+                            <button class="btn btn-outline-secondary" type="button" id="searchAddressBtn"><i class="bi bi-search"></i></button>
                         </div>
+                        <ul id="address-suggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000; max-height: 200px; overflow-y: auto;"></ul>
                         @error('pickup_address')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                         <div id="map" style="height: 300px; width: 100%;" class="mt-2 rounded border"></div>
                         <input type="hidden" name="latitude" id="latitude" value="{{ old('latitude', $donation->latitude) }}">
@@ -167,6 +168,53 @@ document.addEventListener('DOMContentLoaded', function() {
         reverseGeocode(e.latlng.lat, e.latlng.lng);
     });
     
+    const suggestionsList = document.getElementById('address-suggestions');
+    let timeoutId;
+
+    addressInput.addEventListener('input', function() {
+        clearTimeout(timeoutId);
+        const query = this.value;
+        if (!query) {
+            suggestionsList.style.display = 'none';
+            return;
+        }
+        
+        timeoutId = setTimeout(() => {
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`)
+                .then(response => response.json())
+                .then(data => {
+                    suggestionsList.innerHTML = '';
+                    if (data && data.length > 0) {
+                        data.forEach(item => {
+                            const li = document.createElement('li');
+                            li.className = 'list-group-item list-group-item-action text-dark';
+                            li.style.cursor = 'pointer';
+                            li.textContent = item.display_name;
+                            li.addEventListener('click', () => {
+                                const lat = parseFloat(item.lat);
+                                const lng = parseFloat(item.lon);
+                                addressInput.value = item.display_name;
+                                suggestionsList.style.display = 'none';
+                                map.setView([lat, lng], 16);
+                                marker.setLatLng([lat, lng]);
+                                updateInputs(lat, lng);
+                            });
+                            suggestionsList.appendChild(li);
+                        });
+                        suggestionsList.style.display = 'block';
+                    } else {
+                        suggestionsList.style.display = 'none';
+                    }
+                });
+        }, 500);
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target !== addressInput && e.target !== suggestionsList) {
+            suggestionsList.style.display = 'none';
+        }
+    });
+
     document.getElementById('searchAddressBtn').addEventListener('click', function() {
         const query = addressInput.value;
         if (!query) return;
@@ -180,6 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     map.setView([lat, lng], 16);
                     marker.setLatLng([lat, lng]);
                     updateInputs(lat, lng);
+                    addressInput.value = data[0].display_name;
                 } else {
                     alert('Address not found!');
                 }

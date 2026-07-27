@@ -24,12 +24,13 @@
                         @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
-                    <div class="mb-3">
+                    <div class="mb-3 position-relative">
                         <label for="address" class="form-label">Address</label>
                         <div class="input-group">
-                            <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" rows="2" required placeholder="Type an address or click on the map...">{{ old('address') }}</textarea>
-                            <button class="btn btn-outline-secondary" type="button" id="searchAddressBtn"><i class="bi bi-search"></i> Search Map</button>
+                            <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" rows="1" required placeholder="Type an address or click on the map..." autocomplete="off">{{ old('address') }}</textarea>
+                            <button class="btn btn-outline-secondary" type="button" id="searchAddressBtn"><i class="bi bi-search"></i></button>
                         </div>
+                        <ul id="address-suggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000; max-height: 200px; overflow-y: auto;"></ul>
                         @error('address')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                     </div>
                     
@@ -88,6 +89,52 @@ document.addEventListener('DOMContentLoaded', function() {
         reverseGeocode(e.latlng.lat, e.latlng.lng);
     });
     
+    const suggestionsList = document.getElementById('address-suggestions');
+    let timeoutId;
+
+    addressInput.addEventListener('input', function() {
+        clearTimeout(timeoutId);
+        const query = this.value;
+        if (!query) {
+            suggestionsList.style.display = 'none';
+            return;
+        }
+        
+        timeoutId = setTimeout(() => {
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=5`)
+                .then(response => response.json())
+                .then(data => {
+                    suggestionsList.innerHTML = '';
+                    if (data && data.length > 0) {
+                        data.forEach(item => {
+                            const li = document.createElement('li');
+                            li.className = 'list-group-item list-group-item-action text-dark';
+                            li.style.cursor = 'pointer';
+                            li.textContent = item.display_name;
+                            li.addEventListener('click', () => {
+                                const lat = parseFloat(item.lat);
+                                const lng = parseFloat(item.lon);
+                                addressInput.value = item.display_name;
+                                suggestionsList.style.display = 'none';
+                                map.setView([lat, lng], 16);
+                                marker.setLatLng([lat, lng]);
+                            });
+                            suggestionsList.appendChild(li);
+                        });
+                        suggestionsList.style.display = 'block';
+                    } else {
+                        suggestionsList.style.display = 'none';
+                    }
+                });
+        }, 500);
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target !== addressInput && e.target !== suggestionsList) {
+            suggestionsList.style.display = 'none';
+        }
+    });
+
     document.getElementById('searchAddressBtn').addEventListener('click', function() {
         const query = addressInput.value;
         if (!query) return;

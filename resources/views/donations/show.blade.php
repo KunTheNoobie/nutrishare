@@ -39,7 +39,12 @@
                     </div>
                     <div class="col-md-12">
                         <strong><i class="bi bi-geo-alt"></i> Pickup Location:</strong>
-                        {{ $donation->pickup_address }}
+                        <div class="d-flex align-items-center mb-2 mt-1">
+                            <span id="pickup-address-text" class="me-2">{{ $donation->pickup_address }}</span>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="navigator.clipboard.writeText(document.getElementById('pickup-address-text').innerText); this.innerHTML='<i class=\'bi bi-check2\'></i> Copied!'; setTimeout(() => this.innerHTML='<i class=\'bi bi-clipboard\'></i> Copy', 2000);" style="padding: 2px 8px; font-size: 0.75rem;">
+                                <i class="bi bi-clipboard"></i> Copy
+                            </button>
+                        </div>
                         @if($donation->latitude && $donation->longitude)
                             <div id="map" style="height: 250px; width: 100%;" class="mt-2 rounded border"></div>
                             <input type="hidden" id="donation_lat" value="{{ $donation->latitude }}">
@@ -58,7 +63,7 @@
         </div>
 
         <!-- Food Items -->
-        @if($donation->foodItems->count())
+        @if((Auth::user()->isNgo() || Auth::user()->isAdmin()) && $donation->foodItems->count())
         <div class="card mb-4">
             <div class="card-header"><i class="bi bi-list-ul"></i> Food Items</div>
             <div class="card-body">

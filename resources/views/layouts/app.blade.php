@@ -81,6 +81,11 @@
         .btn:hover {
             transform: scale(1.02);
         }
+        .input-group .btn {
+            border-radius: 0 12px 12px 0 !important;
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
+        }
 
         /* Custom Button Colors */
         .btn-ns-primary {
