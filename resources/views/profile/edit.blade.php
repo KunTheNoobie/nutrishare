@@ -25,7 +25,9 @@
                     @method('patch')
 
                     <div class="d-flex align-items-center mb-4">
-                        <img src="{{ $user->profile_photo_url }}" alt="Profile Photo" class="rounded-circle me-3 border border-dark shadow-sm" style="width: 80px; height: 80px; object-fit: cover;">
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#profilePhotoModal">
+                            <img src="{{ $user->profile_photo_url }}" alt="Profile Photo" class="rounded-circle me-3 border border-dark shadow-sm" style="width: 80px; height: 80px; object-fit: cover; cursor: pointer; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.8" onmouseout="this.style.opacity=1" title="Click to view">
+                        </a>
                         <div>
                             <label for="photo" class="form-label mb-1">Profile Photo</label>
                             <input type="file" id="photo" name="photo" class="form-control form-control-sm @error('photo') is-invalid @enderror" accept="image/jpeg,image/png,image/gif">
@@ -123,6 +125,20 @@
                         @endif
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Profile Photo Modal -->
+<div class="modal fade" id="profilePhotoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0">
+            <div class="modal-header border-0 pb-0 justify-content-end">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));"></button>
+            </div>
+            <div class="modal-body text-center pt-0">
+                <img src="{{ $user->profile_photo_url }}" class="img-fluid rounded shadow-lg" alt="Profile Photo" style="max-height: 80vh; object-fit: contain;">
             </div>
         </div>
     </div>
