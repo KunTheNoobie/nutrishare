@@ -27,12 +27,12 @@
             @if(Auth::user()->isAdmin())
             <div class="col-md-3">
                 <select name="status" id="statusFilter" class="form-select border-0 bg-transparent text-light" style="box-shadow: none;">
-                    <option value="all" class="text-dark">All Statuses</option>
-                    <option value="available" class="text-dark" {{ request('status') === 'available' ? 'selected' : '' }}>Available</option>
-                    <option value="claimed" class="text-dark" {{ request('status') === 'claimed' ? 'selected' : '' }}>Claimed</option>
-                    <option value="collected" class="text-dark" {{ request('status') === 'collected' ? 'selected' : '' }}>Collected</option>
-                    <option value="completed" class="text-dark" {{ request('status') === 'completed' ? 'selected' : '' }}>Completed</option>
-                    <option value="expired" class="text-dark" {{ request('status') === 'expired' ? 'selected' : '' }}>Expired</option>
+                    <option value="all">All Statuses</option>
+                    <option value="available" {{ request('status') === 'available' ? 'selected' : '' }}>Available</option>
+                    <option value="claimed" {{ request('status') === 'claimed' ? 'selected' : '' }}>Claimed</option>
+                    <option value="collected" {{ request('status') === 'collected' ? 'selected' : '' }}>Collected</option>
+                    <option value="completed" {{ request('status') === 'completed' ? 'selected' : '' }}>Completed</option>
+                    <option value="expired" {{ request('status') === 'expired' ? 'selected' : '' }}>Expired</option>
                 </select>
             </div>
             @endif
