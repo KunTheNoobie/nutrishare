@@ -116,32 +116,41 @@
 </div>
 
 @if(!$user->isVerified())
-<div class="card border-warning mb-4 animate-slide-up" style="border: 1px solid rgba(255, 149, 0, 0.4);">
-    <div class="card-body p-4">
-        <h5 class="text-apple-warning mb-3"><i class="bi bi-exclamation-triangle"></i> Verification Required</h5>
-        <p class="text-muted">Upload your NGO license to get verified by an admin.</p>
-        <form method="POST" action="{{ route('verification.upload') }}" enctype="multipart/form-data">
-            @csrf
-            <div class="row g-3 align-items-start">
-                <div class="col-md-4">
-                    <select name="document_type" class="form-select @error('document_type') is-invalid @enderror" required>
-                        <option value="license">NGO License</option>
-                        <option value="registration_cert">Registration Certificate</option>
-                        <option value="tax_exempt">Tax Exemption Letter</option>
-                    </select>
-                    @error('document_type')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                </div>
-                <div class="col-md-5">
-                    <input type="file" name="document" class="form-control @error('document') is-invalid @enderror" accept=".pdf,.jpg,.jpeg,.png" required>
-                    @error('document')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                </div>
-                <div class="col-md-3">
-                    <button type="submit" class="btn btn-ns-primary w-100">Upload Document</button>
-                </div>
+    @if($user->verificationDocuments()->where('status', 'pending')->exists())
+        <div class="card border-warning mb-4 animate-slide-up" style="border: 1px solid rgba(255, 149, 0, 0.4); background-color: rgba(255, 149, 0, 0.05);">
+            <div class="card-body p-4 text-center">
+                <h5 class="text-apple-warning mb-3"><i class="bi bi-clock-history"></i> Verification Pending</h5>
+                <p class="text-muted mb-0">Your NGO document has been submitted and is currently under review by an administrator. Please check back later.</p>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
+    @else
+        <div class="card border-warning mb-4 animate-slide-up" style="border: 1px solid rgba(255, 149, 0, 0.4);">
+            <div class="card-body p-4">
+                <h5 class="text-apple-warning mb-3"><i class="bi bi-exclamation-triangle"></i> Verification Required</h5>
+                <p class="text-muted">Upload your NGO license to get verified by an admin.</p>
+                <form method="POST" action="{{ route('verification.upload') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row g-3 align-items-start">
+                        <div class="col-md-4">
+                            <select name="document_type" class="form-select @error('document_type') is-invalid @enderror" required>
+                                <option value="license">NGO License</option>
+                                <option value="registration_cert">Registration Certificate</option>
+                                <option value="tax_exempt">Tax Exemption Letter</option>
+                            </select>
+                            @error('document_type')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="col-md-5">
+                            <input type="file" name="document" class="form-control @error('document') is-invalid @enderror" accept=".pdf,.jpg,.jpeg,.png" required>
+                            @error('document')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-ns-primary w-100">Upload Document</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    @endif
 @endif
 
 <div class="card shadow-sm animate-slide-up">
