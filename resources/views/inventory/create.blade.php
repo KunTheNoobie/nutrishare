@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="capacity" class="form-label">Capacity (kg)</label>
-                            <input type="number" step="0.01" class="form-control @error('capacity') is-invalid @enderror" id="capacity" name="capacity" value="{{ old('capacity') }}" required>
+                            <input type="number" step="0.01" min="0.01" class="form-control @error('capacity') is-invalid @enderror" id="capacity" name="capacity" value="{{ old('capacity') }}" required>
                             @error('capacity')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                     </div>

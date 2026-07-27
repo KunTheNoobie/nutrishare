@@ -44,7 +44,7 @@ class InventoryController extends Controller
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:500',
             'storage_type' => 'required|in:cold,dry,frozen,ambient',
-            'capacity' => 'required|numeric|min:0',
+            'capacity' => 'required|numeric|min:0.01',
         ]);
 
         $validated['user_id'] = Auth::id();

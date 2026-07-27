@@ -92,13 +92,18 @@
                         @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
+                    <div class="mb-3">
+                        <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="2" placeholder="Brief description (optional)">{{ old('description') }}</textarea>
+                        @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+                    
                     <div class="row g-2 mb-3">
                         <div class="col-7">
                             <input type="number" step="0.01" name="quantity" class="form-control @error('quantity') is-invalid @enderror" placeholder="Qty (e.g. 10.5)" value="{{ old('quantity') }}" required>
                             @error('quantity')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="col-5">
-                            <select name="unit" class="form-select @error('unit') is-invalid @enderror">
+                            <select name="unit" class="form-select @error('unit') is-invalid @enderror" required>
                                 <option value="kg" {{ old('unit') == 'kg' ? 'selected' : '' }}>kg</option>
                                 <option value="litres" {{ old('unit') == 'litres' ? 'selected' : '' }}>litres</option>
                                 <option value="items" {{ old('unit') == 'items' ? 'selected' : '' }}>items</option>
@@ -124,7 +129,7 @@
                     </div>
                     
                     <div class="mb-3">
-                        <select name="storage_requirements" class="form-select @error('storage_requirements') is-invalid @enderror">
+                        <select name="storage_requirements" class="form-select @error('storage_requirements') is-invalid @enderror" required>
                             <option value="dry" {{ old('storage_requirements') == 'dry' ? 'selected' : '' }}>Dry Storage</option>
                             <option value="cold" {{ old('storage_requirements') == 'cold' ? 'selected' : '' }}>Cold Storage</option>
                             <option value="frozen" {{ old('storage_requirements') == 'frozen' ? 'selected' : '' }}>Frozen Storage</option>
@@ -134,7 +139,7 @@
                     </div>
                     
                     <div class="mb-3">
-                        <select name="is_perishable" class="form-select @error('is_perishable') is-invalid @enderror">
+                        <select name="is_perishable" class="form-select @error('is_perishable') is-invalid @enderror" required>
                             <option value="1" {{ old('is_perishable') == '1' ? 'selected' : '' }}>Highly Perishable</option>
                             <option value="0" {{ old('is_perishable') == '0' ? 'selected' : '' }}>Non-Perishable</option>
                         </select>
