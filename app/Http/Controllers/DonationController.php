@@ -124,8 +124,17 @@ class DonationController extends Controller
         
         // Add new URL image
         if ($request->filled('image_url')) {
-            $imagePaths[] = $request->image_url;
+            $newUrl = $request->image_url;
+            $toRemove = is_array($request->input('remove_images')) ? $request->input('remove_images') : [];
+            
+            // Only add if we aren't simultaneously removing it
+            if (!in_array($newUrl, $toRemove)) {
+                $imagePaths[] = $newUrl;
+            }
         }
+
+        // Ensure no duplicate URLs
+        $imagePaths = array_values(array_unique($imagePaths));
 
         $validated['image_paths'] = empty($imagePaths) ? null : $imagePaths;
 
