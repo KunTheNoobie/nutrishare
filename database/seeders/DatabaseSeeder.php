@@ -20,6 +20,13 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
+        // Create Moderator Account
+        User::updateOrCreate(['email' => 'moderator@nutrishare.com'], [
+            'name' => 'Platform Moderator',
+            'password' => Hash::make('Password1!'),
+            'role' => 'moderator',
+        ]);
+
         // Create Dummy NGO Account
         User::updateOrCreate(['email' => 'ngo@nutrishare.com'], [
             'name' => 'Food Rescue NGO',

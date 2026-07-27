@@ -35,7 +35,7 @@ class DonationController extends Controller
             }
             
             $donations = $query->orderBy('created_at', 'desc')->paginate(15);
-        } elseif (Auth::user()->isAdmin()) {
+        } elseif (Auth::user()->isAdmin() || Auth::user()->isModerator()) {
             $query = Donation::with(['donor', 'foodItems']);
             
             if (!empty($request->search)) {

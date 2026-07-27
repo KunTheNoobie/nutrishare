@@ -5,7 +5,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4 animate-slide-up">
     <h2>
         <i class="bi bi-basket text-apple-accent"></i> 
-        @if(Auth::user()->isDonor()) My Donations @elseif(Auth::user()->isAdmin()) Platform Donations @else Available Donations @endif
+        @if(Auth::user()->isDonor()) My Donations @elseif(Auth::user()->isAdmin() || Auth::user()->isModerator()) Platform Donations @else Available Donations @endif
     </h2>
     @if(Auth::user()->isDonor() || Auth::user()->isAdmin())
     <a href="{{ route('donations.create') }}" class="btn btn-ns-primary">
@@ -18,13 +18,13 @@
 <div class="card shadow-sm mb-4 animate-slide-up">
     <div class="card-body p-2">
         <form method="GET" action="{{ route('donations.index') }}" class="row g-2 align-items-center m-0" id="searchForm">
-            <div class="col-md-{{ Auth::user()->isAdmin() ? '9' : '12' }} position-relative">
+            <div class="col-md-{{ (Auth::user()->isAdmin() || Auth::user()->isModerator()) ? '9' : '12' }} position-relative">
                 <i class="bi bi-search text-apple-accent position-absolute" style="left: 15px; top: 50%; transform: translateY(-50%);"></i>
                 <input type="text" name="search" id="searchInput" class="form-control border-0 bg-transparent" placeholder="Search donations or donors..."
                        value="{{ request('search') }}" style="box-shadow: none; padding-left: 40px; padding-right: 40px;">
                 <i class="bi bi-x-circle-fill text-muted position-absolute" id="clearSearch" style="right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; display: none;"></i>
             </div>
-            @if(Auth::user()->isAdmin())
+            @if(Auth::user()->isAdmin() || Auth::user()->isModerator())
             <div class="col-md-3">
                 <select name="status" id="statusFilter" class="form-select border-0 bg-transparent text-light" style="box-shadow: none; border-left: 1px solid rgba(255,255,255,0.1) !important; border-radius: 0;">
                     <option value="all">All Statuses</option>
@@ -63,7 +63,7 @@
                 <div class="mb-2" style="font-size: 0.85rem; color: #a1a1aa;">
                     <div class="mb-1"><i class="bi bi-box text-apple-accent"></i> {{ $donation->quantity }} {{ $donation->unit }}</div>
                     <div class="mb-1"><i class="bi bi-geo-alt text-apple-accent"></i> {{ Str::limit($donation->pickup_address, 40) }}</div>
-                    @if(Auth::user()->isAdmin())
+                    @if(Auth::user()->isAdmin() || Auth::user()->isModerator())
                     <div class="mb-1"><i class="bi bi-person text-apple-accent"></i> Donor: {{ $donation->donor->name }}</div>
                     @endif
                     <div><i class="bi bi-calendar text-apple-accent"></i> Expires: {{ $donation->expiry_date->format('d M Y') }}</div>

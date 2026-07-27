@@ -154,8 +154,9 @@
         .badge-ngo { background: rgba(52, 199, 89, 0.15); color: var(--apple-success); }
         .badge-admin { background: rgba(255, 59, 48, 0.15); color: var(--apple-danger); }
         .badge-success { background: rgba(52, 199, 89, 0.15); color: var(--apple-success); border: 1px solid rgba(52, 199, 89, 0.3); }
-        .badge-warning { background: rgba(255, 149, 0, 0.15); color: #ff9f0a; border: 1px solid rgba(255, 149, 0, 0.3); }
-        .badge-danger { background: rgba(255, 59, 48, 0.15); color: var(--apple-danger); border: 1px solid rgba(255, 59, 48, 0.3); }
+        .badge-warning { background: rgba(255, 159, 10, 0.15); color: #ff9f0a; border: 1px solid rgba(255, 159, 10, 0.3); }
+        .badge-secondary { background: rgba(142, 142, 147, 0.15); color: #8e8e93; border: 1px solid rgba(142, 142, 147, 0.3); }
+        .badge-moderator { background: rgba(191, 90, 242, 0.15); color: #bf5af2; border: 1px solid rgba(191, 90, 242, 0.3); }
         
         /* Text Utilities */
         .text-apple-accent { color: var(--apple-accent) !important; }
@@ -268,7 +269,7 @@
                         <a class="nav-link" href="{{ route('donations.index') }}"><i class="bi bi-basket"></i> Donations</a>
                     </li>
 
-                    @if(Auth::user()->isNgo() || Auth::user()->isAdmin())
+                    @if(Auth::user()->isNgo() || Auth::user()->isAdmin() || Auth::user()->isModerator())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('inventory.index') }}"><i class="bi bi-box-seam"></i> Inventory</a>
                     </li>
@@ -283,11 +284,16 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown">
                             <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-circle border border-dark" style="width: 28px; height: 28px; object-fit: cover;">
-                            {{-- SECURITY (Module 1): XSS Prevention — {{ }} auto-escapes output --}}
                             {{ Auth::user()->name }}
-                            <span class="badge bg-{{ Auth::user()->role === 'admin' ? 'danger' : (Auth::user()->role === 'ngo' ? 'purple' : 'primary') }}">
-                                {{ Auth::user()->role === 'ngo' ? 'NGO' : ucfirst(Auth::user()->role) }}
-                            </span>
+                        @if(Auth::user()->isDonor())
+                            <span class="badge badge-success float-end ms-2" style="margin-top: 2px;">Donor</span>
+                        @elseif(Auth::user()->isNgo())
+                            <span class="badge badge-warning float-end ms-2" style="margin-top: 2px;">NGO</span>
+                        @elseif(Auth::user()->isAdmin())
+                            <span class="badge badge-primary float-end ms-2" style="margin-top: 2px;">Admin</span>
+                        @elseif(Auth::user()->isModerator())
+                            <span class="badge badge-moderator float-end ms-2" style="margin-top: 2px;">Moderator</span>
+                        @endif
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end border-dark shadow" style="background-color: var(--apple-surface);">
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}" style="color: var(--apple-text);"><i class="bi bi-speedometer2 text-muted me-2"></i> Dashboard</a></li>

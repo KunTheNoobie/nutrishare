@@ -85,7 +85,7 @@
         </div>
 
         <!-- Food Items -->
-        @if((Auth::user()->isNgo() || Auth::user()->isAdmin()) && $donation->foodItems->count())
+        @if((Auth::user()->isNgo() || Auth::user()->isAdmin() || Auth::user()->isModerator()) && $donation->foodItems->count())
         <div class="card mb-4">
             <div class="card-header"><i class="bi bi-list-ul"></i> Food Items</div>
             <div class="card-body">

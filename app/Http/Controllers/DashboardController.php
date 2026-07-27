@@ -25,7 +25,7 @@ class DashboardController extends Controller
             $data['totalClaims'] = $user->claims()->count();
             $data['pendingClaims'] = $user->claims()->where('status', 'pending')->count();
             $data['recentDonations'] = \App\Models\Donation::where('status', 'available')->where('expiry_date', '>', now())->latest()->take(5)->get();
-        } elseif ($user->isAdmin()) {
+        } elseif ($user->isAdmin() || $user->isModerator()) {
             $data['pendingVerifications'] = \App\Models\VerificationDocument::where('status', 'pending')->count();
             $data['totalUsers'] = \App\Models\User::count();
             $data['totalDonations'] = \App\Models\Donation::count();

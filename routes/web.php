@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('donations', DonationController::class);
 
     // ─── Module 2: NGO Verification & Trust (Cheon Jie Han) ───
-    Route::middleware('role:admin')->group(function () {
+    Route::middleware('role:admin,moderator')->group(function () {
         Route::get('/verification', [VerificationController::class, 'index'])->name('verification.index');
         Route::post('/verification/{document}/review', [VerificationController::class, 'review'])->name('verification.review');
     });
