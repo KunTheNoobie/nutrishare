@@ -149,8 +149,12 @@
         <p class="subtitle">A brilliantly simple platform connecting food donors with NGOs to instantly eliminate surplus food waste.</p>
         
         <div class="cta-buttons">
-            <a href="{{ route('register') }}" class="btn btn-primary">Join the Movement</a>
-            <a href="{{ route('login') }}" class="btn btn-outline">Sign In</a>
+            @auth
+                <a href="{{ route('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+            @else
+                <a href="{{ route('register') }}" class="btn btn-primary">Join the Movement</a>
+                <a href="{{ route('login') }}" class="btn btn-outline">Sign In</a>
+            @endauth
         </div>
     </div>
 </body>
