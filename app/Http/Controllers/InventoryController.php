@@ -36,7 +36,11 @@ class InventoryController extends Controller
     /** List inventory locations. */
     public function index()
     {
-        $locations = Auth::user()->inventoryLocations()->withCount('foodItems')->paginate(15);
+        if (Auth::user()->isAdmin() || Auth::user()->isModerator()) {
+            $locations = InventoryLocation::with('user')->withCount('foodItems')->paginate(15);
+        } else {
+            $locations = Auth::user()->inventoryLocations()->withCount('foodItems')->paginate(15);
+        }
         return view('inventory.index', compact('locations'));
     }
 

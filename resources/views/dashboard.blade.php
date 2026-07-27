@@ -209,8 +209,8 @@
 </div>
 @endif
 
-{{-- ── Admin Dashboard ── --}}
-@if($user->isAdmin())
+{{-- ── Admin / Moderator Dashboard ── --}}
+@if($user->isAdmin() || $user->isModerator())
 <div class="row g-3 mb-4 animate-slide-up">
     <div class="col-md-3">
         <div class="card shadow-sm">

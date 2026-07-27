@@ -124,7 +124,7 @@
         @endif
 
         <!-- Assign Vehicle Form -->
-        @if($claim->status === 'approved' && !$claim->vehicle)
+        @if((Auth::user()->isAdmin() || $claim->user_id === Auth::id()) && $claim->status === 'approved' && !$claim->vehicle)
         <div class="card mb-3">
             <div class="card-header">Assign Vehicle</div>
             <div class="card-body">
@@ -158,7 +158,7 @@
         @endif
 
         <!-- Generate Receipt Form -->
-        @if($claim->status === 'approved' && !$claim->collectionReceipt)
+        @if((Auth::user()->isAdmin() || $claim->user_id === Auth::id()) && $claim->status === 'approved' && !$claim->collectionReceipt)
         <div class="card mb-3">
             <div class="card-header">Generate Receipt</div>
             <div class="card-body">
@@ -192,7 +192,7 @@
         @endif
 
         <!-- Distribution Log Form -->
-        @if($claim->status === 'collected')
+        @if((Auth::user()->isAdmin() || $claim->user_id === Auth::id()) && $claim->status === 'collected')
         <div class="card mb-3">
             <div class="card-header">Log Distribution (SDG)</div>
             <div class="card-body">
