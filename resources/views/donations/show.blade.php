@@ -10,7 +10,7 @@
     <div class="col-md-8">
         <div class="card mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="bi bi-gift"></i> {{ $donation->title }}</h4>
+                <h4 class="mb-0"><i class="bi bi-basket"></i> {{ $donation->title }}</h4>
                 <span class="badge bg-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} fs-6">
                     {{ ucfirst($donation->status) }}
                 </span>

@@ -49,7 +49,7 @@
     </div>
 </div>
 <div class="card shadow-sm animate-slide-up">
-    <div class="card-header"><i class="bi bi-gift text-apple-accent"></i> Recent Donations</div>
+    <div class="card-header"><i class="bi bi-basket text-apple-accent"></i> Recent Donations</div>
     <div class="card-body">
         @forelse($donations as $donation)
         <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
@@ -152,7 +152,7 @@
 </div>
 
 <div class="card shadow-sm animate-slide-up mt-4">
-    <div class="card-header"><i class="bi bi-gift text-apple-accent"></i> Recent Available Donations</div>
+    <div class="card-header"><i class="bi bi-basket text-apple-accent"></i> Recent Available Donations</div>
     <div class="card-body">
         @forelse($recentDonations as $donation)
         <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
@@ -234,7 +234,7 @@
 </div>
 
 <div class="card shadow-sm animate-slide-up mt-4">
-    <div class="card-header"><i class="bi bi-gift text-apple-accent"></i> Recent Donations Platform-wide</div>
+    <div class="card-header"><i class="bi bi-basket text-apple-accent"></i> Recent Donations Platform-wide</div>
     <div class="card-body">
         @forelse($recentDonations as $donation)
         <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">

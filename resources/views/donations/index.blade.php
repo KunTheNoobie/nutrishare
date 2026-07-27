@@ -4,7 +4,7 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4 animate-slide-up">
     <h2>
-        <i class="bi bi-gift text-apple-accent"></i> 
+        <i class="bi bi-basket text-apple-accent"></i> 
         @if(Auth::user()->isDonor()) My Donations @else Available Donations @endif
     </h2>
     @if(Auth::user()->isDonor() || Auth::user()->isAdmin())
