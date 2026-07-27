@@ -278,6 +278,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person-gear"></i> Profile Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 {{-- SECURITY (Module 3): CSRF token on logout form --}}
