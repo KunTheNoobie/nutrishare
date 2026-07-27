@@ -30,7 +30,7 @@
                             <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" rows="1" required placeholder="Type an address or click on the map..." autocomplete="off">{{ old('address') }}</textarea>
                             <button class="btn btn-outline-secondary" type="button" id="searchAddressBtn"><i class="bi bi-search"></i></button>
                         </div>
-                        <ul id="address-suggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 1000; max-height: 200px; overflow-y: auto;"></ul>
+                        <ul id="address-suggestions" class="list-group position-absolute w-100 mt-1 shadow" style="display: none; z-index: 9999; max-height: 200px; overflow-y: auto;"></ul>
                         @error('address')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                     </div>
                     
@@ -108,14 +108,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (data && data.length > 0) {
                         data.forEach(item => {
                             const li = document.createElement('li');
-                            li.className = 'list-group-item list-group-item-action';
+                            li.className = 'list-group-item list-group-item-action text-dark';
                             li.style.cursor = 'pointer';
-                            li.style.backgroundColor = 'var(--apple-surface)';
-                            li.style.color = 'var(--apple-text)';
-                            li.style.border = '1px solid var(--apple-border)';
                             li.textContent = item.display_name;
-                            li.addEventListener('mouseenter', () => { li.style.backgroundColor = 'rgba(255,255,255,0.1)'; });
-                            li.addEventListener('mouseleave', () => { li.style.backgroundColor = 'var(--apple-surface)'; });
                             li.addEventListener('click', () => {
                                 const lat = parseFloat(item.lat);
                                 const lng = parseFloat(item.lon);
