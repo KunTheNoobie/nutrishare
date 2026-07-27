@@ -24,11 +24,16 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror @error('email') is-invalid @enderror"
-                               id="password" name="password" required>
-                        @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <div class="input-group">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror @error('email') is-invalid @enderror"
+                                   id="password" name="password" required>
+                            <button class="btn btn-outline-secondary toggle-password" type="button" style="border: 1px solid var(--apple-border);">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            @error('password')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="mb-4 form-check d-flex justify-content-between align-items-center">

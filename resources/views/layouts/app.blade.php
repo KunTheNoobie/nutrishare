@@ -340,6 +340,25 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('click', function(e) {
+    if (e.target.closest('.toggle-password')) {
+        const btn = e.target.closest('.toggle-password');
+        const input = btn.previousElementSibling;
+        const icon = btn.querySelector('i');
+        if (input && input.tagName === 'INPUT') {
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('bi-eye', 'bi-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('bi-eye-slash', 'bi-eye');
+            }
+        }
+    }
+});
+</script>
+@stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {

@@ -102,19 +102,34 @@
 
                     <div class="mb-3">
                         <label for="current_password" class="form-label">Current Password</label>
-                        <input id="current_password" name="current_password" type="password" class="form-control @error('current_password', 'updatePassword') is-invalid @enderror" required autocomplete="current-password">
-                        @error('current_password', 'updatePassword')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <div class="input-group">
+                            <input id="current_password" name="current_password" type="password" class="form-control @error('current_password', 'updatePassword') is-invalid @enderror" required autocomplete="current-password">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" style="border: 1px solid var(--apple-border);">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            @error('current_password', 'updatePassword')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">New Password</label>
-                        <input id="password" name="password" type="password" class="form-control @error('password', 'updatePassword') is-invalid @enderror" required autocomplete="new-password">
-                        @error('password', 'updatePassword')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        <div class="input-group">
+                            <input id="password" name="password" type="password" class="form-control @error('password', 'updatePassword') is-invalid @enderror" required autocomplete="new-password">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" style="border: 1px solid var(--apple-border);">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            @error('password', 'updatePassword')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
                     </div>
 
                     <div class="mb-4">
                         <label for="password_confirmation" class="form-label">Confirm New Password</label>
-                        <input id="password_confirmation" name="password_confirmation" type="password" class="form-control @error('password_confirmation', 'updatePassword') is-invalid @enderror" required autocomplete="new-password">
+                        <div class="input-group">
+                            <input id="password_confirmation" name="password_confirmation" type="password" class="form-control @error('password_confirmation', 'updatePassword') is-invalid @enderror" required autocomplete="new-password">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" style="border: 1px solid var(--apple-border);">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="d-flex align-items-center gap-3">

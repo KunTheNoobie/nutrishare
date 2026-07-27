@@ -24,17 +24,27 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label">New Password</label>
-                        <input type="password" class="form-control @error('password') is-invalid @enderror"
-                               id="password" name="password" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                   id="password" name="password" required autocomplete="new-password">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" style="border: 1px solid var(--apple-border);">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
                         <div class="form-text text-muted" style="font-size: 0.8rem;">Min 8 chars. Must include uppercase, lowercase, number, and special character.</div>
                         @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-4">
                         <label for="password_confirmation" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required autocomplete="new-password">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" style="border: 1px solid var(--apple-border);">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-ns-primary w-100">
