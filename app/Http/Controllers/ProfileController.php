@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
@@ -24,6 +25,7 @@ class ProfileController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'phone' => ['required', 'string', 'max:20'],
             'notification_preference' => ['required', Rule::in(['email', 'sms', 'both'])],
+            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:5120'], // 5MB max
         ];
 
         if ($user->isNgo()) {
@@ -32,9 +34,31 @@ class ProfileController extends Controller
 
         $validated = $request->validate($rules);
 
+        if ($request->hasFile('photo')) {
+            if ($user->profile_photo_path) {
+                Storage::disk('public')->delete($user->profile_photo_path);
+            }
+            $path = $request->file('photo')->store('profile-photos', 'public');
+            $validated['profile_photo_path'] = $path;
+        }
+
         $user->update($validated);
 
         return redirect()->route('profile.edit')->with('success', 'Profile updated successfully.');
+    }
+
+    public function removePhoto()
+    {
+        $user = auth()->user();
+
+        if ($user->profile_photo_path) {
+            Storage::disk('public')->delete($user->profile_photo_path);
+            $user->forceFill([
+                'profile_photo_path' => null,
+            ])->save();
+        }
+
+        return back()->with('success', 'Profile photo removed.');
     }
 
     public function updatePassword(Request $request)

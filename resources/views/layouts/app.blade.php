@@ -273,11 +273,11 @@
                     <li class="nav-item"><a class="btn btn-ns-primary ms-2" href="{{ route('register') }}">Register</a></li>
                 @else
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i>
+                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown">
+                            <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-circle border border-dark" style="width: 28px; height: 28px; object-fit: cover;">
                             {{-- SECURITY (Module 1): XSS Prevention — {{ }} auto-escapes output --}}
                             {{ Auth::user()->name }}
-                            <span class="badge bg-{{ Auth::user()->role === 'admin' ? 'danger' : (Auth::user()->role === 'ngo' ? 'purple' : 'primary') }} ms-1">
+                            <span class="badge bg-{{ Auth::user()->role === 'admin' ? 'danger' : (Auth::user()->role === 'ngo' ? 'purple' : 'primary') }}">
                                 {{ Auth::user()->role === 'ngo' ? 'NGO' : ucfirst(Auth::user()->role) }}
                             </span>
                         </a>

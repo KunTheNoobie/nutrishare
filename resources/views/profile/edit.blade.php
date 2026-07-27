@@ -20,9 +20,18 @@
                 <small class="text-muted">Update your account's profile information and contact details.</small>
             </div>
             <div class="card-body p-4">
-                <form method="POST" action="{{ route('profile.update') }}">
+                <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
+
+                    <div class="d-flex align-items-center mb-4">
+                        <img src="{{ $user->profile_photo_url }}" alt="Profile Photo" class="rounded-circle me-3 border border-dark shadow-sm" style="width: 80px; height: 80px; object-fit: cover;">
+                        <div>
+                            <label for="photo" class="form-label mb-1">Profile Photo</label>
+                            <input type="file" id="photo" name="photo" class="form-control form-control-sm @error('photo') is-invalid @enderror" accept="image/jpeg,image/png,image/gif">
+                            @error('photo')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                    </div>
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Full Name</label>
@@ -65,6 +74,14 @@
                         <button type="submit" class="btn btn-ns-primary">Save Profile</button>
                     </div>
                 </form>
+                
+                @if($user->profile_photo_path)
+                <form method="POST" action="{{ route('profile.photo.destroy') }}" class="mt-3">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Remove Photo</button>
+                </form>
+                @endif
             </div>
         </div>
 

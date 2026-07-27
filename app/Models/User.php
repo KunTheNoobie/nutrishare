@@ -35,6 +35,7 @@ class User extends Authenticatable
         'phone',
         'address',
         'notification_preference',
+        'profile_photo_path',
     ];
 
     protected $hidden = [
@@ -132,5 +133,19 @@ class User extends Authenticatable
     public function averageRating(): float
     {
         return (float) $this->reviewsReceived()->avg('rating') ?: 0.0;
+    }
+
+    /** Get the URL to the user's profile photo. */
+    public function getProfilePhotoUrlAttribute(): string
+    {
+        if ($this->profile_photo_path) {
+            return asset('storage/' . $this->profile_photo_path);
+        }
+        
+        $name = trim(collect(explode(' ', $this->name))->map(function ($segment) {
+            return mb_substr($segment, 0, 1);
+        })->join(' '));
+
+        return 'https://ui-avatars.com/api/?name=' . urlencode($name) . '&color=FFFFFF&background=111111';
     }
 }
