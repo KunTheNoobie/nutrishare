@@ -141,7 +141,15 @@
         .text-muted { color: var(--apple-text-muted) !important; }
         
         /* Badges */
-        .badge { font-weight: 500; padding: 0.4em 0.8em; border-radius: 6px; }
+        .badge { 
+            font-weight: 500; 
+            padding: 6px 16px; 
+            border-radius: 50px; 
+            font-size: 0.85rem; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
         .badge-donor { background: rgba(41, 151, 255, 0.15); color: var(--apple-accent); }
         .badge-ngo { background: rgba(52, 199, 89, 0.15); color: var(--apple-success); }
         .badge-admin { background: rgba(255, 59, 48, 0.15); color: var(--apple-danger); }
