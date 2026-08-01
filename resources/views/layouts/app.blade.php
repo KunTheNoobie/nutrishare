@@ -138,6 +138,49 @@
             border-color: #0066cc !important;
             color: #0066cc !important;
         }
+
+        /* Global SweetAlert2 Theme Styling */
+        .swal2-popup {
+            background-color: var(--apple-surface) !important;
+            color: var(--apple-text) !important;
+            border: 1px solid var(--apple-border) !important;
+            border-radius: 20px !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
+        }
+        .swal2-title {
+            color: var(--apple-text) !important;
+            font-family: 'Inter', -apple-system, sans-serif !important;
+            font-weight: 600 !important;
+        }
+        .swal2-html-container, .swal2-content {
+            color: var(--apple-text-muted) !important;
+            font-family: 'Inter', -apple-system, sans-serif !important;
+        }
+        .swal2-confirm {
+            border-radius: 980px !important;
+            padding: 10px 26px !important;
+            font-weight: 500 !important;
+            font-family: 'Inter', -apple-system, sans-serif !important;
+        }
+        .swal2-cancel {
+            border-radius: 980px !important;
+            padding: 10px 26px !important;
+            font-weight: 500 !important;
+            font-family: 'Inter', -apple-system, sans-serif !important;
+        }
+
+        [data-theme="light"] .swal2-popup {
+            background-color: #ffffff !important;
+            color: #1d1d1f !important;
+            border: 1px solid #e5e5ea !important;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12) !important;
+        }
+        [data-theme="light"] .swal2-title {
+            color: #1d1d1f !important;
+        }
+        [data-theme="light"] .swal2-html-container {
+            color: #6e6e73 !important;
+        }
         
         body { 
             background-color: var(--apple-bg);
