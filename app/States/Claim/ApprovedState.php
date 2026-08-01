@@ -37,6 +37,11 @@ class ApprovedState extends ClaimState
 
     private function collect(): bool
     {
+        // Enforce vehicle assignment business rule before collection
+        if (!$this->claim->vehicle_id) {
+            return false;
+        }
+
         $this->claim->update(['status' => 'collected']);
 
         // Update donation status

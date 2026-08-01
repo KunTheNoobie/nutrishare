@@ -149,11 +149,20 @@
                 <form method="POST" action="{{ route('claims.transition', $claim) }}" class="mb-2">
                     @csrf
                     <input type="hidden" name="action" value="{{ $action }}">
-                    <button type="submit" class="btn btn-{{ $action === 'approve' ? 'success' : ($action === 'reject' ? 'danger' : ($action === 'collect' ? 'primary' : 'secondary')) }} btn-sm w-100"
-                            onclick="return confirm('Are you sure you want to {{ $action }} this claim?')">
-                        <i class="bi bi-{{ $action === 'approve' ? 'check-circle' : ($action === 'reject' ? 'x-circle' : ($action === 'collect' ? 'box-arrow-down' : 'arrow-left')) }}"></i>
-                        {{ ucfirst($action) }}
-                    </button>
+                    @if($action === 'collect' && !$claim->vehicle)
+                        <button type="button" class="btn btn-secondary btn-sm w-100" disabled title="Vehicle assignment required before collection">
+                            <i class="bi bi-lock me-1"></i> Collect (Assign Vehicle Below First)
+                        </button>
+                        <small class="text-warning d-block mt-1 text-center" style="font-size: 0.72rem;">
+                            <i class="bi bi-exclamation-triangle me-1"></i>Assign driver & vehicle below to enable collection.
+                        </small>
+                    @else
+                        <button type="submit" class="btn btn-{{ $action === 'approve' ? 'success' : ($action === 'reject' ? 'danger' : ($action === 'collect' ? 'primary' : 'secondary')) }} btn-sm w-100"
+                                onclick="return confirm('Are you sure you want to {{ $action }} this claim?')">
+                            <i class="bi bi-{{ $action === 'approve' ? 'check-circle' : ($action === 'reject' ? 'x-circle' : ($action === 'collect' ? 'box-arrow-down' : 'arrow-left')) }}"></i>
+                            {{ ucfirst($action) }}
+                        </button>
+                    @endif
                 </form>
                 @endforeach
             </div>

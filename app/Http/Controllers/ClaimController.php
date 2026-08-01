@@ -108,6 +108,12 @@ class ClaimController extends Controller
             if (!$user->isAdmin() && !$user->isModerator() && (!$user->isNgo() || $claim->user_id !== $user->id)) {
                 abort(403, 'Unauthorized. Only the claiming NGO, Moderator, or Admin can mark this donation as collected.');
             }
+
+            // BUSINESS RULE: A claim CANNOT be marked as collected until a pickup vehicle (driver & van/truck) has been assigned!
+            if (!$claim->vehicle_id) {
+                return redirect()->route('claims.show', $claim)
+                    ->with('error', 'Cannot collect donation: Please assign a pickup vehicle (driver & vehicle details) before marking as collected.');
+            }
         } elseif ($action === 'cancel') {
             // ONLY the NGO who submitted the claim (or Admin/Moderator) can cancel
             if (!$user->isAdmin() && !$user->isModerator() && $claim->user_id !== $user->id) {
