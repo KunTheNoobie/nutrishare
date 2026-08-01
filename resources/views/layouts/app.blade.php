@@ -31,7 +31,7 @@
             --apple-surface: #111111;
             --apple-border: #333333;
             --apple-text: #f5f5f7;
-            --apple-text-muted: #86868b;
+            --apple-text-muted: #a1a1a6;
             --apple-accent: #2997ff;
             --apple-accent-hover: #0071e3;
             --apple-danger: #ff3b30;
@@ -45,7 +45,7 @@
             --apple-surface: #ffffff;
             --apple-border: #e5e5ea;
             --apple-text: #1d1d1f;
-            --apple-text-muted: #6e6e73;
+            --apple-text-muted: #515154;
             --apple-accent: #0066cc;
             --apple-accent-hover: #004499;
             --apple-danger: #ff3b30;
@@ -54,13 +54,16 @@
             --apple-input-bg: #f2f2f7;
         }
 
-        /* Light Mode Text & Component Contrast Fixes */
+        /* High Contrast Text & Component Overrides */
+        .text-muted {
+            color: var(--apple-text-muted) !important;
+        }
         [data-theme="light"] .text-light,
         [data-theme="light"] .text-white {
             color: #1d1d1f !important;
         }
         [data-theme="light"] .text-muted {
-            color: #6e6e73 !important;
+            color: #515154 !important;
         }
         [data-theme="light"] .table-dark {
             --bs-table-bg: #ffffff !important;
