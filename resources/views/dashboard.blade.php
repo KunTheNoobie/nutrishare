@@ -195,11 +195,11 @@
                     <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; {{ $donation->pickup_address }}</small>
                 </div>
             </div>
-            <div>
-                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} mb-2 d-block text-center">
+            <div class="d-flex align-items-center gap-2 ms-auto mt-2 mt-sm-0">
+                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
                     {{ ucfirst($donation->status) }}
                 </span>
-                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light w-100">View Details</a>
+                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">View Details</a>
             </div>
         </div>
         @empty
@@ -340,11 +340,11 @@
                     <br><small class="text-muted">By {{ $donation->donor->organization_name ?? $donation->donor->name }} &nbsp;&middot;&nbsp; {{ $donation->quantity }} {{ $donation->unit }}</small>
                 </div>
             </div>
-            <div class="text-end">
-                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }} mb-2 d-inline-block">
+            <div class="d-flex align-items-center gap-2 ms-auto mt-2 mt-sm-0">
+                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }}">
                     {{ ucfirst($donation->status) }}
                 </span>
-                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light d-block mt-1">View Details</a>
+                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">View Details</a>
             </div>
         </div>
         @empty

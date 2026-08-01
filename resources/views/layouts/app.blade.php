@@ -414,12 +414,21 @@
         /* Badges */
         .badge { 
             font-weight: 500; 
-            padding: 6px 16px; 
-            border-radius: 50px; 
-            font-size: 0.85rem; 
+            padding: 0.45rem 1rem !important; 
+            border-radius: 980px !important; 
+            font-size: 0.82rem !important; 
             display: inline-flex; 
             align-items: center; 
             justify-content: center; 
+            line-height: 1.2 !important;
+            vertical-align: middle !important;
+        }
+        .btn-sm {
+            padding: 0.45rem 1rem !important;
+            font-size: 0.82rem !important;
+            border-radius: 980px !important;
+            line-height: 1.2 !important;
+            vertical-align: middle !important;
         }
         .badge-donor { background: rgba(41, 151, 255, 0.15); color: var(--apple-accent); }
         .badge-ngo { background: rgba(52, 199, 89, 0.15); color: var(--apple-success); }
@@ -428,6 +437,14 @@
         .badge-warning { background: rgba(255, 159, 10, 0.15); color: #ff9f0a; border: 1px solid rgba(255, 159, 10, 0.3); }
         .badge-secondary { background: rgba(142, 142, 147, 0.15); color: #8e8e93; border: 1px solid rgba(142, 142, 147, 0.3); }
         .badge-moderator { background: rgba(191, 90, 242, 0.15); color: #bf5af2; border: 1px solid rgba(191, 90, 242, 0.3); }
+
+        [data-theme="light"] .badge-success { background: rgba(52, 199, 89, 0.15) !important; color: #28a745 !important; border: 1px solid rgba(40, 167, 69, 0.3) !important; }
+        [data-theme="light"] .badge-warning { background: rgba(255, 149, 0, 0.15) !important; color: #d97706 !important; border: 1px solid rgba(217, 119, 6, 0.3) !important; }
+        [data-theme="light"] .badge-secondary { background: rgba(142, 142, 147, 0.15) !important; color: #636366 !important; border: 1px solid rgba(99, 99, 102, 0.3) !important; }
+        [data-theme="light"] .badge-donor { background: rgba(0, 122, 255, 0.15) !important; color: #0066cc !important; }
+        [data-theme="light"] .badge-ngo { background: rgba(52, 199, 89, 0.15) !important; color: #28a745 !important; }
+        [data-theme="light"] .badge-admin { background: rgba(255, 59, 48, 0.15) !important; color: #dc3545 !important; }
+        [data-theme="light"] .badge-moderator { background: rgba(175, 82, 222, 0.15) !important; color: #8944ab !important; }
         
         /* Text Utilities */
         .text-apple-accent { color: var(--apple-accent) !important; }
