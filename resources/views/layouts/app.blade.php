@@ -383,52 +383,26 @@
         .card { 
             background: var(--apple-surface);
             border: 1px solid var(--apple-border); 
-            border-radius: 18px; 
+            border-radius: 18px !important; 
             color: var(--apple-text);
+            overflow: hidden !important;
         }
         .card-header { 
             background: transparent; 
             border-bottom: 1px solid var(--apple-border);
             border-radius: 18px 18px 0 0 !important; 
             font-weight: 600; 
-            padding: 1.5rem;
+            padding: 1.25rem 1.5rem;
         }
-        .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--apple-border);
-            color: var(--apple-text);
-            border-radius: 12px;
-            padding: 0.8rem 1rem;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+        .table-responsive {
+            overflow-x: auto;
+            overflow-y: hidden;
+            border-radius: 0 0 18px 18px;
         }
-        .form-control:focus, .form-select:focus {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--apple-accent);
-            color: var(--apple-text);
-            box-shadow: 0 0 0 4px rgba(41, 151, 255, 0.2);
-        }
-        .form-label { color: var(--apple-text-muted); font-weight: 400; font-size: 0.85rem; margin-bottom: 0.5rem; }
-        .text-muted { color: var(--apple-text-muted) !important; }
-        
-        /* Badges */
-        .badge { 
-            font-weight: 500; 
-            padding: 0.45rem 1rem !important; 
-            border-radius: 980px !important; 
-            font-size: 0.82rem !important; 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            line-height: 1.2 !important;
-            vertical-align: middle !important;
-        }
-        .btn-sm {
-            padding: 0.45rem 1rem !important;
-            font-size: 0.82rem !important;
-            border-radius: 980px !important;
-            line-height: 1.2 !important;
-            vertical-align: middle !important;
+        .table tbody tr:last-child,
+        .table tbody tr:last-child td,
+        .table tbody tr:last-child th {
+            border-bottom: 0 !important;
         }
         /* Badges */
         .badge { 
