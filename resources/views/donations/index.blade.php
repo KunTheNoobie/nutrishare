@@ -3,10 +3,13 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4 animate-slide-up">
-    <h2>
-        <i class="bi bi-basket text-apple-accent"></i> 
-        @if(Auth::user()->isDonor()) My Donations @elseif(Auth::user()->isAdmin() || Auth::user()->isModerator()) Platform Donations @else Available Donations @endif
-    </h2>
+    <div>
+        <h2 style="font-weight: 600;" class="mb-1">
+            <i class="bi bi-basket text-apple-accent"></i> 
+            @if(Auth::user()->isDonor()) My Donations @elseif(Auth::user()->isAdmin() || Auth::user()->isModerator()) Platform Donations @else Available Donations @endif
+        </h2>
+        <p class="mb-0" style="color: var(--apple-text-muted);">Browse, track, and manage food donation listings on NutriShare.</p>
+    </div>
     @if(Auth::user()->isDonor() || Auth::user()->isAdmin())
     <a href="{{ route('donations.create') }}" class="btn btn-ns-primary">
         <i class="bi bi-plus-circle"></i> Publish Donation
@@ -14,7 +17,7 @@
     @endif
 </div>
 
-<!-- Search -->
+<!-- Search & Filter Bar -->
 <div class="card shadow-sm mb-4 animate-slide-up">
     <div class="card-body p-2">
         <form method="GET" action="{{ route('donations.index') }}" class="row g-2 align-items-center m-0" id="searchForm">
@@ -40,60 +43,98 @@
     </div>
 </div>
 
-<!-- Donations Grid -->
-<div class="row g-3 animate-slide-up" id="donationsGrid" style="animation-delay: 0.1s;">
-    @forelse($donations as $donation)
-    <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm h-100">
-            @if($donation->image_paths && count($donation->image_paths) > 0)
-                @php
-                    $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
-                @endphp
-                <img src="{{ $thumbSrc }}" class="card-img-top" alt="Donation Image" style="height: 150px; object-fit: cover;">
-            @endif
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    {{-- SECURITY (Module 1): XSS Prevention — all user content escaped --}}
-                    <h5 class="card-title mb-0" style="font-weight: 600;">{{ $donation->title }}</h5>
-                    <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
-                        {{ ucfirst($donation->status) }}
-                    </span>
-                </div>
-                <p class="card-text text-muted mb-3" style="font-size: 0.95rem;">{{ Str::limit($donation->description, 100) }}</p>
-                <div class="mb-2" style="font-size: 0.85rem; color: #a1a1aa;">
-                    <div class="mb-1"><i class="bi bi-box text-apple-accent"></i> {{ $donation->quantity }} {{ $donation->unit }}</div>
-                    <div class="mb-1"><i class="bi bi-geo-alt text-apple-accent"></i> {{ Str::limit($donation->pickup_address, 40) }}</div>
-                    @if(Auth::user()->isAdmin() || Auth::user()->isModerator())
-                    <div class="mb-1"><i class="bi bi-person text-apple-accent"></i> Donor: {{ $donation->donor->name }}</div>
-                    @endif
-                    <div><i class="bi bi-calendar text-apple-accent"></i> Expires: {{ $donation->expiry_date->format('d M Y') }}</div>
-                </div>
-            </div>
-            <div class="card-footer bg-transparent border-top-0 pt-0">
-                <a href="{{ route('donations.show', $donation) }}" class="btn btn-ns-primary w-100" style="background-color: var(--apple-surface); border: 1px solid var(--apple-border); color: var(--apple-text);">
-                    View Details
-                </a>
-            </div>
+<!-- Donations Unified Card Table -->
+<div class="card shadow-sm animate-slide-up" id="donationsTableContainer">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-list-check text-apple-accent me-1"></i> Food Donations List</span>
+        <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
+            {{ $donations->total() }} Total Donations
+        </span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                        <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donation Title</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donor</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Quantity</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Pickup Location</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Expires</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Status</th>
+                        <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @forelse($donations as $donation)
+                <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                    <td class="ps-4">
+                        <div class="d-flex align-items-center gap-3">
+                            @if($donation->image_paths && count($donation->image_paths) > 0)
+                                @php
+                                    $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
+                                @endphp
+                                <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 40px; height: 40px; object-fit: cover;" alt="Thumbnail">
+                            @else
+                                <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05);">
+                                    <i class="bi bi-basket text-muted"></i>
+                                </div>
+                            @endif
+                            <div>
+                                <strong style="color: var(--apple-text);">
+                                    <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none" style="color: var(--apple-text);">{{ $donation->title }}</a>
+                                </strong>
+                                @if($donation->description)
+                                <br><small style="color: var(--apple-text-muted); font-size: 0.78rem;">{{ Str::limit($donation->description, 50) }}</small>
+                                @endif
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <strong style="color: var(--apple-text);">{{ $donation->donor->organization_name ?? $donation->donor->name }}</strong>
+                        <br><small style="color: var(--apple-text-muted); font-size: 0.75rem;">{{ $donation->donor->email }}</small>
+                    </td>
+                    <td style="color: var(--apple-text);">
+                        <strong>{{ $donation->quantity }}</strong> {{ $donation->unit }}
+                    </td>
+                    <td class="small" style="color: var(--apple-text-muted);">
+                        <i class="bi bi-geo-alt text-apple-accent me-1"></i>{{ Str::limit($donation->pickup_address, 35) }}
+                    </td>
+                    <td class="small" style="color: var(--apple-text-muted);">
+                        <i class="bi bi-calendar me-1"></i>{{ $donation->expiry_date->format('d M Y') }}
+                    </td>
+                    <td>
+                        <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }}">
+                            {{ ucfirst($donation->status) }}
+                        </span>
+                    </td>
+                    <td class="pe-4 text-end">
+                        <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">
+                            <i class="bi bi-eye"></i> View Details
+                        </a>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="7" class="text-center py-5" style="color: var(--apple-text-muted);">
+                        No donations found matching your search.
+                    </td>
+                </tr>
+                @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
-    @empty
-    <div class="col-12">
-        <div class="text-center py-5">
-            <i class="bi bi-inbox text-muted" style="font-size:4rem; opacity: 0.5;"></i>
-            <p class="mt-3 text-muted" style="font-size: 1.1rem;">No donations found.</p>
-        </div>
-    </div>
-    @endforelse
 </div>
 
-<div class="mt-4" id="paginationContainer">{{ $donations->links() }}</div>
+<div class="mt-4 animate-slide-up" id="paginationContainer">{{ $donations->links() }}</div>
 
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     const clearBtn = document.getElementById('clearSearch');
-    const grid = document.getElementById('donationsGrid');
+    const tableContainer = document.getElementById('donationsTableContainer');
     const pagination = document.getElementById('paginationContainer');
     let debounceTimer;
 
@@ -143,8 +184,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 
-                const newGrid = doc.getElementById('donationsGrid');
-                if (newGrid) grid.innerHTML = newGrid.innerHTML;
+                const newTable = doc.getElementById('donationsTableContainer');
+                if (newTable && tableContainer) tableContainer.innerHTML = newTable.innerHTML;
                 
                 const newPagination = doc.getElementById('paginationContainer');
                 if (newPagination && pagination) pagination.innerHTML = newPagination.innerHTML;

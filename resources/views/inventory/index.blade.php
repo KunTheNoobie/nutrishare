@@ -3,7 +3,10 @@
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4 animate-slide-up">
-    <h2><i class="bi bi-box-seam text-apple-accent"></i> Inventory Locations</h2>
+    <div>
+        <h2 style="font-weight: 600;" class="mb-1"><i class="bi bi-box-seam text-apple-accent"></i> Inventory Locations</h2>
+        <p class="mb-0" style="color: var(--apple-text-muted);">Manage food storage facilities, capacity, and inventory safety audits.</p>
+    </div>
     @if(Auth::user()->isNgo())
     <a href="{{ route('inventory.create') }}" class="btn btn-ns-primary">
         <i class="bi bi-plus-circle"></i> Add Location
@@ -11,51 +14,81 @@
     @endif
 </div>
 
-<div class="row g-3 animate-slide-up" style="animation-delay: 0.1s;">
-    @forelse($locations as $location)
-    <div class="col-md-6 col-lg-4">
-        <div class="card shadow-sm h-100">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <h5 style="font-weight: 600;" class="mb-0">{{ $location->name }}</h5>
-                    @if($location->user)
-                    <span class="badge border px-2.5 py-1 text-nowrap ms-2" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
-                        <i class="bi bi-building me-1 text-apple-accent"></i>{{ $location->user->organization_name ?? $location->user->name }}
-                    </span>
-                    @endif
-                </div>
-                <p class="text-muted mb-3" style="font-size: 0.95rem;">{{ Str::limit($location->address, 50) }}</p>
-                <span class="badge badge-{{ $location->storage_type === 'cold' ? 'donor' : ($location->storage_type === 'frozen' ? 'admin' : 'success') }}">
-                    {{ ucfirst($location->storage_type) }} Storage
-                </span>
-                @if($location->capacity)
-                <div class="mt-3">
-                    <small class="text-muted">Capacity: {{ $location->current_occupancy }}/{{ $location->capacity }} kg</small>
-                    <div class="progress mt-1" style="height:6px; background-color: var(--apple-border);">
-                        <div class="progress-bar bg-primary" style="width:{{ ($location->current_occupancy / max($location->capacity, 1)) * 100 }}%; background-color: var(--apple-accent) !important;"></div>
-                    </div>
-                </div>
-                @endif
-                <p class="mt-3 mb-0" style="color: #a1a1aa;"><small><i class="bi bi-list text-apple-accent"></i> {{ $location->food_items_count }} items</small></p>
-            </div>
-            <div class="card-footer bg-transparent border-top-0 pt-0">
-                <a href="{{ route('inventory.show', $location) }}" class="btn btn-ns-primary w-100" style="background-color: var(--apple-surface); border: 1px solid var(--apple-border); color: var(--apple-text);">
-                    @if(Auth::user()->isNgo() && $location->user_id === Auth::id())
-                        <i class="bi bi-gear me-1"></i> Manage Pantry
-                    @else
-                        <i class="bi bi-shield-check me-1"></i> Audit Inventory
-                    @endif
-                </a>
-            </div>
+<div class="card shadow-sm animate-slide-up">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-geo-alt text-apple-accent me-1"></i> Storage Facilities List</span>
+        <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
+            {{ $locations->total() }} Total Facilities
+        </span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                        <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Location Name</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Storage Type</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Managing Organization</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Capacity / Items</th>
+                        <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @forelse($locations as $location)
+                <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                    <td class="ps-4">
+                        <strong style="color: var(--apple-text);">
+                            <a href="{{ route('inventory.show', $location) }}" class="text-decoration-none" style="color: var(--apple-text);">{{ $location->name }}</a>
+                        </strong>
+                        <br><small style="color: var(--apple-text-muted); font-size: 0.78rem;"><i class="bi bi-geo-alt me-1"></i>{{ Str::limit($location->address, 45) }}</small>
+                    </td>
+                    <td>
+                        <span class="badge badge-{{ $location->storage_type === 'cold' ? 'donor' : ($location->storage_type === 'frozen' ? 'admin' : 'success') }}">
+                            {{ ucfirst($location->storage_type) }} Storage
+                        </span>
+                    </td>
+                    <td>
+                        @if($location->user)
+                        <span class="action-tag">
+                            <i class="bi bi-building me-1"></i>{{ $location->user->organization_name ?? $location->user->name }}
+                        </span>
+                        @else
+                        <span style="color: var(--apple-text-muted);">—</span>
+                        @endif
+                    </td>
+                    <td>
+                        <strong style="color: var(--apple-text);">{{ $location->food_items_count }} Items</strong>
+                        @if($location->capacity)
+                        <div class="mt-1" style="max-width: 140px;">
+                            <div class="progress" style="height: 5px; background-color: var(--apple-border);">
+                                <div class="progress-bar" style="width: {{ min(($location->current_occupancy / max($location->capacity, 1)) * 100, 100) }}%; background-color: var(--apple-accent) !important;"></div>
+                            </div>
+                            <small style="font-size: 0.72rem; color: var(--apple-text-muted);">{{ number_format($location->current_occupancy, 1) }}/{{ number_format($location->capacity, 1) }} kg</small>
+                        </div>
+                        @endif
+                    </td>
+                    <td class="pe-4 text-end">
+                        <a href="{{ route('inventory.show', $location) }}" class="btn btn-sm btn-outline-light text-nowrap">
+                            @if(Auth::user()->isNgo() && $location->user_id === Auth::id())
+                                <i class="bi bi-gear me-1"></i> Manage Pantry
+                            @else
+                                <i class="bi bi-shield-check me-1"></i> Audit Inventory
+                            @endif
+                        </a>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center py-5" style="color: var(--apple-text-muted);">
+                        No inventory locations listed yet.
+                    </td>
+                </tr>
+                @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
-    @empty
-    <div class="col-12 text-center py-5">
-        <i class="bi bi-box-seam text-muted" style="font-size:4rem; opacity: 0.5;"></i>
-        <p class="mt-3 text-muted" style="font-size: 1.1rem;">No inventory locations yet. <a href="{{ route('inventory.create') }}">Add your first one!</a></p>
-    </div>
-    @endforelse
 </div>
 
-<div class="mt-4 animate-slide-up" style="animation-delay: 0.2s;">{{ $locations->links() }}</div>
+<div class="mt-4 animate-slide-up">{{ $locations->links() }}</div>
 @endsection

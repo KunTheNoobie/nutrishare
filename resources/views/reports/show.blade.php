@@ -18,7 +18,13 @@
         </p>
     </div>
     <div class="d-flex align-items-center gap-2">
-        <form method="POST" action="{{ route('reports.refresh', $report) }}">
+        <a href="{{ route('reports.export', $report) }}" class="btn btn-sm btn-outline-success text-nowrap">
+            <i class="bi bi-download"></i> Download Report (CSV)
+        </a>
+        <button onclick="window.print()" class="btn btn-sm btn-outline-light text-nowrap d-none d-md-inline-flex">
+            <i class="bi bi-printer"></i> Print / PDF
+        </button>
+        <form method="POST" action="{{ route('reports.refresh', $report) }}" class="d-inline">
             @csrf
             <button type="submit" class="btn btn-ns-accent btn-sm text-nowrap">
                 <i class="bi bi-arrow-clockwise"></i> Refresh Live Data
