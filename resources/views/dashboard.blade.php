@@ -71,11 +71,11 @@
                     <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; Expires: {{ $donation->expiry_date->format('d M Y') }}</small>
                 </div>
             </div>
-            <div>
-                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} mb-2 d-block text-center">
+            <div class="d-flex flex-column align-items-end gap-2">
+                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
                     {{ ucfirst($donation->status) }}
                 </span>
-                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light w-100">View Details</a>
+                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">View Details</a>
             </div>
         </div>
         @empty
@@ -159,12 +159,17 @@
         @forelse($claims as $claim)
         <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
             <div>
-                <strong style="font-size: 1.05rem;">{{ $claim->donation->title }}</strong>
+                <strong style="font-size: 1.05rem;">
+                    <a href="{{ route('claims.show', $claim) }}" class="text-decoration-none text-light">{{ $claim->donation->title }}</a>
+                </strong>
                 <br><small class="text-muted">Claimed on {{ $claim->created_at->format('d M Y') }}</small>
             </div>
-            <span class="badge badge-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : 'secondary') }}">
-                {{ ucfirst($claim->status) }}
-            </span>
+            <div class="d-flex flex-column align-items-end gap-2">
+                <span class="badge badge-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : 'secondary') }}">
+                    {{ ucfirst($claim->status) }}
+                </span>
+                <a href="{{ route('claims.show', $claim) }}" class="btn btn-sm btn-outline-light text-nowrap">View Details</a>
+            </div>
         </div>
         @empty
         <p class="text-muted text-center py-4">No claims yet. <a href="{{ route('donations.index') }}">Browse available donations!</a></p>
