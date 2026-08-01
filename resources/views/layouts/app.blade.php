@@ -625,20 +625,23 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                     <li class="nav-item"><a class="btn btn-ns-primary ms-2" href="{{ route('register') }}">Register</a></li>
                 @else
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown">
+                    <li class="nav-item dropdown d-flex align-items-center">
+                        <a href="{{ route('profile.edit') }}" class="d-flex align-items-center gap-2 text-decoration-none py-1 pe-1" style="color: var(--apple-text);">
                             <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-circle border border-dark" style="width: 28px; height: 28px; object-fit: cover;">
-                            {{ Auth::user()->name }}
-                        @if(Auth::user()->isDonor())
-                            <span class="badge badge-success float-end ms-2" style="margin-top: 2px;">Donor</span>
-                        @elseif(Auth::user()->isNgo())
-                            <span class="badge badge-warning float-end ms-2" style="margin-top: 2px;">NGO</span>
-                        @elseif(Auth::user()->isAdmin())
-                            <span class="badge badge-primary float-end ms-2" style="margin-top: 2px;">Admin</span>
-                        @elseif(Auth::user()->isModerator())
-                            <span class="badge badge-moderator float-end ms-2" style="margin-top: 2px;">Moderator</span>
-                        @endif
+                            <span class="fw-medium small" style="color: var(--apple-text);">{{ Auth::user()->name }}</span>
+                            @if(Auth::user()->isDonor())
+                                <span class="badge badge-success ms-1">Donor</span>
+                            @elseif(Auth::user()->isNgo())
+                                <span class="badge badge-warning ms-1">NGO</span>
+                            @elseif(Auth::user()->isAdmin())
+                                <span class="badge badge-primary ms-1">Admin</span>
+                            @elseif(Auth::user()->isModerator())
+                                <span class="badge badge-moderator ms-1">Moderator</span>
+                            @endif
                         </a>
+                        <button type="button" class="btn btn-sm text-muted dropdown-toggle dropdown-toggle-split px-1 py-0 ms-1 border-0" data-bs-toggle="dropdown" aria-expanded="false" style="box-shadow: none; background: transparent;">
+                            <span class="visually-hidden">Toggle Dropdown</span>
+                        </button>
                         <ul class="dropdown-menu dropdown-menu-end border-dark shadow" style="background-color: var(--apple-surface);">
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}" style="color: var(--apple-text);"><i class="bi bi-speedometer2 text-muted me-2"></i> Dashboard</a></li>
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}" style="color: var(--apple-text);"><i class="bi bi-person-gear text-muted me-2"></i> Profile Settings</a></li>
