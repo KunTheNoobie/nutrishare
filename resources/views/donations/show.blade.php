@@ -144,6 +144,7 @@
                 <a href="{{ route('donations.edit', $donation) }}" class="btn btn-outline-primary btn-sm w-100 mb-2">
                     <i class="bi bi-pencil"></i> Edit
                 </a>
+                @if(Auth::user()->isAdmin() || (Auth::user()->isDonor() && $donation->user_id === Auth::id()))
                 <form method="POST" action="{{ route('donations.destroy', $donation) }}">
                     @csrf @method('DELETE')
                     <button type="submit" class="btn btn-outline-danger btn-sm w-100"
@@ -151,6 +152,7 @@
                         <i class="bi bi-trash"></i> Delete
                     </button>
                 </form>
+                @endif
             </div>
         </div>
         @endif

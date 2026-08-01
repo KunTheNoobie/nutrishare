@@ -13,7 +13,9 @@
 </div>
 
 @php
-    $canManageInventory = Auth::user()->isNgo() && Auth::id() === $inventoryLocation->user_id;
+    $canManageInventory = (Auth::user()->isNgo() && Auth::id() === $inventoryLocation->user_id)
+        || Auth::user()->isAdmin()
+        || Auth::user()->isModerator();
 @endphp
 
 @if(!$canManageInventory)

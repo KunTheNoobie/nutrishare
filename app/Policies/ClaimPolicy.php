@@ -10,42 +10,31 @@ use App\Models\User;
  *
  * OWASP Reference: A01 Broken Access Control (Insecure Direct Object Reference)
  *
- * Implements strict ownership checks via Laravel Policies/Gates to ensure
- * an NGO can only view/edit their own claims. This prevents IDOR attacks
- * where a user might manipulate claim IDs in URLs to access other users' data.
+ * RBAC Rules:
+ * - Admin: Full CRUD (view all, update all, delete all)
+ * - Moderator: View all, Update all, but CANNOT delete
+ * - Donor: View/update claims on their own donations
+ * - NGO: View/update own claims, cancel own pending claims
  */
 class ClaimPolicy
 {
     /**
      * Determine if the user can view any claims.
-     * Admins can view all; NGOs only see their own.
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->role, ['admin', 'ngo', 'donor']);
+        return in_array($user->role, ['admin', 'moderator', 'ngo', 'donor']);
     }
 
     /**
      * Determine if the user can view the specific claim.
-     * IDOR Prevention: User must own the claim or be admin/donor of the donation.
+     * IDOR Prevention: User must own the claim or be admin/moderator/donor of the donation.
      */
     public function view(User $user, Claim $claim): bool
     {
-        // Admin or Moderator can view all
-        if ($user->isAdmin() || $user->isModerator()) {
-            return true;
-        }
-
-        // NGO can only view their own claims
-        if ($user->isNgo()) {
-            return $claim->user_id === $user->id;
-        }
-
-        // Donor can view claims on their donations
-        if ($user->isDonor()) {
-            return $claim->donation->user_id === $user->id;
-        }
-
+        if ($user->isAdmin() || $user->isModerator()) return true;
+        if ($user->isNgo()) return $claim->user_id === $user->id;
+        if ($user->isDonor()) return $claim->donation->user_id === $user->id;
         return false;
     }
 
@@ -63,25 +52,19 @@ class ClaimPolicy
      */
     public function update(User $user, Claim $claim): bool
     {
-        if ($user->isAdmin() || $user->isModerator()) {
-            return true;
-        }
-
-        // Donor of the donation or NGO who owns the claim can access show/update pages
+        if ($user->isAdmin() || $user->isModerator()) return true;
         return ($user->isDonor() && $claim->donation->user_id === $user->id) 
             || ($user->isNgo() && $claim->user_id === $user->id);
     }
 
     /**
      * Determine if the user can delete the claim.
+     * Only Admin or the owning NGO (pending only) can delete. Moderators CANNOT delete.
      */
     public function delete(User $user, Claim $claim): bool
     {
-        if ($user->isAdmin() || $user->isModerator()) {
-            return true;
-        }
-
-        // NGO can cancel their own pending claims
+        if ($user->isAdmin()) return true;
+        // Moderators CANNOT delete claims
         return $user->isNgo() && $claim->user_id === $user->id && $claim->status === 'pending';
     }
 }

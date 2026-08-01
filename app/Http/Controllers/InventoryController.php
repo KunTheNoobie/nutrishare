@@ -47,8 +47,8 @@ class InventoryController extends Controller
     /** Show create form. */
     public function create()
     {
-        if (!Auth::user()->isNgo()) {
-            abort(403, 'Unauthorized. Inventory locations are managed exclusively by NGOs.');
+        if (!Auth::user()->isNgo() && !Auth::user()->isAdmin() && !Auth::user()->isModerator()) {
+            abort(403, 'Unauthorized. Inventory locations are managed by NGOs, Admins, and Moderators.');
         }
         return view('inventory.create');
     }
@@ -56,8 +56,8 @@ class InventoryController extends Controller
     /** Store a new inventory location. */
     public function store(Request $request)
     {
-        if (!Auth::user()->isNgo()) {
-            abort(403, 'Unauthorized. Inventory locations can only be registered by NGOs.');
+        if (!Auth::user()->isNgo() && !Auth::user()->isAdmin() && !Auth::user()->isModerator()) {
+            abort(403, 'Unauthorized. Inventory locations can only be registered by NGOs, Admins, and Moderators.');
         }
 
         $validated = $request->validate([
@@ -97,8 +97,8 @@ class InventoryController extends Controller
     /** Add a food item to inventory. */
     public function addFoodItem(StoreFoodItemRequest $request)
     {
-        if (!Auth::user()->isNgo()) {
-            abort(403, 'Unauthorized. Food items in inventory are managed exclusively by NGOs.');
+        if (!Auth::user()->isNgo() && !Auth::user()->isAdmin() && !Auth::user()->isModerator()) {
+            abort(403, 'Unauthorized. Food items in inventory are managed by NGOs, Admins, and Moderators.');
         }
         $validated = $request->validated();
 

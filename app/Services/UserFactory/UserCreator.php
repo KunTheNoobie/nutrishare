@@ -45,10 +45,11 @@ abstract class UserCreator
     public static function resolve(string $role): static
     {
         return match (strtolower($role)) {
-            'donor' => new DonorCreator(),
-            'ngo'   => new NgoCreator(),
-            'admin' => new AdminCreator(),
-            default => throw new \InvalidArgumentException("Unknown user role: {$role}"),
+            'donor'     => new DonorCreator(),
+            'ngo'       => new NgoCreator(),
+            'admin'     => new AdminCreator(),
+            'moderator' => new ModeratorCreator(),
+            default     => throw new \InvalidArgumentException("Unknown user role: {$role}"),
         };
     }
 }
