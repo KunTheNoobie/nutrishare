@@ -110,7 +110,7 @@ class ClaimController extends Controller
             }
 
             // BUSINESS RULE: A claim CANNOT be marked as collected until a pickup vehicle (driver & van/truck) has been assigned!
-            if (!$claim->vehicle_id) {
+            if (!$claim->vehicle) {
                 return redirect()->route('claims.show', $claim)
                     ->with('error', 'Cannot collect donation: Please assign a pickup vehicle (driver & vehicle details) before marking as collected.');
             }

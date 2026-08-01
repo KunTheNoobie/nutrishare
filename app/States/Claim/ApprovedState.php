@@ -38,7 +38,7 @@ class ApprovedState extends ClaimState
     private function collect(): bool
     {
         // Enforce vehicle assignment business rule before collection
-        if (!$this->claim->vehicle_id) {
+        if (!$this->claim->vehicle) {
             return false;
         }
 
