@@ -53,6 +53,91 @@
             --apple-card-bg: #ffffff;
             --apple-input-bg: #f2f2f7;
         }
+
+        /* Light Mode Text & Component Contrast Fixes */
+        [data-theme="light"] .text-light,
+        [data-theme="light"] .text-white {
+            color: #1d1d1f !important;
+        }
+        [data-theme="light"] .text-muted {
+            color: #6e6e73 !important;
+        }
+        [data-theme="light"] .table-dark {
+            --bs-table-bg: #ffffff !important;
+            --bs-table-color: #1d1d1f !important;
+            --bs-table-hover-bg: #f2f2f7 !important;
+            --bs-table-hover-color: #1d1d1f !important;
+            --bs-table-border-color: #e5e5ea !important;
+            color: #1d1d1f !important;
+            border-color: #e5e5ea !important;
+        }
+        [data-theme="light"] .table-dark th {
+            color: #6e6e73 !important;
+            border-bottom-color: #e5e5ea !important;
+        }
+        [data-theme="light"] .btn-outline-light {
+            color: #1d1d1f !important;
+            border-color: #c7c7cc !important;
+            background-color: transparent !important;
+        }
+        [data-theme="light"] .btn-outline-light:hover {
+            background-color: #e5e5ea !important;
+            color: #000000 !important;
+        }
+        [data-theme="light"] .btn-secondary {
+            background-color: #e5e5ea !important;
+            color: #1d1d1f !important;
+            border-color: #c7c7cc !important;
+        }
+        [data-theme="light"] .btn-secondary:hover {
+            background-color: #d1d1d6 !important;
+            color: #000000 !important;
+        }
+        [data-theme="light"] .bg-dark,
+        [data-theme="light"] .bg-secondary {
+            background-color: #f2f2f7 !important;
+            color: #1d1d1f !important;
+        }
+        [data-theme="light"] .border-dark,
+        [data-theme="light"] .border-secondary {
+            border-color: #e5e5ea !important;
+        }
+        [data-theme="light"] .dropdown-menu {
+            background-color: #ffffff !important;
+            border-color: #e5e5ea !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+        }
+        [data-theme="light"] .dropdown-item {
+            color: #1d1d1f !important;
+        }
+        [data-theme="light"] .dropdown-item:hover {
+            background-color: #f2f2f7 !important;
+            color: #0066cc !important;
+        }
+        [data-theme="light"] .list-group-item {
+            background-color: #ffffff !important;
+            color: #1d1d1f !important;
+            border-color: #e5e5ea !important;
+        }
+        [data-theme="light"] .modal-content {
+            background-color: #ffffff !important;
+            color: #1d1d1f !important;
+            border-color: #e5e5ea !important;
+        }
+        [data-theme="light"] .datatable-table > tbody > tr:hover {
+            background-color: #f2f2f7 !important;
+        }
+        [data-theme="light"] .datatable-input,
+        [data-theme="light"] .datatable-selector {
+            background-color: #f2f2f7 !important;
+            color: #1d1d1f !important;
+            border-color: #e5e5ea !important;
+        }
+        [data-theme="light"] .btn-check:checked + .btn-outline-light {
+            background: rgba(0, 102, 204, 0.1) !important;
+            border-color: #0066cc !important;
+            color: #0066cc !important;
+        }
         
         body { 
             background-color: var(--apple-bg);
