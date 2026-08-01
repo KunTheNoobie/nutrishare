@@ -133,7 +133,7 @@
                     </div>
 
                     <div class="d-flex align-items-center gap-3">
-                        <button type="submit" class="btn btn-outline-light text-apple-danger border-apple-danger" style="background-color: rgba(255,59,48,0.1);">Change Password</button>
+                        <button type="submit" class="btn btn-ns-primary">Change Password</button>
 
                         @if (session('status') === 'password-updated')
                             <p class="text-apple-success mb-0 small">Saved.</p>
