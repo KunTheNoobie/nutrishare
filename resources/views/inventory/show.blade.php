@@ -51,10 +51,24 @@
                         @forelse($inventoryLocation->foodItems as $item)
                         <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
                             <td class="ps-4">
-                                <strong style="color: var(--apple-text);">{{ $item->name }}</strong>
-                                @if($item->isExpired())
-                                    <span class="badge badge-danger ms-2" style="font-size: 0.68rem;">Expired</span>
-                                @endif
+                                <div class="d-flex align-items-center gap-3">
+                                    @if($item->donation && $item->donation->image_paths && count($item->donation->image_paths) > 0)
+                                        @php
+                                            $imgSrc = Str::startsWith($item->donation->image_paths[0], ['http://', 'https://']) ? $item->donation->image_paths[0] : asset('storage/' . $item->donation->image_paths[0]);
+                                        @endphp
+                                        <img src="{{ $imgSrc }}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 10px; border: 1px solid var(--apple-border);" alt="{{ $item->name }}">
+                                    @else
+                                        <div class="d-flex align-items-center justify-content-center rounded" style="width: 40px; height: 40px; background: rgba(41, 151, 255, 0.1); border: 1px solid var(--apple-border); color: var(--apple-accent);">
+                                            <i class="bi bi-box-seam" style="font-size: 1.1rem;"></i>
+                                        </div>
+                                    @endif
+                                    <div>
+                                        <strong style="color: var(--apple-text);">{{ $item->name }}</strong>
+                                        @if($item->isExpired())
+                                            <span class="badge badge-danger ms-2" style="font-size: 0.68rem;">Expired</span>
+                                        @endif
+                                    </div>
+                                </div>
                             </td>
                             <td style="color: var(--apple-text);">{{ $item->quantity }} {{ $item->unit }}</td>
                             <td>

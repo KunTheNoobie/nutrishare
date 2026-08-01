@@ -73,8 +73,22 @@
                 @forelse($claims as $claim)
                 <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
                     <td class="ps-4">
-                        <strong style="color: var(--apple-text);">{{ $claim->donation->title }}</strong>
-                        <br><small style="color: var(--apple-text-muted); font-size: 0.78rem;">{{ $claim->donation->quantity }} {{ $claim->donation->unit }}</small>
+                        <div class="d-flex align-items-center gap-3">
+                            @if($claim->donation->image_paths && count($claim->donation->image_paths) > 0)
+                                @php
+                                    $thumbSrc = Str::startsWith($claim->donation->image_paths[0], ['http://', 'https://']) ? $claim->donation->image_paths[0] : asset('storage/' . $claim->donation->image_paths[0]);
+                                @endphp
+                                <img src="{{ $thumbSrc }}" style="width: 38px; height: 38px; object-fit: cover; border-radius: 8px; border: 1px solid var(--apple-border);" alt="{{ $claim->donation->title }}">
+                            @else
+                                <div class="d-flex align-items-center justify-content-center rounded" style="width: 38px; height: 38px; background: rgba(41, 151, 255, 0.1); border: 1px solid var(--apple-border); color: var(--apple-accent);">
+                                    <i class="bi bi-basket" style="font-size: 1rem;"></i>
+                                </div>
+                            @endif
+                            <div>
+                                <strong style="color: var(--apple-text);">{{ $claim->donation->title }}</strong>
+                                <br><small style="color: var(--apple-text-muted); font-size: 0.78rem;">{{ $claim->donation->quantity }} {{ $claim->donation->unit }}</small>
+                            </div>
+                        </div>
                     </td>
                     <td>
                         @if(Auth::user()->isDonor())
@@ -144,6 +158,18 @@
     @forelse($claims as $claim)
     <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm h-100 border" style="border-color: var(--apple-border) !important; border-radius: 16px; overflow: hidden;">
+            @if($claim->donation->image_paths && count($claim->donation->image_paths) > 0)
+                @php
+                    $cardImg = Str::startsWith($claim->donation->image_paths[0], ['http://', 'https://']) ? $claim->donation->image_paths[0] : asset('storage/' . $claim->donation->image_paths[0]);
+                @endphp
+                <div style="height: 140px; overflow: hidden; background: rgba(0,0,0,0.2);">
+                    <img src="{{ $cardImg }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ $claim->donation->title }}">
+                </div>
+            @else
+                <div class="d-flex justify-content-center align-items-center" style="height: 120px; background: rgba(255,255,255,0.03);">
+                    <i class="bi bi-basket text-muted" style="font-size: 2.2rem; opacity: 0.5;"></i>
+                </div>
+            @endif
             <div class="card-body p-4 d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <h6 class="fw-bold mb-0" style="color: var(--apple-text);">Claim #{{ $claim->id }}: {{ $claim->donation->title }}</h6>

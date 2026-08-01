@@ -13,7 +13,15 @@
                 </span>
             </div>
             <div class="card-body">
-                <h5>Donation: {{ $claim->donation->title }}</h5>
+                @if($claim->donation->image_paths && count($claim->donation->image_paths) > 0)
+                    @php
+                        $thumbSrc = Str::startsWith($claim->donation->image_paths[0], ['http://', 'https://']) ? $claim->donation->image_paths[0] : asset('storage/' . $claim->donation->image_paths[0]);
+                    @endphp
+                    <div class="mb-3 rounded overflow-hidden" style="height: 200px; background: rgba(0,0,0,0.2); border: 1px solid var(--apple-border);">
+                        <img src="{{ $thumbSrc }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ $claim->donation->title }}">
+                    </div>
+                @endif
+                <h5 class="fw-bold" style="color: var(--apple-text);">Donation: {{ $claim->donation->title }}</h5>
                 <p>{{ $claim->donation->description }}</p>
                 <div class="row g-3">
                     <div class="col-md-6"><strong>Quantity:</strong> {{ $claim->donation->quantity }} {{ $claim->donation->unit }}</div>
