@@ -684,23 +684,20 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                     <li class="nav-item"><a class="btn btn-ns-primary ms-2" href="{{ route('register') }}">Register</a></li>
                 @else
-                    <li class="nav-item dropdown d-flex align-items-center">
-                        <div class="d-flex align-items-center gap-2 py-1 pe-1">
-                            <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-circle border border-dark" style="width: 28px; height: 28px; object-fit: cover;">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 py-1 px-2 rounded-pill" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: var(--apple-text); background-color: var(--apple-input-bg); border: 1px solid var(--apple-border); transition: all 0.2s ease;">
+                            <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-circle" style="width: 26px; height: 26px; object-fit: cover;">
                             <span class="fw-medium small" style="color: var(--apple-text);">{{ Auth::user()->name }}</span>
                             @if(Auth::user()->isDonor())
-                                <span class="badge badge-success ms-1">Donor</span>
+                                <span class="badge badge-success">Donor</span>
                             @elseif(Auth::user()->isNgo())
-                                <span class="badge badge-warning ms-1">NGO</span>
+                                <span class="badge badge-warning">NGO</span>
                             @elseif(Auth::user()->isAdmin())
-                                <span class="badge badge-primary ms-1">Admin</span>
+                                <span class="badge badge-primary">Admin</span>
                             @elseif(Auth::user()->isModerator())
-                                <span class="badge badge-moderator ms-1">Moderator</span>
+                                <span class="badge badge-moderator">Moderator</span>
                             @endif
-                        </div>
-                        <button type="button" class="btn btn-sm text-muted dropdown-toggle dropdown-toggle-split px-1 py-0 ms-1 border-0" data-bs-toggle="dropdown" aria-expanded="false" style="box-shadow: none; background: transparent;">
-                            <span class="visually-hidden">Toggle Dropdown</span>
-                        </button>
+                        </a>
                         <ul class="dropdown-menu dropdown-menu-end border-dark shadow" style="background-color: var(--apple-surface);">
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}" style="color: var(--apple-text);"><i class="bi bi-speedometer2 text-muted me-2"></i> Dashboard</a></li>
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}" style="color: var(--apple-text);"><i class="bi bi-person-gear text-muted me-2"></i> Profile Settings</a></li>
