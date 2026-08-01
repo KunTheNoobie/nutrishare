@@ -55,8 +55,13 @@
                                     @if($item->donation && $item->donation->image_paths && count($item->donation->image_paths) > 0)
                                         @php
                                             $imgSrc = Str::startsWith($item->donation->image_paths[0], ['http://', 'https://']) ? $item->donation->image_paths[0] : asset('storage/' . $item->donation->image_paths[0]);
+                                            $allImgs = array_map(function($p) {
+                                                return Str::startsWith($p, ['http://', 'https://']) ? $p : asset('storage/' . $p);
+                                            }, $item->donation->image_paths);
                                         @endphp
-                                        <img src="{{ $imgSrc }}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 10px; border: 1px solid var(--apple-border);" alt="{{ $item->name }}">
+                                        <a href="javascript:void(0);" onclick='openInventoryItemModal({{ json_encode($allImgs) }}, "{{ addslashes($item->name) }}")' data-bs-toggle="modal" data-bs-target="#inventoryImageModal" title="Click to view item photo">
+                                            <img src="{{ $imgSrc }}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 10px; border: 1px solid var(--apple-border); cursor: pointer;" alt="{{ $item->name }}">
+                                        </a>
                                     @else
                                         <div class="d-flex align-items-center justify-content-center rounded" style="width: 40px; height: 40px; background: rgba(41, 151, 255, 0.1); border: 1px solid var(--apple-border); color: var(--apple-accent);">
                                             <i class="bi bi-box-seam" style="font-size: 1.1rem;"></i>
@@ -207,4 +212,68 @@
     </div>
     @endif
 </div>
+
+<!-- Modal for Inventory Item Fullscreen Image Viewing -->
+<div class="modal fade" id="inventoryImageModal" tabindex="-1" aria-labelledby="inventoryImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-light border-secondary">
+            <div class="modal-header border-secondary py-2">
+                <h6 class="modal-title" id="inventoryImageModalLabel"><i class="bi bi-box-seam text-apple-accent me-1"></i> <span id="invItemTitle">Item Photo</span></h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-0 position-relative d-flex justify-content-center align-items-center" style="min-height: 400px; background: #000;">
+                <img id="invModalImage" src="" class="img-fluid" style="max-height: 75vh; object-fit: contain;" alt="Inventory Item Photo">
+                <button type="button" class="btn btn-dark btn-sm position-absolute start-0 top-50 translate-middle-y ms-2 rounded-circle border-secondary" id="invModalPrevBtn" style="width: 40px; height: 40px; opacity: 0.8; display: none;">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button type="button" class="btn btn-dark btn-sm position-absolute end-0 top-50 translate-middle-y me-2 rounded-circle border-secondary" id="invModalNextBtn" style="width: 40px; height: 40px; opacity: 0.8; display: none;">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+    let currentInvImages = [];
+    let currentInvIndex = 0;
+
+    window.openInventoryItemModal = function(images, title) {
+        currentInvImages = images || [];
+        currentInvIndex = 0;
+        document.getElementById('invItemTitle').innerText = title || 'Item Photo';
+        updateInvModalImage();
+    };
+
+    function updateInvModalImage() {
+        if(currentInvImages.length > 0) {
+            document.getElementById('invModalImage').src = currentInvImages[currentInvIndex];
+            const showButtons = currentInvImages.length > 1;
+            document.getElementById('invModalPrevBtn').style.display = showButtons ? 'block' : 'none';
+            document.getElementById('invModalNextBtn').style.display = showButtons ? 'block' : 'none';
+        }
+    }
+
+    if (document.getElementById('invModalPrevBtn')) {
+        document.getElementById('invModalPrevBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if(currentInvImages.length > 0) {
+                currentInvIndex = (currentInvIndex - 1 + currentInvImages.length) % currentInvImages.length;
+                updateInvModalImage();
+            }
+        });
+    }
+
+    if (document.getElementById('invModalNextBtn')) {
+        document.getElementById('invModalNextBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if(currentInvImages.length > 0) {
+                currentInvIndex = (currentInvIndex + 1) % currentInvImages.length;
+                updateInvModalImage();
+            }
+        });
+    }
+</script>
+@endpush
 @endsection
