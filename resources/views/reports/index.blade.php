@@ -36,11 +36,11 @@
                     </div>
                     <span class="badge badge-{{ $report->type === 'sdg_impact' ? 'success' : ($report->type === 'donation_summary' ? 'warning' : 'primary') }}">
                         @if($report->type === 'sdg_impact')
-                            <i class="bi bi-globe"></i> SDG Impact
+                            <i class="bi bi-globe me-1"></i> SDG Impact
                         @elseif($report->type === 'donation_summary')
-                            <i class="bi bi-basket"></i> Donations
+                            <i class="bi bi-basket me-1"></i> Donations
                         @else
-                            <i class="bi bi-people"></i> Users
+                            <i class="bi bi-people me-1"></i> Users
                         @endif
                     </span>
                 </div>

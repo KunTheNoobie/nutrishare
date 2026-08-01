@@ -268,6 +268,12 @@
             border-color: #e5e5ea !important;
         }
 
+        /* Icon Spacing for Badges and Buttons */
+        .badge i, .btn i {
+            margin-right: 6px !important;
+            display: inline-block;
+        }
+
         /* Action Tag High-Contrast Styling */
         .action-tag {
             display: inline-block;
