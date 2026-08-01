@@ -60,7 +60,13 @@
             </div>
         </div>
         @empty
-        <p class="text-muted text-center py-4">No pending verifications. All clear! ✅</p>
+        <div class="text-center py-5">
+            <div class="d-inline-flex justify-content-center align-items-center rounded-circle mb-3 bg-success bg-opacity-10 border border-success border-opacity-20 shadow-sm" style="width: 72px; height: 72px;">
+                <i class="bi bi-shield-check text-apple-success fs-1"></i>
+            </div>
+            <h4 class="fw-bold mb-2" style="color: var(--apple-text); font-size: 1.25rem;">No Pending Verifications</h4>
+            <p class="mb-0" style="color: var(--apple-text-muted); font-size: 0.95rem;">All NGO registration documents have been reviewed. Queue is completely clear!</p>
+        </div>
         @endforelse
     </div>
 </div>
