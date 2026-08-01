@@ -8,6 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <script>
+        (function() {
+            const saved = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+
     <style>
         :root {
             --apple-bg: #000000;
@@ -15,7 +24,20 @@
             --apple-text-muted: #86868b;
             --apple-accent: #2997ff;
             --apple-accent-hover: #0071e3;
+            --apple-border: rgba(255, 255, 255, 0.2);
+            --glow-color: rgba(41, 151, 255, 0.12);
         }
+
+        [data-theme="light"] {
+            --apple-bg: #f5f5f7;
+            --apple-text: #1d1d1f;
+            --apple-text-muted: #6e6e73;
+            --apple-accent: #0066cc;
+            --apple-accent-hover: #004499;
+            --apple-border: rgba(0, 0, 0, 0.15);
+            --glow-color: rgba(0, 102, 204, 0.08);
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -28,14 +50,38 @@
             overflow: hidden;
             -webkit-font-smoothing: antialiased;
             position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
+        /* Floating theme button top-right */
+        .theme-toggle-fixed {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+            background: transparent;
+            border: 1px solid var(--apple-border);
+            color: var(--apple-text);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle-fixed:hover {
+            transform: scale(1.1);
+        }
+
         /* Subtle glow in background */
         .glow {
             position: absolute;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(41,151,255,0.1) 0%, rgba(0,0,0,0) 70%);
+            background: radial-gradient(circle, var(--glow-color) 0%, rgba(0,0,0,0) 70%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -56,22 +102,6 @@
         @keyframes slideUpFade {
             to { transform: translateY(0); opacity: 1; }
         }
-        
-        .badge-top {
-            display: inline-block;
-            color: var(--apple-text-muted);
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 6px 16px;
-            border-radius: 980px;
-            animation: fadeIn 1.5s ease forwards;
-            opacity: 0;
-        }
-        @keyframes fadeIn { to { opacity: 1; } }
 
         h1 {
             font-size: 5rem;
@@ -120,17 +150,17 @@
             color: var(--apple-bg);
         }
         .btn-primary:hover {
-            background-color: #d1d1d6;
+            opacity: 0.9;
             transform: scale(1.02);
         }
         
         .btn-outline {
             background-color: transparent;
             color: var(--apple-text);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--apple-border);
         }
         .btn-outline:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(125, 125, 125, 0.1);
         }
 
         /* Responsive */
@@ -142,6 +172,10 @@
     </style>
 </head>
 <body>
+    <button class="theme-toggle-fixed" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Light / Dark Mode">
+        <i id="themeIcon" class="bi bi-moon-stars-fill fs-5 text-info"></i>
+    </button>
+
     <div class="glow"></div>
     
     <div class="container">
@@ -157,5 +191,31 @@
             @endauth
         </div>
     </div>
+
+    <script>
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('themeIcon');
+            if (icon) {
+                if (theme === 'light') {
+                    icon.className = 'bi bi-sun-fill fs-5 text-warning';
+                } else {
+                    icon.className = 'bi bi-moon-stars-fill fs-5 text-info';
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const saved = localStorage.getItem('theme') || 'dark';
+            updateThemeIcon(saved);
+        });
+    </script>
 </body>
 </html>
