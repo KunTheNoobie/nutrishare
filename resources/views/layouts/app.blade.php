@@ -436,6 +436,27 @@
         .badge-moderator { background: rgba(191, 90, 242, 0.15) !important; color: #bf5af2 !important; border: 1px solid rgba(191, 90, 242, 0.3) !important; }
         .badge-danger { background: rgba(255, 59, 48, 0.15) !important; color: #ff3b30 !important; border: 1px solid rgba(255, 59, 48, 0.3) !important; }
 
+        /* Navbar Notification Badge */
+        .nav-badge-count {
+            position: absolute !important;
+            top: -4px !important;
+            right: -4px !important;
+            background-color: #ff3b30 !important;
+            color: #ffffff !important;
+            font-size: 0.65rem !important;
+            font-weight: 700 !important;
+            border-radius: 980px !important;
+            min-width: 18px !important;
+            height: 18px !important;
+            padding: 0 4px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: 2px solid var(--apple-surface) !important;
+            line-height: 1 !important;
+            z-index: 10 !important;
+        }
+
         /* Light Mode Badges - Enhanced Contrast */
         [data-theme="light"] .badge-success { background: rgba(40, 167, 69, 0.15) !important; color: #1e7e34 !important; border: 1px solid rgba(40, 167, 69, 0.35) !important; }
         [data-theme="light"] .badge-warning { background: rgba(217, 119, 6, 0.15) !important; color: #b45309 !important; border: 1px solid rgba(217, 119, 6, 0.35) !important; }
@@ -669,7 +690,7 @@
                         <a class="btn btn-sm btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center p-0 position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="System Notifications" style="width: 36px; height: 36px; border: 1px solid var(--apple-border);">
                             <i class="bi bi-bell text-apple-accent d-flex align-items-center justify-content-center" style="font-size: 1.05rem; line-height: 1; margin: 0; width: 100%; height: 100%;"></i>
                             @if(Auth::user()->unreadNotificationsCount() > 0)
-                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style="font-size: 0.65rem; padding: 0.2rem 0.4rem;">
+                                <span class="nav-badge-count">
                                     {{ Auth::user()->unreadNotificationsCount() }}
                                 </span>
                             @endif
