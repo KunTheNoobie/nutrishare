@@ -54,6 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:admin,moderator')->group(function () {
         Route::get('/verification', [VerificationController::class, 'index'])->name('verification.index');
         Route::post('/verification/{document}/review', [VerificationController::class, 'review'])->name('verification.review');
+        Route::get('/verification/{document}/file', [VerificationController::class, 'showFile'])->name('verification.file');
+        Route::get('/verification/{document}/download', [VerificationController::class, 'download'])->name('verification.download');
 
         // ─── Platform Reports (Admin/Moderator) ───
         Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');

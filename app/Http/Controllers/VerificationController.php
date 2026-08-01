@@ -91,5 +91,33 @@ class VerificationController extends Controller
         );
 
         return redirect()->back()->with('success', 'Review submitted successfully.');
+    /** View verification document inline. */
+    public function showFile(VerificationDocument $document)
+    {
+        $user = Auth::user();
+        if (!$user->isAdmin() && !$user->isModerator() && $user->id !== $document->user_id) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($document->file_path)) {
+            return back()->with('error', 'File not found on server.');
+        }
+
+        return \Illuminate\Support\Facades\Storage::disk('public')->response($document->file_path);
+    }
+
+    /** Download verification document. */
+    public function download(VerificationDocument $document)
+    {
+        $user = Auth::user();
+        if (!$user->isAdmin() && !$user->isModerator() && $user->id !== $document->user_id) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($document->file_path)) {
+            return back()->with('error', 'File not found on server.');
+        }
+
+        return \Illuminate\Support\Facades\Storage::disk('public')->download($document->file_path, $document->original_filename);
     }
 }
