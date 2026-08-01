@@ -107,10 +107,11 @@ class ApprovedState extends ClaimState
         // AUTO-GENERATE SDG DISTRIBUTION LOG (Module 3 requirement)
         if ($this->claim->distributionLogs()->count() === 0) {
             $beneficiaries = max(10, (int) round($this->claim->donation->quantity * 5));
+            $distLocation = $location ? ($location->name . ' (' . ($location->address ?: 'NGO Pantry Hub') . ')') : ($ngo->organization_name ?: $ngo->name) . ' Distribution Center';
             \App\Models\DistributionLog::create([
                 'claim_id' => $this->claim->id,
                 'beneficiaries_count' => $beneficiaries,
-                'distribution_location' => $this->claim->donation->pickup_address ?: 'Community Pantry Site',
+                'distribution_location' => $distLocation,
                 'notes' => 'Auto-logged SDG 2 Zero Hunger food distribution to local beneficiaries upon collection.',
                 'quantity_distributed' => $this->claim->donation->quantity,
                 'unit' => $this->claim->donation->unit,
