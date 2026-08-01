@@ -17,9 +17,17 @@
             <i class="bi bi-calendar"></i> {{ $report->report_date->format('d M Y, h:i A') }}
         </p>
     </div>
-    <a href="{{ route('reports.index') }}" class="btn btn-outline-light btn-sm">
-        <i class="bi bi-arrow-left"></i> All Reports
-    </a>
+    <div class="d-flex align-items-center gap-2">
+        <form method="POST" action="{{ route('reports.refresh', $report) }}">
+            @csrf
+            <button type="submit" class="btn btn-ns-accent btn-sm text-nowrap">
+                <i class="bi bi-arrow-clockwise"></i> Refresh Live Data
+            </button>
+        </form>
+        <a href="{{ route('reports.index') }}" class="btn btn-outline-light btn-sm text-nowrap">
+            <i class="bi bi-arrow-left"></i> All Reports
+        </a>
+    </div>
 </div>
 
 {{-- ─── SDG Impact Report ─── --}}

@@ -72,6 +72,31 @@ class ReportController extends Controller
         return view('reports.show', compact('report', 'content'));
     }
 
+    /** Recalculate and update an existing report with fresh live platform metrics. */
+    public function refresh(Report $report)
+    {
+        $content = match ($report->type) {
+            'sdg_impact' => $this->generateSdgImpactReport(),
+            'donation_summary' => $this->generateDonationSummaryReport(),
+            'user_activity' => $this->generateUserActivityReport(),
+        };
+
+        $report->update([
+            'content' => json_encode($content),
+            'report_date' => now(),
+        ]);
+
+        \App\Models\SystemLog::create([
+            'user_id' => Auth::id(),
+            'action' => 'report.refreshed',
+            'description' => "Report '{$report->title}' updated with fresh live platform metrics.",
+            'level' => 'info',
+        ]);
+
+        return redirect()->route('reports.show', $report)
+            ->with('success', 'Report data updated with current live platform metrics.');
+    }
+
     /** Delete a report. */
     public function destroy(Report $report)
     {

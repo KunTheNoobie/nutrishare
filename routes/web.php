@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports/create', [ReportController::class, 'create'])->name('reports.create');
         Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
         Route::get('/reports/{report}', [ReportController::class, 'show'])->name('reports.show');
+        Route::post('/reports/{report}/refresh', [ReportController::class, 'refresh'])->name('reports.refresh');
         Route::delete('/reports/{report}', [ReportController::class, 'destroy'])->name('reports.destroy');
 
         // ─── System Activity Logs (Admin/Moderator) ───
