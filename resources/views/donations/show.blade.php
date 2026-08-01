@@ -178,7 +178,9 @@
                             {{ ucfirst($claim->status) }}
                         </span>
                     </div>
+                    @can('view', $claim)
                     <a href="{{ route('claims.show', $claim) }}" class="btn btn-sm btn-outline-light">View Details</a>
+                    @endcan
                 </div>
                 @endforeach
             </div>
