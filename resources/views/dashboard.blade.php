@@ -238,9 +238,12 @@
     </div>
     <div class="col-md-3">
         <div class="card shadow-sm h-100 d-flex justify-content-center align-items-center">
-            <div class="card-body text-center py-4 w-100 d-flex flex-column justify-content-center">
+            <div class="card-body text-center py-4 w-100 d-flex flex-column justify-content-center gap-2">
                 <a href="{{ route('verification.index') }}" class="btn btn-ns-primary w-100" style="background-color: var(--apple-danger); color: #fff;">
                     <i class="bi bi-shield-check"></i> Review Queue
+                </a>
+                <a href="{{ route('reports.index') }}" class="btn btn-outline-light w-100">
+                    <i class="bi bi-graph-up"></i> Reports
                 </a>
             </div>
         </div>

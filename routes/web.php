@@ -8,6 +8,7 @@ use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,13 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:admin,moderator')->group(function () {
         Route::get('/verification', [VerificationController::class, 'index'])->name('verification.index');
         Route::post('/verification/{document}/review', [VerificationController::class, 'review'])->name('verification.review');
+
+        // ─── Platform Reports (Admin/Moderator) ───
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('/reports/create', [ReportController::class, 'create'])->name('reports.create');
+        Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
+        Route::get('/reports/{report}', [ReportController::class, 'show'])->name('reports.show');
+        Route::delete('/reports/{report}', [ReportController::class, 'destroy'])->name('reports.destroy');
     });
 
     Route::middleware('role:ngo')->group(function () {

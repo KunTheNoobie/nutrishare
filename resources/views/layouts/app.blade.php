@@ -274,6 +274,12 @@
                         <a class="nav-link" href="{{ route('inventory.index') }}"><i class="bi bi-box-seam"></i> Inventory</a>
                     </li>
                     @endif
+
+                    @if(Auth::user()->isAdmin() || Auth::user()->isModerator())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('reports.index') }}"><i class="bi bi-graph-up"></i> Reports</a>
+                    </li>
+                    @endif
                 @endauth
             </ul>
             <ul class="navbar-nav">
