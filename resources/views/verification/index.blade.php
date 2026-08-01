@@ -35,11 +35,11 @@
                         </div>
                         <p class="mb-2 text-muted extra-small"><i class="bi bi-clock-history"></i> Uploaded: {{ $doc->created_at->format('d M Y, h:i A') }}</p>
 
-                        <div class="d-flex gap-2 mt-2">
-                            <a href="{{ route('verification.file', $doc) }}" target="_blank" class="btn btn-sm btn-outline-info">
+                        <div class="d-flex flex-wrap gap-2 mt-3">
+                            <a href="{{ route('verification.file', $doc) }}" target="_blank" class="btn btn-sm btn-outline-info text-nowrap px-3">
                                 <i class="bi bi-eye"></i> View File
                             </a>
-                            <a href="{{ route('verification.download', $doc) }}" class="btn btn-sm btn-outline-primary">
+                            <a href="{{ route('verification.download', $doc) }}" class="btn btn-sm btn-outline-primary text-nowrap px-3">
                                 <i class="bi bi-download"></i> Download
                             </a>
                         </div>
@@ -51,10 +51,10 @@
                         @csrf
                         <input type="text" name="admin_remarks" class="form-control form-control-sm" placeholder="Remarks (optional)" style="max-width: 250px;">
                         <div class="d-flex gap-2">
-                            <button type="submit" name="action" value="approved" class="btn btn-success btn-sm px-3 fw-medium">
+                            <button type="submit" name="action" value="approved" class="btn btn-success btn-sm px-3 fw-medium text-nowrap">
                                 <i class="bi bi-check-lg"></i> Approve
                             </button>
-                            <button type="submit" name="action" value="rejected" class="btn btn-danger btn-sm px-3 fw-medium">
+                            <button type="submit" name="action" value="rejected" class="btn btn-danger btn-sm px-3 fw-medium text-nowrap">
                                 <i class="bi bi-x-lg"></i> Reject
                             </button>
                         </div>

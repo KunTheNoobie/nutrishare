@@ -267,27 +267,43 @@
             font-weight: 600 !important;
         }
         
-        /* Global Button Overrides for Consistency */
+        /* Global Button Overrides for System-wide Uniformity */
         .btn {
             border-radius: 980px !important;
             font-weight: 500 !important;
-            font-family: 'Inter', -apple-system, sans-serif !important;
-            padding: 10px 24px;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            padding: 8px 20px !important;
+            line-height: 1.4 !important;
+            white-space: nowrap !important;
+            transition: all 0.2s ease !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            font-size: 0.875rem !important;
+            box-shadow: none !important;
         }
         .btn-sm {
             padding: 6px 16px !important;
-            font-size: 0.85rem !important;
+            font-size: 0.8rem !important;
+            border-radius: 980px !important;
+            white-space: nowrap !important;
+        }
+        .btn-lg {
+            padding: 12px 28px !important;
+            font-size: 1rem !important;
+            border-radius: 980px !important;
+            white-space: nowrap !important;
         }
         .btn:hover {
-            transform: scale(1.02);
+            transform: translateY(-1px) !important;
+            opacity: 0.92 !important;
+        }
+        .btn:active {
+            transform: translateY(0) !important;
         }
         .input-group .btn {
-            border-radius: 0 12px 12px 0 !important;
+            border-radius: 0 980px 980px 0 !important;
             padding-left: 1.25rem !important;
             padding-right: 1.25rem !important;
         }
