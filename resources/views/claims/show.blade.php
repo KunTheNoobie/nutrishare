@@ -2,18 +2,19 @@
 @section('title', 'Claim Details')
 
 @section('content')
-<div class="row">
-    <div class="col-md-8">
+<div class="row g-4">
+    <div class="col-lg-7">
         <!-- Claim Details -->
-        <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between">
-                <h4 class="mb-0"><i class="bi bi-hand-thumbs-up"></i> Claim #{{ $claim->id }}</h4>
+        <div class="card mb-4 shadow-sm animate-slide-up">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="mb-0 fw-bold"><i class="bi bi-hand-thumbs-up text-apple-accent me-1"></i> Claim #{{ $claim->id }}</h4>
                 <span class="badge bg-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : ($claim->status === 'collected' ? 'info' : 'secondary')) }} fs-6">
                     {{ ucfirst($claim->status) }}
                 </span>
             </div>
+            <div class="card-body">
                 @if($claim->donation->image_paths && count($claim->donation->image_paths) > 0)
-                <div id="claimImageCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+                <div id="claimImageCarousel" class="carousel slide mb-3" data-bs-ride="carousel">
                     @if(count($claim->donation->image_paths) > 1)
                     <div class="carousel-indicators">
                         @foreach($claim->donation->image_paths as $index => $path)
@@ -21,14 +22,14 @@
                         @endforeach
                     </div>
                     @endif
-                    <div class="carousel-inner rounded shadow-sm" style="border: 1px solid var(--apple-border);">
+                    <div class="carousel-inner rounded-3 shadow-sm" style="border: 1px solid var(--apple-border);">
                         @foreach($claim->donation->image_paths as $index => $path)
                             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                                 @php
                                     $imgSrc = Str::startsWith($path, ['http://', 'https://']) ? $path : asset('storage/' . $path);
                                 @endphp
                                 <a href="javascript:void(0);" onclick="window.openClaimModalImage({{ $index }})" data-bs-toggle="modal" data-bs-target="#claimImageModal" title="Click to view full image">
-                                    <img src="{{ $imgSrc }}" class="d-block w-100" alt="Claim Image {{ $index + 1 }}" style="height: 340px; object-fit: cover;">
+                                    <img src="{{ $imgSrc }}" class="d-block w-100" alt="Claim Image {{ $index + 1 }}" style="height: 180px; object-fit: cover; cursor: pointer;">
                                 </a>
                             </div>
                         @endforeach
@@ -45,16 +46,16 @@
                     @endif
                 </div>
                 @endif
-                <h5 class="fw-bold" style="color: var(--apple-text);">Donation: {{ $claim->donation->title }}</h5>
-                <p>{{ $claim->donation->description }}</p>
-                <div class="row g-3">
+                <h5 class="fw-bold mb-1" style="color: var(--apple-text);">Donation: {{ $claim->donation->title }}</h5>
+                <p class="small mb-3" style="color: var(--apple-text-muted);">{{ $claim->donation->description }}</p>
+                <div class="row g-2 small mb-3">
                     <div class="col-md-6"><strong>Quantity:</strong> {{ $claim->donation->quantity }} {{ $claim->donation->unit }}</div>
                     <div class="col-md-6"><strong>Donor:</strong> {{ $claim->donation->donor->name }}</div>
                     <div class="col-md-6"><strong>NGO:</strong> {{ $claim->user->organization_name ?? $claim->user->name }}</div>
                     <div class="col-md-6"><strong>Pickup:</strong> {{ $claim->pickup_scheduled_at?->format('d M Y, h:i A') ?? 'TBD' }}</div>
                 </div>
-                <hr>
-                <p><strong>Justification:</strong> {{ $claim->justification }}</p>
+                <hr class="my-2" style="border-color: var(--apple-border) !important;">
+                <p class="small mb-3"><strong>Justification:</strong> {{ $claim->justification }}</p>
 
                 <!-- State Pattern Info -->
                 @php
@@ -171,7 +172,7 @@
         @endif
     </div>
 
-    <div class="col-md-4" style="position: sticky; top: 20px; align-self: flex-start;">
+    <div class="col-lg-5" style="position: sticky; top: 20px; align-self: flex-start;">
         <!-- State Transition Actions -->
         @if(count($availableActions) > 0)
         <div class="card mb-3">
