@@ -254,16 +254,24 @@
     <div class="card-header"><i class="bi bi-journal-text text-apple-accent"></i> Recent System Logs</div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-dark table-hover border-dark datatable">
-                <thead><tr><th class="text-muted fw-normal">Time</th><th class="text-muted fw-normal">User</th><th class="text-muted fw-normal">Action</th><th class="text-muted fw-normal">Description</th><th class="text-muted fw-normal">Level</th></tr></thead>
+            <table class="table table-hover align-middle datatable">
+                <thead>
+                    <tr>
+                        <th class="text-muted fw-normal">Time</th>
+                        <th class="text-muted fw-normal">User</th>
+                        <th class="text-muted fw-normal">Action</th>
+                        <th class="text-muted fw-normal">Description</th>
+                        <th class="text-muted fw-normal">Level</th>
+                    </tr>
+                </thead>
                 <tbody>
                 @forelse($recentLogs as $log)
                 <tr>
                     <td><small class="text-muted">{{ $log->created_at->format('d M H:i') }}</small></td>
-                    <td>{{ $log->user?->name ?? 'System' }}</td>
-                    <td><code class="text-apple-accent" style="background: transparent;">{{ $log->action }}</code></td>
-                    <td class="text-muted">{{ Str::limit($log->description, 60) }}</td>
-                    <td><span class="badge badge-{{ $log->level === 'error' ? 'danger' : ($log->level === 'warning' ? 'warning' : 'success') }}">{{ $log->level }}</span></td>
+                    <td><span class="fw-semibold text-light">{{ $log->user?->name ?? 'System' }}</span></td>
+                    <td><span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-30 px-2 py-1 font-monospace" style="font-size: 0.75rem;">{{ $log->action }}</span></td>
+                    <td class="text-muted">{{ Str::limit($log->description, 65) }}</td>
+                    <td><span class="badge badge-{{ $log->level === 'error' ? 'danger' : ($log->level === 'warning' ? 'warning' : 'success') }}">{{ ucfirst($log->level) }}</span></td>
                 </tr>
                 @empty
                 <tr><td colspan="5" class="text-muted text-center py-4">No system logs yet.</td></tr>
@@ -275,18 +283,23 @@
 </div>
 
 <div class="card shadow-sm animate-slide-up mt-4">
-    <div class="card-header"><i class="bi bi-basket text-apple-accent"></i> Recent Donations Platform-wide</div>
+    <div class="card-header"><i class="bi bi-basket text-apple-accent"></i> Recent Available Donations</div>
     <div class="card-body">
         @forelse($recentDonations as $donation)
-        <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
+        <div class="d-flex justify-content-between align-items-center py-3 border-bottom" style="border-color: var(--apple-border) !important;">
             <div class="d-flex align-items-center gap-3">
                 @if($donation->image_paths && count($donation->image_paths) > 0)
                     @php
                         $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
                     @endphp
-                    <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" alt="Thumbnail">
+                    <div style="width: 60px; height: 60px; flex-shrink: 0;">
+                        <img src="{{ $thumbSrc }}" class="rounded shadow-sm w-100 h-100" style="object-fit: cover;" alt="{{ $donation->title }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="rounded shadow-sm justify-content-center align-items-center bg-secondary bg-opacity-10 w-100 h-100" style="display: none;">
+                            <i class="bi bi-basket text-muted fs-4"></i>
+                        </div>
+                    </div>
                 @else
-                    <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; background: rgba(255,255,255,0.05);">
+                    <div class="rounded shadow-sm d-flex justify-content-center align-items-center bg-secondary bg-opacity-10" style="width: 60px; height: 60px; flex-shrink: 0;">
                         <i class="bi bi-basket text-muted fs-4"></i>
                     </div>
                 @endif
@@ -294,18 +307,18 @@
                     <strong style="font-size: 1.05rem;">
                         <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
                     </strong>
-                    <br><small class="text-muted">By {{ $donation->donor->name }} &nbsp;&middot;&nbsp; {{ $donation->quantity }} {{ $donation->unit }}</small>
+                    <br><small class="text-muted">By {{ $donation->donor->organization_name ?? $donation->donor->name }} &nbsp;&middot;&nbsp; {{ $donation->quantity }} {{ $donation->unit }}</small>
                 </div>
             </div>
-            <div>
-                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} mb-2 d-block text-center">
+            <div class="text-end">
+                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }} mb-2 d-inline-block">
                     {{ ucfirst($donation->status) }}
                 </span>
-                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light w-100">View Details</a>
+                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light d-block mt-1">View Details</a>
             </div>
         </div>
         @empty
-        <p class="text-muted text-center py-4">No donations on the platform yet.</p>
+        <p class="text-muted text-center py-4">No active available donations at the moment.</p>
         @endforelse
     </div>
 </div>

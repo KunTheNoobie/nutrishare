@@ -42,6 +42,16 @@ class Donation extends Model
         ];
     }
 
+    protected static function booted()
+    {
+        static::retrieved(function ($donation) {
+            if ($donation->status === 'available' && $donation->expiry_date && $donation->expiry_date->isPast()) {
+                $donation->status = 'expired';
+                $donation->saveQuietly();
+            }
+        });
+    }
+
     // ──────────────── Relationships ────────────────
 
     /** The donor who published this donation. */
