@@ -71,11 +71,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const addressInput = document.getElementById('address');
     
-    const map = L.map('map').setView([defaultLat, defaultLng], 12);
+    const map = L.map('map').setView([defaultLat, defaultLng], 15);
     
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+
+    setTimeout(function() {
+        map.invalidateSize();
+    }, 300);
     
     let marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
     

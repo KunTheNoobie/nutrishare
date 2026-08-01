@@ -263,9 +263,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (document.getElementById('map')) {
         const map = L.map('map').setView([lat, lng], 15);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
+
+        setTimeout(function() {
+            map.invalidateSize();
+        }, 300);
         
         L.marker([lat, lng]).addTo(map)
             .bindPopup("<b>{{ addslashes($donation->title) }}</b><br>Pickup Location")
