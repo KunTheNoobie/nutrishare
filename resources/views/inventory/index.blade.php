@@ -19,7 +19,9 @@
                 <div class="d-flex justify-content-between align-items-start mb-2">
                     <h5 style="font-weight: 600;" class="mb-0">{{ $location->name }}</h5>
                     @if($location->user)
-                    <span class="badge bg-secondary bg-opacity-20 text-muted extra-small" style="font-size: 0.7rem;">{{ $location->user->organization_name ?? $location->user->name }}</span>
+                    <span class="badge border px-2.5 py-1 text-nowrap ms-2" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
+                        <i class="bi bi-building me-1 text-apple-accent"></i>{{ $location->user->organization_name ?? $location->user->name }}
+                    </span>
                     @endif
                 </div>
                 <p class="text-muted mb-3" style="font-size: 0.95rem;">{{ Str::limit($location->address, 50) }}</p>
