@@ -96,8 +96,14 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="text-center py-5" style="color: var(--apple-text-muted);">
-                            No inventory locations listed yet.
+                        <td colspan="5" class="text-center py-5">
+                            <div class="py-4">
+                                <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 56px; height: 56px; background: rgba(52, 199, 89, 0.1); color: var(--apple-success);">
+                                    <i class="bi bi-box-seam" style="font-size: 1.6rem;"></i>
+                                </div>
+                                <h6 class="fw-bold mb-1" style="color: var(--apple-text);">No Inventory Locations Listed Yet</h6>
+                                <p class="mb-0 small" style="color: var(--apple-text-muted);">No food storage facilities or inventory pantries have been added to NutriShare.</p>
+                            </div>
                         </td>
                     </tr>
                     @endforelse
@@ -154,8 +160,21 @@
             </div>
         </div>
         @empty
-        <div class="col-12 text-center py-5" style="color: var(--apple-text-muted);">
-            No inventory locations listed yet.
+        <div class="col-12 text-center py-5">
+            <div class="card shadow-sm border p-5 mx-auto text-center" style="max-width: 480px; background: var(--apple-surface); border-color: var(--apple-border) !important; border-radius: 20px;">
+                <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle mx-auto" style="width: 64px; height: 64px; background: rgba(52, 199, 89, 0.1); color: var(--apple-success);">
+                    <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
+                </div>
+                <h5 class="fw-bold mb-2" style="color: var(--apple-text);">No Inventory Locations Listed Yet</h5>
+                <p class="mb-3 small" style="color: var(--apple-text-muted);">No food storage facilities or inventory pantries have been added to NutriShare.</p>
+                @if(Auth::user()->isNgo() || Auth::user()->isAdmin() || Auth::user()->isModerator())
+                    <div>
+                        <a href="{{ route('inventory.create') }}" class="btn btn-ns-primary btn-sm">
+                            <i class="bi bi-plus-circle me-1"></i> Add Location
+                        </a>
+                    </div>
+                @endif
+            </div>
         </div>
         @endforelse
     </div>
