@@ -173,38 +173,75 @@
 </div>
 
 <div class="card shadow-sm animate-slide-up mt-4">
-    <div class="card-header"><i class="bi bi-basket text-apple-accent"></i> Recent Available Donations</div>
-    <div class="card-body">
-        @forelse($recentDonations as $donation)
-        <div class="d-flex justify-content-between align-items-center py-3 border-bottom border-dark">
-            <div class="d-flex align-items-center gap-3">
-                @if($donation->image_paths && count($donation->image_paths) > 0)
-                    @php
-                        $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
-                    @endphp
-                    <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" alt="Thumbnail">
-                @else
-                    <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 60px; height: 60px; background: rgba(255,255,255,0.05);">
-                        <i class="bi bi-basket text-muted fs-4"></i>
-                    </div>
-                @endif
-                <div>
-                    <strong style="font-size: 1.05rem;">
-                        <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
-                    </strong>
-                    <br><small class="text-muted">{{ $donation->quantity }} {{ $donation->unit }} &nbsp;&middot;&nbsp; {{ $donation->pickup_address }}</small>
-                </div>
-            </div>
-            <div class="d-flex align-items-center gap-2 ms-auto mt-2 mt-sm-0">
-                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
-                    {{ ucfirst($donation->status) }}
-                </span>
-                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">View Details</a>
-            </div>
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-basket text-apple-accent me-1"></i> Recent Available Donations</span>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
+                <i class="bi bi-clock-history me-1"></i>Active Listings
+            </span>
+            <a href="{{ route('donations.index') }}" class="btn btn-sm btn-outline-light px-3" style="font-size: 0.78rem;">
+                <i class="bi bi-arrow-right"></i> View All Donations
+            </a>
         </div>
-        @empty
-        <p class="text-muted text-center py-4">No available donations at the moment.</p>
-        @endforelse
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                        <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donation Title</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donor</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Quantity</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Status</th>
+                        <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @forelse($recentDonations as $donation)
+                <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                    <td class="ps-4">
+                        <div class="d-flex align-items-center gap-3">
+                            @if($donation->image_paths && count($donation->image_paths) > 0)
+                                @php
+                                    $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
+                                @endphp
+                                <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 36px; height: 36px; object-fit: cover;" alt="Thumbnail">
+                            @else
+                                <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 36px; height: 36px; background: rgba(255,255,255,0.05);">
+                                    <i class="bi bi-basket text-muted small"></i>
+                                </div>
+                            @endif
+                            <strong style="color: var(--apple-text);">
+                                <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none" style="color: var(--apple-text);">{{ $donation->title }}</a>
+                            </strong>
+                        </div>
+                    </td>
+                    <td>
+                        <strong style="color: var(--apple-text);">{{ $donation->donor->organization_name ?? $donation->donor->name }}</strong>
+                        <br><small style="color: var(--apple-text-muted); font-size: 0.75rem;">{{ $donation->donor->email }}</small>
+                    </td>
+                    <td style="color: var(--apple-text);">
+                        {{ $donation->quantity }} {{ $donation->unit }}
+                    </td>
+                    <td>
+                        <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
+                            {{ ucfirst($donation->status) }}
+                        </span>
+                    </td>
+                    <td class="pe-4 text-end">
+                        <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">
+                            <i class="bi bi-eye"></i> View Details
+                        </a>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center py-5" style="color: var(--apple-text-muted);">No available donations at the moment.</td>
+                </tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endif
@@ -313,43 +350,75 @@
 </div>
 
 <div class="card shadow-sm animate-slide-up mt-4">
-    <div class="card-header"><i class="bi bi-basket text-apple-accent"></i> Recent Available Donations</div>
-    <div class="card-body">
-        @forelse($recentDonations as $donation)
-        <div class="d-flex justify-content-between align-items-center py-3 border-bottom" style="border-color: var(--apple-border) !important;">
-            <div class="d-flex align-items-center gap-3">
-                @if($donation->image_paths && count($donation->image_paths) > 0)
-                    @php
-                        $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
-                    @endphp
-                    <div style="width: 60px; height: 60px; flex-shrink: 0;">
-                        <img src="{{ $thumbSrc }}" class="rounded shadow-sm w-100 h-100" style="object-fit: cover;" alt="{{ $donation->title }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="rounded shadow-sm justify-content-center align-items-center bg-secondary bg-opacity-10 w-100 h-100" style="display: none;">
-                            <i class="bi bi-basket text-muted fs-4"></i>
-                        </div>
-                    </div>
-                @else
-                    <div class="rounded shadow-sm d-flex justify-content-center align-items-center bg-secondary bg-opacity-10" style="width: 60px; height: 60px; flex-shrink: 0;">
-                        <i class="bi bi-basket text-muted fs-4"></i>
-                    </div>
-                @endif
-                <div>
-                    <strong style="font-size: 1.05rem;">
-                        <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none text-light">{{ $donation->title }}</a>
-                    </strong>
-                    <br><small class="text-muted">By {{ $donation->donor->organization_name ?? $donation->donor->name }} &nbsp;&middot;&nbsp; {{ $donation->quantity }} {{ $donation->unit }}</small>
-                </div>
-            </div>
-            <div class="d-flex align-items-center gap-2 ms-auto mt-2 mt-sm-0">
-                <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }}">
-                    {{ ucfirst($donation->status) }}
-                </span>
-                <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">View Details</a>
-            </div>
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-basket text-apple-accent me-1"></i> Recent Available Donations</span>
+        <div class="d-flex align-items-center gap-2">
+            <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
+                <i class="bi bi-clock-history me-1"></i>Active Listings
+            </span>
+            <a href="{{ route('donations.index') }}" class="btn btn-sm btn-outline-light px-3" style="font-size: 0.78rem;">
+                <i class="bi bi-arrow-right"></i> View All Donations
+            </a>
         </div>
-        @empty
-        <p class="text-muted text-center py-4">No active available donations at the moment.</p>
-        @endforelse
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                        <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donation Title</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donor</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Quantity</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Status</th>
+                        <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @forelse($recentDonations as $donation)
+                <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                    <td class="ps-4">
+                        <div class="d-flex align-items-center gap-3">
+                            @if($donation->image_paths && count($donation->image_paths) > 0)
+                                @php
+                                    $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
+                                @endphp
+                                <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 36px; height: 36px; object-fit: cover;" alt="Thumbnail">
+                            @else
+                                <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 36px; height: 36px; background: rgba(255,255,255,0.05);">
+                                    <i class="bi bi-basket text-muted small"></i>
+                                </div>
+                            @endif
+                            <strong style="color: var(--apple-text);">
+                                <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none" style="color: var(--apple-text);">{{ $donation->title }}</a>
+                            </strong>
+                        </div>
+                    </td>
+                    <td>
+                        <strong style="color: var(--apple-text);">{{ $donation->donor->organization_name ?? $donation->donor->name }}</strong>
+                        <br><small style="color: var(--apple-text-muted); font-size: 0.75rem;">{{ $donation->donor->email }}</small>
+                    </td>
+                    <td style="color: var(--apple-text);">
+                        {{ $donation->quantity }} {{ $donation->unit }}
+                    </td>
+                    <td>
+                        <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }}">
+                            {{ ucfirst($donation->status) }}
+                        </span>
+                    </td>
+                    <td class="pe-4 text-end">
+                        <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">
+                            <i class="bi bi-eye"></i> View Details
+                        </a>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center py-5" style="color: var(--apple-text-muted);">No active available donations at the moment.</td>
+                </tr>
+                @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 @endif
