@@ -27,10 +27,17 @@ class ClaimController extends Controller
     {
         $query = Claim::with(['donation', 'vehicle', 'collectionReceipt', 'user']);
 
-        // SECURITY (Module 3): Admins & Moderators view all claims; NGOs view their own
-        if (!Auth::user()->isAdmin() && !Auth::user()->isModerator()) {
+        // SECURITY (Module 3): Role-based claim scoping
+        if (Auth::user()->isDonor()) {
+            // Donors view claims placed by NGOs on their published donations
+            $query->whereHas('donation', function ($q) {
+                $q->where('user_id', Auth::id());
+            });
+        } elseif (Auth::user()->isNgo()) {
+            // NGOs view claims created by their organization
             $query->where('user_id', Auth::id());
         }
+        // Admins & Moderators view all platform claims
 
         $claims = $query->latest()->paginate(20);
 

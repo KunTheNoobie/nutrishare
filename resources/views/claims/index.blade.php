@@ -1,11 +1,28 @@
 @extends('layouts.app')
-@section('title', 'My Claims')
+@section('title', Auth::user()->isDonor() ? 'Donation Claims' : (Auth::user()->isNgo() ? 'My Claims' : 'Platform Claims'))
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4 animate-slide-up">
     <div>
-        <h2 style="font-weight: 600;" class="mb-1"><i class="bi bi-hand-thumbs-up text-apple-accent"></i> My Claims</h2>
-        <p class="mb-0" style="color: var(--apple-text-muted);">Track and manage your claimed food donation requests.</p>
+        <h2 style="font-weight: 600;" class="mb-1">
+            <i class="bi bi-hand-thumbs-up text-apple-accent"></i> 
+            @if(Auth::user()->isDonor())
+                Donation Claims Received
+            @elseif(Auth::user()->isNgo())
+                My Claims
+            @else
+                Platform Claims
+            @endif
+        </h2>
+        <p class="mb-0" style="color: var(--apple-text-muted);">
+            @if(Auth::user()->isDonor())
+                Track and manage claim requests submitted by NGOs for your published food listings.
+            @elseif(Auth::user()->isNgo())
+                Track and manage your claimed food donation requests.
+            @else
+                Overview and logistics management of all platform claims.
+            @endif
+        </p>
     </div>
 </div>
 
@@ -22,6 +39,13 @@
                 <thead>
                     <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
                         <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donation Title</th>
+                        @if(Auth::user()->isDonor())
+                            <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Claiming NGO</th>
+                        @elseif(Auth::user()->isNgo())
+                            <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donor</th>
+                        @else
+                            <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">NGO / Donor</th>
+                        @endif
                         <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Status</th>
                         <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Pickup Date</th>
                         <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Vehicle</th>
@@ -35,6 +59,16 @@
                     <td class="ps-4">
                         <strong style="color: var(--apple-text);">{{ $claim->donation->title }}</strong>
                         <br><small style="color: var(--apple-text-muted); font-size: 0.78rem;">{{ $claim->donation->quantity }} {{ $claim->donation->unit }}</small>
+                    </td>
+                    <td>
+                        @if(Auth::user()->isDonor())
+                            <strong style="color: var(--apple-text);">{{ $claim->user->organization_name ?? $claim->user->name }}</strong>
+                        @elseif(Auth::user()->isNgo())
+                            <strong style="color: var(--apple-text);">{{ $claim->donation->donor->organization_name ?? $claim->donation->donor->name }}</strong>
+                        @else
+                            <strong style="color: var(--apple-text);">{{ $claim->user->organization_name ?? $claim->user->name }}</strong>
+                            <br><small style="color: var(--apple-text-muted); font-size: 0.75rem;">Donor: {{ $claim->donation->donor->name }}</small>
+                        @endif
                     </td>
                     <td>
                         <span class="badge badge-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : ($claim->status === 'collected' ? 'info' : 'secondary')) }}">
@@ -63,7 +97,17 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="6" class="text-center py-5" style="color: var(--apple-text-muted);">No claims placed yet.</td></tr>
+                <tr>
+                    <td colspan="7" class="text-center py-5" style="color: var(--apple-text-muted);">
+                        @if(Auth::user()->isDonor())
+                            No claims received on your food donations yet.
+                        @elseif(Auth::user()->isNgo())
+                            No claims placed yet.
+                        @else
+                            No claims recorded on the platform yet.
+                        @endif
+                    </td>
+                </tr>
                 @endforelse
                 </tbody>
             </table>
