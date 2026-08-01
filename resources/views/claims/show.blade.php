@@ -28,7 +28,7 @@
                 @php
                     $user = Auth::user();
                     $isReviewer = $user->isAdmin() || $user->isModerator() || $claim->donation->user_id === $user->id;
-                    $isClaimingNgo = $user->isNgo() && $claim->user_id === $user->id;
+                    $isClaimingNgo = ($user->isNgo() && $claim->user_id === $user->id) || $user->isAdmin() || $user->isModerator();
 
                     $availableActions = array_filter($stateObject->allowedActions(), function($action) use ($user, $isReviewer, $isClaimingNgo) {
                         if (in_array($action, ['approve', 'reject'])) return $isReviewer;
@@ -38,11 +38,18 @@
                     });
                 @endphp
                 <div class="alert border-0 shadow-sm" style="background: rgba(41, 151, 255, 0.12); color: var(--apple-text); border: 1px solid rgba(41, 151, 255, 0.25) !important;">
-                    <strong>Current State:</strong> <span class="badge bg-secondary ms-1 me-2">{{ ucfirst($stateObject->getStateName()) }}</span>
+                    <strong>Current State:</strong> 
+                    <span class="badge badge-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : ($claim->status === 'collected' ? 'info' : 'secondary')) }} ms-1 me-2">
+                        {{ ucfirst($stateObject->getStateName()) }}
+                    </span>
                     @if(count($availableActions) > 0)
                         | <strong class="ms-2">Available Actions for You:</strong> <span class="text-apple-accent fw-bold">{{ implode(', ', array_map('ucfirst', $availableActions)) }}</span>
+                    @elseif($claim->status === 'approved')
+                        | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-info-circle me-1"></i> Claim Approved. Complete vehicle assignment & collection receipt generation below.</span>
+                    @elseif($claim->status === 'collected')
+                        | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-check-circle me-1"></i> Collection Completed. Record distribution logs below to measure SDG impact.</span>
                     @else
-                        | <em class="ms-2 opacity-75">No further actions available for your role</em>
+                        | <em class="ms-2 opacity-75">No further state transitions available for this claim.</em>
                     @endif
                 </div>
             </div>

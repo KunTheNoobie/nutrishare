@@ -22,14 +22,17 @@ use Illuminate\Support\Facades\Auth;
  */
 class ClaimController extends Controller
 {
-    /** List user's claims. */
+    /** List user's claims or all claims if Admin/Moderator. */
     public function index()
     {
-        // SECURITY (Module 3): IDOR Prevention — Only show user's own claims
-        $claims = Auth::user()->claims()
-            ->with(['donation', 'vehicle', 'collectionReceipt'])
-            ->latest()
-            ->paginate(20);
+        $query = Claim::with(['donation', 'vehicle', 'collectionReceipt', 'user']);
+
+        // SECURITY (Module 3): Admins & Moderators view all claims; NGOs view their own
+        if (!Auth::user()->isAdmin() && !Auth::user()->isModerator()) {
+            $query->where('user_id', Auth::id());
+        }
+
+        $claims = $query->latest()->paginate(20);
 
         return view('claims.index', compact('claims'));
     }
@@ -94,9 +97,9 @@ class ClaimController extends Controller
                 abort(403, 'Unauthorized. Only an Admin, Moderator, or the Donor can approve or reject claims.');
             }
         } elseif ($action === 'collect') {
-            // EXCLUSIVELY the NGO who claimed this donation can collect it!
-            if (!$user->isNgo() || $claim->user_id !== $user->id) {
-                abort(403, 'Unauthorized. Only the claiming NGO can mark this donation as collected.');
+            // Admin, Moderator, or the NGO who claimed this donation can collect it
+            if (!$user->isAdmin() && !$user->isModerator() && (!$user->isNgo() || $claim->user_id !== $user->id)) {
+                abort(403, 'Unauthorized. Only the claiming NGO, Moderator, or Admin can mark this donation as collected.');
             }
         } elseif ($action === 'cancel') {
             // ONLY the NGO who submitted the claim (or Admin/Moderator) can cancel
