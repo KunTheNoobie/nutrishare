@@ -25,21 +25,21 @@
                         </div>
                     @endif
 
-                    <div>
+                    <div class="flex-grow-1">
                         <h5 class="fw-bold text-light mb-1">{{ $doc->user->organization_name ?? $doc->user->name }}</h5>
-                        <div class="mb-2">
-                            <span class="badge bg-primary bg-opacity-20 text-primary border border-primary border-opacity-30">
+                        <div class="mb-1 d-flex align-items-center gap-2 flex-wrap">
+                            <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-30 px-2 py-1">
                                 <i class="bi bi-file-text"></i> {{ ucfirst(str_replace('_', ' ', $doc->document_type)) }}
                             </span>
-                            <span class="ms-2 text-muted small"><i class="bi bi-paperclip"></i> {{ $doc->original_filename }}</span>
+                            <span class="text-muted small"><i class="bi bi-paperclip"></i> {{ $doc->original_filename }}</span>
                         </div>
                         <p class="mb-2 text-muted extra-small"><i class="bi bi-clock-history"></i> Uploaded: {{ $doc->created_at->format('d M Y, h:i A') }}</p>
 
-                        <div class="d-flex flex-wrap gap-2 mt-3">
-                            <a href="{{ route('verification.file', $doc) }}" target="_blank" class="btn btn-sm btn-outline-info text-nowrap px-3">
+                        <div class="d-flex align-items-center gap-2 mt-2" style="flex-direction: row !important; flex-wrap: nowrap !important;">
+                            <a href="{{ route('verification.file', $doc) }}" target="_blank" class="btn btn-sm btn-outline-info px-3">
                                 <i class="bi bi-eye"></i> View File
                             </a>
-                            <a href="{{ route('verification.download', $doc) }}" class="btn btn-sm btn-outline-primary text-nowrap px-3">
+                            <a href="{{ route('verification.download', $doc) }}" class="btn btn-sm btn-outline-primary px-3">
                                 <i class="bi bi-download"></i> Download
                             </a>
                         </div>

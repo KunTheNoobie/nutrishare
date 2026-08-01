@@ -243,6 +243,31 @@
             box-shadow: 0 0 0 0.25rem rgba(41, 151, 255, 0.25) !important;
         }
 
+        /* Global Table Contrast & Background Overrides */
+        .table {
+            --bs-table-bg: transparent !important;
+            --bs-table-color: var(--apple-text) !important;
+            background-color: var(--apple-surface) !important;
+            color: var(--apple-text) !important;
+        }
+        .table th, .table td {
+            color: var(--apple-text) !important;
+            border-color: var(--apple-border) !important;
+        }
+        .table-hover > tbody > tr:hover > * {
+            --bs-table-accent-bg: var(--apple-input-bg) !important;
+            color: var(--apple-text) !important;
+        }
+        [data-theme="light"] .table {
+            background-color: #ffffff !important;
+            color: #1d1d1f !important;
+        }
+        [data-theme="light"] .table th,
+        [data-theme="light"] .table td {
+            color: #1d1d1f !important;
+            border-color: #e5e5ea !important;
+        }
+
         /* Nav Tabs High Contrast Styling */
         .nav-tabs {
             border-bottom: 2px solid var(--apple-border) !important;
