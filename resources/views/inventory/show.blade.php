@@ -12,8 +12,22 @@
     </span>
 </div>
 
+@php
+    $canManageInventory = Auth::user()->isNgo() && Auth::id() === $inventoryLocation->user_id;
+@endphp
+
+@if(!$canManageInventory)
+<div class="alert border-0 shadow-sm mb-4 d-flex align-items-center gap-3" style="background: rgba(41, 151, 255, 0.12); color: var(--apple-text); border: 1px solid rgba(41, 151, 255, 0.25) !important;">
+    <i class="bi bi-shield-check text-apple-accent fs-3"></i>
+    <div>
+        <strong>Pantry Compliance & Audit View</strong>
+        <div class="small text-muted">Viewing inventory location managed by <strong>{{ $inventoryLocation->user->organization_name ?? $inventoryLocation->user->name }}</strong>. Read-only oversight mode.</div>
+    </div>
+</div>
+@endif
+
 <div class="row animate-slide-up" style="animation-delay: 0.1s;">
-    <div class="col-md-8">
+    <div class="{{ $canManageInventory ? 'col-md-8' : 'col-md-12' }}">
         <!-- Food Items -->
         <div class="card shadow-sm mb-4">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -22,7 +36,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-dark table-hover border-dark datatable">
+                    <table class="table table-hover align-middle datatable">
                         <thead>
                             <tr>
                                 <th class="text-muted fw-normal">Item</th>
@@ -47,7 +61,7 @@
                             </td>
                             <td>
                                 @forelse($item->allergenTags as $tag)
-                                <span class="badge bg-warning text-dark">{{ $tag->name }}</span>
+                                <span class="badge bg-warning text-dark me-1">{{ $tag->name }}</span>
                                 @empty
                                 <span class="text-muted">—</span>
                                 @endforelse
@@ -56,7 +70,7 @@
                             <td>{{ ucfirst($item->storage_requirements) }}</td>
                         </tr>
                         @empty
-                        <tr><td colspan="6" class="text-muted text-center py-4">No food items yet. Use the form to add some!</td></tr>
+                        <tr><td colspan="6" class="text-muted text-center py-4">No food items recorded in this inventory location yet.</td></tr>
                         @endforelse
                         </tbody>
                     </table>
@@ -65,9 +79,11 @@
         </div>
     </div>
 
+    @if($canManageInventory)
     <div class="col-md-4">
         <!-- Add Food Item Form -->
         <div class="card shadow-sm">
+            <div class="card-header"><i class="bi bi-plus-circle text-apple-success"></i> Add Food Item</div>
             <div class="card-header"><i class="bi bi-plus-circle text-apple-success"></i> Add Food Item</div>
             <div class="card-body">
                 <form method="POST" action="{{ route('inventory.add-food-item') }}">
@@ -165,5 +181,6 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 @endsection

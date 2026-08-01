@@ -47,12 +47,19 @@ class InventoryController extends Controller
     /** Show create form. */
     public function create()
     {
+        if (!Auth::user()->isNgo()) {
+            abort(403, 'Unauthorized. Inventory locations are managed exclusively by NGOs.');
+        }
         return view('inventory.create');
     }
 
     /** Store a new inventory location. */
     public function store(Request $request)
     {
+        if (!Auth::user()->isNgo()) {
+            abort(403, 'Unauthorized. Inventory locations can only be registered by NGOs.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:500',
@@ -79,10 +86,10 @@ class InventoryController extends Controller
     /** Show inventory location details with food items. */
     public function show(InventoryLocation $inventoryLocation)
     {
-        $inventoryLocation->load(['foodItems.category', 'foodItems.allergenTags']);
+        $inventoryLocation->load(['foodItems.category', 'foodItems.allergenTags', 'user']);
         $categories = Category::all();
         $allergenTags = AllergenTag::all();
-        $donations = Auth::user()->donations()->get();
+        $donations = Auth::user()->isNgo() ? Auth::user()->claims()->with('donation')->get() : collect();
 
         return view('inventory.show', compact('inventoryLocation', 'categories', 'allergenTags', 'donations'));
     }
@@ -90,6 +97,9 @@ class InventoryController extends Controller
     /** Add a food item to inventory. */
     public function addFoodItem(StoreFoodItemRequest $request)
     {
+        if (!Auth::user()->isNgo()) {
+            abort(403, 'Unauthorized. Food items in inventory are managed exclusively by NGOs.');
+        }
         $validated = $request->validated();
 
         $foodItem = FoodItem::create($validated);

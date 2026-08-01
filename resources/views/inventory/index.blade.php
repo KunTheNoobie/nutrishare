@@ -4,9 +4,11 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4 animate-slide-up">
     <h2><i class="bi bi-box-seam text-apple-accent"></i> Inventory Locations</h2>
+    @if(Auth::user()->isNgo())
     <a href="{{ route('inventory.create') }}" class="btn btn-ns-primary">
         <i class="bi bi-plus-circle"></i> Add Location
     </a>
+    @endif
 </div>
 
 <div class="row g-3 animate-slide-up" style="animation-delay: 0.1s;">
@@ -14,7 +16,12 @@
     <div class="col-md-6 col-lg-4">
         <div class="card shadow-sm h-100">
             <div class="card-body">
-                <h5 style="font-weight: 600;">{{ $location->name }}</h5>
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 style="font-weight: 600;" class="mb-0">{{ $location->name }}</h5>
+                    @if($location->user)
+                    <span class="badge bg-secondary bg-opacity-20 text-muted extra-small" style="font-size: 0.7rem;">{{ $location->user->organization_name ?? $location->user->name }}</span>
+                    @endif
+                </div>
                 <p class="text-muted mb-3" style="font-size: 0.95rem;">{{ Str::limit($location->address, 50) }}</p>
                 <span class="badge badge-{{ $location->storage_type === 'cold' ? 'donor' : ($location->storage_type === 'frozen' ? 'admin' : 'success') }}">
                     {{ ucfirst($location->storage_type) }} Storage
@@ -30,7 +37,13 @@
                 <p class="mt-3 mb-0" style="color: #a1a1aa;"><small><i class="bi bi-list text-apple-accent"></i> {{ $location->food_items_count }} items</small></p>
             </div>
             <div class="card-footer bg-transparent border-top-0 pt-0">
-                <a href="{{ route('inventory.show', $location) }}" class="btn btn-ns-primary w-100" style="background-color: var(--apple-surface); border: 1px solid var(--apple-border); color: var(--apple-text);">Manage</a>
+                <a href="{{ route('inventory.show', $location) }}" class="btn btn-ns-primary w-100" style="background-color: var(--apple-surface); border: 1px solid var(--apple-border); color: var(--apple-text);">
+                    @if(Auth::user()->isNgo() && $location->user_id === Auth::id())
+                        <i class="bi bi-gear me-1"></i> Manage Pantry
+                    @else
+                        <i class="bi bi-shield-check me-1"></i> Audit Inventory
+                    @endif
+                </a>
             </div>
         </div>
     </div>
