@@ -75,7 +75,7 @@
                         <label class="form-label fw-bold"><i class="bi bi-images"></i> Donation Images (Optional)</label>
                         <ul class="nav nav-tabs mb-3" id="photoTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab"><i class="bi bi-cloud-upload"></i> Upload Files</button>
+                                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab"><i class="bi bi-cloud-upload"></i> Upload Files (up to 5)</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="url-tab" data-bs-toggle="tab" data-bs-target="#url" type="button" role="tab"><i class="bi bi-link-45deg"></i> Image URLs (up to 5)</button>
