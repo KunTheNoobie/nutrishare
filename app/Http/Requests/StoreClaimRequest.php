@@ -15,6 +15,7 @@ class StoreClaimRequest extends FormRequest
     {
         return [
             'donation_id' => 'required|exists:donations,id',
+            'inventory_location_id' => 'nullable|exists:inventory_locations,id',
             'justification' => 'required|string|max:1000',
             'pickup_scheduled_at' => 'required|date|after:now',
         ];

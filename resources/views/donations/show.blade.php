@@ -143,17 +143,29 @@
                         @csrf
                         <input type="hidden" name="donation_id" value="{{ $donation->id }}">
                         <div class="mb-3">
-                            <label class="form-label text-muted small">Justification</label>
+                            <label class="form-label text-muted small"><i class="bi bi-chat-left-text"></i> Justification</label>
                             <textarea name="justification" class="form-control @error('justification') is-invalid @enderror" rows="3" required placeholder="Why does your NGO need this donation?">{{ old('justification') }}</textarea>
                             @error('justification')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
-                            <label class="form-label text-muted small">Pickup Date</label>
+                            <label class="form-label text-muted small"><i class="bi bi-calendar-event"></i> Pickup Date</label>
                             <input type="datetime-local" name="pickup_scheduled_at" class="form-control @error('pickup_scheduled_at') is-invalid @enderror" value="{{ old('pickup_scheduled_at') }}" required>
                             @error('pickup_scheduled_at')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted small"><i class="bi bi-building"></i> Stock Into Inventory Warehouse</label>
+                            <select name="inventory_location_id" class="form-select">
+                                @foreach(Auth::user()->inventoryLocations as $loc)
+                                    <option value="{{ $loc->id }}">{{ $loc->name }} ({{ ucfirst($loc->storage_type) }} Storage)</option>
+                                @endforeach
+                                <option value="" {{ Auth::user()->inventoryLocations->isEmpty() ? 'selected' : '' }}>
+                                    ✨ Auto-create & Link NGO Storage Hub
+                                </option>
+                            </select>
+                            <div class="form-text text-muted extra-small">Upon collection, food items will automatically stock into this warehouse.</div>
+                        </div>
                         <button type="submit" class="btn btn-ns-primary w-100 py-2 fw-medium">
-                            Submit Claim
+                            <i class="bi bi-send"></i> Submit Claim & Link Inventory
                         </button>
                     </form>
                 </div>

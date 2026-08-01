@@ -24,6 +24,7 @@ class Claim extends Model
     protected $fillable = [
         'donation_id',
         'user_id',
+        'inventory_location_id',
         'status',
         'justification',
         'pickup_scheduled_at',
@@ -38,6 +39,12 @@ class Claim extends Model
     }
 
     // ──────────────── Relationships ────────────────
+
+    /** Target inventory location where claimed food will be stocked. */
+    public function inventoryLocation(): BelongsTo
+    {
+        return $this->belongsTo(InventoryLocation::class);
+    }
 
     /** The donation being claimed. */
     public function donation(): BelongsTo
