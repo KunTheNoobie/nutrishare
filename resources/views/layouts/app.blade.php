@@ -520,6 +520,42 @@
         
         a { color: var(--apple-accent); text-decoration: none; transition: opacity 0.2s; }
         a:hover { color: var(--apple-accent); opacity: 0.8; }
+
+        /* Pagination Styling & Alignment */
+        .pagination { margin-bottom: 0; display: inline-flex; flex-wrap: wrap; gap: 4px; }
+        .page-link {
+            background-color: var(--apple-surface) !important;
+            color: var(--apple-text) !important;
+            border-color: var(--apple-border) !important;
+            padding: 0.45rem 0.85rem !important;
+            border-radius: 980px !important;
+            margin: 0 !important;
+            font-size: 0.85rem !important;
+            font-weight: 500;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .page-link:hover {
+            background-color: var(--apple-input-bg) !important;
+            color: var(--apple-accent) !important;
+        }
+        .page-item.active .page-link {
+            background-color: var(--apple-accent) !important;
+            border-color: var(--apple-accent) !important;
+            color: #ffffff !important;
+        }
+        .page-item.disabled .page-link {
+            background-color: transparent !important;
+            color: var(--apple-text-muted) !important;
+            opacity: 0.5;
+        }
+        .pagination svg, svg.w-5.h-5 {
+            width: 1rem !important;
+            height: 1rem !important;
+            max-width: 1rem !important;
+            max-height: 1rem !important;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/style.css" rel="stylesheet">
     <style>
