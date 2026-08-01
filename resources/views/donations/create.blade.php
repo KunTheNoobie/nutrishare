@@ -345,6 +345,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 div.remove();
                 updateUrlPreviews();
             });
+        });
+    }
+
     const clearUrlBtn = document.getElementById('clearUrlBtn');
     if (clearUrlBtn && urlInputsContainer) {
         clearUrlBtn.addEventListener('click', function() {

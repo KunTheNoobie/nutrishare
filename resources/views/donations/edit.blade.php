@@ -401,6 +401,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.closest('.url-input-group').remove();
                 updateUrlPreviews();
             });
+        });
+
         const clearUrlBtn = document.getElementById('clearUrlBtn');
         if (clearUrlBtn && urlInputsContainer) {
             clearUrlBtn.addEventListener('click', function() {
