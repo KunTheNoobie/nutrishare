@@ -120,8 +120,11 @@ class ClaimController extends Controller
             'plate_number' => 'required|string|max:20',
             'vehicle_type' => 'required|in:van,truck,car,motorcycle',
             'driver_name' => 'required|string|max:255',
-            'driver_phone' => 'required|string|max:20',
+            'driver_phone' => ['required', 'string', 'min:9', 'max:20', 'regex:/^(\+?[\d\s\-\(\)]){9,20}$/'],
             'capacity_kg' => 'nullable|numeric|min:0',
+        ], [
+            'driver_phone.min' => 'Please enter a valid driver phone number (at least 9 digits).',
+            'driver_phone.regex' => 'Please enter a valid driver phone number (e.g. 012-3456789 or +60123456789).',
         ]);
 
         $validated['claim_id'] = $claim->id;

@@ -23,7 +23,7 @@ class ProfileController extends Controller
         $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => ['required', 'string', 'min:9', 'max:20', 'regex:/^(\+?[\d\s\-\(\)]){9,20}$/'],
             'notification_preference' => ['required', Rule::in(['email', 'sms', 'both'])],
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:5120'], // 5MB max
         ];
@@ -32,7 +32,10 @@ class ProfileController extends Controller
             $rules['organization_name'] = ['required', 'string', 'max:255'];
         }
 
-        $validated = $request->validate($rules);
+        $validated = $request->validate($rules, [
+            'phone.min' => 'Please enter a valid phone number (at least 9 digits).',
+            'phone.regex' => 'Please enter a valid phone number (e.g. 012-3456789 or +60123456789).',
+        ]);
 
         if ($request->hasFile('photo')) {
             if ($user->profile_photo_path) {

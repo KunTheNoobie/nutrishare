@@ -32,7 +32,7 @@ class RegisterUserRequest extends FormRequest
             ],
             'role' => 'required|in:donor,ngo',
             'organization_name' => 'required_if:role,ngo|nullable|string|max:255',
-            'phone' => 'required|string|max:20',
+            'phone' => ['required', 'string', 'min:9', 'max:20', 'regex:/^(\+?[\d\s\-\(\)]){9,20}$/'],
             'notification_preference' => 'nullable|in:email,sms,both',
         ];
     }
@@ -43,6 +43,8 @@ class RegisterUserRequest extends FormRequest
             'password.min' => 'Password must be at least 8 characters.',
             'password.regex' => 'Password must contain uppercase, lowercase, number, and special character.',
             'organization_name.required_if' => 'Organization name is required for NGO registration.',
+            'phone.min' => 'Please enter a valid phone number (at least 9 digits).',
+            'phone.regex' => 'Please enter a valid phone number (e.g. 012-3456789 or +60123456789).',
         ];
     }
 }
