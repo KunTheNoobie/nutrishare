@@ -36,6 +36,8 @@
                         if ($action === 'cancel') return $isClaimingNgo || $user->isAdmin() || $user->isModerator();
                         return false;
                     });
+                @php
+                    $canManageLogistics = $user->isAdmin() || $user->isModerator() || $claim->user_id === $user->id;
                 @endphp
                 <div class="alert border-0 shadow-sm" style="background: rgba(41, 151, 255, 0.12); color: var(--apple-text); border: 1px solid rgba(41, 151, 255, 0.25) !important;">
                     <strong>Current State:</strong> 
@@ -45,9 +47,23 @@
                     @if(count($availableActions) > 0)
                         | <strong class="ms-2">Available Actions for You:</strong> <span class="text-apple-accent fw-bold">{{ implode(', ', array_map('ucfirst', $availableActions)) }}</span>
                     @elseif($claim->status === 'approved')
-                        | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-info-circle me-1"></i> Claim Approved. Complete vehicle assignment & collection receipt generation below.</span>
+                        @if($canManageLogistics)
+                            | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-info-circle me-1"></i> Claim Approved. Complete vehicle assignment & collection receipt generation below.</span>
+                        @else
+                            | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-info-circle me-1"></i> Claim Approved. Awaiting claiming NGO to complete vehicle assignment & pickup.</span>
+                        @endif
                     @elseif($claim->status === 'collected')
-                        | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-check-circle me-1"></i> Collection Completed. Record distribution logs below to measure SDG impact.</span>
+                        @if($canManageLogistics)
+                            | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-check-circle me-1"></i> Collection Completed. Record distribution logs below to measure SDG impact.</span>
+                        @else
+                            | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-check-circle me-1"></i> Collection Completed. Surplus food successfully collected by NGO.</span>
+                        @endif
+                    @elseif($claim->status === 'pending')
+                        @if($isReviewer)
+                            | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-info-circle me-1"></i> Claim Pending Review. Use the action buttons to Approve or Reject this claim.</span>
+                        @else
+                            | <span class="ms-2" style="color: var(--apple-text-muted);"><i class="bi bi-info-circle me-1"></i> Claim Pending Review. Awaiting donor or moderator approval.</span>
+                        @endif
                     @else
                         | <em class="ms-2 opacity-75">No further state transitions available for this claim.</em>
                     @endif

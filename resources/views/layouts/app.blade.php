@@ -657,6 +657,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('donations.index') }}"><i class="bi bi-basket"></i> Donations</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('claims.index') }}"><i class="bi bi-hand-thumbs-up"></i> Claims</a>
+                    </li>
 
                     @if(Auth::user()->isNgo() || Auth::user()->isAdmin() || Auth::user()->isModerator())
                     <li class="nav-item">
@@ -665,6 +668,9 @@
                     @endif
 
                     @if(Auth::user()->isAdmin() || Auth::user()->isModerator())
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('verification.index') }}"><i class="bi bi-patch-check"></i> NGO Verifications</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('reports.index') }}"><i class="bi bi-graph-up"></i> Reports</a>
                     </li>
