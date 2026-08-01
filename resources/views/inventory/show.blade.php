@@ -143,9 +143,9 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-muted small"><i class="bi bi-images me-1"></i> Upload Item Photos (Max 3, optional)</label>
+                        <label class="form-label text-muted small"><i class="bi bi-images me-1"></i> Upload Item Photos (Max 5, optional)</label>
                         <input type="file" name="images[]" class="form-control form-control-sm @error('images') is-invalid @enderror" multiple accept="image/*">
-                        <div class="form-text text-muted extra-small">Upload photos of this food item (JPEG, PNG, WEBP, max 5MB).</div>
+                        <div class="form-text text-muted extra-small">Upload up to 5 photos of this food item (JPEG, PNG, WEBP).</div>
                         @error('images')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                     </div>
                     
