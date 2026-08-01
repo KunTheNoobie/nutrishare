@@ -171,7 +171,7 @@
         @endif
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4" style="position: sticky; top: 20px; align-self: flex-start;">
         <!-- State Transition Actions -->
         @if(count($availableActions) > 0)
         <div class="card mb-3">
@@ -238,37 +238,45 @@
 
 
         <!-- Distribution Log Form -->
-        @if((Auth::user()->isAdmin() || $claim->user_id === Auth::id()) && $claim->status === 'collected')
-        <div class="card mb-3">
-            <div class="card-header">Log Distribution (SDG)</div>
+        @if((Auth::user()->isAdmin() || Auth::user()->isModerator() || $claim->user_id === Auth::id()) && $claim->status === 'collected')
+        <div class="card mb-3 shadow-sm animate-slide-up">
+            <div class="card-header"><i class="bi bi-globe-americas text-apple-success me-1"></i> Log Distribution (SDG)</div>
             <div class="card-body">
                 <form method="POST" action="{{ route('claims.distribution', $claim) }}">
                     @csrf
                     <div class="mb-2">
-                        <input type="number" name="beneficiaries_count" class="form-control form-control-sm @error('beneficiaries_count') is-invalid @enderror" placeholder="Beneficiaries Count" value="{{ old('beneficiaries_count') }}" required min="1">
+                        <label class="form-label text-muted small mb-1"><i class="bi bi-people me-1"></i> Beneficiaries Count</label>
+                        <input type="number" name="beneficiaries_count" class="form-control form-control-sm @error('beneficiaries_count') is-invalid @enderror" placeholder="Beneficiaries Count" value="{{ old('beneficiaries_count', max(10, (int) round($claim->donation->quantity * 5))) }}" required min="1">
                         @error('beneficiaries_count')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <input type="text" name="distribution_location" class="form-control form-control-sm @error('distribution_location') is-invalid @enderror" placeholder="Distribution Location" value="{{ old('distribution_location') }}" required>
+                        <label class="form-label text-muted small mb-1"><i class="bi bi-geo-alt me-1"></i> Distribution Location</label>
+                        <input type="text" name="distribution_location" class="form-control form-control-sm @error('distribution_location') is-invalid @enderror" placeholder="Distribution Location" value="{{ old('distribution_location', Auth::user()->inventoryLocations->first()?->name ? (Auth::user()->inventoryLocations->first()->name . ' (' . (Auth::user()->inventoryLocations->first()->address ?: 'NGO Facility') . ')') : ((Auth::user()->organization_name ?? Auth::user()->name) . ' Distribution Center')) }}" required>
                         @error('distribution_location')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <input type="number" step="0.01" name="quantity_distributed" class="form-control form-control-sm @error('quantity_distributed') is-invalid @enderror" placeholder="Quantity" value="{{ old('quantity_distributed') }}" required>
+                        <label class="form-label text-muted small mb-1"><i class="bi bi-box-seam me-1"></i> Quantity</label>
+                        <input type="number" step="0.01" name="quantity_distributed" class="form-control form-control-sm @error('quantity_distributed') is-invalid @enderror" placeholder="Quantity" value="{{ old('quantity_distributed', $claim->donation->quantity) }}" required>
                         @error('quantity_distributed')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
+                        <label class="form-label text-muted small mb-1"><i class="bi bi-tag me-1"></i> Unit</label>
                         <select name="unit" class="form-select form-select-sm @error('unit') is-invalid @enderror" required>
-                            <option value="kg" {{ old('unit') == 'kg' ? 'selected' : '' }}>kg</option>
-                            <option value="litres" {{ old('unit') == 'litres' ? 'selected' : '' }}>litres</option>
-                            <option value="items" {{ old('unit') == 'items' ? 'selected' : '' }}>items</option>
+                            <option value="kg" {{ old('unit', $claim->donation->unit) == 'kg' ? 'selected' : '' }}>kg</option>
+                            <option value="litres" {{ old('unit', $claim->donation->unit) == 'litres' ? 'selected' : '' }}>litres</option>
+                            <option value="items" {{ old('unit', $claim->donation->unit) == 'items' ? 'selected' : '' }}>items</option>
+                            <option value="boxes" {{ old('unit', $claim->donation->unit) == 'boxes' ? 'selected' : '' }}>boxes</option>
                         </select>
                         @error('unit')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-2">
-                        <textarea name="notes" class="form-control form-control-sm @error('notes') is-invalid @enderror" rows="2" placeholder="Notes">{{ old('notes') }}</textarea>
+                        <label class="form-label text-muted small mb-1"><i class="bi bi-journal-text me-1"></i> Notes</label>
+                        <textarea name="notes" class="form-control form-control-sm @error('notes') is-invalid @enderror" rows="2" placeholder="Distribution Notes (Optional)">{{ old('notes') }}</textarea>
                         @error('notes')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
-                    <button type="submit" class="btn btn-outline-info btn-sm w-100">Submit Log</button>
+                    <button type="submit" class="btn btn-ns-primary btn-sm w-100 mt-2 fw-medium">
+                        <i class="bi bi-plus-lg me-1"></i> Submit Distribution Log
+                    </button>
                 </form>
             </div>
         </div>
