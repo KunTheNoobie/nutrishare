@@ -19,7 +19,7 @@ class VerificationController extends Controller
         $documents = VerificationDocument::with('user')
             ->where('status', 'pending')
             ->latest()
-            ->paginate(15);
+            ->paginate(20);
 
         return view('verification.index', compact('documents'));
     }

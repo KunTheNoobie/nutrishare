@@ -34,7 +34,7 @@ class DonationController extends Controller
                 $query->where('title', 'LIKE', '%' . $request->search . '%');
             }
             
-            $donations = $query->orderBy('created_at', 'desc')->paginate(15);
+            $donations = $query->orderBy('created_at', 'desc')->paginate(20);
         } elseif (Auth::user()->isAdmin() || Auth::user()->isModerator()) {
             $query = Donation::with(['donor', 'foodItems']);
             
@@ -51,7 +51,7 @@ class DonationController extends Controller
                 $query->where('status', $request->status);
             }
             
-            $donations = $query->orderBy('created_at', 'desc')->paginate(15);
+            $donations = $query->orderBy('created_at', 'desc')->paginate(20);
         } else {
             // SECURITY (Module 1): Eloquent parameterized queries prevent SQLi
             $donations = $this->repository->findActiveDonations($request->all());

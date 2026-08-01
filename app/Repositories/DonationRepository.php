@@ -36,7 +36,7 @@ class DonationRepository
             $query->where('quantity', '>=', $filters['min_quantity']);
         }
 
-        return $query->orderBy('created_at', 'desc')->paginate(15);
+        return $query->orderBy('created_at', 'desc')->paginate(20);
     }
 
     /**

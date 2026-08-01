@@ -21,7 +21,7 @@ class ReportController extends Controller
     /** List all generated reports. */
     public function index()
     {
-        $reports = Report::with('user')->latest('report_date')->paginate(15);
+        $reports = Report::with('user')->latest('report_date')->paginate(20);
         return view('reports.index', compact('reports'));
     }
 

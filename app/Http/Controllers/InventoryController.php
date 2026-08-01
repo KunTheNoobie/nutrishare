@@ -37,9 +37,9 @@ class InventoryController extends Controller
     public function index()
     {
         if (Auth::user()->isAdmin() || Auth::user()->isModerator()) {
-            $locations = InventoryLocation::with('user')->withCount('foodItems')->paginate(15);
+            $locations = InventoryLocation::with('user')->withCount('foodItems')->paginate(20);
         } else {
-            $locations = Auth::user()->inventoryLocations()->withCount('foodItems')->paginate(15);
+            $locations = Auth::user()->inventoryLocations()->withCount('foodItems')->paginate(20);
         }
         return view('inventory.index', compact('locations'));
     }

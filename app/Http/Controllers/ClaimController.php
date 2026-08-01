@@ -29,7 +29,7 @@ class ClaimController extends Controller
         $claims = Auth::user()->claims()
             ->with(['donation', 'vehicle', 'collectionReceipt'])
             ->latest()
-            ->paginate(15);
+            ->paginate(20);
 
         return view('claims.index', compact('claims'));
     }
