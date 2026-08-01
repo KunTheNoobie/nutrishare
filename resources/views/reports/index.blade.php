@@ -7,7 +7,7 @@
         <h2 style="font-weight: 600;" class="mb-1"><i class="bi bi-graph-up text-apple-accent"></i> Platform Reports</h2>
         <p class="mb-0" style="color: var(--apple-text-muted);">View, generate, and export platform analytics and SDG impact reports.</p>
     </div>
-    @if(Auth::user()->isAdmin())
+    @if(Auth::user()->isAdmin() || Auth::user()->isModerator())
     <a href="{{ route('reports.create') }}" class="btn btn-ns-primary">
         <i class="bi bi-plus-circle"></i> Generate Report
     </a>

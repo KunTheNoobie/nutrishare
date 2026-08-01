@@ -137,7 +137,7 @@
 
     <div class="col-md-4">
         <!-- Actions sidebar -->
-        @if(Auth::user()->isDonor() && $donation->user_id === Auth::id())
+        @if((Auth::user()->isDonor() && $donation->user_id === Auth::id()) || Auth::user()->isAdmin() || Auth::user()->isModerator())
         <div class="card mb-3">
             <div class="card-header">Actions</div>
             <div class="card-body">
@@ -155,7 +155,7 @@
         </div>
         @endif
 
-        @if(Auth::user()->isNgo() && $donation->status === 'available')
+        @if((Auth::user()->isNgo() || Auth::user()->isAdmin() || Auth::user()->isModerator()) && $donation->status === 'available')
             @if(Auth::user()->isVerified())
             <div class="card mb-3 shadow-sm animate-slide-up">
                 <div class="card-header"><i class="bi bi-hand-thumbs-up text-apple-success"></i> Claim this Donation</div>

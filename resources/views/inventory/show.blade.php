@@ -95,7 +95,6 @@
         <!-- Add Food Item Form -->
         <div class="card shadow-sm">
             <div class="card-header"><i class="bi bi-plus-circle text-apple-success"></i> Add Food Item</div>
-            <div class="card-header"><i class="bi bi-plus-circle text-apple-success"></i> Add Food Item</div>
             <div class="card-body">
                 <form method="POST" action="{{ route('inventory.add-food-item') }}">
                     @csrf

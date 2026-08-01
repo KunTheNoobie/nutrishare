@@ -7,7 +7,7 @@
         <h2 style="font-weight: 600;" class="mb-1"><i class="bi bi-box-seam text-apple-accent"></i> Inventory Locations</h2>
         <p class="mb-0" style="color: var(--apple-text-muted);">Manage food storage facilities, capacity, and inventory safety audits.</p>
     </div>
-    @if(Auth::user()->isNgo())
+    @if(Auth::user()->isNgo() || Auth::user()->isAdmin() || Auth::user()->isModerator())
     <a href="{{ route('inventory.create') }}" class="btn btn-ns-primary">
         <i class="bi bi-plus-circle"></i> Add Location
     </a>

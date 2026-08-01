@@ -10,7 +10,7 @@
         </h2>
         <p class="mb-0" style="color: var(--apple-text-muted);">Browse, track, and manage food donation listings on NutriShare.</p>
     </div>
-    @if(Auth::user()->isDonor() || Auth::user()->isAdmin())
+    @if(Auth::user()->isDonor() || Auth::user()->isAdmin() || Auth::user()->isModerator())
     <a href="{{ route('donations.create') }}" class="btn btn-ns-primary">
         <i class="bi bi-plus-circle"></i> Publish Donation
     </a>
