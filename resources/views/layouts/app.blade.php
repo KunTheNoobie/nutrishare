@@ -734,19 +734,5 @@ document.addEventListener('click', function(e) {
 }, true);
 </script>
 @stack('scripts')
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Initialize all tables with class 'datatable'
-        const dataTables = document.querySelectorAll(".datatable");
-        dataTables.forEach(table => {
-            new simpleDatatables.DataTable(table, {
-                searchable: true,
-                fixedHeight: true,
-                perPage: 10
-            });
-        });
-    });
-</script>
 </body>
 </html>

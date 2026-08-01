@@ -34,43 +34,54 @@
                 <span><i class="bi bi-list-ul text-apple-accent"></i> Food Items</span>
                 <span class="badge bg-secondary rounded-pill">{{ $inventoryLocation->foodItems->count() }} items</span>
             </div>
-            <div class="card-body">
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle datatable">
+                    <table class="table table-hover align-middle mb-0">
                         <thead>
-                            <tr>
-                                <th class="text-muted fw-normal">Item</th>
-                                <th class="text-muted fw-normal">Qty</th>
-                                <th class="text-muted fw-normal">Category</th>
-                                <th class="text-muted fw-normal">Allergens</th>
-                                <th class="text-muted fw-normal">Expires</th>
-                                <th class="text-muted fw-normal">Storage</th>
+                            <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                                <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Item</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Qty</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Category</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Allergens</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Expires</th>
+                                <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Storage</th>
                             </tr>
                         </thead>
                         <tbody>
                         @forelse($inventoryLocation->foodItems as $item)
-                        <tr class="{{ $item->isExpired() ? 'table-danger' : '' }}">
-                            <td><strong>{{ $item->name }}</strong></td>
-                            <td>{{ $item->quantity }} {{ $item->unit }}</td>
+                        <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                            <td class="ps-4">
+                                <strong style="color: var(--apple-text);">{{ $item->name }}</strong>
+                                @if($item->isExpired())
+                                    <span class="badge badge-danger ms-2" style="font-size: 0.68rem;">Expired</span>
+                                @endif
+                            </td>
+                            <td style="color: var(--apple-text);">{{ $item->quantity }} {{ $item->unit }}</td>
                             <td>
                                 @if($item->category)
-                                    <span class="badge bg-secondary">{{ $item->category->name }}</span>
+                                    <span class="action-tag">{{ $item->category->name }}</span>
                                 @else
-                                    <span class="text-muted">—</span>
+                                    <span style="color: var(--apple-text-muted);">—</span>
                                 @endif
                             </td>
                             <td>
                                 @forelse($item->allergenTags as $tag)
-                                <span class="badge bg-warning text-dark me-1">{{ $tag->name }}</span>
+                                <span class="badge bg-warning text-dark me-1" style="font-size: 0.72rem;">{{ $tag->name }}</span>
                                 @empty
-                                <span class="text-muted">—</span>
+                                <span style="color: var(--apple-text-muted);">—</span>
                                 @endforelse
                             </td>
-                            <td>{{ $item->expiry_date->format('d M Y') }}</td>
-                            <td>{{ ucfirst($item->storage_requirements) }}</td>
+                            <td class="small" style="color: {{ $item->isExpired() ? '#ff453a' : 'var(--apple-text-muted)' }};">
+                                <i class="bi bi-clock me-1"></i>{{ $item->expiry_date->format('d M Y') }}
+                            </td>
+                            <td class="pe-4 text-end">
+                                <span class="badge badge-{{ $item->storage_requirements === 'cold' ? 'donor' : ($item->storage_requirements === 'frozen' ? 'admin' : 'success') }}">
+                                    {{ ucfirst($item->storage_requirements) }}
+                                </span>
+                            </td>
                         </tr>
                         @empty
-                        <tr><td colspan="6" class="text-muted text-center py-4">No food items recorded in this inventory location yet.</td></tr>
+                        <tr><td colspan="6" class="text-center py-5" style="color: var(--apple-text-muted);">No food items recorded in this inventory location yet.</td></tr>
                         @endforelse
                         </tbody>
                     </table>
