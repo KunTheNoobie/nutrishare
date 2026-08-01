@@ -14,6 +14,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Apply saved theme immediately before render to prevent flicker
+        (function() {
+            const saved = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+
     <style>
         :root {
             --apple-bg: #000000;
@@ -25,6 +36,22 @@
             --apple-accent-hover: #0071e3;
             --apple-danger: #ff3b30;
             --apple-success: #34c759;
+            --apple-card-bg: #111111;
+            --apple-input-bg: #1a1a1a;
+        }
+
+        [data-theme="light"] {
+            --apple-bg: #f5f5f7;
+            --apple-surface: #ffffff;
+            --apple-border: #e5e5ea;
+            --apple-text: #1d1d1f;
+            --apple-text-muted: #6e6e73;
+            --apple-accent: #0066cc;
+            --apple-accent-hover: #004499;
+            --apple-danger: #ff3b30;
+            --apple-success: #28cd41;
+            --apple-card-bg: #ffffff;
+            --apple-input-bg: #f2f2f7;
         }
         
         body { 
@@ -35,18 +62,20 @@
             display: flex;
             flex-direction: column;
             -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         
         /* Apple-style floating blurry navbar */
         .navbar { 
-            background: rgba(0, 0, 0, 0.72) !important;
+            background: var(--apple-surface) !important;
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--apple-border);
             padding: 0.75rem 0;
             position: sticky;
             top: 0;
             z-index: 1030;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
         .navbar-brand { 
             font-weight: 600; 
@@ -61,6 +90,54 @@
             transition: color 0.3s ease; 
         }
         .nav-link:hover { color: var(--apple-text) !important; }
+
+        /* Card & Inputs Light/Dark Overrides */
+        .card {
+            background-color: var(--apple-card-bg) !important;
+            border-color: var(--apple-border) !important;
+            color: var(--apple-text) !important;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .card-header {
+            background-color: var(--apple-card-bg) !important;
+            border-bottom-color: var(--apple-border) !important;
+            color: var(--apple-text) !important;
+        }
+        .form-control, .form-select {
+            background-color: var(--apple-input-bg) !important;
+            color: var(--apple-text) !important;
+            border-color: var(--apple-border) !important;
+        }
+        .form-control:focus, .form-select:focus {
+            background-color: var(--apple-input-bg) !important;
+            color: var(--apple-text) !important;
+            border-color: var(--apple-accent) !important;
+            box-shadow: 0 0 0 0.25rem rgba(41, 151, 255, 0.25) !important;
+        }
+
+        /* Nav Tabs High Contrast Styling */
+        .nav-tabs {
+            border-bottom: 2px solid var(--apple-border) !important;
+        }
+        .nav-tabs .nav-link {
+            color: var(--apple-text-muted) !important;
+            border: 1px solid transparent !important;
+            border-radius: 8px 8px 0 0 !important;
+            font-weight: 500 !important;
+            padding: 8px 16px !important;
+            transition: all 0.2s ease !important;
+        }
+        .nav-tabs .nav-link:hover {
+            color: var(--apple-text) !important;
+            background-color: rgba(125, 125, 125, 0.15) !important;
+        }
+        .nav-tabs .nav-link.active {
+            color: var(--apple-accent) !important;
+            background-color: var(--apple-input-bg) !important;
+            border-color: var(--apple-border) var(--apple-border) transparent !important;
+            border-bottom: 2px solid var(--apple-accent) !important;
+            font-weight: 600 !important;
+        }
         
         /* Global Button Overrides for Consistency */
         .btn {
@@ -282,7 +359,12 @@
                     @endif
                 @endauth
             </ul>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav align-items-center gap-2">
+                <li class="nav-item me-1">
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle p-2 d-flex align-items-center justify-content-center" id="themeToggleBtn" title="Toggle Light / Dark Mode" onclick="toggleTheme()" style="width: 38px; height: 38px;">
+                        <i id="themeIcon" class="bi bi-moon-stars-fill text-info fs-6"></i>
+                    </button>
+                </li>
                 @guest
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                     <li class="nav-item"><a class="btn btn-ns-primary ms-2" href="{{ route('register') }}">Register</a></li>
@@ -361,6 +443,33 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+// Theme Switcher Logic
+function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    updateThemeIcon(next);
+}
+
+function updateThemeIcon(theme) {
+    const icon = document.getElementById('themeIcon');
+    if (icon) {
+        if (theme === 'light') {
+            icon.className = 'bi bi-sun-fill text-warning fs-6';
+        } else {
+            icon.className = 'bi bi-moon-stars-fill text-info fs-6';
+        }
+    }
+}
+
+// Update icon on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const saved = localStorage.getItem('theme') || 'dark';
+    updateThemeIcon(saved);
+});
+
+// Password field toggle
 document.addEventListener('click', function(e) {
     if (e.target.closest('.toggle-password')) {
         const btn = e.target.closest('.toggle-password');
@@ -377,6 +486,49 @@ document.addEventListener('click', function(e) {
         }
     }
 });
+
+// GLOBAL SWEETALERT2 POPUP INTERCEPTOR
+// Replaces native browser 127.0.0.1 says "Are you sure?" popups everywhere!
+document.addEventListener('click', function(e) {
+    const target = e.target.closest('[onclick*="confirm"]');
+    if (target) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const onclickVal = target.getAttribute('onclick');
+        const match = onclickVal.match(/confirm\(['"](.+?)['"]\)/);
+        const message = match ? match[1] : 'Are you sure you want to proceed?';
+        const form = target.closest('form');
+
+        const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+
+        Swal.fire({
+            title: 'Confirmation',
+            text: message,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#ff3b30',
+            cancelButtonColor: '#8e8e93',
+            confirmButtonText: 'Yes, proceed',
+            cancelButtonText: 'Cancel',
+            background: isDark ? '#1c1c1e' : '#ffffff',
+            color: isDark ? '#ffffff' : '#1d1d1f',
+            customClass: {
+                popup: 'rounded-4 shadow-lg border border-secondary'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                target.removeAttribute('onclick');
+                if (form) {
+                    form.submit();
+                } else if (target.tagName === 'A' && target.href) {
+                    window.location.href = target.href;
+                }
+            }
+        });
+        return false;
+    }
+}, true);
 </script>
 @stack('scripts')
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3"></script>
@@ -393,6 +545,5 @@ document.addEventListener('click', function(e) {
         });
     });
 </script>
-@stack('scripts')
 </body>
 </html>

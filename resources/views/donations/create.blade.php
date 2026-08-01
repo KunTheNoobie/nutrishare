@@ -72,28 +72,44 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label">Image (Optional)</label>
+                        <label class="form-label fw-bold"><i class="bi bi-images"></i> Donation Images (Optional)</label>
                         <ul class="nav nav-tabs mb-3" id="photoTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab" style="color: var(--apple-text);">Upload File</button>
+                                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload" type="button" role="tab"><i class="bi bi-cloud-upload"></i> Upload Files</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="url-tab" data-bs-toggle="tab" data-bs-target="#url" type="button" role="tab" style="color: var(--apple-text);">Image URL</button>
+                                <button class="nav-link" id="url-tab" data-bs-toggle="tab" data-bs-target="#url" type="button" role="tab"><i class="bi bi-link-45deg"></i> Image URLs (up to 5)</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="photoTabContent">
                             <div class="tab-pane fade show active" id="upload" role="tabpanel">
                                 <div class="input-group">
-                                    <input type="file" class="form-control @error('images') is-invalid @enderror @error('images.*') is-invalid @enderror" id="image" name="images[]" accept="image/jpeg,image/png,image/gif" multiple>
-                                    <button class="btn btn-outline-secondary" type="button" id="clearFileBtn" title="Clear selected file"><i class="bi bi-x-lg"></i></button>
+                                    <input type="file" class="form-control @error('images') is-invalid @enderror @error('images.*') is-invalid @enderror" id="imageInput" name="images[]" accept="image/jpeg,image/png,image/gif" multiple>
+                                    <button class="btn btn-outline-secondary" type="button" id="clearFileBtn" title="Clear selected files"><i class="bi bi-x-lg"></i> Clear</button>
                                 </div>
-                                <div class="text-muted small mt-1">You can upload up to 5 images (Max 100MB each).</div>
+                                <div class="text-muted small mt-1">Select up to 5 images (JPEG, PNG, GIF — Max 100MB each).</div>
                                 @error('images')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                                 @error('images.*')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                                
+                                {{-- Live Preview for File Uploads --}}
+                                <div id="filePreviewGrid" class="row g-2 mt-2"></div>
                             </div>
                             <div class="tab-pane fade" id="url" role="tabpanel">
-                                <input type="url" class="form-control @error('image_url') is-invalid @enderror" id="image_url" name="image_url" placeholder="https://example.com/image.jpg">
-                                @error('image_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                                <div id="urlInputsContainer">
+                                    <div class="input-group mb-2 url-input-group">
+                                        <span class="input-group-text"><i class="bi bi-link"></i></span>
+                                        <input type="url" class="form-control image-url-input @error('image_urls.*') is-invalid @enderror" name="image_urls[]" placeholder="https://example.com/image1.jpg">
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary mt-1" id="addUrlBtn">
+                                    <i class="bi bi-plus-circle"></i> Add Another Image URL (Max 5)
+                                </button>
+                                <div class="text-muted small mt-1">Paste web image URLs directly. Real-time preview will appear below.</div>
+                                @error('image_urls')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                                @error('image_urls.*')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+
+                                {{-- Live Preview for Image URLs --}}
+                                <div id="urlPreviewGrid" class="row g-2 mt-2"></div>
                             </div>
                         </div>
                     </div>
@@ -227,10 +243,98 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+    // File upload live preview
+    const imageInput = document.getElementById('imageInput');
+    const filePreviewGrid = document.getElementById('filePreviewGrid');
     const clearFileBtn = document.getElementById('clearFileBtn');
+
+    if (imageInput && filePreviewGrid) {
+        imageInput.addEventListener('change', function() {
+            filePreviewGrid.innerHTML = '';
+            const files = Array.from(this.files).slice(0, 5); // Max 5 files
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const col = document.createElement('div');
+                        col.className = 'col-auto';
+                        col.innerHTML = `
+                            <div class="position-relative border rounded p-1 shadow-sm" style="background: var(--apple-input-bg);">
+                                <img src="${e.target.result}" class="rounded" style="width: 80px; height: 80px; object-fit: cover;" alt="Preview">
+                                <span class="badge bg-success position-absolute top-0 start-100 translate-middle rounded-pill" style="font-size: 0.65rem;"><i class="bi bi-check"></i></span>
+                            </div>
+                        `;
+                        filePreviewGrid.appendChild(col);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    }
+
     if (clearFileBtn) {
         clearFileBtn.addEventListener('click', function() {
-            document.getElementById('image').value = '';
+            if (imageInput) imageInput.value = '';
+            if (filePreviewGrid) filePreviewGrid.innerHTML = '';
+        });
+    }
+
+    // Dynamic 5 Image URLs logic & Live Preview
+    const urlInputsContainer = document.getElementById('urlInputsContainer');
+    const addUrlBtn = document.getElementById('addUrlBtn');
+    const urlPreviewGrid = document.getElementById('urlPreviewGrid');
+
+    function updateUrlPreviews() {
+        if (!urlPreviewGrid) return;
+        urlPreviewGrid.innerHTML = '';
+        const inputs = urlInputsContainer.querySelectorAll('.image-url-input');
+        inputs.forEach(input => {
+            const val = input.value.trim();
+            if (val && (val.startsWith('http://') || val.startsWith('https://'))) {
+                const col = document.createElement('div');
+                col.className = 'col-auto';
+                col.innerHTML = `
+                    <div class="position-relative border rounded p-1 shadow-sm" style="background: var(--apple-input-bg);">
+                        <img src="${val}" class="rounded" style="width: 80px; height: 80px; object-fit: cover;" alt="URL Preview" onerror="this.src='https://via.placeholder.com/80?text=Invalid+URL';">
+                        <span class="badge bg-primary position-absolute top-0 start-100 translate-middle rounded-pill" style="font-size: 0.65rem;">URL</span>
+                    </div>
+                `;
+                urlPreviewGrid.appendChild(col);
+            }
+        });
+    }
+
+    if (urlInputsContainer) {
+        urlInputsContainer.addEventListener('input', updateUrlPreviews);
+        urlInputsContainer.addEventListener('paste', () => setTimeout(updateUrlPreviews, 100));
+    }
+
+    if (addUrlBtn && urlInputsContainer) {
+        addUrlBtn.addEventListener('click', function() {
+            const currentGroups = urlInputsContainer.querySelectorAll('.url-input-group');
+            if (currentGroups.length >= 5) {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Maximum Reached',
+                    text: 'You can add a maximum of 5 image URLs.',
+                    confirmButtonColor: '#2997ff'
+                });
+                return;
+            }
+            const count = currentGroups.length + 1;
+            const div = document.createElement('div');
+            div.className = 'input-group mb-2 url-input-group';
+            div.innerHTML = `
+                <span class="input-group-text"><i class="bi bi-link"></i></span>
+                <input type="url" class="form-control image-url-input" name="image_urls[]" placeholder="https://example.com/image${count}.jpg">
+                <button type="button" class="btn btn-outline-danger remove-url-btn"><i class="bi bi-trash"></i></button>
+            `;
+            urlInputsContainer.appendChild(div);
+
+            div.querySelector('.remove-url-btn').addEventListener('click', function() {
+                div.remove();
+                updateUrlPreviews();
+            });
         });
     }
 });

@@ -83,7 +83,13 @@ class DonationController extends Controller
             }
         }
         
-        if ($request->filled('image_url')) {
+        if ($request->filled('image_urls')) {
+            foreach ($request->input('image_urls') as $url) {
+                if (!empty($url)) {
+                    $imagePaths[] = $url;
+                }
+            }
+        } elseif ($request->filled('image_url')) {
             $imagePaths[] = $request->image_url;
         }
 
@@ -138,8 +144,15 @@ class DonationController extends Controller
             }
         }
         
-        // Add new URL image
-        if ($request->filled('image_url')) {
+        // Add new URL images
+        if ($request->filled('image_urls')) {
+            $toRemove = is_array($request->input('remove_images')) ? $request->input('remove_images') : [];
+            foreach ($request->input('image_urls') as $url) {
+                if (!empty($url) && !in_array($url, $toRemove)) {
+                    $imagePaths[] = $url;
+                }
+            }
+        } elseif ($request->filled('image_url')) {
             $newUrl = $request->image_url;
             $toRemove = is_array($request->input('remove_images')) ? $request->input('remove_images') : [];
             

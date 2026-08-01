@@ -29,6 +29,8 @@ class StoreDonationRequest extends FormRequest
             'images' => 'nullable|array|max:5',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:102400',
             'image_url' => 'nullable|url|max:1000',
+            'image_urls' => 'nullable|array|max:5',
+            'image_urls.*' => 'nullable|url|max:1000',
         ];
     }
 
