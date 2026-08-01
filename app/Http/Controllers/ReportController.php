@@ -64,11 +64,25 @@ class ReportController extends Controller
             ->with('success', 'Report generated successfully.');
     }
 
-    /** Display a specific report. */
+    /** Display a specific report with auto-synced live database metrics. */
     public function show(Report $report)
     {
         $report->load('user');
-        $content = json_decode($report->content, true);
+
+        // Dynamically recalculate fresh live metrics directly from the database
+        $content = match ($report->type) {
+            'sdg_impact' => $this->generateSdgImpactReport(),
+            'donation_summary' => $this->generateDonationSummaryReport(),
+            'user_activity' => $this->generateUserActivityReport(),
+            default => json_decode($report->content, true) ?: [],
+        };
+
+        // Auto-update report in database so content is always 100% up to date
+        $report->update([
+            'content' => json_encode($content),
+            'report_date' => now(),
+        ]);
+
         return view('reports.show', compact('report', 'content'));
     }
 

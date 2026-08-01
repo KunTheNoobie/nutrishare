@@ -11,6 +11,9 @@
             <span class="badge badge-{{ $report->type === 'sdg_impact' ? 'success' : ($report->type === 'donation_summary' ? 'warning' : 'primary') }}">
                 {{ $report->type === 'sdg_impact' ? 'SDG Impact' : ($report->type === 'donation_summary' ? 'Donation Summary' : 'User Activity') }}
             </span>
+            <span class="badge border text-success bg-success bg-opacity-10 ms-1 me-1 px-2.5 py-1" style="font-size: 0.75rem; font-weight: 500;">
+                <i class="bi bi-broadcast me-1 text-success"></i>Auto-Synced Live DB
+            </span>
             &nbsp;&middot;&nbsp;
             <i class="bi bi-person"></i> {{ $report->user->name ?? 'System' }}
             &nbsp;&middot;&nbsp;
