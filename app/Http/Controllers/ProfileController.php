@@ -33,8 +33,8 @@ class ProfileController extends Controller
         }
 
         $validated = $request->validate($rules, [
-            'phone.min' => 'Please enter a valid phone number (at least 9 digits).',
-            'phone.regex' => 'Please enter a valid phone number (e.g. 012-3456789 or +60123456789).',
+            'phone.min' => 'Please enter a valid phone number (at least 9 digits, e.g. 012-3456789 or +60123456789).',
+            'phone.regex' => 'Please enter a valid phone number (at least 9 digits, e.g. 012-3456789 or +60123456789).',
         ]);
 
         if ($request->hasFile('photo')) {
