@@ -24,15 +24,20 @@
             @endif
         </p>
     </div>
-    <div class="d-flex align-items-center gap-2">
-        <div class="btn-group btn-group-sm shadow-sm" role="group" style="border-radius: 20px; overflow: hidden; border: 1px solid var(--apple-border);">
-            <button type="button" class="btn btn-sm btn-outline-light active px-3" id="btnTableView" onclick="setClaimsView('table')">
-                <i class="bi bi-table me-1"></i> Table
-            </button>
-            <button type="button" class="btn btn-sm btn-outline-light px-3" id="btnGridView" onclick="setClaimsView('grid')">
-                <i class="bi bi-grid-3x3-gap me-1"></i> Visual Cards
-            </button>
-        </div>
+</div>
+
+<!-- View Switcher Controls -->
+<div class="d-flex justify-content-between align-items-center mb-3 animate-slide-up">
+    <div class="small" style="color: var(--apple-text-muted);">
+        Showing <strong style="color: var(--apple-text);">{{ $claims->count() }}</strong> of <strong style="color: var(--apple-text);">{{ $claims->total() }}</strong> claim records
+    </div>
+    <div class="btn-group btn-group-sm shadow-sm" role="group" style="border-radius: 20px; overflow: hidden; border: 1px solid var(--apple-border);">
+        <button type="button" class="btn btn-sm btn-outline-light active px-3" id="btnTableView" onclick="setClaimsView('table')">
+            <i class="bi bi-table me-1"></i> Table View
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-light px-3" id="btnGridView" onclick="setClaimsView('grid')">
+            <i class="bi bi-grid-3x3-gap me-1"></i> Visual Cards View
+        </button>
     </div>
 </div>
 

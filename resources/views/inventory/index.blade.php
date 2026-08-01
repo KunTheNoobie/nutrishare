@@ -19,12 +19,12 @@
     <div class="small" style="color: var(--apple-text-muted);">
         Showing <strong style="color: var(--apple-text);">{{ $locations->count() }}</strong> of <strong style="color: var(--apple-text);">{{ $locations->total() }}</strong> facilities
     </div>
-    <div class="btn-group btn-group-sm" role="group">
-        <button type="button" class="btn btn-outline-light active" id="btnTableView" onclick="setInventoryView('table')">
-            <i class="bi bi-list-ul me-1"></i> Table View
+    <div class="btn-group btn-group-sm shadow-sm" role="group" style="border-radius: 20px; overflow: hidden; border: 1px solid var(--apple-border);">
+        <button type="button" class="btn btn-sm btn-outline-light active px-3" id="btnTableView" onclick="setInventoryView('table')">
+            <i class="bi bi-table me-1"></i> Table View
         </button>
-        <button type="button" class="btn btn-outline-light" id="btnGridView" onclick="setInventoryView('grid')">
-            <i class="bi bi-grid-3x3-gap me-1"></i> Facility Cards View
+        <button type="button" class="btn btn-sm btn-outline-light px-3" id="btnGridView" onclick="setInventoryView('grid')">
+            <i class="bi bi-grid-3x3-gap me-1"></i> Visual Cards View
         </button>
     </div>
 </div>
