@@ -74,7 +74,7 @@
         <!-- Vehicle Info -->
         @if($claim->vehicle)
         <div class="card mb-4">
-            <div class="card-header"><i class="bi bi-truck"></i> Vehicle Assignment</div>
+            <div class="card-header"><i class="bi bi-truck text-apple-accent"></i> Pickup & Transport Logistics</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4"><strong>Plate:</strong> {{ $claim->vehicle->plate_number }}</div>
@@ -172,7 +172,7 @@
         <!-- Assign Vehicle Form -->
         @if((Auth::user()->isAdmin() || $claim->user_id === Auth::id()) && $claim->status === 'approved' && !$claim->vehicle)
         <div class="card mb-3">
-            <div class="card-header">Assign Vehicle</div>
+            <div class="card-header"><i class="bi bi-truck me-1"></i> Dispatch Transport & Driver</div>
             <div class="card-body">
                 <form method="POST" action="{{ route('claims.vehicle', $claim) }}">
                     @csrf
