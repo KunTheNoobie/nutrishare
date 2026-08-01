@@ -101,9 +101,14 @@
                                         <input type="url" class="form-control image-url-input @error('image_urls.*') is-invalid @enderror" name="image_urls[]" placeholder="https://example.com/image1.jpg">
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-sm btn-outline-primary mt-1" id="addUrlBtn">
-                                    <i class="bi bi-plus-circle"></i> Add Another Image URL (Max 5)
-                                </button>
+                                <div class="d-flex gap-2 mt-1">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" id="addUrlBtn">
+                                        <i class="bi bi-plus-circle"></i> Add Another Image URL (Max 5)
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" id="clearUrlBtn" title="Clear all URLs">
+                                        <i class="bi bi-x-lg"></i> Clear
+                                    </button>
+                                </div>
                                 <div class="text-muted small mt-1">Paste web image URLs directly. Real-time preview will appear below.</div>
                                 @error('image_urls')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                                 @error('image_urls.*')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
@@ -335,6 +340,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 div.remove();
                 updateUrlPreviews();
             });
+    const clearUrlBtn = document.getElementById('clearUrlBtn');
+    if (clearUrlBtn && urlInputsContainer) {
+        clearUrlBtn.addEventListener('click', function() {
+            urlInputsContainer.innerHTML = `
+                <div class="input-group mb-2 url-input-group">
+                    <span class="input-group-text"><i class="bi bi-link"></i></span>
+                    <input type="url" class="form-control image-url-input" name="image_urls[]" placeholder="https://example.com/image1.jpg">
+                </div>
+            `;
+            updateUrlPreviews();
         });
     }
 });
