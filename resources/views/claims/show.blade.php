@@ -81,22 +81,36 @@
 
         <!-- Distribution Logs -->
         @if($claim->distributionLogs->count())
-        <div class="card mb-4">
-            <div class="card-header"><i class="bi bi-people"></i> Distribution Logs (SDG Impact)</div>
-            <div class="card-body">
-                <table class="table table-sm">
-                    <thead><tr><th>Date</th><th>Location</th><th>Beneficiaries</th><th>Qty</th></tr></thead>
-                    <tbody>
-                    @foreach($claim->distributionLogs as $log)
-                    <tr>
-                        <td>{{ $log->distributed_at->format('d M Y') }}</td>
-                        <td>{{ $log->distribution_location }}</td>
-                        <td>{{ $log->beneficiaries_count }}</td>
-                        <td>{{ $log->quantity_distributed }} {{ $log->unit }}</td>
-                    </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+        <div class="card shadow-sm mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-people text-apple-accent"></i> Distribution Logs (SDG Impact)</span>
+                <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
+                    {{ $claim->distributionLogs->count() }} Entries
+                </span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                                <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Date</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Location</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Beneficiaries</th>
+                                <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Qty Distributed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($claim->distributionLogs as $log)
+                        <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                            <td class="ps-4 small" style="color: var(--apple-text-muted);"><i class="bi bi-calendar me-1"></i>{{ $log->distributed_at->format('d M Y') }}</td>
+                            <td style="color: var(--apple-text);"><i class="bi bi-geo-alt text-apple-accent me-1"></i>{{ $log->distribution_location }}</td>
+                            <td><span class="badge badge-success fw-bold">{{ $log->beneficiaries_count }} People</span></td>
+                            <td class="pe-4 text-end" style="color: var(--apple-text);">{{ $log->quantity_distributed }} {{ $log->unit }}</td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         @endif

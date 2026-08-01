@@ -79,19 +79,31 @@
 </div>
 
 @if(!empty($content['top_distribution_locations']))
-<div class="card shadow-sm animate-slide-up">
-    <div class="card-header"><i class="bi bi-geo-alt text-apple-accent"></i> Top Distribution Locations</div>
-    <div class="card-body">
+<div class="card shadow-sm animate-slide-up mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-geo-alt text-apple-accent"></i> Top Distribution Locations</span>
+        <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
+            {{ count($content['top_distribution_locations']) }} Locations
+        </span>
+    </div>
+    <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-dark table-hover border-dark">
-                <thead><tr><th class="text-muted fw-normal">Location</th><th class="text-muted fw-normal">Beneficiaries</th><th class="text-muted fw-normal">Qty Distributed</th><th class="text-muted fw-normal">Times</th></tr></thead>
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                        <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Location</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Beneficiaries</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Qty Distributed</th>
+                        <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Times</th>
+                    </tr>
+                </thead>
                 <tbody>
                 @foreach($content['top_distribution_locations'] as $loc)
-                <tr>
-                    <td>{{ $loc['distribution_location'] }}</td>
+                <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                    <td class="ps-4"><strong style="color: var(--apple-text);">{{ $loc['distribution_location'] }}</strong></td>
                     <td><span class="text-apple-success fw-bold">{{ number_format($loc['total_beneficiaries']) }}</span></td>
-                    <td>{{ number_format($loc['total_quantity'], 1) }}</td>
-                    <td>{{ $loc['distribution_count'] }}</td>
+                    <td style="color: var(--apple-text);">{{ number_format($loc['total_quantity'], 1) }}</td>
+                    <td class="pe-4 text-end" style="color: var(--apple-text);">{{ $loc['distribution_count'] }}</td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -248,18 +260,27 @@
     </div>
     <div class="col-md-8">
         <div class="card shadow-sm">
-            <div class="card-header"><i class="bi bi-lightning text-apple-accent"></i> Most Active Users</div>
-            <div class="card-body">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-lightning text-apple-accent"></i> Most Active Users</span>
+            </div>
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-dark table-hover border-dark mb-0">
-                        <thead><tr><th class="text-muted fw-normal">User</th><th class="text-muted fw-normal">Role</th><th class="text-muted fw-normal">Donations</th><th class="text-muted fw-normal">Claims</th></tr></thead>
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                                <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">User</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Role</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donations</th>
+                                <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Claims</th>
+                            </tr>
+                        </thead>
                         <tbody>
                         @foreach(($content['most_active_users'] ?? []) as $u)
-                        <tr>
-                            <td>{{ $u['name'] }}</td>
+                        <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                            <td class="ps-4"><strong style="color: var(--apple-text);">{{ $u['name'] }}</strong></td>
                             <td><span class="badge badge-{{ $u['role'] === 'admin' ? 'primary' : ($u['role'] === 'ngo' ? 'warning' : ($u['role'] === 'moderator' ? 'moderator' : 'success')) }}">{{ $u['role'] === 'ngo' ? 'NGO' : ucfirst($u['role']) }}</span></td>
-                            <td>{{ $u['donations'] }}</td>
-                            <td>{{ $u['claims'] }}</td>
+                            <td style="color: var(--apple-text);">{{ $u['donations'] }}</td>
+                            <td class="pe-4 text-end" style="color: var(--apple-text);">{{ $u['claims'] }}</td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -271,17 +292,25 @@
 </div>
 
 <div class="card shadow-sm animate-slide-up">
-    <div class="card-header"><i class="bi bi-clock-history text-apple-accent"></i> Recently Joined Users</div>
-    <div class="card-body">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-clock-history text-apple-accent"></i> Recently Joined Users</span>
+    </div>
+    <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-dark table-hover border-dark mb-0">
-                <thead><tr><th class="text-muted fw-normal">Name</th><th class="text-muted fw-normal">Role</th><th class="text-muted fw-normal">Joined</th></tr></thead>
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                        <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Name</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Role</th>
+                        <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Joined</th>
+                    </tr>
+                </thead>
                 <tbody>
                 @foreach(($content['recent_users'] ?? []) as $u)
-                <tr>
-                    <td>{{ $u['name'] }}</td>
+                <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                    <td class="ps-4"><strong style="color: var(--apple-text);">{{ $u['name'] }}</strong></td>
                     <td><span class="badge badge-{{ $u['role'] === 'admin' ? 'primary' : ($u['role'] === 'ngo' ? 'warning' : ($u['role'] === 'moderator' ? 'moderator' : 'success')) }}">{{ $u['role'] === 'ngo' ? 'NGO' : ucfirst($u['role']) }}</span></td>
-                    <td class="text-muted">{{ $u['joined'] }}</td>
+                    <td class="pe-4 text-end small" style="color: var(--apple-text-muted);"><i class="bi bi-calendar me-1"></i>{{ $u['joined'] }}</td>
                 </tr>
                 @endforeach
                 </tbody>

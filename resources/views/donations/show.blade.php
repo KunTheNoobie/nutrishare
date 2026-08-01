@@ -86,24 +86,45 @@
 
         <!-- Food Items -->
         @if((Auth::user()->isNgo() || Auth::user()->isAdmin() || Auth::user()->isModerator()) && $donation->foodItems->count())
-        <div class="card mb-4">
-            <div class="card-header"><i class="bi bi-list-ul"></i> Food Items</div>
-            <div class="card-body">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-list-ul text-apple-accent"></i> Food Items Included</span>
+                <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
+                    {{ $donation->foodItems->count() }} Items
+                </span>
+            </div>
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead><tr><th>Item</th><th>Qty</th><th>Category</th><th>Allergens</th><th>Expires</th></tr></thead>
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                                <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Item</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Qty</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Category</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Allergens</th>
+                                <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Expires</th>
+                            </tr>
+                        </thead>
                         <tbody>
                         @foreach($donation->foodItems as $item)
-                        <tr>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->quantity }} {{ $item->unit }}</td>
-                            <td>{{ $item->category?->name ?? 'N/A' }}</td>
+                        <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                            <td class="ps-4"><strong style="color: var(--apple-text);">{{ $item->name }}</strong></td>
+                            <td style="color: var(--apple-text);">{{ $item->quantity }} {{ $item->unit }}</td>
                             <td>
-                                @foreach($item->allergenTags as $tag)
-                                <span class="badge bg-warning text-dark">{{ $tag->name }}</span>
-                                @endforeach
+                                @if($item->category)
+                                    <span class="action-tag">{{ $item->category->name }}</span>
+                                @else
+                                    <span style="color: var(--apple-text-muted);">—</span>
+                                @endif
                             </td>
-                            <td>{{ $item->expiry_date->format('d M Y') }}</td>
+                            <td>
+                                @forelse($item->allergenTags as $tag)
+                                <span class="badge bg-warning text-dark me-1" style="font-size: 0.72rem;">{{ $tag->name }}</span>
+                                @empty
+                                <span style="color: var(--apple-text-muted);">—</span>
+                                @endforelse
+                            </td>
+                            <td class="pe-4 text-end small" style="color: var(--apple-text-muted);"><i class="bi bi-clock me-1"></i>{{ $item->expiry_date->format('d M Y') }}</td>
                         </tr>
                         @endforeach
                         </tbody>
