@@ -79,7 +79,11 @@
             </div>
         </div>
         @empty
-        <p class="text-muted text-center py-4">No donations yet. <a href="{{ route('donations.create') }}">Create your first donation!</a></p>
+        <div class="text-center py-4">
+            <i class="bi bi-basket text-muted opacity-50 fs-2 d-block mb-2"></i>
+            <p class="text-muted mb-2 small">You haven't published any food donations yet.</p>
+            <a href="{{ route('donations.create') }}" class="btn btn-ns-primary btn-sm"><i class="bi bi-plus-circle me-1"></i> Create Donation</a>
+        </div>
         @endforelse
     </div>
 </div>
@@ -172,7 +176,11 @@
             </div>
         </div>
         @empty
-        <p class="text-muted text-center py-4">No claims yet. <a href="{{ route('donations.index') }}">Browse available donations!</a></p>
+        <div class="text-center py-4">
+            <i class="bi bi-hand-thumbs-up text-muted opacity-50 fs-2 d-block mb-2"></i>
+            <p class="text-muted mb-2 small">You haven't claimed any food donations yet.</p>
+            <a href="{{ route('donations.index') }}" class="btn btn-ns-primary btn-sm"><i class="bi bi-search me-1"></i> Browse Donations</a>
+        </div>
         @endforelse
     </div>
 </div>
@@ -241,7 +249,15 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center py-5" style="color: var(--apple-text-muted);">No available donations at the moment.</td>
+                    <td colspan="5" class="text-center py-5">
+                        <div class="py-3">
+                            <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 56px; height: 56px; background: rgba(41, 151, 255, 0.1); color: var(--apple-accent);">
+                                <i class="bi bi-basket" style="font-size: 1.6rem;"></i>
+                            </div>
+                            <h6 class="fw-bold mb-1" style="color: var(--apple-text);">No Available Donations</h6>
+                            <p class="mb-0 small" style="color: var(--apple-text-muted);">There are no active food donations available for claiming right now.</p>
+                        </div>
+                    </td>
                 </tr>
                 @endforelse
                 </tbody>
@@ -346,7 +362,17 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="5" class="text-center py-4" style="color: var(--apple-text-muted);">No system logs recorded yet.</td></tr>
+                <tr>
+                    <td colspan="5" class="text-center py-5">
+                        <div class="py-3">
+                            <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 56px; height: 56px; background: rgba(41, 151, 255, 0.1); color: var(--apple-accent);">
+                                <i class="bi bi-journal-text" style="font-size: 1.6rem;"></i>
+                            </div>
+                            <h6 class="fw-bold mb-1" style="color: var(--apple-text);">No System Activity Logs</h6>
+                            <p class="mb-0 small" style="color: var(--apple-text-muted);">No system activity logs recorded yet.</p>
+                        </div>
+                    </td>
+                </tr>
                 @endforelse
                 </tbody>
             </table>
@@ -418,7 +444,15 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center py-5" style="color: var(--apple-text-muted);">No active available donations at the moment.</td>
+                    <td colspan="5" class="text-center py-5">
+                        <div class="py-3">
+                            <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 56px; height: 56px; background: rgba(41, 151, 255, 0.1); color: var(--apple-accent);">
+                                <i class="bi bi-basket" style="font-size: 1.6rem;"></i>
+                            </div>
+                            <h6 class="fw-bold mb-1" style="color: var(--apple-text);">No Available Donations</h6>
+                            <p class="mb-0 small" style="color: var(--apple-text-muted);">No active surplus food donations listed on the platform right now.</p>
+                        </div>
+                    </td>
                 </tr>
                 @endforelse
                 </tbody>

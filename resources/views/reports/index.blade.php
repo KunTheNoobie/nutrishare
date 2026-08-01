@@ -86,7 +86,15 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="5" class="text-center py-5" style="color: var(--apple-text-muted);">No reports generated yet.</td>
+                    <td colspan="5" class="text-center py-5">
+                        <div class="py-4">
+                            <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 56px; height: 56px; background: rgba(41, 151, 255, 0.1); color: var(--apple-accent);">
+                                <i class="bi bi-graph-up" style="font-size: 1.6rem;"></i>
+                            </div>
+                            <h6 class="fw-bold mb-1" style="color: var(--apple-text);">No Reports Generated Yet</h6>
+                            <p class="mb-0 small" style="color: var(--apple-text-muted);">No platform analytics or SDG impact reports have been created.</p>
+                        </div>
+                    </td>
                 </tr>
                 @endforelse
                 </tbody>

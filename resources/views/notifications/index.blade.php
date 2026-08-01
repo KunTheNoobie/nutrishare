@@ -74,8 +74,14 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="text-center py-5" style="color: var(--apple-text-muted);">
-                        No notifications received yet.
+                    <td colspan="4" class="text-center py-5">
+                        <div class="py-4">
+                            <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 56px; height: 56px; background: rgba(41, 151, 255, 0.1); color: var(--apple-accent);">
+                                <i class="bi bi-bell-slash" style="font-size: 1.6rem;"></i>
+                            </div>
+                            <h6 class="fw-bold mb-1" style="color: var(--apple-text);">No Notifications Found</h6>
+                            <p class="mb-0 small" style="color: var(--apple-text-muted);">You have no unread or archived system alerts in your notification history.</p>
+                        </div>
                     </td>
                 </tr>
                 @endforelse

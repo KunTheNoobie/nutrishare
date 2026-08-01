@@ -98,14 +98,22 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center py-5" style="color: var(--apple-text-muted);">
-                        @if(Auth::user()->isDonor())
-                            No claims received on your food donations yet.
-                        @elseif(Auth::user()->isNgo())
-                            No claims placed yet.
-                        @else
-                            No claims recorded on the platform yet.
-                        @endif
+                    <td colspan="7" class="text-center py-5">
+                        <div class="py-4">
+                            <div class="mb-3 d-inline-flex align-items-center justify-content-center rounded-circle" style="width: 56px; height: 56px; background: rgba(41, 151, 255, 0.1); color: var(--apple-accent);">
+                                <i class="bi bi-hand-thumbs-up" style="font-size: 1.6rem;"></i>
+                            </div>
+                            <h6 class="fw-bold mb-1" style="color: var(--apple-text);">No Claims Found</h6>
+                            <p class="mb-0 small" style="color: var(--apple-text-muted);">
+                                @if(Auth::user()->isDonor())
+                                    No claims have been submitted by NGOs for your published food listings yet.
+                                @elseif(Auth::user()->isNgo())
+                                    You have not claimed any food donations yet.
+                                @else
+                                    No claims recorded across the platform yet.
+                                @endif
+                            </p>
+                        </div>
                     </td>
                 </tr>
                 @endforelse
