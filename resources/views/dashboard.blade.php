@@ -257,14 +257,14 @@
     </div>
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0" style="background: var(--apple-surface);">
+            <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
-                        <th class="ps-4 py-3 text-muted fw-normal small">Time</th>
-                        <th class="py-3 text-muted fw-normal small">User</th>
-                        <th class="py-3 text-muted fw-normal small">Action</th>
-                        <th class="py-3 text-muted fw-normal small">Description</th>
-                        <th class="pe-4 py-3 text-muted fw-normal small text-end">Level</th>
+                        <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Time</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">User</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Action</th>
+                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Description</th>
+                        <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Level</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -279,19 +279,19 @@
                     };
                 @endphp
                 <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
-                    <td class="ps-4 text-nowrap"><small class="text-muted"><i class="bi bi-clock me-1"></i>{{ $log->created_at->format('d M H:i') }}</small></td>
+                    <td class="ps-4 text-nowrap"><small style="color: var(--apple-text-muted);"><i class="bi bi-clock me-1"></i>{{ $log->created_at->format('d M H:i') }}</small></td>
                     <td>
-                        <span class="fw-semibold text-light">
+                        <span class="fw-bold" style="color: var(--apple-text);">
                             <i class="bi {{ $actionIcon }} me-1"></i>
                             {{ $log->user?->name ?? 'System' }}
                         </span>
                     </td>
                     <td>
-                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-30 px-2 py-1 font-monospace" style="font-size: 0.72rem;">
+                        <span class="badge bg-primary bg-opacity-15 text-primary border border-primary border-opacity-30 px-2 py-1 font-monospace" style="font-size: 0.75rem;">
                             {{ $log->action }}
                         </span>
                     </td>
-                    <td class="text-muted small">{{ Str::limit($log->description, 75) }}</td>
+                    <td class="small" style="color: var(--apple-text-muted);">{{ Str::limit($log->description, 75) }}</td>
                     <td class="pe-4 text-end">
                         <span class="badge badge-{{ $log->level === 'error' ? 'danger' : ($log->level === 'warning' ? 'warning' : 'success') }}">
                             {{ strtoupper($log->level) }}
@@ -299,7 +299,7 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="5" class="text-muted text-center py-4">No system logs recorded yet.</td></tr>
+                <tr><td colspan="5" class="text-center py-4" style="color: var(--apple-text-muted);">No system logs recorded yet.</td></tr>
                 @endforelse
                 </tbody>
             </table>
