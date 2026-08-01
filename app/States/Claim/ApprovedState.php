@@ -68,7 +68,7 @@ class ApprovedState extends ClaimState
             $location = \App\Models\InventoryLocation::create([
                 'user_id' => $ngo->id,
                 'name' => $locationName,
-                'address' => $this->claim->donation->pickup_address ?: 'NGO Central Facility',
+                'address' => $ngo->address ?: 'NGO Central Facility',
                 'storage_type' => 'ambient',
                 'capacity' => 5000,
                 'current_occupancy' => 0,
