@@ -43,87 +43,159 @@
     </div>
 </div>
 
-<!-- Donations Unified Card Table -->
-<div class="card shadow-sm animate-slide-up" id="donationsTableContainer">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <span><i class="bi bi-list-check text-apple-accent me-1"></i> Food Donations List</span>
-        <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
-            {{ $donations->total() }} Total Donations
-        </span>
+<!-- View Switcher Controls -->
+<div class="d-flex justify-content-between align-items-center mb-3 animate-slide-up">
+    <div class="small" style="color: var(--apple-text-muted);">
+        Showing <strong style="color: var(--apple-text);">{{ $donations->count() }}</strong> of <strong style="color: var(--apple-text);">{{ $donations->total() }}</strong> listings
     </div>
-    <div class="card-body p-0">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead>
+    <div class="btn-group btn-group-sm" role="group">
+        <button type="button" class="btn btn-outline-light active" id="btnTableView" onclick="setDonationsView('table')">
+            <i class="bi bi-list-ul me-1"></i> Table View
+        </button>
+        <button type="button" class="btn btn-outline-light" id="btnGridView" onclick="setDonationsView('grid')">
+            <i class="bi bi-grid-3x3-gap me-1"></i> Visual Cards View
+        </button>
+    </div>
+</div>
+
+<div id="donationsContentArea">
+    <!-- Table View Container -->
+    <div class="card shadow-sm animate-slide-up" id="donationsTableView">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span><i class="bi bi-list-check text-apple-accent me-1"></i> Food Donations List</span>
+            <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
+                {{ $donations->total() }} Total Donations
+            </span>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                            <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donation Title</th>
+                            <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donor</th>
+                            <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Quantity</th>
+                            <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Pickup Location</th>
+                            <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Expires</th>
+                            <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Status</th>
+                            <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($donations as $donation)
                     <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
-                        <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donation Title</th>
-                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Donor</th>
-                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Quantity</th>
-                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Pickup Location</th>
-                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Expires</th>
-                        <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Status</th>
-                        <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @forelse($donations as $donation)
-                <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
-                    <td class="ps-4">
-                        <div class="d-flex align-items-center gap-3">
-                            @if($donation->image_paths && count($donation->image_paths) > 0)
-                                @php
-                                    $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
-                                @endphp
-                                <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 40px; height: 40px; object-fit: cover;" alt="Thumbnail">
-                            @else
-                                <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05);">
-                                    <i class="bi bi-basket text-muted"></i>
-                                </div>
-                            @endif
-                            <div>
-                                <strong style="color: var(--apple-text);">
-                                    <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none" style="color: var(--apple-text);">{{ $donation->title }}</a>
-                                </strong>
-                                @if($donation->description)
-                                <br><small style="color: var(--apple-text-muted); font-size: 0.78rem;">{{ Str::limit($donation->description, 50) }}</small>
+                        <td class="ps-4">
+                            <div class="d-flex align-items-center gap-3">
+                                @if($donation->image_paths && count($donation->image_paths) > 0)
+                                    @php
+                                        $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
+                                    @endphp
+                                    <img src="{{ $thumbSrc }}" class="rounded shadow-sm" style="width: 40px; height: 40px; object-fit: cover;" alt="Thumbnail">
+                                @else
+                                    <div class="rounded shadow-sm d-flex justify-content-center align-items-center" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05);">
+                                        <i class="bi bi-basket text-muted"></i>
+                                    </div>
                                 @endif
+                                <div>
+                                    <strong style="color: var(--apple-text);">
+                                        <a href="{{ route('donations.show', $donation) }}" class="text-decoration-none" style="color: var(--apple-text);">{{ $donation->title }}</a>
+                                    </strong>
+                                    @if($donation->description)
+                                    <br><small style="color: var(--apple-text-muted); font-size: 0.78rem;">{{ Str::limit($donation->description, 50) }}</small>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <strong style="color: var(--apple-text);">{{ $donation->donor->organization_name ?? $donation->donor->name }}</strong>
-                        <br><small style="color: var(--apple-text-muted); font-size: 0.75rem;">{{ $donation->donor->email }}</small>
-                    </td>
-                    <td style="color: var(--apple-text);">
-                        <strong>{{ $donation->quantity }}</strong> {{ $donation->unit }}
-                    </td>
-                    <td class="small" style="color: var(--apple-text-muted);">
-                        <i class="bi bi-geo-alt text-apple-accent me-1"></i>{{ Str::limit($donation->pickup_address, 35) }}
-                    </td>
-                    <td class="small" style="color: var(--apple-text-muted);">
-                        <i class="bi bi-calendar me-1"></i>{{ $donation->expiry_date->format('d M Y') }}
-                    </td>
-                    <td>
-                        <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }}">
+                        </td>
+                        <td>
+                            <strong style="color: var(--apple-text);">{{ $donation->donor->organization_name ?? $donation->donor->name }}</strong>
+                            <br><small style="color: var(--apple-text-muted); font-size: 0.75rem;">{{ $donation->donor->email }}</small>
+                        </td>
+                        <td style="color: var(--apple-text);">
+                            <strong>{{ $donation->quantity }}</strong> {{ $donation->unit }}
+                        </td>
+                        <td class="small" style="color: var(--apple-text-muted);">
+                            <i class="bi bi-geo-alt text-apple-accent me-1"></i>{{ Str::limit($donation->pickup_address, 35) }}
+                        </td>
+                        <td class="small" style="color: var(--apple-text-muted);">
+                            <i class="bi bi-calendar me-1"></i>{{ $donation->expiry_date->format('d M Y') }}
+                        </td>
+                        <td>
+                            <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }}">
+                                {{ ucfirst($donation->status) }}
+                            </span>
+                        </td>
+                        <td class="pe-4 text-end">
+                            <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">
+                                <i class="bi bi-eye"></i> View Details
+                            </a>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="7" class="text-center py-5" style="color: var(--apple-text-muted);">
+                            No donations found matching your search.
+                        </td>
+                    </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visual Cards View Container (Hidden by Default or Toggleable) -->
+    <div class="row g-3 animate-slide-up" id="donationsGridView" style="display: none;">
+        @forelse($donations as $donation)
+        <div class="col-md-6 col-lg-4">
+            <div class="card shadow-sm h-100 border" style="border-color: var(--apple-border) !important; border-radius: 16px; overflow: hidden;">
+                @if($donation->image_paths && count($donation->image_paths) > 0)
+                    @php
+                        $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
+                    @endphp
+                    <div style="height: 160px; overflow: hidden; background: rgba(0,0,0,0.2);">
+                        <img src="{{ $thumbSrc }}" class="w-100 h-100" style="object-fit: cover; transition: transform 0.3s ease;" alt="{{ $donation->title }}">
+                    </div>
+                @else
+                    <div class="d-flex justify-content-center align-items-center" style="height: 140px; background: rgba(255,255,255,0.03);">
+                        <i class="bi bi-basket text-muted" style="font-size: 2.5rem; opacity: 0.5;"></i>
+                    </div>
+                @endif
+                <div class="card-body d-flex flex-column p-3">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h6 class="fw-bold mb-0" style="color: var(--apple-text);">{{ $donation->title }}</h6>
+                        <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
                             {{ ucfirst($donation->status) }}
                         </span>
-                    </td>
-                    <td class="pe-4 text-end">
-                        <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light text-nowrap">
-                            <i class="bi bi-eye"></i> View Details
-                        </a>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="7" class="text-center py-5" style="color: var(--apple-text-muted);">
-                        No donations found matching your search.
-                    </td>
-                </tr>
-                @endforelse
-                </tbody>
-            </table>
+                    </div>
+                    <p class="small mb-3" style="color: var(--apple-text-muted); line-height: 1.4;">{{ Str::limit($donation->description, 75) }}</p>
+                    
+                    <div class="mt-auto small pt-2 border-top" style="border-color: var(--apple-border) !important; color: var(--apple-text-muted);">
+                        <div class="d-flex justify-content-between mb-1">
+                            <span><i class="bi bi-box text-apple-accent me-1"></i> Quantity:</span>
+                            <strong style="color: var(--apple-text);">{{ $donation->quantity }} {{ $donation->unit }}</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-1">
+                            <span><i class="bi bi-building text-apple-accent me-1"></i> Donor:</span>
+                            <span style="color: var(--apple-text);">{{ Str::limit($donation->donor->organization_name ?? $donation->donor->name, 20) }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span><i class="bi bi-calendar text-apple-accent me-1"></i> Expires:</span>
+                            <span>{{ $donation->expiry_date->format('d M Y') }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-top-0 p-3 pt-0">
+                    <a href="{{ route('donations.show', $donation) }}" class="btn btn-sm btn-outline-light w-100">
+                        <i class="bi bi-eye me-1"></i> View Details
+                    </a>
+                </div>
+            </div>
         </div>
+        @empty
+        <div class="col-12 text-center py-5" style="color: var(--apple-text-muted);">
+            No donations found matching your search.
+        </div>
+        @endforelse
     </div>
 </div>
 
@@ -131,27 +203,48 @@
 
 @push('scripts')
 <script>
+function setDonationsView(mode) {
+    const tableView = document.getElementById('donationsTableView');
+    const gridView = document.getElementById('donationsGridView');
+    const btnTable = document.getElementById('btnTableView');
+    const btnGrid = document.getElementById('btnGridView');
+
+    if (mode === 'grid') {
+        tableView.style.display = 'none';
+        gridView.style.display = 'flex';
+        btnTable.classList.remove('active');
+        btnGrid.classList.add('active');
+        localStorage.setItem('donations_view_mode', 'grid');
+    } else {
+        gridView.style.display = 'none';
+        tableView.style.display = 'block';
+        btnGrid.classList.remove('active');
+        btnTable.classList.add('active');
+        localStorage.setItem('donations_view_mode', 'table');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    const savedMode = localStorage.getItem('donations_view_mode') || 'table';
+    setDonationsView(savedMode);
+
     const searchInput = document.getElementById('searchInput');
     const clearBtn = document.getElementById('clearSearch');
-    const tableContainer = document.getElementById('donationsTableContainer');
+    const contentArea = document.getElementById('donationsContentArea');
     const pagination = document.getElementById('paginationContainer');
     let debounceTimer;
 
-    // Toggle clear button visibility
     const toggleClearBtn = () => {
         clearBtn.style.display = searchInput.value.length > 0 ? 'block' : 'none';
     };
     toggleClearBtn();
 
-    // Clear search
     clearBtn.addEventListener('click', () => {
         searchInput.value = '';
         toggleClearBtn();
         triggerSearch();
     });
 
-    // Live search on typing
     searchInput.addEventListener('input', function() {
         toggleClearBtn();
         clearTimeout(debounceTimer);
@@ -184,8 +277,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
                 
-                const newTable = doc.getElementById('donationsTableContainer');
-                if (newTable && tableContainer) tableContainer.innerHTML = newTable.innerHTML;
+                const newContent = doc.getElementById('donationsContentArea');
+                if (newContent && contentArea) {
+                    contentArea.innerHTML = newContent.innerHTML;
+                    const currentMode = localStorage.getItem('donations_view_mode') || 'table';
+                    setDonationsView(currentMode);
+                }
                 
                 const newPagination = doc.getElementById('paginationContainer');
                 if (newPagination && pagination) pagination.innerHTML = newPagination.innerHTML;
