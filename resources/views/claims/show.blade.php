@@ -12,14 +12,38 @@
                     {{ ucfirst($claim->status) }}
                 </span>
             </div>
-            <div class="card-body">
                 @if($claim->donation->image_paths && count($claim->donation->image_paths) > 0)
-                    @php
-                        $thumbSrc = Str::startsWith($claim->donation->image_paths[0], ['http://', 'https://']) ? $claim->donation->image_paths[0] : asset('storage/' . $claim->donation->image_paths[0]);
-                    @endphp
-                    <div class="mb-3 rounded overflow-hidden" style="height: 200px; background: rgba(0,0,0,0.2); border: 1px solid var(--apple-border);">
-                        <img src="{{ $thumbSrc }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ $claim->donation->title }}">
+                <div id="claimImageCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+                    @if(count($claim->donation->image_paths) > 1)
+                    <div class="carousel-indicators">
+                        @foreach($claim->donation->image_paths as $index => $path)
+                            <button type="button" data-bs-target="#claimImageCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
+                        @endforeach
                     </div>
+                    @endif
+                    <div class="carousel-inner rounded shadow-sm" style="border: 1px solid var(--apple-border);">
+                        @foreach($claim->donation->image_paths as $index => $path)
+                            <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                                @php
+                                    $imgSrc = Str::startsWith($path, ['http://', 'https://']) ? $path : asset('storage/' . $path);
+                                @endphp
+                                <a href="javascript:void(0);" onclick="window.openClaimModalImage({{ $index }})" data-bs-toggle="modal" data-bs-target="#claimImageModal" title="Click to view full image">
+                                    <img src="{{ $imgSrc }}" class="d-block w-100" alt="Claim Image {{ $index + 1 }}" style="height: 340px; object-fit: cover;">
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                    @if(count($claim->donation->image_paths) > 1)
+                    <button class="carousel-control-prev" type="button" data-bs-target="#claimImageCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#claimImageCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    @endif
+                </div>
                 @endif
                 <h5 class="fw-bold" style="color: var(--apple-text);">Donation: {{ $claim->donation->title }}</h5>
                 <p>{{ $claim->donation->description }}</p>
@@ -251,4 +275,68 @@
         @endif
     </div>
 </div>
+
+@if($claim->donation->image_paths && count($claim->donation->image_paths) > 0)
+<!-- Modal for Fullscreen Image Viewing -->
+<div class="modal fade" id="claimImageModal" tabindex="-1" aria-labelledby="claimImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-dark text-light border-secondary">
+            <div class="modal-header border-secondary py-2">
+                <h6 class="modal-title" id="claimImageModalLabel"><i class="bi bi-image text-apple-accent"></i> {{ $claim->donation->title }} — Photo Gallery</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center p-0 position-relative d-flex justify-content-center align-items-center" style="min-height: 400px; background: #000;">
+                <img id="claimModalImage" src="" class="img-fluid" style="max-height: 75vh; object-fit: contain;" alt="Full Donation Image">
+                <button type="button" class="btn btn-dark btn-sm position-absolute start-0 top-50 translate-middle-y ms-2 rounded-circle border-secondary" id="claimModalPrevBtn" style="width: 40px; height: 40px; opacity: 0.8;">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button type="button" class="btn btn-dark btn-sm position-absolute end-0 top-50 translate-middle-y me-2 rounded-circle border-secondary" id="claimModalNextBtn" style="width: 40px; height: 40px; opacity: 0.8;">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('scripts')
+<script>
+    const claimModalImages = [
+        @foreach($claim->donation->image_paths as $path)
+            '{{ Str::startsWith($path, ["http://", "https://"]) ? $path : asset("storage/" . $path) }}',
+        @endforeach
+    ];
+    let currentClaimModalIndex = 0;
+
+    window.openClaimModalImage = function(index) {
+        currentClaimModalIndex = index;
+        updateClaimModalImage();
+    };
+
+    function updateClaimModalImage() {
+        if(claimModalImages.length > 0) {
+            document.getElementById('claimModalImage').src = claimModalImages[currentClaimModalIndex];
+            const showButtons = claimModalImages.length > 1;
+            document.getElementById('claimModalPrevBtn').style.display = showButtons ? 'block' : 'none';
+            document.getElementById('claimModalNextBtn').style.display = showButtons ? 'block' : 'none';
+        }
+    }
+
+    if (document.getElementById('claimModalPrevBtn')) {
+        document.getElementById('claimModalPrevBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            currentClaimModalIndex = (currentClaimModalIndex - 1 + claimModalImages.length) % claimModalImages.length;
+            updateClaimModalImage();
+        });
+    }
+
+    if (document.getElementById('claimModalNextBtn')) {
+        document.getElementById('claimModalNextBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            currentClaimModalIndex = (currentClaimModalIndex + 1) % claimModalImages.length;
+            updateClaimModalImage();
+        });
+    }
+</script>
+@endpush
+@endif
 @endsection
