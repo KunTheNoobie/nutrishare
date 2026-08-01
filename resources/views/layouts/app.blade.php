@@ -556,6 +556,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('reports.index') }}"><i class="bi bi-graph-up"></i> Reports</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logs.index') }}"><i class="bi bi-journal-text"></i> System Logs</a>
+                    </li>
                     @endif
                 @endauth
             </ul>

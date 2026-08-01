@@ -63,6 +63,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/reports', [ReportController::class, 'store'])->name('reports.store');
         Route::get('/reports/{report}', [ReportController::class, 'show'])->name('reports.show');
         Route::delete('/reports/{report}', [ReportController::class, 'destroy'])->name('reports.destroy');
+
+        // ─── System Activity Logs (Admin/Moderator) ───
+        Route::get('/logs', [\App\Http\Controllers\SystemLogController::class, 'index'])->name('logs.index');
+        Route::get('/logs/{log}', [\App\Http\Controllers\SystemLogController::class, 'show'])->name('logs.show');
     });
 
     Route::middleware('role:ngo')->group(function () {
