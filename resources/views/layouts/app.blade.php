@@ -268,6 +268,25 @@
             border-color: #e5e5ea !important;
         }
 
+        /* Action Tag High-Contrast Styling */
+        .action-tag {
+            display: inline-block;
+            font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background-color: rgba(41, 151, 255, 0.18) !important;
+            color: #64d2ff !important;
+            border: 1px solid rgba(41, 151, 255, 0.35) !important;
+            white-space: nowrap;
+        }
+        [data-theme="light"] .action-tag {
+            background-color: rgba(0, 102, 204, 0.12) !important;
+            color: #0066cc !important;
+            border: 1px solid rgba(0, 102, 204, 0.3) !important;
+        }
+
         /* Nav Tabs High Contrast Styling */
         .nav-tabs {
             border-bottom: 2px solid var(--apple-border) !important;

@@ -287,7 +287,7 @@
                         </span>
                     </td>
                     <td>
-                        <span class="badge bg-primary bg-opacity-15 text-primary border border-primary border-opacity-30 px-2 py-1 font-monospace" style="font-size: 0.75rem;">
+                        <span class="action-tag">
                             {{ $log->action }}
                         </span>
                     </td>
