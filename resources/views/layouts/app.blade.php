@@ -680,6 +680,49 @@
                         <i id="themeIcon" class="bi bi-moon-stars-fill text-info" style="font-size: 1.05rem; line-height: 1;"></i>
                     </button>
                 </li>
+                @auth
+                    <!-- Notifications Bell Dropdown -->
+                    <li class="nav-item dropdown me-1">
+                        <a class="btn btn-sm btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center p-0 position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="System Notifications" style="width: 36px; height: 36px; border: 1px solid var(--apple-border);">
+                            <i class="bi bi-bell text-apple-accent" style="font-size: 1.05rem; line-height: 1;"></i>
+                            @if(Auth::user()->unreadNotificationsCount() > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style="font-size: 0.65rem; padding: 0.2rem 0.4rem;">
+                                    {{ Auth::user()->unreadNotificationsCount() }}
+                                </span>
+                            @endif
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end shadow-lg border-dark p-0" style="width: 320px; background-color: var(--apple-surface); border-radius: 12px; overflow: hidden;">
+                            <div class="p-3 border-bottom d-flex justify-content-between align-items-center" style="border-color: var(--apple-border) !important;">
+                                <span class="fw-bold small" style="color: var(--apple-text);"><i class="bi bi-bell text-apple-accent me-1"></i> Notifications</span>
+                                @if(Auth::user()->unreadNotificationsCount() > 0)
+                                <form method="POST" action="{{ route('notifications.read-all') }}" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link p-0 text-decoration-none small text-apple-accent" style="font-size: 0.75rem;">Mark all read</button>
+                                </form>
+                                @endif
+                            </div>
+                            <div style="max-height: 280px; overflow-y: auto;">
+                                @forelse(Auth::user()->systemNotifications()->take(5)->get() as $n)
+                                    <div class="p-3 border-bottom {{ !$n->is_read ? 'fw-bold' : '' }}" style="border-color: var(--apple-border) !important; {{ !$n->is_read ? 'background: rgba(41, 151, 255, 0.05);' : '' }}">
+                                        <div class="d-flex justify-content-between align-items-start mb-1">
+                                            <span class="small" style="color: var(--apple-text);">{{ $n->title }}</span>
+                                            <small class="text-muted" style="font-size: 0.7rem;">{{ $n->created_at->diffForHumans() }}</small>
+                                        </div>
+                                        <p class="small text-muted mb-0" style="font-size: 0.8rem; line-height: 1.3;">{{ Str::limit($n->message, 80) }}</p>
+                                    </div>
+                                @empty
+                                    <div class="p-4 text-center text-muted small">
+                                        <i class="bi bi-bell-slash fs-4 d-block mb-1 opacity-50"></i>
+                                        No notifications yet.
+                                    </div>
+                                @endforelse
+                            </div>
+                            <div class="p-2 border-top text-center" style="border-color: var(--apple-border) !important; background: var(--apple-input-bg);">
+                                <a href="{{ route('notifications.index') }}" class="small text-decoration-none text-apple-accent fw-medium">View All Notifications</a>
+                            </div>
+                        </div>
+                    </li>
+                @endauth
                 @guest
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                     <li class="nav-item"><a class="btn btn-ns-primary ms-2" href="{{ route('register') }}">Register</a></li>

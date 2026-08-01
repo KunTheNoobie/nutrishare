@@ -107,6 +107,16 @@ class User extends Authenticatable
         return $this->hasMany(InventoryLocation::class);
     }
 
+    public function systemNotifications(): HasMany
+    {
+        return $this->hasMany(Notification::class)->latest();
+    }
+
+    public function unreadNotificationsCount(): int
+    {
+        return $this->systemNotifications()->where('is_read', false)->count();
+    }
+
     // ──────────────── Helper Methods ────────────────
 
     public function isDonor(): bool

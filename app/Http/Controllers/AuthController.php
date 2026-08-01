@@ -65,6 +65,15 @@ class AuthController extends Controller
             // SECURITY: Regenerate session ID to prevent session hijacking
             $request->session()->regenerate();
 
+            // System Notification on Login
+            \App\Models\Notification::create([
+                'user_id' => Auth::id(),
+                'title' => 'Login Alert',
+                'message' => 'Welcome back, ' . Auth::user()->name . '! Signed in successfully as ' . (Auth::user()->isNgo() ? 'NGO' : ucfirst(Auth::user()->role)) . '.',
+                'channel' => Auth::user()->notification_preference ?? 'email',
+                'sent_at' => now(),
+            ]);
+
             return redirect()->intended(route('dashboard'));
         }
 
