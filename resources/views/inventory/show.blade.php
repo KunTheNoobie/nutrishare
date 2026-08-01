@@ -52,12 +52,12 @@
                         <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
                             <td class="ps-4">
                                 <div class="d-flex align-items-center gap-3">
-                                    @if($item->donation && $item->donation->image_paths && count($item->donation->image_paths) > 0)
+                                    @if($item->image_paths && count($item->image_paths) > 0)
                                         @php
-                                            $imgSrc = Str::startsWith($item->donation->image_paths[0], ['http://', 'https://']) ? $item->donation->image_paths[0] : asset('storage/' . $item->donation->image_paths[0]);
+                                            $imgSrc = Str::startsWith($item->image_paths[0], ['http://', 'https://']) ? $item->image_paths[0] : asset('storage/' . $item->image_paths[0]);
                                             $allImgs = array_map(function($p) {
                                                 return Str::startsWith($p, ['http://', 'https://']) ? $p : asset('storage/' . $p);
-                                            }, $item->donation->image_paths);
+                                            }, $item->image_paths);
                                         @endphp
                                         <a href="javascript:void(0);" onclick='openInventoryItemModal({{ json_encode($allImgs) }}, "{{ addslashes($item->name) }}")' data-bs-toggle="modal" data-bs-target="#inventoryImageModal" title="Click to view item photo">
                                             <img src="{{ $imgSrc }}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 10px; border: 1px solid var(--apple-border); cursor: pointer;" alt="{{ $item->name }}">
@@ -115,7 +115,7 @@
         <div class="card shadow-sm">
             <div class="card-header"><i class="bi bi-plus-circle text-apple-success"></i> Add Food Item</div>
             <div class="card-body">
-                <form method="POST" action="{{ route('inventory.add-food-item') }}">
+                <form method="POST" action="{{ route('inventory.add-food-item') }}" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="inventory_location_id" value="{{ $inventoryLocation->id }}">
                     
@@ -140,6 +140,19 @@
                     <div class="mb-3">
                         <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="2" placeholder="Brief description (optional)">{{ old('description') }}</textarea>
                         @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-muted small"><i class="bi bi-images me-1"></i> Upload Item Photos (Max 3, optional)</label>
+                        <input type="file" name="images[]" class="form-control form-control-sm @error('images') is-invalid @enderror" multiple accept="image/*">
+                        <div class="form-text text-muted extra-small">Upload photos of this food item (JPEG, PNG, WEBP, max 5MB).</div>
+                        @error('images')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label text-muted small"><i class="bi bi-link-45deg me-1"></i> Or Image URL (Optional)</label>
+                        <input type="url" name="image_url" class="form-control form-control-sm @error('image_url') is-invalid @enderror" placeholder="https://example.com/item.jpg" value="{{ old('image_url') }}">
+                        @error('image_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
                     <div class="row g-2 mb-3">

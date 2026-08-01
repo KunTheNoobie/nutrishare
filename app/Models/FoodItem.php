@@ -26,6 +26,7 @@ class FoodItem extends Model
         'expiry_date',
         'storage_requirements',
         'is_perishable',
+        'image_paths',
     ];
 
     protected function casts(): array
@@ -34,7 +35,22 @@ class FoodItem extends Model
             'expiry_date' => 'datetime',
             'quantity' => 'decimal:2',
             'is_perishable' => 'boolean',
+            'image_paths' => 'array',
         ];
+    }
+
+    /**
+     * Get image paths accessor with fallback to linked donation images.
+     */
+    public function getImagePathsAttribute($value): array
+    {
+        if ($value) {
+            $decoded = is_string($value) ? json_decode($value, true) : $value;
+            if (is_array($decoded) && !empty($decoded)) {
+                return $decoded;
+            }
+        }
+        return $this->donation ? ($this->donation->image_paths ?? []) : [];
     }
 
     // ──────────────── Relationships ────────────────

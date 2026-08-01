@@ -25,6 +25,9 @@ class StoreFoodItemRequest extends FormRequest
             'expiry_date' => 'required|date|after:today',
             'storage_requirements' => 'required|in:cold,dry,frozen,ambient',
             'is_perishable' => 'required|boolean',
+            'images' => 'nullable|array|max:3',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:5120',
+            'image_url' => 'nullable|url|max:1000',
             'allergen_tags' => 'nullable|array',
             'allergen_tags.*' => 'exists:allergen_tags,id',
         ];

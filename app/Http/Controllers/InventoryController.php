@@ -102,6 +102,23 @@ class InventoryController extends Controller
         }
         $validated = $request->validated();
 
+        $imagePaths = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                if ($file->isValid()) {
+                    $path = $file->store('food-items', 'public');
+                    $imagePaths[] = $path;
+                }
+            }
+        }
+        if (!empty($validated['image_url'])) {
+            $imagePaths[] = trim($validated['image_url']);
+        }
+
+        if (!empty($imagePaths)) {
+            $validated['image_paths'] = $imagePaths;
+        }
+
         $foodItem = FoodItem::create($validated);
 
         if (!empty($validated['inventory_location_id'])) {
