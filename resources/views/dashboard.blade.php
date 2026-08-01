@@ -253,7 +253,7 @@
 <div class="card shadow-sm animate-slide-up">
     <div class="card-header d-flex justify-content-between align-items-center">
         <span><i class="bi bi-journal-text text-apple-accent"></i> Recent System Activity Logs</span>
-        <span class="badge bg-secondary bg-opacity-20 text-muted extra-small">Last 10 Events</span>
+        <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;"><i class="bi bi-clock-history me-1"></i>Last 10 Events</span>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive">
