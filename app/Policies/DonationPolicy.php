@@ -22,18 +22,18 @@ class DonationPolicy
 
     public function create(User $user): bool
     {
-        return $user->isDonor() || $user->isAdmin();
+        return $user->isDonor() || $user->isAdmin() || $user->isModerator();
     }
 
     public function update(User $user, Donation $donation): bool
     {
-        if ($user->isAdmin()) return true;
+        if ($user->isAdmin() || $user->isModerator()) return true;
         return $user->isDonor() && $donation->user_id === $user->id;
     }
 
     public function delete(User $user, Donation $donation): bool
     {
-        if ($user->isAdmin()) return true;
-        return $user->isDonor() && $donation->user_id === $user->id && $donation->status === 'available';
+        if ($user->isAdmin() || $user->isModerator()) return true;
+        return $user->isDonor() && $donation->user_id === $user->id;
     }
 }
