@@ -689,11 +689,11 @@
                             <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-circle" style="width: 26px; height: 26px; object-fit: cover;">
                             <span class="fw-medium small" style="color: var(--apple-text);">{{ Auth::user()->name }}</span>
                             @if(Auth::user()->isDonor())
-                                <span class="badge badge-success">Donor</span>
+                                <span class="badge badge-donor">Donor</span>
                             @elseif(Auth::user()->isNgo())
-                                <span class="badge badge-warning">NGO</span>
+                                <span class="badge badge-ngo">NGO</span>
                             @elseif(Auth::user()->isAdmin())
-                                <span class="badge badge-primary">Admin</span>
+                                <span class="badge badge-admin">Admin</span>
                             @elseif(Auth::user()->isModerator())
                                 <span class="badge badge-moderator">Moderator</span>
                             @endif

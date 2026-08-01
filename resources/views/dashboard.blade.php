@@ -7,7 +7,7 @@
         {{-- SECURITY (Module 1): XSS Prevention — {{ }} escapes user-provided name --}}
         <h2>Welcome, {{ $user->name }}!</h2>
         <p class="text-muted mb-0">
-            <span class="badge badge-{{ $user->role === 'admin' ? 'admin' : ($user->role === 'ngo' ? 'ngo' : 'donor') }}">
+            <span class="badge badge-{{ $user->role === 'admin' ? 'admin' : ($user->role === 'moderator' ? 'moderator' : ($user->role === 'ngo' ? 'ngo' : 'donor')) }}">
                 {{ $user->role === 'ngo' ? 'NGO' : ucfirst($user->role) }}
             </span>
             @if($user->isNgo())

@@ -255,7 +255,7 @@
             <div class="card-body">
                 @foreach(($content['users_by_role'] ?? []) as $role => $count)
                 <div class="d-flex justify-content-between align-items-center py-2 {{ !$loop->last ? 'border-bottom' : '' }}" style="border-color: var(--apple-border) !important;">
-                    <span class="badge badge-{{ $role === 'admin' ? 'primary' : ($role === 'ngo' ? 'warning' : ($role === 'moderator' ? 'moderator' : 'success')) }}">
+                    <span class="badge badge-{{ $role === 'admin' ? 'admin' : ($role === 'moderator' ? 'moderator' : ($role === 'ngo' ? 'ngo' : 'donor')) }}">
                         {{ $role === 'ngo' ? 'NGO' : ucfirst($role) }}
                     </span>
                     <strong class="text-light">{{ $count }}</strong>
@@ -284,7 +284,7 @@
                         @foreach(($content['most_active_users'] ?? []) as $u)
                         <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
                             <td class="ps-4"><strong style="color: var(--apple-text);">{{ $u['name'] }}</strong></td>
-                            <td><span class="badge badge-{{ $u['role'] === 'admin' ? 'primary' : ($u['role'] === 'ngo' ? 'warning' : ($u['role'] === 'moderator' ? 'moderator' : 'success')) }}">{{ $u['role'] === 'ngo' ? 'NGO' : ucfirst($u['role']) }}</span></td>
+                            <td><span class="badge badge-{{ $u['role'] === 'admin' ? 'admin' : ($u['role'] === 'moderator' ? 'moderator' : ($u['role'] === 'ngo' ? 'ngo' : 'donor')) }}">{{ $u['role'] === 'ngo' ? 'NGO' : ucfirst($u['role']) }}</span></td>
                             <td style="color: var(--apple-text);">{{ $u['donations'] }}</td>
                             <td class="pe-4 text-end" style="color: var(--apple-text);">{{ $u['claims'] }}</td>
                         </tr>
@@ -315,7 +315,7 @@
                 @foreach(($content['recent_users'] ?? []) as $u)
                 <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
                     <td class="ps-4"><strong style="color: var(--apple-text);">{{ $u['name'] }}</strong></td>
-                    <td><span class="badge badge-{{ $u['role'] === 'admin' ? 'primary' : ($u['role'] === 'ngo' ? 'warning' : ($u['role'] === 'moderator' ? 'moderator' : 'success')) }}">{{ $u['role'] === 'ngo' ? 'NGO' : ucfirst($u['role']) }}</span></td>
+                    <td><span class="badge badge-{{ $u['role'] === 'admin' ? 'admin' : ($u['role'] === 'moderator' ? 'moderator' : ($u['role'] === 'ngo' ? 'ngo' : 'donor')) }}">{{ $u['role'] === 'ngo' ? 'NGO' : ucfirst($u['role']) }}</span></td>
                     <td class="pe-4 text-end small" style="color: var(--apple-text-muted);"><i class="bi bi-calendar me-1"></i>{{ $u['joined'] }}</td>
                 </tr>
                 @endforeach
