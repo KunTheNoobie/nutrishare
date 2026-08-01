@@ -251,30 +251,55 @@
 </div>
 
 <div class="card shadow-sm animate-slide-up">
-    <div class="card-header"><i class="bi bi-journal-text text-apple-accent"></i> Recent System Logs</div>
-    <div class="card-body">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-journal-text text-apple-accent"></i> Recent System Activity Logs</span>
+        <span class="badge bg-secondary bg-opacity-20 text-muted extra-small">Last 10 Events</span>
+    </div>
+    <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover align-middle datatable">
+            <table class="table table-hover align-middle mb-0" style="background: var(--apple-surface);">
                 <thead>
-                    <tr>
-                        <th class="text-muted fw-normal">Time</th>
-                        <th class="text-muted fw-normal">User</th>
-                        <th class="text-muted fw-normal">Action</th>
-                        <th class="text-muted fw-normal">Description</th>
-                        <th class="text-muted fw-normal">Level</th>
+                    <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                        <th class="ps-4 py-3 text-muted fw-normal small">Time</th>
+                        <th class="py-3 text-muted fw-normal small">User</th>
+                        <th class="py-3 text-muted fw-normal small">Action</th>
+                        <th class="py-3 text-muted fw-normal small">Description</th>
+                        <th class="pe-4 py-3 text-muted fw-normal small text-end">Level</th>
                     </tr>
                 </thead>
                 <tbody>
                 @forelse($recentLogs as $log)
-                <tr>
-                    <td><small class="text-muted">{{ $log->created_at->format('d M H:i') }}</small></td>
-                    <td><span class="fw-semibold text-light">{{ $log->user?->name ?? 'System' }}</span></td>
-                    <td><span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-30 px-2 py-1 font-monospace" style="font-size: 0.75rem;">{{ $log->action }}</span></td>
-                    <td class="text-muted">{{ Str::limit($log->description, 65) }}</td>
-                    <td><span class="badge badge-{{ $log->level === 'error' ? 'danger' : ($log->level === 'warning' ? 'warning' : 'success') }}">{{ ucfirst($log->level) }}</span></td>
+                @php
+                    $actionIcon = match(true) {
+                        str_contains($log->action, 'user') => 'bi-person-check text-primary',
+                        str_contains($log->action, 'donation') => 'bi-box-seam text-success',
+                        str_contains($log->action, 'claim') => 'bi-hand-thumbs-up text-warning',
+                        str_contains($log->action, 'inventory') => 'bi-building text-info',
+                        default => 'bi-activity text-accent'
+                    };
+                @endphp
+                <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
+                    <td class="ps-4 text-nowrap"><small class="text-muted"><i class="bi bi-clock me-1"></i>{{ $log->created_at->format('d M H:i') }}</small></td>
+                    <td>
+                        <span class="fw-semibold text-light">
+                            <i class="bi {{ $actionIcon }} me-1"></i>
+                            {{ $log->user?->name ?? 'System' }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-30 px-2 py-1 font-monospace" style="font-size: 0.72rem;">
+                            {{ $log->action }}
+                        </span>
+                    </td>
+                    <td class="text-muted small">{{ Str::limit($log->description, 75) }}</td>
+                    <td class="pe-4 text-end">
+                        <span class="badge badge-{{ $log->level === 'error' ? 'danger' : ($log->level === 'warning' ? 'warning' : 'success') }}">
+                            {{ strtoupper($log->level) }}
+                        </span>
+                    </td>
                 </tr>
                 @empty
-                <tr><td colspan="5" class="text-muted text-center py-4">No system logs yet.</td></tr>
+                <tr><td colspan="5" class="text-muted text-center py-4">No system logs recorded yet.</td></tr>
                 @endforelse
                 </tbody>
             </table>

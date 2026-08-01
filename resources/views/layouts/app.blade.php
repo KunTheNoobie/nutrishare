@@ -440,18 +440,24 @@
     </style>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/style.css" rel="stylesheet">
     <style>
-        /* Custom Simple-DataTables Dark Theme for Apple Aesthetic */
-        .datatable-wrapper.no-header .datatable-container { border-top: none; }
-        .datatable-table { color: var(--apple-text); border-collapse: separate; border-spacing: 0; }
-        .datatable-table > thead > tr > th { border-bottom: 1px solid var(--apple-border); color: var(--apple-text-muted); font-weight: 500; }
-        .datatable-table > tbody > tr > td { border-bottom: 1px solid var(--apple-border); vertical-align: middle; }
-        .datatable-table > tbody > tr:hover { background-color: rgba(255,255,255,0.02); }
-        .datatable-input { background: var(--apple-surface); border: 1px solid var(--apple-border); color: var(--apple-text); border-radius: 6px; padding: 0.375rem 0.75rem; }
-        .datatable-selector { background: var(--apple-surface); border: 1px solid var(--apple-border); color: var(--apple-text); border-radius: 6px; padding: 0.375rem 1.75rem 0.375rem 0.75rem; }
-        .datatable-pagination a { color: var(--apple-accent); background: transparent; border: 1px solid transparent; border-radius: 6px; }
-        .datatable-pagination a:hover { background: var(--apple-surface); border-color: var(--apple-border); }
-        .datatable-pagination .active a { background: var(--apple-accent); color: var(--apple-bg); }
+        /* Custom Simple-DataTables Dark & Light Theme Override */
+        .datatable-wrapper { background: transparent !important; color: var(--apple-text) !important; }
+        .datatable-container { background: transparent !important; border: none !important; }
+        .datatable-table { background: transparent !important; color: var(--apple-text) !important; border-collapse: separate; border-spacing: 0; }
+        .datatable-table > thead > tr > th { background: var(--apple-surface) !important; border-bottom: 1px solid var(--apple-border) !important; color: var(--apple-text) !important; font-weight: 600; }
+        .datatable-table > tbody > tr > td { background: transparent !important; border-bottom: 1px solid var(--apple-border) !important; color: var(--apple-text) !important; vertical-align: middle; }
+        .datatable-table > tbody > tr:hover { background-color: var(--apple-input-bg) !important; }
+        .datatable-input { background: var(--apple-input-bg) !important; border: 1px solid var(--apple-border) !important; color: var(--apple-text) !important; border-radius: 8px; padding: 0.375rem 0.75rem; }
+        .datatable-selector { background: var(--apple-input-bg) !important; border: 1px solid var(--apple-border) !important; color: var(--apple-text) !important; border-radius: 8px; padding: 0.375rem 1.75rem 0.375rem 0.75rem; }
+        .datatable-pagination a { color: var(--apple-accent) !important; background: transparent !important; border: 1px solid transparent !important; border-radius: 8px; }
+        .datatable-pagination a:hover { background: var(--apple-surface) !important; border-color: var(--apple-border) !important; }
+        .datatable-pagination .active a { background: var(--apple-accent) !important; color: #ffffff !important; }
         .datatable-sorter::before, .datatable-sorter::after { opacity: 0.4; }
+
+        [data-theme="light"] .datatable-table > thead > tr > th { background: #f2f2f7 !important; color: #1d1d1f !important; }
+        [data-theme="light"] .datatable-table > tbody > tr > td { color: #1d1d1f !important; }
+        [data-theme="light"] .datatable-input,
+        [data-theme="light"] .datatable-selector { background: #ffffff !important; color: #1d1d1f !important; border-color: #e5e5ea !important; }
     </style>
     @stack('styles')
 </head>
