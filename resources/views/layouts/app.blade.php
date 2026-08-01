@@ -642,7 +642,7 @@
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg py-3">
+<nav class="navbar navbar-expand-lg py-3" style="position: relative; z-index: 1040;">
     <div class="container-fluid px-4">
         <a class="navbar-brand" href="{{ route('home') }}">🌾 NutriShare</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -684,14 +684,14 @@
                     <!-- Notifications Bell Dropdown -->
                     <li class="nav-item dropdown me-1">
                         <a class="btn btn-sm btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center p-0 position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="System Notifications" style="width: 36px; height: 36px; border: 1px solid var(--apple-border);">
-                            <i class="bi bi-bell text-apple-accent" style="font-size: 1.05rem; line-height: 1;"></i>
+                            <i class="bi bi-bell text-apple-accent d-flex align-items-center justify-content-center" style="font-size: 1.05rem; line-height: 1; margin: 0; width: 100%; height: 100%;"></i>
                             @if(Auth::user()->unreadNotificationsCount() > 0)
                                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style="font-size: 0.65rem; padding: 0.2rem 0.4rem;">
                                     {{ Auth::user()->unreadNotificationsCount() }}
                                 </span>
                             @endif
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end shadow-lg border-dark p-0" style="width: 320px; background-color: var(--apple-surface); border-radius: 12px; overflow: hidden;">
+                        <div class="dropdown-menu dropdown-menu-end shadow-lg border-dark p-0" style="width: 320px; background-color: var(--apple-surface); border-radius: 12px; overflow: hidden; z-index: 1060 !important; margin-top: 8px !important;">
                             <div class="p-3 border-bottom d-flex justify-content-between align-items-center" style="border-color: var(--apple-border) !important;">
                                 <span class="fw-bold small" style="color: var(--apple-text);"><i class="bi bi-bell text-apple-accent me-1"></i> Notifications</span>
                                 @if(Auth::user()->unreadNotificationsCount() > 0)
