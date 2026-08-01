@@ -36,7 +36,7 @@
                         if ($action === 'cancel') return $isClaimingNgo || $user->isAdmin() || $user->isModerator();
                         return false;
                     });
-                @php
+
                     $canManageLogistics = $user->isAdmin() || $user->isModerator() || $claim->user_id === $user->id;
                 @endphp
                 <div class="alert border-0 shadow-sm" style="background: rgba(41, 151, 255, 0.12); color: var(--apple-text); border: 1px solid rgba(41, 151, 255, 0.25) !important;">
