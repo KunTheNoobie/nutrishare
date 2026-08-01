@@ -91,6 +91,8 @@ class VerificationController extends Controller
         );
 
         return redirect()->back()->with('success', 'Review submitted successfully.');
+    }
+
     /** View verification document inline. */
     public function showFile(VerificationDocument $document)
     {
