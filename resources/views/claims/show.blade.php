@@ -27,21 +27,22 @@
                 <!-- State Pattern Info -->
                 @php
                     $user = Auth::user();
-                    $isDonorOrAdmin = $user->isAdmin() || $user->isModerator() || $claim->donation->user_id === $user->id;
-                    $isClaimOwner = $user->isAdmin() || $user->isModerator() || $claim->user_id === $user->id;
-                    
-                    $availableActions = array_filter($stateObject->allowedActions(), function($action) use ($isDonorOrAdmin, $isClaimOwner) {
-                        if (in_array($action, ['approve', 'reject'])) return $isDonorOrAdmin;
-                        if ($action === 'cancel') return $isClaimOwner;
-                        return true;
+                    $isReviewer = $user->isAdmin() || $user->isModerator() || $claim->donation->user_id === $user->id;
+                    $isClaimingNgo = $user->isNgo() && $claim->user_id === $user->id;
+
+                    $availableActions = array_filter($stateObject->allowedActions(), function($action) use ($user, $isReviewer, $isClaimingNgo) {
+                        if (in_array($action, ['approve', 'reject'])) return $isReviewer;
+                        if ($action === 'collect') return $isClaimingNgo;
+                        if ($action === 'cancel') return $isClaimingNgo || $user->isAdmin() || $user->isModerator();
+                        return false;
                     });
                 @endphp
-                <div class="alert alert-info">
-                    <strong>Current State:</strong> {{ ucfirst($stateObject->getStateName()) }}
+                <div class="alert border-0 shadow-sm" style="background: rgba(41, 151, 255, 0.12); color: var(--apple-text); border: 1px solid rgba(41, 151, 255, 0.25) !important;">
+                    <strong>Current State:</strong> <span class="badge bg-secondary ms-1 me-2">{{ ucfirst($stateObject->getStateName()) }}</span>
                     @if(count($availableActions) > 0)
-                        | <strong>Available Actions for You:</strong> {{ implode(', ', $availableActions) }}
+                        | <strong class="ms-2">Available Actions for You:</strong> <span class="text-apple-accent fw-bold">{{ implode(', ', array_map('ucfirst', $availableActions)) }}</span>
                     @else
-                        | <em>No further actions available</em>
+                        | <em class="ms-2 opacity-75">No further actions available for your role</em>
                     @endif
                 </div>
             </div>

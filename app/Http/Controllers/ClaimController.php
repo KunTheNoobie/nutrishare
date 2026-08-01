@@ -89,9 +89,14 @@ class ClaimController extends Controller
 
         // Enforce strict role authorization per transition action
         if (in_array($action, ['approve', 'reject'])) {
-            // ONLY the donor who created the donation (or Admin/Moderator) can approve/reject
+            // ONLY Admin, Moderator, or the donor who created the donation can approve/reject
             if (!$user->isAdmin() && !$user->isModerator() && $claim->donation->user_id !== $user->id) {
-                abort(403, 'Unauthorized. Only the Donor who published this donation (or an Admin/Moderator) can approve or reject claims.');
+                abort(403, 'Unauthorized. Only an Admin, Moderator, or the Donor can approve or reject claims.');
+            }
+        } elseif ($action === 'collect') {
+            // EXCLUSIVELY the NGO who claimed this donation can collect it!
+            if (!$user->isNgo() || $claim->user_id !== $user->id) {
+                abort(403, 'Unauthorized. Only the claiming NGO can mark this donation as collected.');
             }
         } elseif ($action === 'cancel') {
             // ONLY the NGO who submitted the claim (or Admin/Moderator) can cancel
