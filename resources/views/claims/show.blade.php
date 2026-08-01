@@ -203,39 +203,7 @@
         </div>
         @endif
 
-        <!-- Generate Receipt Form -->
-        @if((Auth::user()->isAdmin() || $claim->user_id === Auth::id()) && $claim->status === 'approved' && !$claim->collectionReceipt)
-        <div class="card mb-3">
-            <div class="card-header">Generate Receipt</div>
-            <div class="card-body">
-                <form method="POST" action="{{ route('claims.receipt', $claim) }}">
-                    @csrf
-                    <div class="mb-2">
-                        <input type="number" step="0.01" name="quantity_collected" class="form-control form-control-sm @error('quantity_collected') is-invalid @enderror" placeholder="Quantity Collected" value="{{ old('quantity_collected') }}" required>
-                        @error('quantity_collected')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                    <div class="mb-2">
-                        <select name="unit" class="form-select form-select-sm @error('unit') is-invalid @enderror" required>
-                            <option value="kg" {{ old('unit') == 'kg' ? 'selected' : '' }}>kg</option>
-                            <option value="litres" {{ old('unit') == 'litres' ? 'selected' : '' }}>litres</option>
-                            <option value="items" {{ old('unit') == 'items' ? 'selected' : '' }}>items</option>
-                            <option value="boxes" {{ old('unit') == 'boxes' ? 'selected' : '' }}>boxes</option>
-                        </select>
-                        @error('unit')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                    <div class="mb-2">
-                        <input type="text" name="collected_by" class="form-control form-control-sm @error('collected_by') is-invalid @enderror" placeholder="Collected By" value="{{ old('collected_by') }}" required>
-                        @error('collected_by')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                    <div class="mb-2">
-                        <textarea name="condition_notes" class="form-control form-control-sm @error('condition_notes') is-invalid @enderror" rows="2" placeholder="Condition Notes">{{ old('condition_notes') }}</textarea>
-                        @error('condition_notes')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                    <button type="submit" class="btn btn-outline-success btn-sm w-100">Generate Receipt</button>
-                </form>
-            </div>
-        </div>
-        @endif
+
 
         <!-- Distribution Log Form -->
         @if((Auth::user()->isAdmin() || $claim->user_id === Auth::id()) && $claim->status === 'collected')
