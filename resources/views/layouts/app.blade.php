@@ -430,21 +430,45 @@
             line-height: 1.2 !important;
             vertical-align: middle !important;
         }
-        .badge-donor { background: rgba(41, 151, 255, 0.15); color: var(--apple-accent); }
-        .badge-ngo { background: rgba(52, 199, 89, 0.15); color: var(--apple-success); }
-        .badge-admin { background: rgba(255, 59, 48, 0.15); color: var(--apple-danger); }
-        .badge-success { background: rgba(52, 199, 89, 0.15); color: var(--apple-success); border: 1px solid rgba(52, 199, 89, 0.3); }
-        .badge-warning { background: rgba(255, 159, 10, 0.15); color: #ff9f0a; border: 1px solid rgba(255, 159, 10, 0.3); }
-        .badge-secondary { background: rgba(142, 142, 147, 0.15); color: #8e8e93; border: 1px solid rgba(142, 142, 147, 0.3); }
-        .badge-moderator { background: rgba(191, 90, 242, 0.15); color: #bf5af2; border: 1px solid rgba(191, 90, 242, 0.3); }
+        /* Badges */
+        .badge { 
+            font-weight: 500 !important; 
+            padding: 0.45rem 1rem !important; 
+            border-radius: 980px !important; 
+            font-size: 0.82rem !important; 
+            display: inline-flex !important; 
+            align-items: center !important; 
+            justify-content: center !important; 
+            line-height: 1.2 !important;
+            vertical-align: middle !important;
+        }
+        .btn-sm {
+            padding: 0.45rem 1rem !important;
+            font-size: 0.82rem !important;
+            border-radius: 980px !important;
+            line-height: 1.2 !important;
+            vertical-align: middle !important;
+        }
+        .badge-donor { background: rgba(41, 151, 255, 0.15) !important; color: #2997ff !important; border: 1px solid rgba(41, 151, 255, 0.3) !important; }
+        .badge-ngo { background: rgba(52, 199, 89, 0.15) !important; color: #34c759 !important; border: 1px solid rgba(52, 199, 89, 0.3) !important; }
+        .badge-admin { background: rgba(255, 59, 48, 0.15) !important; color: #ff3b30 !important; border: 1px solid rgba(255, 59, 48, 0.3) !important; }
+        .badge-success { background: rgba(52, 199, 89, 0.15) !important; color: #34c759 !important; border: 1px solid rgba(52, 199, 89, 0.3) !important; }
+        .badge-warning { background: rgba(255, 159, 10, 0.15) !important; color: #ff9f0a !important; border: 1px solid rgba(255, 159, 10, 0.3) !important; }
+        .badge-info { background: rgba(10, 132, 255, 0.15) !important; color: #64d2ff !important; border: 1px solid rgba(10, 132, 255, 0.3) !important; }
+        .badge-secondary { background: rgba(142, 142, 147, 0.15) !important; color: #8e8e93 !important; border: 1px solid rgba(142, 142, 147, 0.3) !important; }
+        .badge-moderator { background: rgba(191, 90, 242, 0.15) !important; color: #bf5af2 !important; border: 1px solid rgba(191, 90, 242, 0.3) !important; }
+        .badge-danger { background: rgba(255, 59, 48, 0.15) !important; color: #ff3b30 !important; border: 1px solid rgba(255, 59, 48, 0.3) !important; }
 
-        [data-theme="light"] .badge-success { background: rgba(52, 199, 89, 0.15) !important; color: #28a745 !important; border: 1px solid rgba(40, 167, 69, 0.3) !important; }
-        [data-theme="light"] .badge-warning { background: rgba(255, 149, 0, 0.15) !important; color: #d97706 !important; border: 1px solid rgba(217, 119, 6, 0.3) !important; }
-        [data-theme="light"] .badge-secondary { background: rgba(142, 142, 147, 0.15) !important; color: #636366 !important; border: 1px solid rgba(99, 99, 102, 0.3) !important; }
-        [data-theme="light"] .badge-donor { background: rgba(0, 122, 255, 0.15) !important; color: #0066cc !important; }
-        [data-theme="light"] .badge-ngo { background: rgba(52, 199, 89, 0.15) !important; color: #28a745 !important; }
-        [data-theme="light"] .badge-admin { background: rgba(255, 59, 48, 0.15) !important; color: #dc3545 !important; }
-        [data-theme="light"] .badge-moderator { background: rgba(175, 82, 222, 0.15) !important; color: #8944ab !important; }
+        /* Light Mode Badges - Enhanced Contrast */
+        [data-theme="light"] .badge-success { background: rgba(40, 167, 69, 0.15) !important; color: #1e7e34 !important; border: 1px solid rgba(40, 167, 69, 0.35) !important; }
+        [data-theme="light"] .badge-warning { background: rgba(217, 119, 6, 0.15) !important; color: #b45309 !important; border: 1px solid rgba(217, 119, 6, 0.35) !important; }
+        [data-theme="light"] .badge-info { background: rgba(0, 102, 204, 0.15) !important; color: #0055b3 !important; border: 1px solid rgba(0, 102, 204, 0.35) !important; }
+        [data-theme="light"] .badge-secondary { background: rgba(142, 142, 147, 0.15) !important; color: #48484a !important; border: 1px solid rgba(142, 142, 147, 0.35) !important; }
+        [data-theme="light"] .badge-donor { background: rgba(0, 102, 204, 0.15) !important; color: #0055b3 !important; border: 1px solid rgba(0, 102, 204, 0.35) !important; }
+        [data-theme="light"] .badge-ngo { background: rgba(40, 167, 69, 0.15) !important; color: #1e7e34 !important; border: 1px solid rgba(40, 167, 69, 0.35) !important; }
+        [data-theme="light"] .badge-admin { background: rgba(220, 53, 69, 0.15) !important; color: #bd2130 !important; border: 1px solid rgba(220, 53, 69, 0.35) !important; }
+        [data-theme="light"] .badge-danger { background: rgba(220, 53, 69, 0.15) !important; color: #bd2130 !important; border: 1px solid rgba(220, 53, 69, 0.35) !important; }
+        [data-theme="light"] .badge-moderator { background: rgba(175, 82, 222, 0.15) !important; color: #6b268a !important; border: 1px solid rgba(175, 82, 222, 0.35) !important; }
         
         /* Text Utilities */
         .text-apple-accent { color: var(--apple-accent) !important; }
@@ -556,6 +580,41 @@
             max-width: 1rem !important;
             max-height: 1rem !important;
         }
+
+        /* View Switcher Active Buttons (Light & Dark Mode) */
+        .btn-group .btn-outline-light {
+            color: var(--apple-text) !important;
+            border-color: var(--apple-border) !important;
+            background-color: var(--apple-surface) !important;
+            font-weight: 500 !important;
+        }
+        .btn-group .btn-outline-light:hover {
+            background-color: var(--apple-input-bg) !important;
+            color: var(--apple-accent) !important;
+        }
+        .btn-group .btn-outline-light.active {
+            background-color: var(--apple-accent) !important;
+            border-color: var(--apple-accent) !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 8px rgba(41, 151, 255, 0.3) !important;
+        }
+        [data-theme="light"] .btn-group .btn-outline-light {
+            color: #1d1d1f !important;
+            border-color: #c7c7cc !important;
+            background-color: #ffffff !important;
+        }
+        [data-theme="light"] .btn-group .btn-outline-light:hover {
+            background-color: #e5e5ea !important;
+            color: #0066cc !important;
+        }
+        [data-theme="light"] .btn-group .btn-outline-light.active {
+            background-color: #0066cc !important;
+            border-color: #0066cc !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3) !important;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@9.0.3/dist/style.css" rel="stylesheet">
     <style>
@@ -617,8 +676,8 @@
             </ul>
             <ul class="navbar-nav align-items-center gap-2">
                 <li class="nav-item me-1">
-                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle p-2 d-flex align-items-center justify-content-center" id="themeToggleBtn" title="Toggle Light / Dark Mode" onclick="toggleTheme()" style="width: 38px; height: 38px;">
-                        <i id="themeIcon" class="bi bi-moon-stars-fill text-info fs-6"></i>
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center p-0" id="themeToggleBtn" title="Toggle Light / Dark Mode" onclick="toggleTheme()" style="width: 36px; height: 36px; border: 1px solid var(--apple-border);">
+                        <i id="themeIcon" class="bi bi-moon-stars-fill text-info" style="font-size: 1.05rem; line-height: 1;"></i>
                     </button>
                 </li>
                 @guest
@@ -626,7 +685,7 @@
                     <li class="nav-item"><a class="btn btn-ns-primary ms-2" href="{{ route('register') }}">Register</a></li>
                 @else
                     <li class="nav-item dropdown d-flex align-items-center">
-                        <a href="{{ route('profile.edit') }}" class="d-flex align-items-center gap-2 text-decoration-none py-1 pe-1" style="color: var(--apple-text);">
+                        <div class="d-flex align-items-center gap-2 py-1 pe-1">
                             <img src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" class="rounded-circle border border-dark" style="width: 28px; height: 28px; object-fit: cover;">
                             <span class="fw-medium small" style="color: var(--apple-text);">{{ Auth::user()->name }}</span>
                             @if(Auth::user()->isDonor())
@@ -638,7 +697,7 @@
                             @elseif(Auth::user()->isModerator())
                                 <span class="badge badge-moderator ms-1">Moderator</span>
                             @endif
-                        </a>
+                        </div>
                         <button type="button" class="btn btn-sm text-muted dropdown-toggle dropdown-toggle-split px-1 py-0 ms-1 border-0" data-bs-toggle="dropdown" aria-expanded="false" style="box-shadow: none; background: transparent;">
                             <span class="visually-hidden">Toggle Dropdown</span>
                         </button>
