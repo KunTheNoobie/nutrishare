@@ -52,24 +52,17 @@ class PasswordResetController extends Controller
             'otp' => $otp,
             'expires_at' => now()->addMinutes(10),
         ]);
-
-        // In local dev mode, show OTP directly; in production, send email
-        if (app()->environment('local')) {
-            return redirect()->route('password.otp.form', ['email' => $request->email])
-                ->with('status', "Your OTP code is: {$otp} (Local Dev Mode — valid for 10 minutes)");
-        }
-
-        // Send OTP email
+        // Send OTP email via Mailpit (local SMTP on port 1025)
         try {
             Mail::to($request->email)->send(new ResetPasswordOtpMail($otp, $request->email));
         } catch (\Exception $e) {
-            // If mail fails in dev, still redirect with OTP shown
+            // If Mailpit is not running, fallback to showing OTP on screen
             return redirect()->route('password.otp.form', ['email' => $request->email])
-                ->with('status', "Your OTP code is: {$otp} (Mail sending failed — showing OTP directly)");
+                ->with('status', "Your OTP code is: {$otp} (Mailpit not running — showing OTP directly, valid for 10 minutes)");
         }
 
         return redirect()->route('password.otp.form', ['email' => $request->email])
-            ->with('status', 'We have sent a 6-digit OTP to your email address.');
+            ->with('status', 'We have sent a 6-digit OTP code to your email. Check Mailpit at http://127.0.0.1:8025');
     }
 
     /**
