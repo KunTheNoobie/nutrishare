@@ -61,7 +61,10 @@ class PasswordResetController extends Controller
         }
 
         return redirect()->route('password.otp.form', ['email' => $request->email])
-            ->with('status', 'A 6-digit OTP code has been sent to your email address. Please check Mailpit at http://127.0.0.1:8025.');
+            ->with([
+                'status' => 'We sent a 6-digit verification code to your email address.',
+                'dev_otp' => $otp,
+            ]);
     }
 
     /**
