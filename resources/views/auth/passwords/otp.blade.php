@@ -18,11 +18,9 @@
 
 
                 @if (session('status'))
-                    <div class="alert alert-success border-0 shadow-sm mb-4" role="alert" style="background: rgba(52, 199, 89, 0.15); color: #34c759; border: 1px solid rgba(52, 199, 89, 0.3) !important; border-radius: 12px;">
-                        <div class="d-flex align-items-center">
-                            <i class="bi bi-check-circle-fill me-2 fs-5"></i>
-                            <div>{{ session('status') }}</div>
-                        </div>
+                    <div class="alert alert-success border-0 shadow-sm mb-4 p-3 rounded-3 d-flex align-items-center w-100" role="alert" style="background: rgba(52, 199, 89, 0.12); color: #34c759; border: 1px solid rgba(52, 199, 89, 0.25) !important;">
+                        <i class="bi bi-check-circle-fill me-2 fs-5 flex-shrink-0"></i>
+                        <div class="small fw-medium">{{ session('status') }}</div>
                     </div>
                 @endif
 
@@ -41,7 +39,7 @@
                                    inputmode="numeric"
                                    data-index="{{ $i }}"
                                    style="width: 48px; height: 56px; border-radius: 12px; border: 1px solid var(--apple-border); background: var(--apple-input-bg);"
-                                   required 
+                                   autocomplete="off"
                                    {{ $i === 0 ? 'autofocus' : '' }}>
                         @endfor
                     </div>
@@ -85,6 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
             code += box.value;
         });
         fullInput.value = code;
+        return code;
     }
 
     boxes.forEach((box, idx) => {
@@ -92,15 +91,27 @@ document.addEventListener('DOMContentLoaded', function() {
             const val = e.target.value.replace(/[^0-9]/g, '');
             e.target.value = val;
             
+            const code = syncOtp();
+
             if (val && idx < boxes.length - 1) {
-                boxes[idx + 1].focus();
+                requestAnimationFrame(() => {
+                    boxes[idx + 1].focus();
+                    boxes[idx + 1].select();
+                });
             }
-            syncOtp();
+
+            if (code.length === 6) {
+                requestAnimationFrame(() => {
+                    form.submit();
+                });
+            }
         });
 
         box.addEventListener('keydown', function(e) {
             if (e.key === 'Backspace' && !e.target.value && idx > 0) {
-                boxes[idx - 1].focus();
+                requestAnimationFrame(() => {
+                    boxes[idx - 1].focus();
+                });
             }
         });
 
@@ -114,17 +125,26 @@ document.addEventListener('DOMContentLoaded', function() {
                     boxes[i].value = digits[i];
                 }
             }
+            
+            const code = syncOtp();
             if (digits.length > 0) {
                 const targetIdx = Math.min(digits.length, boxes.length - 1);
-                boxes[targetIdx].focus();
+                requestAnimationFrame(() => {
+                    boxes[targetIdx].focus();
+                });
             }
-            syncOtp();
+
+            if (code.length === 6) {
+                requestAnimationFrame(() => {
+                    form.submit();
+                });
+            }
         });
     });
 
     form.addEventListener('submit', function(e) {
-        syncOtp();
-        if (fullInput.value.length !== 6) {
+        const code = syncOtp();
+        if (code.length !== 6) {
             e.preventDefault();
             alert('Please enter all 6 digits of the OTP code.');
         }
