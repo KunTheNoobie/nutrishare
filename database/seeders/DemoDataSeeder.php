@@ -6,7 +6,20 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Donation;
 use App\Models\Claim;
+use App\Models\FoodItem;
+use App\Models\Category;
+use App\Models\AllergenTag;
 use App\Models\InventoryLocation;
+use App\Models\Vehicle;
+use App\Models\CollectionReceipt;
+use App\Models\DistributionLog;
+use App\Models\VerificationDocument;
+use App\Models\Review;
+use App\Models\Report;
+use App\Models\Notification;
+use App\Models\NotificationTemplate;
+use App\Models\SystemLog;
+use App\Models\PasswordResetOtp;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
@@ -16,316 +29,303 @@ class DemoDataSeeder extends Seeder
     {
         $password = Hash::make('Password1!');
 
-        // 1. Seed Categories & Allergen Tags
-        $categories = [
-            'Fresh Produce' => 'Fresh fruits and vegetables.',
-            'Bakery & Bread' => 'Baked goods, breads, and pastries.',
-            'Dairy & Eggs' => 'Milk, cheese, eggs, and dairy alternatives.',
-            'Meat & Seafood' => 'Fresh or frozen meat, poultry, and fish.',
-            'Pantry & Canned Goods' => 'Non-perishable items, canned foods, pasta.',
-            'Prepared Meals' => 'Ready-to-eat meals and cooked catering left-overs.',
+        // 1. Seed Categories
+        $categoriesData = [
+            'Fresh Produce' => 'Fresh organic fruits and vegetables from local farms and markets.',
+            'Bakery & Pastry' => 'Freshly baked artisanal breads, rolls, and morning pastries.',
+            'Dairy & Eggs' => 'Fresh milk, artisan cheeses, farm eggs, and plant-based alternatives.',
+            'Meat & Seafood' => 'Quality meat cuts, poultry, and fresh seafood.',
+            'Pantry & Canned Goods' => 'Non-perishable canned goods, pasta, rice, and pantry staples.',
+            'Prepared Meals' => 'Ready-to-eat gourmet cooked meals and catering surplus.',
         ];
-        foreach ($categories as $name => $desc) {
-            \App\Models\Category::updateOrCreate(['name' => $name], ['description' => $desc]);
+        foreach ($categoriesData as $name => $desc) {
+            Category::updateOrCreate(['name' => $name], ['description' => $desc]);
         }
 
-        $allergens = ['Contains Nuts', 'Gluten', 'Dairy', 'Soy', 'Egg', 'Shellfish'];
+        // 2. Seed Allergen Tags
+        $allergens = ['Gluten', 'Dairy', 'Contains Nuts', 'Soy', 'Egg', 'Seafood'];
         foreach ($allergens as $name) {
-            \App\Models\AllergenTag::updateOrCreate(['name' => $name]);
+            AllergenTag::updateOrCreate(['name' => $name]);
         }
-        $catProduce = \App\Models\Category::where('name', 'Fresh Produce')->first();
-        $catBakery = \App\Models\Category::where('name', 'Bakery & Bread')->first();
-        $catPantry = \App\Models\Category::where('name', 'Pantry & Canned Goods')->first();
-        $catMeals = \App\Models\Category::where('name', 'Prepared Meals')->first();
 
-        // 2. Create Professional NGOs
-        $ngo1 = User::updateOrCreate(['email' => 'soupkitchen@nutrishare.com'], [
-            'name' => 'Community Hope Foundation',
+        $catProduce = Category::where('name', 'Fresh Produce')->first();
+        $catBakery = Category::where('name', 'Bakery & Pastry')->first();
+        $catPantry = Category::where('name', 'Pantry & Canned Goods')->first();
+        $catMeals = Category::where('name', 'Prepared Meals')->first();
+
+        $tagGluten = AllergenTag::where('name', 'Gluten')->first();
+        $tagDairy = AllergenTag::where('name', 'Dairy')->first();
+        $tagNuts = AllergenTag::where('name', 'Contains Nuts')->first();
+
+        // 3. Create Professional NGO Accounts
+        $ngo1 = User::updateOrCreate(['email' => 'ngo@nutrishare.com'], [
+            'name' => 'Food Rescue Foundation',
             'password' => $password,
             'role' => 'ngo',
-            'organization_name' => 'Community Hope Foundation',
-            'phone' => '+1 (555) 019-2001',
+            'organization_name' => 'Food Rescue Foundation (BBB)',
+            'phone' => '+60123456789',
             'verification_status' => 'approved',
             'email_verified_at' => now(),
-            'address' => '100 Community Way, Metro City',
+            'address' => '100 Community Way, Kuala Lumpur',
+            'notification_preference' => 'email',
         ]);
 
-        $ngo2 = User::updateOrCreate(['email' => 'shelter@nutrishare.com'], [
-            'name' => 'Global Relief Initiative',
+        $ngo2 = User::updateOrCreate(['email' => 'kechara@nutrishare.com'], [
+            'name' => 'Kechara Soup Kitchen',
             'password' => $password,
             'role' => 'ngo',
-            'organization_name' => 'Global Relief Inc.',
-            'phone' => '+1 (555) 021-3992',
+            'organization_name' => 'Kechara Soup Kitchen Society',
+            'phone' => '+60169876543',
             'verification_status' => 'approved',
             'email_verified_at' => now(),
-            'address' => '450 Safety Blvd, Metro City',
+            'address' => '17 Jalan Barat, Off Jalan Imbi, Kuala Lumpur',
+            'notification_preference' => 'email',
         ]);
 
-        // 3. Create Professional Donors
-        $donor1 = User::updateOrCreate(['email' => 'freshmart@nutrishare.com'], [
-            'name' => 'Whole Foods Market',
+        // 4. Create Professional Donor Accounts
+        $donor1 = User::updateOrCreate(['email' => 'donor@nutrishare.com'], [
+            'name' => 'Sunway Bakery & Grocer',
             'password' => $password,
             'role' => 'donor',
-            'phone' => '+1 (555) 100-2000',
-            'address' => '789 Organic Ave, Metro City',
+            'organization_name' => 'Sunway Bakery & Grocer AAA',
+            'phone' => '+60198887777',
+            'verification_status' => 'approved',
+            'email_verified_at' => now(),
+            'address' => '789 Sunway Avenue, Petaling Jaya',
+            'notification_preference' => 'email',
         ]);
 
-        $donor2 = User::updateOrCreate(['email' => 'bistro@nutrishare.com'], [
-            'name' => 'The Ritz-Carlton Culinary',
+        $donor2 = User::updateOrCreate(['email' => 'jayagrocer@nutrishare.com'], [
+            'name' => 'Jaya Grocer Supermarket',
             'password' => $password,
             'role' => 'donor',
-            'phone' => '+1 (555) 220-4000',
-            'address' => '1 Luxury Plaza, Metro City',
-        ]);
-        
-        $donor3 = User::updateOrCreate(['email' => 'bakery@nutrishare.com'], [
-            'name' => 'Artisan Bakery Co.',
-            'password' => $password,
-            'role' => 'donor',
-            'phone' => '+1 (555) 330-5000',
-            'address' => '22 Sourdough Lane, Metro City',
+            'organization_name' => 'Jaya Grocer Outlets',
+            'phone' => '+60123334444',
+            'verification_status' => 'approved',
+            'email_verified_at' => now(),
+            'address' => '12 Plaza Damansara, Kuala Lumpur',
+            'notification_preference' => 'email',
         ]);
 
-        // 4. Create High-Quality Donations
-        $donationsData = [
-            [
-                'user_id' => $donor1->id,
-                'title' => 'Premium Organic Produce Surplus',
-                'description' => 'A large collection of completely fresh organic vegetables and fruits (apples, kale, carrots, and avocados) that were slightly overstocked. Excellent quality and perfectly safe for consumption.',
-                'quantity' => 120.5,
-                'unit' => 'kg',
-                'pickup_address' => '789 Organic Ave, Loading Dock C, Metro City',
-                'latitude' => 40.7128,
-                'longitude' => -74.0060,
-                'expiry_date' => Carbon::now()->addDays(3),
-                'status' => 'available',
-                'image_path' => 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=2070&auto=format&fit=crop'
-            ],
-            [
-                'user_id' => $donor1->id,
-                'title' => 'Assorted Canned Soups and Pasta',
-                'description' => 'Pallet of non-perishable canned tomato soups, beans, and dried pasta boxes. Approaching best-before dates but good for another 8 months.',
-                'quantity' => 500,
-                'unit' => 'items',
-                'pickup_address' => '789 Organic Ave, Storage Facility B, Metro City',
-                'latitude' => 40.7138,
-                'longitude' => -74.0050,
-                'expiry_date' => Carbon::now()->addMonths(8),
-                'status' => 'available',
-                'image_path' => 'https://images.unsplash.com/photo-1584473457406-6240486418e9?q=80&w=2072&auto=format&fit=crop'
-            ],
-            [
-                'user_id' => $donor2->id,
-                'title' => 'Gourmet Catering Trays (Unserved)',
-                'description' => 'High-end prepared meals from yesterday\'s corporate gala. Includes 10 trays of roasted chicken and vegetables, and 5 trays of vegetarian lasagna. Stored immediately in cold blast freezers.',
-                'quantity' => 15,
-                'unit' => 'boxes',
-                'pickup_address' => '1 Luxury Plaza, Kitchen Entrance, Metro City',
-                'latitude' => 40.7580,
-                'longitude' => -73.9855,
-                'expiry_date' => Carbon::now()->addDays(2),
-                'status' => 'available',
-                'image_path' => 'https://images.unsplash.com/photo-1555244162-833832eb1cce?q=80&w=2070&auto=format&fit=crop'
-            ],
-            [
-                'user_id' => $donor3->id,
-                'title' => 'Artisan Sourdough and Baguettes',
-                'description' => 'A massive batch of day-old artisan bread. Still soft and incredibly delicious, perfect for soup kitchens or sandwich drives.',
-                'quantity' => 45,
-                'unit' => 'items',
-                'pickup_address' => '22 Sourdough Lane, Metro City',
-                'latitude' => 40.7282,
-                'longitude' => -73.9943,
-                'expiry_date' => Carbon::now()->addDays(2),
-                'status' => 'available',
-                'image_path' => 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2072&auto=format&fit=crop'
-            ],
-            [
-                'user_id' => $donor3->id,
-                'title' => 'Assorted Breakfast Pastries',
-                'description' => 'Croissants, muffins, and danishes left over from the morning rush. Must be consumed soon.',
-                'quantity' => 60,
-                'unit' => 'items',
-                'pickup_address' => '22 Sourdough Lane, Metro City',
-                'latitude' => 40.7282,
-                'longitude' => -73.9943,
-                'expiry_date' => Carbon::now()->addHours(24),
-                'status' => 'claimed',
-                'image_path' => 'https://images.unsplash.com/photo-1495147466023-ac5c588e2e40?q=80&w=2070&auto=format&fit=crop'
+        // 5. Create High-Quality Donations
+        $donation1 = Donation::create([
+            'user_id' => $donor1->id,
+            'title' => 'Fresh Organic Fruits & Veggies Pack',
+            'description' => 'Surplus organic honeycrisp apples, fresh kale, carrots, and avocados from morning shipment stock. High quality and perfectly fresh.',
+            'quantity' => 120.50,
+            'unit' => 'kg',
+            'pickup_address' => '789 Sunway Avenue, Loading Bay C, Petaling Jaya',
+            'latitude' => 3.0738,
+            'longitude' => 101.6074,
+            'expiry_date' => Carbon::now()->addDays(4),
+            'status' => 'available',
+            'image_paths' => [
+                'https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=2070&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=2070&auto=format&fit=crop'
             ]
-        ];
+        ]);
 
-        foreach ($donationsData as $data) {
-            $donation = Donation::create($data);
-            
-            // Add some food items to each donation
-            if ($donation->title === 'Premium Organic Produce Surplus') {
-                \App\Models\FoodItem::create([
-                    'donation_id' => $donation->id,
-                    'category_id' => $catProduce->id,
-                    'name' => 'Organic Honeycrisp Apples',
-                    'quantity' => 50,
-                    'unit' => 'kg',
-                    'expiry_date' => $donation->expiry_date,
-                    'storage_requirements' => 'ambient',
-                    'is_perishable' => true
-                ]);
-                \App\Models\FoodItem::create([
-                    'donation_id' => $donation->id,
-                    'category_id' => $catProduce->id,
-                    'name' => 'Fresh Kale Bunches',
-                    'quantity' => 70.5,
-                    'unit' => 'kg',
-                    'expiry_date' => $donation->expiry_date,
-                    'storage_requirements' => 'cold',
-                    'is_perishable' => true
-                ]);
-            }
-        }
+        $donation2 = Donation::create([
+            'user_id' => $donor1->id,
+            'title' => 'Artisan Sourdough Breads & Pastries',
+            'description' => 'A large collection of fresh artisan sourdough loaves, French baguettes, and butter croissants baked fresh this morning.',
+            'quantity' => 45.00,
+            'unit' => 'items',
+            'pickup_address' => '789 Sunway Avenue, Bakery Counter, Petaling Jaya',
+            'latitude' => 3.0738,
+            'longitude' => 101.6074,
+            'expiry_date' => Carbon::now()->addDays(2),
+            'status' => 'claimed',
+            'image_paths' => [
+                'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2072&auto=format&fit=crop'
+            ]
+        ]);
 
-        // 5. Create Realistic Claims
-        $claimedDonation = Donation::where('title', 'Assorted Breakfast Pastries')->first();
-        if ($claimedDonation) {
-            Claim::create([
-                'donation_id' => $claimedDonation->id,
-                'user_id' => $ngo1->id,
-                'status' => 'approved',
-                'pickup_scheduled_at' => Carbon::now()->addHours(2),
-                'justification' => 'We will distribute these pastries immediately at our morning shelter breakfast service.'
-            ]);
-        }
+        $donation3 = Donation::create([
+            'user_id' => $donor2->id,
+            'title' => 'Assorted Canned Soups & Pantry Boxes',
+            'description' => 'Pallet of non-perishable canned tomato soups, black beans, and whole wheat pasta boxes. Long shelf life, ideal for pantry storage.',
+            'quantity' => 250.00,
+            'unit' => 'items',
+            'pickup_address' => '12 Plaza Damansara, Storage Room B, Kuala Lumpur',
+            'latitude' => 3.1517,
+            'longitude' => 101.6558,
+            'expiry_date' => Carbon::now()->addMonths(6),
+            'status' => 'claimed',
+            'image_paths' => [
+                'https://images.unsplash.com/photo-1584473457406-6240486418e9?q=80&w=2072&auto=format&fit=crop'
+            ]
+        ]);
 
-        // 6. Create Premium Inventory Locations for NGOs
-        $inventory1 = InventoryLocation::create([
+        // 6. Food Items for Donations
+        $item1 = FoodItem::create([
+            'donation_id' => $donation1->id,
+            'category_id' => $catProduce->id,
+            'name' => 'Organic Honeycrisp Apples',
+            'description' => 'Crisp, sweet organic apples packed in wooden crates.',
+            'quantity' => 50.00,
+            'unit' => 'kg',
+            'expiry_date' => $donation1->expiry_date,
+            'storage_requirements' => 'ambient',
+            'is_perishable' => true,
+            'image_paths' => [$donation1->image_paths[0]]
+        ]);
+
+        $item2 = FoodItem::create([
+            'donation_id' => $donation2->id,
+            'category_id' => $catBakery->id,
+            'name' => 'Artisan Sourdough Loaf',
+            'description' => 'Freshly baked sourdough bread.',
+            'quantity' => 45.00,
+            'unit' => 'items',
+            'expiry_date' => $donation2->expiry_date,
+            'storage_requirements' => 'dry',
+            'is_perishable' => true,
+            'image_paths' => [$donation2->image_paths[0]]
+        ]);
+        $item2->allergenTags()->sync([$tagGluten->id]);
+
+        // 7. Inventory Locations
+        $invLocation1 = InventoryLocation::create([
             'user_id' => $ngo1->id,
-            'name' => 'Metro City Main Pantry',
-            'address' => '100 Community Way, Metro City',
-            'storage_type' => 'ambient',
-            'capacity' => 1500.00,
+            'name' => 'Central Storage Facility (NGO Central Facility)',
+            'address' => '100 Community Way, Kuala Lumpur',
+            'storage_type' => 'dry',
+            'capacity' => 2000.00,
             'current_occupancy' => 450.00
         ]);
 
-        InventoryLocation::create([
+        $invLocation2 = InventoryLocation::create([
             'user_id' => $ngo1->id,
-            'name' => 'Commercial Blast Freezer',
-            'address' => '100 Community Way (Facility B), Metro City',
-            'storage_type' => 'frozen',
-            'capacity' => 500.00,
-            'current_occupancy' => 200.00
-        ]);
-
-        InventoryLocation::create([
-            'user_id' => $ngo2->id,
-            'name' => 'Downtown Shelter Coolers',
-            'address' => '450 Safety Blvd, Metro City',
+            'name' => 'Cold Storage Blast Freezer',
+            'address' => '100 Community Way (Block B), Kuala Lumpur',
             'storage_type' => 'cold',
-            'capacity' => 300.00,
-            'current_occupancy' => 85.00
+            'capacity' => 800.00,
+            'current_occupancy' => 150.00
         ]);
 
-        // 7. Seed Missing Tables to ensure 100% database coverage
-        
-        // Allergen_tags <-> food_items (Pivot table)
-        $nutTag = \App\Models\AllergenTag::where('name', 'Contains Nuts')->first();
-        $dairyTag = \App\Models\AllergenTag::where('name', 'Dairy')->first();
-        foreach (\App\Models\FoodItem::all() as $item) {
-            $item->allergenTags()->sync([$nutTag->id, $dairyTag->id]);
-        }
-
-        // VerificationDocument
-        \App\Models\VerificationDocument::create([
+        // 8. Claims (Claimed & Collected)
+        $claim1 = Claim::create([
+            'donation_id' => $donation2->id,
             'user_id' => $ngo1->id,
-            'document_type' => 'license',
-            'file_path' => 'documents/license_ngo1.pdf',
-            'original_filename' => 'NGO_License.pdf',
             'status' => 'approved',
-            'admin_remarks' => 'Verified against state registry.',
-            'reviewed_by' => 1,
-            'reviewed_at' => Carbon::now()->subDays(5)
+            'pickup_scheduled_at' => Carbon::now()->addHours(3),
+            'justification' => 'We will distribute these artisan breads to 150 beneficiaries at our community breakfast center.'
         ]);
 
-        // Review
-        \App\Models\Review::create([
+        $claim2 = Claim::create([
+            'donation_id' => $donation3->id,
+            'user_id' => $ngo1->id,
+            'status' => 'collected',
+            'pickup_scheduled_at' => Carbon::now()->subDays(1),
+            'justification' => 'Stocking up our central community pantry for weekend food pack distribution.'
+        ]);
+
+        // 9. Vehicles
+        Vehicle::create([
+            'claim_id' => $claim1->id,
+            'plate_number' => 'VHT1484',
+            'vehicle_type' => 'van',
+            'driver_name' => 'Bala Subra',
+            'driver_phone' => '+60129998888',
+            'capacity_kg' => 800.00
+        ]);
+
+        Vehicle::create([
+            'claim_id' => $claim2->id,
+            'plate_number' => 'WKT8899',
+            'vehicle_type' => 'truck',
+            'driver_name' => 'Ahmad Razak',
+            'driver_phone' => '+60172223333',
+            'capacity_kg' => 2500.00
+        ]);
+
+        // 10. Collection Receipts
+        CollectionReceipt::create([
+            'claim_id' => $claim2->id,
+            'receipt_number' => 'REC-WATTKO-20260802',
+            'quantity_collected' => 250.00,
+            'unit' => 'items',
+            'collected_by' => 'Food Rescue Foundation (BBB)',
+            'condition_notes' => 'Verified & collected in good condition at pickup site.',
+            'collected_at' => Carbon::now()->subDays(1)
+        ]);
+
+        // 11. Distribution Logs (SDG 2 Impact)
+        DistributionLog::create([
+            'claim_id' => $claim2->id,
+            'beneficiaries_count' => 125,
+            'distribution_location' => 'Central Storage Facility (100 Community Way, Kuala Lumpur)',
+            'quantity_distributed' => 250.00,
+            'unit' => 'items',
+            'notes' => 'Food packs distributed to B40 families under SDG 2 Zero Hunger initiative.',
+            'distributed_at' => Carbon::now()->subHours(6)
+        ]);
+
+        // 12. Verification Documents
+        VerificationDocument::create([
+            'user_id' => $ngo1->id,
+            'document_type' => 'registration_cert',
+            'file_path' => 'verification_documents/ngo_cert.pdf',
+            'original_filename' => 'NGO_Registration_Cert_2026.pdf',
+            'status' => 'approved',
+            'admin_remarks' => 'Verified against Registrar of Societies Malaysia.',
+            'reviewed_by' => 1,
+            'reviewed_at' => Carbon::now()->subDays(10)
+        ]);
+
+        // 13. Reviews & Ratings
+        Review::create([
             'reviewer_id' => $donor1->id,
             'reviewee_id' => $ngo1->id,
             'rating' => 5,
-            'comment' => 'Excellent communication and punctual pickup!'
+            'comment' => 'Punctual driver, smooth communication, and great food redistribution handling!'
         ]);
 
-        // NotificationTemplate
-        $template = \App\Models\NotificationTemplate::create([
-            'name' => 'Donation Claimed',
-            'subject' => 'Your donation was claimed!',
-            'body' => 'Great news! {{ngo_name}} has claimed your donation: {{donation_title}}.',
-            'channel' => 'database'
+        // 14. Notification Templates
+        $tpl1 = NotificationTemplate::create([
+            'name' => 'donation_claimed',
+            'subject' => 'Donation Claimed Notification',
+            'body' => 'Your donation "{donation_title}" was claimed by {ngo_name}.',
+            'channel' => 'email'
         ]);
 
-        // Notification
-        \App\Models\Notification::create([
-            'user_id' => $donor3->id,
-            'notification_template_id' => $template->id,
-            'donation_id' => $claimedDonation ? $claimedDonation->id : null,
-            'title' => 'Your donation was claimed!',
-            'message' => 'Great news! Community Hope Foundation has claimed your donation.',
-            'channel' => 'database',
-            'is_read' => false,
-            'sent_at' => Carbon::now()
-        ]);
-
-        // SystemLog
-        \App\Models\SystemLog::create([
+        // 15. Notifications
+        Notification::create([
             'user_id' => $donor1->id,
-            'action' => 'donation.created',
-            'description' => 'User created a new premium organic donation.',
-            'ip_address' => '192.168.1.100',
-            'user_agent' => 'Mozilla/5.0 Professional',
+            'notification_template_id' => $tpl1->id,
+            'donation_id' => $donation2->id,
+            'title' => 'Donation Claimed',
+            'message' => 'Food Rescue Foundation claimed your donation "Artisan Sourdough Breads & Pastries".',
+            'channel' => 'email',
+            'is_read' => false,
+            'sent_at' => Carbon::now()->subHours(2)
+        ]);
+
+        // 16. System Audit Logs
+        SystemLog::create([
+            'user_id' => $ngo1->id,
+            'action' => 'claim.created',
+            'description' => 'NGO submitted a new claim for Artisan Sourdough Breads & Pastries.',
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
             'level' => 'info'
         ]);
 
-        // Report
-        \App\Models\Report::create([
+        // 17. Platform Reports
+        Report::create([
             'user_id' => 1,
-            'title' => 'Q3 Sustainability Impact Report',
-            'content' => 'This quarter, NutriShare facilitated the rescue of over 500kg of food, feeding 2,000 beneficiaries and reducing CO2 emissions by 1.2 tons.',
+            'title' => 'SDG 2 Zero Hunger Impact Report (Q3 2026)',
+            'content' => 'NutriShare has successfully redistributed 415.5 kg of surplus food to 175 beneficiaries, achieving Zero Hunger impact.',
             'type' => 'sdg_impact',
             'report_date' => Carbon::now()
         ]);
 
-        if ($claimedDonation) {
-            $claim = \App\Models\Claim::where('donation_id', $claimedDonation->id)->first();
-            
-            // Vehicle
-            \App\Models\Vehicle::create([
-                'claim_id' => $claim->id,
-                'plate_number' => 'NTR-9901',
-                'vehicle_type' => 'Refrigerated Van',
-                'driver_name' => 'John Doe',
-                'driver_phone' => '+1 (555) 999-8888',
-                'capacity_kg' => 1000.00
-            ]);
-
-            // CollectionReceipt
-            \App\Models\CollectionReceipt::create([
-                'claim_id' => $claim->id,
-                'receipt_number' => 'RCPT-'.date('Ymd').'-001',
-                'quantity_collected' => $claimedDonation->quantity,
-                'unit' => $claimedDonation->unit,
-                'collected_by' => 'John Doe',
-                'condition_notes' => 'Items received in excellent condition.',
-                'signature_path' => 'signatures/sig_001.png',
-                'collected_at' => Carbon::now()->addHours(2)
-            ]);
-
-            // DistributionLog
-            \App\Models\DistributionLog::create([
-                'claim_id' => $claim->id,
-                'beneficiaries_count' => 50,
-                'distribution_location' => 'Downtown Shelter Main Hall',
-                'notes' => 'Distributed during breakfast service.',
-                'quantity_distributed' => $claimedDonation->quantity,
-                'unit' => $claimedDonation->unit,
-                'distributed_at' => Carbon::now()->addHours(4)
-            ]);
-        }
+        // 18. Password Reset OTP
+        PasswordResetOtp::create([
+            'email' => 'ngo@nutrishare.com',
+            'otp' => '123456',
+            'expires_at' => Carbon::now()->addMinutes(10)
+        ]);
     }
 }
