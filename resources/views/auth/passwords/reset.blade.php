@@ -6,7 +6,8 @@
     <div class="col-md-5 col-lg-4">
         <div class="card shadow-sm animate-slide-up">
             <div class="card-header text-center">
-                <h4 class="mb-0">Set New Password</h4>
+                <h4 class="mb-0"><i class="bi bi-key"></i> Set New Password</h4>
+                <div class="text-muted small mt-1">Step 3 of 3: Create New Password</div>
             </div>
             <div class="card-body p-4">
                 <form method="POST" action="{{ route('password.update') }}">

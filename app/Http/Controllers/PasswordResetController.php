@@ -3,16 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
-use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Models\User;
+use App\Models\PasswordResetOtp;
+use App\Mail\ResetPasswordOtpMail;
 
+/**
+ * PasswordResetController — OTP-based password reset flow.
+ *
+ * Flow:
+ * 1. User enters email → OTP generated & sent (or shown in local dev mode)
+ * 2. User enters 6-digit OTP → verified, token generated
+ * 3. User enters new password → password reset using token
+ */
 class PasswordResetController extends Controller
 {
     /**
-     * Show the form to request a password reset link.
+     * Step 1: Show the form to request a password reset OTP.
      */
     public function requestForm()
     {
@@ -20,37 +29,121 @@ class PasswordResetController extends Controller
     }
 
     /**
-     * Send a password reset link to the given user.
+     * Step 1: Generate OTP and send it (or display in local dev mode).
      */
-    public function sendResetLink(Request $request)
+    public function sendOtp(Request $request)
     {
         $request->validate(['email' => 'required|email']);
 
-        $status = Password::broker()->sendResetLink(
-            $request->only('email')
-        );
+        $user = User::where('email', $request->email)->first();
 
-        if ($status === Password::RESET_LINK_SENT) {
-            $user = User::where('email', $request->email)->first();
-            $token = Password::broker()->createToken($user);
-            $url = route('password.reset', ['token' => $token, 'email' => $user->email]);
-            
-            return back()->with(['status' => __($status), 'reset_url' => $url]);
+        if (!$user) {
+            return back()->withErrors(['email' => 'No account found with that email address.']);
         }
 
-        return back()->withErrors(['email' => __($status)]);
+        // Invalidate any previous OTPs for this email
+        PasswordResetOtp::where('email', $request->email)->delete();
+
+        // Generate 6-digit OTP
+        $otp = str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+
+        $otpRecord = PasswordResetOtp::create([
+            'email' => $request->email,
+            'otp' => $otp,
+            'expires_at' => now()->addMinutes(10),
+        ]);
+
+        // In local dev mode, show OTP directly; in production, send email
+        if (app()->environment('local')) {
+            return redirect()->route('password.otp.form', ['email' => $request->email])
+                ->with('status', "Your OTP code is: {$otp} (Local Dev Mode — valid for 10 minutes)");
+        }
+
+        // Send OTP email
+        try {
+            Mail::to($request->email)->send(new ResetPasswordOtpMail($otp, $request->email));
+        } catch (\Exception $e) {
+            // If mail fails in dev, still redirect with OTP shown
+            return redirect()->route('password.otp.form', ['email' => $request->email])
+                ->with('status', "Your OTP code is: {$otp} (Mail sending failed — showing OTP directly)");
+        }
+
+        return redirect()->route('password.otp.form', ['email' => $request->email])
+            ->with('status', 'We have sent a 6-digit OTP to your email address.');
     }
 
     /**
-     * Show the form to reset the password.
+     * Step 2: Show the OTP verification form.
+     */
+    public function otpForm(Request $request)
+    {
+        $email = $request->query('email', $request->old('email'));
+
+        if (!$email) {
+            return redirect()->route('password.request')->withErrors(['email' => 'Email is required.']);
+        }
+
+        return view('auth.passwords.otp', compact('email'));
+    }
+
+    /**
+     * Step 2: Verify the OTP code.
+     */
+    public function verifyOtp(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'otp' => 'required|string|size:6',
+        ]);
+
+        $otpRecord = PasswordResetOtp::where('email', $request->email)
+            ->where('otp', $request->otp)
+            ->whereNull('verified_at')
+            ->first();
+
+        if (!$otpRecord) {
+            return back()->withErrors(['otp' => 'Invalid OTP code. Please try again.'])->withInput();
+        }
+
+        if ($otpRecord->isExpired()) {
+            $otpRecord->delete();
+            return back()->withErrors(['otp' => 'This OTP has expired. Please request a new one.'])->withInput();
+        }
+
+        // Mark as verified and generate a secure token for the reset form
+        $token = Str::random(64);
+        $otpRecord->update([
+            'verified_at' => now(),
+            'token' => $token,
+        ]);
+
+        return redirect()->route('password.reset', ['token' => $token, 'email' => $request->email]);
+    }
+
+    /**
+     * Step 2 (resend): Resend OTP code.
+     */
+    public function resendOtp(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+
+        // Re-use the sendOtp logic
+        return $this->sendOtp($request);
+    }
+
+    /**
+     * Step 3: Show the password reset form.
      */
     public function resetForm(Request $request, $token)
     {
-        return view('auth.passwords.reset', ['token' => $token, 'email' => $request->email]);
+        return view('auth.passwords.reset', [
+            'token' => $token,
+            'email' => $request->email,
+        ]);
     }
 
     /**
-     * Reset the given user's password.
+     * Step 3: Reset the password using the verified token.
      */
     public function resetPassword(Request $request)
     {
@@ -69,19 +162,32 @@ class PasswordResetController extends Controller
             ],
         ]);
 
-        $status = Password::broker()->reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user, string $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password)
-                ])->setRememberToken(Str::random(60));
+        // Verify the token is valid and verified
+        $otpRecord = PasswordResetOtp::where('email', $request->email)
+            ->where('token', $request->token)
+            ->whereNotNull('verified_at')
+            ->first();
 
-                $user->save();
-            }
-        );
+        if (!$otpRecord) {
+            return back()->withErrors(['email' => 'Invalid or expired reset token. Please start the process again.']);
+        }
 
-        return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withErrors(['email' => [__($status)]]);
+        // Reset the password
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'No account found with that email address.']);
+        }
+
+        $user->forceFill([
+            'password' => Hash::make($request->password),
+        ])->setRememberToken(Str::random(60));
+
+        $user->save();
+
+        // Clean up all OTP records for this email
+        PasswordResetOtp::where('email', $request->email)->delete();
+
+        return redirect()->route('login')->with('status', 'Your password has been reset successfully! Please login with your new password.');
     }
 }

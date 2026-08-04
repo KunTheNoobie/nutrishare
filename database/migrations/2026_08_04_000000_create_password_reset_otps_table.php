@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('otp', 6);
             $table->string('token')->nullable()->unique();
             $table->timestamp('verified_at')->nullable();
-            $table->timestamp('expires_at');
+            $table->timestamp('expires_at')->useCurrent();
             $table->timestamps();
         });
     }
