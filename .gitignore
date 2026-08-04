@@ -17,3 +17,8 @@ yarn-error.log
 /.idea
 /.vscode
 /.phpunit.cache
+/mailpit
+/mailpit.zip
+/database/database.sqlite
+composer.phar
+run.bat
