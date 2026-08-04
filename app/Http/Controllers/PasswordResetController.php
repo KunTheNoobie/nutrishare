@@ -61,10 +61,7 @@ class PasswordResetController extends Controller
         }
 
         return redirect()->route('password.otp.form', ['email' => $request->email])
-            ->with([
-                'status' => 'We sent a 6-digit verification code to your email address.',
-                'dev_otp' => $otp,
-            ]);
+            ->with('status', 'We sent a 6-digit verification code to your email address.');
     }
 
     /**

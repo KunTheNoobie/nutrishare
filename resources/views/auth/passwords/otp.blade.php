@@ -23,12 +23,6 @@
                             <i class="bi bi-check-circle-fill me-2 fs-5"></i>
                             <div>{{ session('status') }}</div>
                         </div>
-                        @if(config('app.env') === 'local' && session('dev_otp'))
-                            <div class="mt-2 pt-2 border-top small d-flex align-items-center justify-content-between" style="border-color: rgba(52, 199, 89, 0.25) !important;">
-                                <span class="text-muted"><i class="bi bi-terminal me-1"></i> <strong>Local Dev Mode OTP:</strong></span>
-                                <span class="badge bg-dark text-warning border px-2 py-1 font-monospace" style="font-size: 0.95rem; letter-spacing: 2px; border-color: rgba(255,193,7,0.3) !important;">{{ session('dev_otp') }}</span>
-                            </div>
-                        @endif
                     </div>
                 @endif
 
