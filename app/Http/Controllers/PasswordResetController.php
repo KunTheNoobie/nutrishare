@@ -53,15 +53,15 @@ class PasswordResetController extends Controller
             'expires_at' => now()->addMinutes(10),
         ]);
 
-        // Send OTP email (dispatches via SMTP / Mailpit on port 1025)
+        // Send OTP email via Mailer (Mailpit / SMTP)
         try {
             Mail::to($request->email)->send(new ResetPasswordOtpMail($otp, $request->email));
         } catch (\Exception $e) {
-            \Illuminate\Support\Facades\Log::warning("OTP Mail delivery failed: " . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Failed to send OTP email: ' . $e->getMessage());
         }
 
         return redirect()->route('password.otp.form', ['email' => $request->email])
-            ->with('status', 'We sent a 6-digit OTP code to your email address. Check your inbox (or local Mailpit at http://127.0.0.1:8025).');
+            ->with('status', 'A 6-digit OTP code has been sent to your email address. Please check Mailpit at http://127.0.0.1:8025.');
     }
 
     /**
