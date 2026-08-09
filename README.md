@@ -53,10 +53,20 @@ You can create administrative accounts at any time via the custom NutriShare Art
 
 ```bash
 # Create System Admin Account
-php artisan nutrishare:create-admin --name="Admin Name" --email="admin@example.com" --password="Password1!" --role=admin
+php artisan nutrishare:create-admin --name="System Admin" --email="admin@example.com" --password="Password1!" --role=admin
 
 # Create Platform Moderator Account
 php artisan nutrishare:create-admin --name="Mod Name" --email="mod@example.com" --password="Password1!" --role=moderator
+```
+
+---
+
+## 🛠️ Automated System Health & Diagnostic Audit
+
+Run the platform diagnostic command to verify database connectivity, Mailpit status, and 10+ table record targets before your presentation:
+
+```bash
+php artisan nutrishare:health-check
 ```
 
 ---
