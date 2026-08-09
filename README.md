@@ -1,124 +1,161 @@
-<h1 align="center">
-  Mailpit - email testing for developers
-</h1>
+# 🌾 NutriShare — Surplus Food Redistribution Platform
 
-<div align="center">
-    <a href="https://github.com/axllent/mailpit/actions/workflows/tests.yml"><img src="https://github.com/axllent/mailpit/actions/workflows/tests.yml/badge.svg" alt="CI Tests status"></a>
-    <a href="https://github.com/axllent/mailpit/actions/workflows/build-release.yml"><img src="https://github.com/axllent/mailpit/actions/workflows/build-release.yml/badge.svg" alt="CI build status"></a>
-    <a href="https://github.com/axllent/mailpit/actions/workflows/build-docker.yml"><img src="https://github.com/axllent/mailpit/actions/workflows/build-docker.yml/badge.svg" alt="CI Docker build status"></a>
-    <a href="https://github.com/axllent/mailpit/actions/workflows/codeql-analysis.yml"><img src="https://github.com/axllent/mailpit/actions/workflows/codeql-analysis.yml/badge.svg" alt="Code quality"></a>
-    <a href="https://goreportcard.com/report/github.com/axllent/mailpit"><img src="https://goreportcard.com/badge/github.com/axllent/mailpit" alt="Go Report Card"></a>
-    <br>
-    <a href="https://github.com/axllent/mailpit/releases/latest"><img src="https://img.shields.io/github/v/release/axllent/mailpit.svg" alt="Latest release"></a>
-    <a href="https://hub.docker.com/r/axllent/mailpit"><img src="https://img.shields.io/docker/pulls/axllent/mailpit.svg" alt="Docker pulls"></a>
-</div>
-<br>
-<p align="center">
-  <a href="https://mailpit.axllent.org">Website</a>  •
-  <a href="https://mailpit.axllent.org/docs/">Documentation</a>  •
-  <a href="https://mailpit.axllent.org/docs/api-v1/">API</a>
-</p>
+> **UN SDG 2: Zero Hunger | Web Application Development & Software Architecture**
 
-<hr>
-
-**Mailpit** is a small, fast, low memory, zero-dependency, multi-platform email testing tool & API for developers.
-
-It acts as an SMTP server, provides a modern web interface to view & test captured emails, and includes an API for automated integration testing.
-
-Mailpit was originally **inspired** by MailHog which is [no longer maintained](https://github.com/mailhog/MailHog/issues/442#issuecomment-1493415258) and hasn't seen active development or security updates for a few years now.
-
-![Mailpit](https://raw.githubusercontent.com/axllent/mailpit/develop/server/ui-src/screenshot.png)
-
-
-## Features
-
-- Runs entirely from a single [static binary](https://mailpit.axllent.org/docs/install/) or multi-architecture [Docker images](https://mailpit.axllent.org/docs/install/docker/)
-- Modern web UI with advanced [mail search](https://mailpit.axllent.org/docs/usage/search-filters/) to view emails (formatted HTML, highlighted HTML source, text, headers, raw source, and MIME attachments
-including image thumbnails), including optional [HTTPS](https://mailpit.axllent.org/docs/configuration/http/) & [authentication](https://mailpit.axllent.org/docs/configuration/http/)
-- [SMTP server](https://mailpit.axllent.org/docs/configuration/smtp/) with optional STARTTLS or SSL/TLS, authentication (including an "accept any" mode)
-- A [REST API](https://mailpit.axllent.org/docs/api-v1/) for integration testing
-- Real-time web UI updates using web sockets for new mail & optional [browser notifications](https://mailpit.axllent.org/docs/usage/notifications/) when new mail is received
-- Optional [POP3 server](https://mailpit.axllent.org/docs/configuration/pop3/) to download captured message directly into your email client
-- [HTML check](https://mailpit.axllent.org/docs/usage/html-check/) to test & score mail client compatibility with HTML emails
-- [Link check](https://mailpit.axllent.org/docs/usage/link-check/) to test message links (HTML & text) & linked images
-- [Spam check](https://mailpit.axllent.org/docs/usage/spamassassin/) to test message "spamminess" using a running SpamAssassin server
-- [Create screenshots](https://mailpit.axllent.org/docs/usage/html-screenshots/) of HTML messages via web UI
-- Mobile and tablet HTML preview toggle in desktop mode
-- [Message tagging](https://mailpit.axllent.org/docs/usage/tagging/) including manual tagging or automated tagging using filtering and "plus addressing"
-- [SMTP relaying](https://mailpit.axllent.org/docs/configuration/smtp-relay/) (message release) - relay messages via a different SMTP server including an optional allowlist of accepted recipients
-- [SMTP forwarding](https://mailpit.axllent.org/docs/configuration/smtp-forward/) - automatically forward messages via a different SMTP server to predefined email addresses
-- Fast message [storing & processing](https://mailpit.axllent.org/docs/configuration/email-storage/) - ingesting 200-300 emails per second over SMTP depending on CPU, network speed & email size,
-easily handling tens of thousands of emails, with automatic email pruning by volume or message age (by default keeping the most recent 500 emails)
-- [Chaos](https://mailpit.axllent.org/docs/integration/chaos/) feature to enable configurable SMTP errors to test application resilience
-- `List-Unsubscribe` syntax validation
-- Optional [webhook](https://mailpit.axllent.org/docs/integration/webhook/) for received messages
-
-
-## Installation
-
-The Mailpit web UI listens by default on `http://0.0.0.0:8025` and the SMTP port on `0.0.0.0:1025`.
-
-Mailpit runs as a single binary and can be installed in different ways:
-
-
-### Install via package managers
-
-- **Mac**: `brew install mailpit` (to run automatically in the background: `brew services start mailpit`)
-- **Arch Linux**: available in the AUR as `mailpit`
-- **FreeBSD**: `pkg install mailpit`
-
-
-### Install via script (Linux & Mac)
-
-Linux & Mac users can install it directly to `/usr/local/bin/mailpit` with:
-
-```shell
-sudo sh < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)
-```
-
-You can also change the install path to something else by setting the `INSTALL_PATH` environment, for example:
-
-```shell
-sudo INSTALL_PATH=/usr/bin sh < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)
-```
-
-
-### Download static binary (Windows, Linux and Mac)
-
-Static binaries can always be found on the [releases](https://github.com/axllent/mailpit/releases/latest). The `mailpit` binary can be extracted and copied to your `$PATH`, or simply run as `./mailpit`.
-
-
-### Docker
-
-See [Docker instructions](https://mailpit.axllent.org/docs/install/docker/) for 386, amd64 & arm64 images.
-
-
-### Compile from source
-
-To build Mailpit from source, see [Building from source](https://mailpit.axllent.org/docs/install/source/).
-
-
-## Usage
-
-Run `mailpit -h` to see options. More information can be seen in [the docs](https://mailpit.axllent.org/docs/configuration/runtime-options/).
-
-If installed using homebrew, you may run `brew services start mailpit` to always run mailpit automatically.
-
-
-### Testing Mailpit
-
-Please refer to [the documentation](https://mailpit.axllent.org/docs/install/testing/) on how to easily test email delivery to Mailpit.
-
-
-### Configuring sendmail
-
-Mailpit's SMTP server (default on port 1025), so you will likely need to configure your sending application to deliver mail via that port. 
-A common MTA (Mail Transfer Agent) that delivers system emails to an SMTP server is `sendmail`, used by many applications, including PHP. 
-Mailpit can also act as substitute for sendmail. For instructions on how to set this up, please refer to the [sendmail documentation](https://mailpit.axllent.org/docs/install/sendmail/).
+NutriShare is a state-of-the-art web application engineered to bridge surplus food donors (supermarkets, bakeries, hotels, restaurants) with verified Non-Governmental Organizations (NGOs), reducing food waste while empowering vulnerable communities under **UN Sustainable Development Goal 2 (Zero Hunger)**.
 
 ---
 
-<p align="center">
-  For team features, multiple inboxes, and a hosted setup, try
-  <a href="https://mailtrap.io/?ref=mailpit">Mailtrap</a>, our friendly companion.
-</p>
+## 🚀 Key System Features & Modules
+
+### Module 1: Donation & Notification Management
+- **Surplus Food Publishing:** Donors publish available food donations with photos, quantity, unit, pickup location, map coordinates, and expiry dates.
+- **Multi-Image Support:** Up to 5 high-resolution photos or image URLs per donation item.
+- **Event-Driven Notifications:** Real-time system & email alerts dispatched when donations are published, claimed, or updated.
+
+### Module 2: NGO Verification & Peer Trust Rating System
+- **Document Verification:** NGOs upload registration certificates, tax exemption docs, and food premise licenses for Admin/Moderator approval.
+- **Trust & Peer Review System:** Donors and NGOs leave 1–5 star trust ratings and reviews post-collection to foster platform credibility.
+- **OTP Password Reset:** 3-step secure 6-digit OTP verification code flow for password resets.
+
+### Module 3: Claims & Logistics Distribution
+- **State-Driven Claims:** State Pattern manages claim lifecycles (`pending` ➔ `approved` ➔ `collected`, or `rejected` / `cancelled`).
+- **Logistics & Dispatch:** Assign pickup vehicles (van, truck, car, motorcycle) and driver contact details.
+- **Digital Collection Receipts:** Auto-generated unique receipts (`REC-NUTRI-YYYYMMDD-XXX`) with driver sign-off.
+- **SDG 2 Impact Tracking:** Record distribution logs detailing beneficiaries count, distribution center, and quantity distributed.
+
+### Module 4: Inventory & Food Safety Compliance
+- **Multi-Location Storage:** NGOs manage dry, cold, ambient, and blast freezer inventory facilities with live capacity tracking.
+- **Allergen & Expiry Tracking:** Food items tagged with allergen warnings (Gluten, Dairy, Nuts, Soy, Egg, Seafood) and automatic expiry countdowns.
+
+---
+
+## 🔒 Role-Based Access Control (RBAC) Matrix
+
+| System Feature / Action | **Admin** | **Moderator** | **Donor** | **NGO** |
+|---|:---:|:---:|:---:|:---:|
+| **Publish / Edit Donations** | ✅ | ✅ | ✅ (Own) | ❌ |
+| **Delete Donations** | ✅ | ❌ | ✅ (Own) | ❌ |
+| **Submit Claims** | ❌ | ❌ | ❌ | ✅ (Verified) |
+| **Approve / Reject Claims** | ✅ | ✅ | ✅ (Own) | ❌ |
+| **Collect Claims & Log SDG Impact** | ✅ | ✅ | ❌ | ✅ (Own) |
+| **Delete Claims** | ✅ | ❌ | ❌ | ✅ (Pending) |
+| **Manage Inventory & Facilities** | ✅ | ✅ | ❌ | ✅ (Own) |
+| **Review NGO Verification Docs** | ✅ | ✅ | ❌ | Upload Only |
+| **Generate Platform Analytics Reports** | ✅ | ✅ | ❌ | ❌ |
+| **View Audit Trail & System Activity Logs** | ✅ | ✅ | ❌ | ❌ |
+
+---
+
+## 🏗️ Software Architecture & Design Patterns
+
+### 1. Factory Method Pattern (Module 2 — User Creation)
+- **Abstract Creator:** `UserCreator`
+- **Concrete Creators:** `AdminCreator`, `ModeratorCreator`, `DonorCreator`, `NgoCreator`
+- Encapsulates role-specific defaults, verification statuses, and automated post-creation audit logging.
+
+### 2. State Pattern (Module 3 — Claim Lifecycle)
+- **State Interface:** `ClaimStateInterface`
+- **Concrete States:** `PendingState`, `ApprovedState`, `CollectedState`, `RejectedState`, `CancelledState`
+- Enforces valid state transitions and encapsulates business rules per lifecycle stage.
+
+### 3. Strategy Pattern (Module 4 — Notification Dispatching)
+- **Strategy Interface:** `NotificationStrategyInterface`
+- **Concrete Strategies:** `EmailStrategy`, `SmsStrategy`
+- **Context:** `NotificationDispatcher`
+- Dynamically selects communication channels based on user preferences.
+
+### 4. Observer Pattern (Module 1 — Event-Driven Notifications)
+- **Observer:** `DonationObserver`
+- Listens for `created` events on `Donation` model to automatically notify verified NGOs.
+
+### 5. Repository Pattern (Module 1 — Data Access)
+- **Repository:** `DonationRepository`
+- Encapsulates Eloquent parameterized query logic for searching and filtering donations.
+
+---
+
+## 🛡️ Security Implementations (OWASP Compliance)
+
+- **OWASP A01: Broken Access Control:** Enforced via Laravel Policies (`DonationPolicy`, `ClaimPolicy`) and `CheckRole` middleware.
+- **OWASP A02: Cryptographic Failures:** Bcrypt password hashing (`ROUND=12`) and signed HMAC URLs for quick-claim actions.
+- **OWASP A03: SQL Injection:** Parameterized queries via Eloquent ORM.
+- **OWASP A05: Security Misconfiguration:** CSRF token `@csrf` validation on all HTTP POST/PUT/DELETE forms.
+- **OWASP A07: Stored XSS Prevention:** Automatic Blade HTML escaping `{{ }}` across all views.
+- **OWASP A09: Security Logging & Monitoring:** CRLF sanitization helper (`SecurityHelper`) preventing log injection in `SystemLog`.
+
+---
+
+## 🗄️ Database Architecture (26 Tables Coverage)
+
+The database consists of **18 Application Feature Tables** (100% populated with 10+ records each) and **8 Framework System Tables**:
+
+### Application Tables (10+ Records Each)
+1. `users` (12 records) — Core user accounts across all 4 roles.
+2. `donations` (12 records) — Surplus food donation listings.
+3. `food_items` (12 records) — Detailed food items linked to donations.
+4. `categories` (10 records) — Food classification categories.
+5. `allergen_tags` (10 records) — Food safety allergen tags.
+6. `allergen_tag_food_item` (17 records) — Pivot table connecting food items to allergens.
+7. `inventory_locations` (10 records) — NGO storage facilities.
+8. `claims` (10 records) — Claim lifecycle records.
+9. `vehicles` (10 records) — Pickup logistics vehicles & drivers.
+10. `collection_receipts` (10 records) — Digital pickup receipts.
+11. `distribution_logs` (10 records) — SDG 2 Zero Hunger impact logs.
+12. `verification_documents` (10 records) — NGO compliance documents.
+13. `reviews` (10 records) — Peer trust ratings and feedback.
+14. `reports` (10 records) — Platform analytics & SDG impact reports.
+15. `notification_templates` (10 records) — System alert templates.
+16. `notifications` (48 records) — Dispatched user alerts.
+17. `system_logs` (24 records) — Audit logs with IP Address & User Agent.
+18. `password_reset_otps` (10 records) — 6-digit OTP security tokens.
+
+### Framework System Tables
+19. `sessions` — Browser session management.
+20. `cache` & 21. `cache_locks` — Performance query cache.
+22. `jobs`, 23. `job_batches`, & 24. `failed_jobs` — Background queue engine.
+25. `migrations` — Schema versioning.
+26. `password_reset_tokens` — Legacy token storage.
+
+---
+
+## 🔑 Demo Login Credentials
+
+All accounts use password: **`Password1!`**
+
+| User Role | Email Address | Access Level |
+|---|---|---|
+| **System Admin** | `admin@nutrishare.com` | Full CRUD, User Verification, Reports, Audit Logs |
+| **Platform Moderator** | `moderator@nutrishare.com` | Oversight (Create/Read/Update, No Delete) |
+| **NGO (Primary)** | `ngo@nutrishare.com` | Claims, Inventory, Logistics, SDG Impact Logs |
+| **NGO (Secondary)** | `kechara@nutrishare.com` | Claims & Shelter Distribution |
+| **Donor (Primary)** | `donor@nutrishare.com` | Publish Donations, Approve Claims, Reviews |
+| **Donor (Secondary)** | `jayagrocer@nutrishare.com` | Supermarket Donations |
+
+---
+
+## ⚙️ Quickstart & Local Setup Guide
+
+1. **Clone & Install Dependencies:**
+   ```bash
+   git clone https://github.com/KunTheNoobie/nutrishare.git
+   cd nutrishare
+   composer install
+   ```
+
+2. **Configure Environment:**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+3. **Wipe & Seed God Tier Database:**
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
+
+4. **Start Application Server:**
+   ```bash
+   php artisan serve
+   ```
+   *Note: `mailpit.exe` will automatically launch in the background to capture emails at `http://127.0.0.1:8025`.*

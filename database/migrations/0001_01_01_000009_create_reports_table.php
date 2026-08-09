@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('content');
-            $table->enum('type', ['donation_summary', 'distribution_report', 'sdg_impact', 'audit'])->default('donation_summary');
+            $table->enum('type', ['donation_summary', 'distribution_report', 'sdg_impact', 'audit', 'user_activity'])->default('donation_summary');
             $table->date('report_date');
             $table->timestamps();
         });
