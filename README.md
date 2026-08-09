@@ -8,25 +8,35 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 
 ## 🚀 Key System Features & Modules
 
-### Module 1: Donation & Notification Management
+### Module 1: Donation & Notification Management (Liew Yi Ler)
 - **Surplus Food Publishing:** Donors publish available food donations with photos, quantity, unit, pickup location, map coordinates, and expiry dates.
 - **Multi-Image Support:** Up to 5 high-resolution photos or image URLs per donation item.
-- **Event-Driven Notifications:** Real-time system & email alerts dispatched when donations are published, claimed, or updated.
+- **Event-Driven Notifications:** Real-time system & email alerts dispatched via the **Observer Pattern** when donations are published, claimed, or updated.
 
-### Module 2: NGO Verification & Peer Trust Rating System
-- **Document Verification:** NGOs upload registration certificates, tax exemption docs, and food premise licenses for Admin/Moderator approval.
+### Module 2: NGO Verification & Peer Trust Rating System (Cheon Jie Han)
+- **Document Verification:** NGOs upload registration certificates, tax exemption docs, and food premise licenses for Admin/Moderator approval with custom remarks.
 - **Trust & Peer Review System:** Donors and NGOs leave 1–5 star trust ratings and reviews post-collection to foster platform credibility.
 - **OTP Password Reset:** 3-step secure 6-digit OTP verification code flow for password resets.
 
-### Module 3: Claims & Logistics Distribution
-- **State-Driven Claims:** State Pattern manages claim lifecycles (`pending` ➔ `approved` ➔ `collected`, or `rejected` / `cancelled`).
+### Module 3: Claims & Logistics Distribution (Yap Zhing Shuen)
+- **State-Driven Claims:** **State Pattern** manages claim lifecycles (`pending` ➔ `approved` ➔ `collected`, or `rejected` / `cancelled`).
 - **Logistics & Dispatch:** Assign pickup vehicles (van, truck, car, motorcycle) and driver contact details.
-- **Digital Collection Receipts:** Auto-generated unique receipts (`REC-NUTRI-YYYYMMDD-XXX`) with driver sign-off.
+- **Digital Collection Receipts:** Auto-generated unique receipts (`REC-NUTRI-YYYYMMDD-XXX`) with one-click **Print Receipt** functionality.
 - **SDG 2 Impact Tracking:** Record distribution logs detailing beneficiaries count, distribution center, and quantity distributed.
 
-### Module 4: Inventory & Food Safety Compliance
-- **Multi-Location Storage:** NGOs manage dry, cold, ambient, and blast freezer inventory facilities with live capacity tracking.
+### Module 4: Inventory & Food Safety Compliance (Wong Men Jing)
+- **Multi-Location Storage:** NGOs manage dry, cold, ambient, and blast freezer inventory facilities with live capacity tracking and CSV exports.
 - **Allergen & Expiry Tracking:** Food items tagged with allergen warnings (Gluten, Dairy, Nuts, Soy, Egg, Seafood) and automatic expiry countdowns.
+
+---
+
+## 📊 Live Analytics & Presenter Highlights
+
+- **📊 Interactive Chart.js Analytics Graphs:** Real-time **Food Rescue Category Bar Chart** & **Claim Status Ratio Doughnut Chart** rendered automatically on the Dashboard (`/dashboard`).
+- **🌍 Role-Specific UN SDG 2 Impact Tracker:** Live metrics detailing **Food Rescued (kg)**, **Beneficiaries Fed (People)**, and **CO₂e Environmental Savings (Tons)** personalized for Donors, NGOs, and Admins.
+- **🎭 1-Click Presentation Demo Switcher:** Top navbar dropdown & login page buttons to switch between **Admin**, **Moderator**, **NGO**, and **Donor** in 1 second during live demos (`/demo-login/{role}`).
+- **📥 CSV Data Exporters:** Download CSV audit files from `/logs/export/csv` and inventory storage reports from `/inventory/export/csv`.
+- **🖨️ Printable Collection Receipts:** One-click receipt print preview layout for physical driver sign-off.
 
 ---
 
@@ -40,7 +50,7 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 | **Approve / Reject Claims** | ✅ | ✅ | ✅ (Own) | ❌ |
 | **Collect Claims & Log SDG Impact** | ✅ | ✅ | ❌ | ✅ (Own) |
 | **Delete Claims** | ✅ | ❌ | ❌ | ✅ (Pending) |
-| **Manage Inventory & Facilities** | ✅ | ✅ | ❌ | ✅ (Own) |
+| **Manage Inventory & Storage Facilities** | ✅ | ✅ | ❌ | ✅ (Own) |
 | **Review NGO Verification Docs** | ✅ | ✅ | ❌ | Upload Only |
 | **Generate Platform Analytics Reports** | ✅ | ✅ | ❌ | ❌ |
 | **View Audit Trail & System Activity Logs** | ✅ | ✅ | ❌ | ❌ |
@@ -112,13 +122,13 @@ php artisan nutrishare:health-check
 
 ## 🗄️ Database Architecture (All 26 Tables Breakdown)
 
-The database consists of **18 Application Feature Tables** (10+ records each) and **8 Framework Infrastructure Tables**:
+The database consists of **18 Application Feature Tables** (10+ to 48+ records each) and **8 Framework Infrastructure Tables**:
 
 | # | Database Table Name | Category | Record Count | Description |
 |---|---|---|:---:|---|
 | 1 | `users` | Application | 12 | System Admins, Moderators, NGOs, Donors |
 | 2 | `donations` | Application | 12 | Surplus food donation listings |
-| 3 | `food_items` | Application | 12 | Individual food items with photos & expiry |
+| 3 | `food_items` | Application | 16 | Individual food items with photos & expiry |
 | 4 | `categories` | Application | 10 | Food categories (Produce, Bakery, Dairy, etc.) |
 | 5 | `allergen_tags` | Application | 10 | Allergen safety tags (Gluten, Dairy, Nuts, etc.) |
 | 6 | `allergen_tag_food_item` | Application | 17 | Pivot table linking food items to allergens |
@@ -132,7 +142,7 @@ The database consists of **18 Application Feature Tables** (10+ records each) an
 | 14 | `reports` | Application | 10 | Platform analytics & SDG impact reports |
 | 15 | `notification_templates` | Application | 10 | Predefined alert templates |
 | 16 | `notifications` | Application | 48 | Dispatched system & email user alerts |
-| 17 | `system_logs` | Application | 24 | Audit trail logs with IP & User Agent |
+| 17 | `system_logs` | Application | 25 | Audit trail logs with IP & User Agent |
 | 18 | `password_reset_otps` | Application | 10 | 6-digit OTP security reset tokens |
 | 19 | `sessions` | Framework | Active | Managed automatically by Laravel session driver |
 | 20 | `cache` | Framework | System | Framework database query cache |
