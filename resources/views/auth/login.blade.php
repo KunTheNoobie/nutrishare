@@ -49,9 +49,28 @@
                     </button>
                 </form>
 
-                <div class="text-center mt-3">
+                <div class="text-center mt-3 mb-3">
                     <span class="text-muted" style="font-size: 0.9rem;">Don't have an account?</span>
                     <a href="{{ route('register') }}" style="font-size: 0.9rem; font-weight: 500;">Create one now</a>
+                </div>
+
+                <!-- Presentation Quick Login Buttons -->
+                <div class="pt-3 border-top text-center" style="border-color: var(--apple-border) !important;">
+                    <small class="text-muted d-block mb-2 fw-semibold" style="font-size: 0.75rem; letter-spacing: 0.5px;">🎭 PRESENTATION QUICK DEMO LOGIN</small>
+                    <div class="d-flex flex-wrap justify-content-center gap-1">
+                        <a href="{{ route('demo.login', 'admin') }}" class="btn btn-outline-danger btn-sm py-1 px-2" style="font-size: 0.75rem !important;">
+                            <i class="bi bi-shield-lock"></i> Admin
+                        </a>
+                        <a href="{{ route('demo.login', 'moderator') }}" class="btn btn-outline-info btn-sm py-1 px-2" style="font-size: 0.75rem !important;">
+                            <i class="bi bi-shield-check"></i> Moderator
+                        </a>
+                        <a href="{{ route('demo.login', 'ngo') }}" class="btn btn-outline-success btn-sm py-1 px-2" style="font-size: 0.75rem !important;">
+                            <i class="bi bi-building-heart"></i> NGO
+                        </a>
+                        <a href="{{ route('demo.login', 'donor') }}" class="btn btn-outline-primary btn-sm py-1 px-2" style="font-size: 0.75rem !important;">
+                            <i class="bi bi-shop"></i> Donor
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

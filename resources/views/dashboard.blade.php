@@ -19,6 +19,39 @@
     </div>
 </div>
 
+<!-- UN SDG 2 Zero Hunger Live Impact Banner -->
+<div class="card shadow-sm mb-4 border-0 animate-slide-up" style="background: linear-gradient(135deg, rgba(0, 102, 204, 0.12) 0%, rgba(40, 205, 65, 0.12) 100%); border: 1px solid var(--apple-border) !important;">
+    <div class="card-body p-3">
+        <div class="row align-items-center text-center text-md-start g-3">
+            <div class="col-md-4 d-flex align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(40, 205, 65, 0.2); color: var(--apple-success);">
+                    <i class="bi bi-globe-americas fs-4"></i>
+                </div>
+                <div>
+                    <h6 class="mb-0 fw-bold" style="color: var(--apple-text);">UN SDG 2 Impact Tracker</h6>
+                    <small class="text-muted">Zero Hunger & Food Rescue Metrics</small>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="row g-2 text-center">
+                    <div class="col-4">
+                        <small class="text-muted d-block text-uppercase" style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px;">Food Rescued</small>
+                        <span class="fw-bold fs-5 text-apple-accent">{{ number_format($sdgFoodRescuedKg, 1) }} kg</span>
+                    </div>
+                    <div class="col-4" style="border-left: 1px solid var(--apple-border); border-right: 1px solid var(--apple-border);">
+                        <small class="text-muted d-block text-uppercase" style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px;">Beneficiaries Fed</small>
+                        <span class="fw-bold fs-5 text-apple-success">{{ number_format($sdgBeneficiaries) }} People</span>
+                    </div>
+                    <div class="col-4">
+                        <small class="text-muted d-block text-uppercase" style="font-size: 0.7rem; font-weight: 600; letter-spacing: 0.5px;">CO₂e Saved</small>
+                        <span class="fw-bold fs-5 text-info">{{ $sdgCo2eSavedTons }} Tons</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- ── Donor Dashboard ── --}}
 @if($user->isDonor())
 <div class="row g-3 mb-4 animate-slide-up">
