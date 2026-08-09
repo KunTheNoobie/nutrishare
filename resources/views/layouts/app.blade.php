@@ -635,6 +635,7 @@
         [data-theme="light"] .datatable-input,
         [data-theme="light"] .datatable-selector { background: #ffffff !important; color: #1d1d1f !important; border-color: #e5e5ea !important; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @stack('styles')
 </head>
 <body>

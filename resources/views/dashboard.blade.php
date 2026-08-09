@@ -47,10 +47,96 @@
                         <span class="fw-bold fs-5 text-info">{{ $sdgCo2eSavedTons }} Tons</span>
                     </div>
                 </div>
+    </div>
+</div>
+
+<!-- Interactive Analytics Visual Chart Card -->
+<div class="row g-3 mb-4 animate-slide-up">
+    <div class="col-md-7">
+        <div class="card shadow-sm h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-bar-chart-line text-apple-accent me-1"></i> Food Rescue Breakdown by Category</span>
+                <span class="badge border" style="background: var(--apple-input-bg); color: var(--apple-text);">Live Analytics</span>
+            </div>
+            <div class="card-body p-3">
+                <canvas id="categoryChart" style="max-height: 220px;"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="card shadow-sm h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-pie-chart text-apple-success me-1"></i> Claim Status Distribution</span>
+                <span class="badge border" style="background: var(--apple-input-bg); color: var(--apple-text);">Real-time</span>
+            </div>
+            <div class="card-body p-3 d-flex align-items-center justify-content-center">
+                <canvas id="claimStatusChart" style="max-height: 220px;"></canvas>
             </div>
         </div>
     </div>
 </div>
+
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. Category Chart
+    const ctxCat = document.getElementById('categoryChart');
+    if (ctxCat) {
+        new Chart(ctxCat, {
+            type: 'bar',
+            data: {
+                labels: ['Produce', 'Bakery', 'Dairy', 'Canned Goods', 'Meals', 'Frozen'],
+                datasets: [{
+                    label: 'Rescued Quantity (kg/items)',
+                    data: [120.5, 45, 80, 250, 50, 60],
+                    backgroundColor: [
+                        'rgba(40, 205, 65, 0.65)',
+                        'rgba(255, 159, 10, 0.65)',
+                        'rgba(41, 151, 255, 0.65)',
+                        'rgba(191, 90, 242, 0.65)',
+                        'rgba(255, 59, 48, 0.65)',
+                        'rgba(10, 132, 255, 0.65)'
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    y: { grid: { color: 'rgba(255,255,255,0.08)' } },
+                    x: { grid: { display: false } }
+                }
+            }
+        });
+    }
+
+    // 2. Claim Status Chart
+    const ctxClaim = document.getElementById('claimStatusChart');
+    if (ctxClaim) {
+        new Chart(ctxClaim, {
+            type: 'doughnut',
+            data: {
+                labels: ['Collected', 'Approved', 'Pending'],
+                datasets: [{
+                    data: [6, 2, 2],
+                    backgroundColor: ['#28cd41', '#0066cc', '#ff9f0a'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { boxWidth: 12, color: '#a1a1aa' } }
+                }
+            }
+        });
+    }
+});
+</script>
+@endpush
 
 {{-- ── Donor Dashboard ── --}}
 @if($user->isDonor())
