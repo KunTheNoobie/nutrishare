@@ -218,57 +218,7 @@ class DemoDataSeeder extends Seeder
         }
 
         // ──────────────────────────────────────────────────────────
-        // 5. Food Items (12 Records)
-        // ──────────────────────────────────────────────────────────
-        $foodItemsList = [
-            ['d' => $donationModels[0], 'cat' => $catModels['Fresh Produce'], 'name' => 'Organic Honeycrisp Apples', 'qty' => 50.0, 'unit' => 'kg', 'storage' => 'ambient', 'perish' => true],
-            ['d' => $donationModels[0], 'cat' => $catModels['Fresh Produce'], 'name' => 'Fresh Kale & Spinach Bunches', 'qty' => 70.5, 'unit' => 'kg', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[1], 'cat' => $catModels['Bakery & Pastry'], 'name' => 'Artisan Sourdough Loaf', 'qty' => 45.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => true],
-            ['d' => $donationModels[2], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Tomato Soup Cans (400g)', 'qty' => 250.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => false],
-            ['d' => $donationModels[3], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Pasteurized Whole Milk Cartons', 'qty' => 80.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[4], 'cat' => $catModels['Prepared Meals'], 'name' => 'Roasted Chicken & Rice Trays', 'qty' => 20.0, 'unit' => 'boxes', 'storage' => 'frozen', 'perish' => true],
-            ['d' => $donationModels[5], 'cat' => $catModels['Seafood & Fish'], 'name' => 'Fresh Atlantic Salmon Fillets', 'qty' => 35.0, 'unit' => 'kg', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[6], 'cat' => $catModels['Beverages & Juices'], 'name' => 'Cold Pressed Orange Juice (1L)', 'qty' => 150.0, 'unit' => 'litres', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[7], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Oats & Cornflakes Cereal Packs', 'qty' => 90.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => false],
-            ['d' => $donationModels[8], 'cat' => $catModels['Baby Food & Formula'], 'name' => 'Infant Purée Banana Pouches', 'qty' => 110.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => false],
-            ['d' => $donationModels[9], 'cat' => $catModels['Frozen Foods'], 'name' => 'Frozen Sweet Corn & Green Peas', 'qty' => 60.0, 'unit' => 'kg', 'storage' => 'frozen', 'perish' => true],
-            ['d' => $donationModels[10], 'cat' => $catModels['Meat & Poultry'], 'name' => 'Roasted Chicken Meal Boxes', 'qty' => 30.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
-        ];
-
-        $foodItemModels = [];
-        foreach ($foodItemsList as $fi) {
-            $foodItemModels[] = FoodItem::create([
-                'donation_id' => $fi['d']->id,
-                'category_id' => $fi['cat']->id,
-                'name' => $fi['name'],
-                'description' => 'High quality food item inspected for safety compliance.',
-                'quantity' => $fi['qty'],
-                'unit' => $fi['unit'],
-                'expiry_date' => $fi['d']->expiry_date,
-                'storage_requirements' => $fi['storage'],
-                'is_perishable' => $fi['perish'],
-                'image_paths' => $fi['d']->image_paths
-            ]);
-        }
-
-        // ──────────────────────────────────────────────────────────
-        // 6. Allergen-FoodItem Pivot Relationships (16 Pivot Links)
-        // ──────────────────────────────────────────────────────────
-        $foodItemModels[0]->allergenTags()->sync([$tagModels['Gluten']->id]);
-        $foodItemModels[1]->allergenTags()->sync([$tagModels['Dairy']->id]);
-        $foodItemModels[2]->allergenTags()->sync([$tagModels['Gluten']->id]);
-        $foodItemModels[3]->allergenTags()->sync([$tagModels['Soy']->id]);
-        $foodItemModels[4]->allergenTags()->sync([$tagModels['Dairy']->id, $tagModels['Egg']->id]);
-        $foodItemModels[5]->allergenTags()->sync([$tagModels['Soy']->id, $tagModels['Gluten']->id]);
-        $foodItemModels[6]->allergenTags()->sync([$tagModels['Seafood']->id]);
-        $foodItemModels[7]->allergenTags()->sync([$tagModels['Sulfites']->id]);
-        $foodItemModels[8]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Contains Nuts']->id]);
-        $foodItemModels[9]->allergenTags()->sync([$tagModels['Soy']->id]);
-        $foodItemModels[10]->allergenTags()->sync([$tagModels['Gluten']->id]);
-        $foodItemModels[11]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Dairy']->id, $tagModels['Contains Nuts']->id]);
-
-        // ──────────────────────────────────────────────────────────
-        // 7. Inventory Locations (10 Records)
+        // 5. Inventory Locations (10 Records)
         // ──────────────────────────────────────────────────────────
         $locationsData = [
             ['user' => $ngo1, 'name' => 'Central Storage Facility (NGO Central Facility)', 'addr' => '100 Community Way, KL', 'type' => 'dry', 'cap' => 2000.0],
@@ -283,8 +233,9 @@ class DemoDataSeeder extends Seeder
             ['user' => $ngo1, 'name' => 'Emergency Relief Food Bank', 'addr' => 'Cheras Community Center, KL', 'type' => 'ambient', 'cap' => 2500.0],
         ];
 
+        $invLocationModels = [];
         foreach ($locationsData as $loc) {
-            InventoryLocation::create([
+            $invLocationModels[] = InventoryLocation::create([
                 'user_id' => $loc['user']->id,
                 'name' => $loc['name'],
                 'address' => $loc['addr'],
@@ -293,6 +244,61 @@ class DemoDataSeeder extends Seeder
                 'current_occupancy' => rand(50, (int)($loc['cap'] * 0.4))
             ]);
         }
+
+        // ──────────────────────────────────────────────────────────
+        // 6. Food Items (Linked to Donations & Inventory Locations)
+        // ──────────────────────────────────────────────────────────
+        $foodItemsList = [
+            ['d' => $donationModels[0], 'loc' => $invLocationModels[0], 'cat' => $catModels['Fresh Produce'], 'name' => 'Organic Honeycrisp Apples', 'qty' => 50.0, 'unit' => 'kg', 'storage' => 'ambient', 'perish' => true],
+            ['d' => $donationModels[0], 'loc' => $invLocationModels[1], 'cat' => $catModels['Fresh Produce'], 'name' => 'Fresh Kale & Spinach Bunches', 'qty' => 70.5, 'unit' => 'kg', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[1], 'loc' => $invLocationModels[3], 'cat' => $catModels['Bakery & Pastry'], 'name' => 'Artisan Sourdough Loaf', 'qty' => 45.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => true],
+            ['d' => $donationModels[2], 'loc' => $invLocationModels[3], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Tomato Soup Cans (400g)', 'qty' => 250.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => false],
+            ['d' => $donationModels[3], 'loc' => $invLocationModels[4], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Pasteurized Whole Milk Cartons', 'qty' => 80.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[4], 'loc' => $invLocationModels[4], 'cat' => $catModels['Prepared Meals'], 'name' => 'Roasted Chicken & Rice Trays', 'qty' => 20.0, 'unit' => 'boxes', 'storage' => 'frozen', 'perish' => true],
+            ['d' => $donationModels[5], 'loc' => $invLocationModels[6], 'cat' => $catModels['Seafood & Fish'], 'name' => 'Fresh Atlantic Salmon Fillets', 'qty' => 35.0, 'unit' => 'kg', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[6], 'loc' => $invLocationModels[6], 'cat' => $catModels['Beverages & Juices'], 'name' => 'Cold Pressed Orange Juice (1L)', 'qty' => 150.0, 'unit' => 'litres', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[7], 'loc' => $invLocationModels[5], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Oats & Cornflakes Cereal Packs', 'qty' => 90.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => false],
+            ['d' => $donationModels[8], 'loc' => $invLocationModels[5], 'cat' => $catModels['Baby Food & Formula'], 'name' => 'Infant Purée Banana Pouches', 'qty' => 110.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => false],
+            ['d' => $donationModels[9], 'loc' => $invLocationModels[1], 'cat' => $catModels['Frozen Foods'], 'name' => 'Frozen Sweet Corn & Green Peas', 'qty' => 60.0, 'unit' => 'kg', 'storage' => 'frozen', 'perish' => true],
+            ['d' => $donationModels[10], 'loc' => $invLocationModels[3], 'cat' => $catModels['Meat & Poultry'], 'name' => 'Roasted Chicken Meal Boxes', 'qty' => 30.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[11], 'loc' => $invLocationModels[2], 'cat' => $catModels['Beverages & Juices'], 'name' => 'Bottled Mineral Water Crates', 'qty' => 40.0, 'unit' => 'boxes', 'storage' => 'ambient', 'perish' => false],
+            ['d' => $donationModels[1], 'loc' => $invLocationModels[7], 'cat' => $catModels['Bakery & Pastry'], 'name' => 'French Baguettes Pack', 'qty' => 25.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => true],
+            ['d' => $donationModels[3], 'loc' => $invLocationModels[8], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Farm Fresh Eggs (30-egg Trays)', 'qty' => 15.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[2], 'loc' => $invLocationModels[9], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Black Beans Canned Packs', 'qty' => 100.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => false],
+        ];
+
+        $foodItemModels = [];
+        foreach ($foodItemsList as $fi) {
+            $foodItemModels[] = FoodItem::create([
+                'donation_id' => $fi['d']->id,
+                'inventory_location_id' => $fi['loc']->id,
+                'category_id' => $fi['cat']->id,
+                'name' => $fi['name'],
+                'description' => 'High quality food item inspected for safety compliance.',
+                'quantity' => $fi['qty'],
+                'unit' => $fi['unit'],
+                'expiry_date' => $fi['d']->expiry_date,
+                'storage_requirements' => $fi['storage'],
+                'is_perishable' => $fi['perish'],
+                'image_paths' => $fi['d']->image_paths
+            ]);
+        }
+
+        // ──────────────────────────────────────────────────────────
+        // 7. Allergen-FoodItem Pivot Relationships
+        // ──────────────────────────────────────────────────────────
+        $foodItemModels[0]->allergenTags()->sync([$tagModels['Gluten']->id]);
+        $foodItemModels[1]->allergenTags()->sync([$tagModels['Dairy']->id]);
+        $foodItemModels[2]->allergenTags()->sync([$tagModels['Gluten']->id]);
+        $foodItemModels[3]->allergenTags()->sync([$tagModels['Soy']->id]);
+        $foodItemModels[4]->allergenTags()->sync([$tagModels['Dairy']->id, $tagModels['Egg']->id]);
+        $foodItemModels[5]->allergenTags()->sync([$tagModels['Soy']->id, $tagModels['Gluten']->id]);
+        $foodItemModels[6]->allergenTags()->sync([$tagModels['Seafood']->id]);
+        $foodItemModels[7]->allergenTags()->sync([$tagModels['Sulfites']->id]);
+        $foodItemModels[8]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Contains Nuts']->id]);
+        $foodItemModels[9]->allergenTags()->sync([$tagModels['Soy']->id]);
+        $foodItemModels[10]->allergenTags()->sync([$tagModels['Gluten']->id]);
+        $foodItemModels[11]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Dairy']->id, $tagModels['Contains Nuts']->id]);
 
         // ──────────────────────────────────────────────────────────
         // 8. Claims (10 Records in Various Lifecycle States)
