@@ -55,11 +55,13 @@
                         <span class="fw-bold fs-5 text-info">{{ $sdgCo2eSavedTons }} Tons</span>
                     </div>
                 </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <!-- Interactive Analytics Visual Chart Card -->
-<div class="row g-3 mb-4 animate-slide-up">
+<div class="row g-3 mb-4 mt-2 animate-slide-up">
     <div class="col-md-7">
         <div class="card shadow-sm h-100">
             <div class="card-header d-flex justify-content-between align-items-center">
