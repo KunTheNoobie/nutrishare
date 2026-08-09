@@ -7,9 +7,14 @@
         <h2 style="font-weight: 600;" class="mb-1"><i class="bi bi-journal-text text-apple-accent"></i> System Activity Logs</h2>
         <p class="mb-0" style="color: var(--apple-text-muted);">Complete platform audit trail and security event logs.</p>
     </div>
-    <span class="badge border px-3 py-2" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.85rem; font-weight: 500;">
-        <i class="bi bi-shield-check me-1 text-apple-success"></i> Audit Active
-    </span>
+    <div class="d-flex gap-2 align-items-center">
+        <a href="{{ route('logs.export.csv') }}" class="btn btn-ns-accent btn-sm px-3 shadow-sm">
+            <i class="bi bi-download me-1"></i> Export Audit CSV
+        </a>
+        <span class="badge border px-3 py-2" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.85rem; font-weight: 500;">
+            <i class="bi bi-shield-check me-1 text-apple-success"></i> Audit Active
+        </span>
+    </div>
 </div>
 
 <!-- Search & Filter Controls -->

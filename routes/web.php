@@ -38,6 +38,9 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password', [\App\Http\Controllers\PasswordResetController::class, 'resetPassword'])->name('password.update');
 });
 
+// Presentation Demo Account Quick Switcher
+Route::get('/demo-login/{role}', [AuthController::class, 'demoLogin'])->name('demo.login');
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 // ── Authenticated Routes ──
@@ -75,6 +78,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/reports/{report}', [ReportController::class, 'destroy'])->name('reports.destroy');
 
         // ─── System Activity Logs (Admin/Moderator) ───
+        Route::get('/logs/export/csv', [\App\Http\Controllers\SystemLogController::class, 'exportCsv'])->name('logs.export.csv');
         Route::get('/logs', [\App\Http\Controllers\SystemLogController::class, 'index'])->name('logs.index');
         Route::get('/logs/{log}', [\App\Http\Controllers\SystemLogController::class, 'show'])->name('logs.show');
     });

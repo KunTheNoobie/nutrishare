@@ -91,4 +91,31 @@ class AuthController extends Controller
 
         return redirect()->route('home');
     }
+
+    /**
+     * Handle quick 1-click persona switching for live presentation demos.
+     */
+    public function demoLogin(string $role)
+    {
+        $emails = [
+            'admin' => 'admin@nutrishare.com',
+            'moderator' => 'moderator@nutrishare.com',
+            'ngo' => 'ngo@nutrishare.com',
+            'donor' => 'donor@nutrishare.com',
+        ];
+
+        if (!array_key_exists($role, $emails)) {
+            return redirect()->back()->with('error', 'Invalid demo persona requested.');
+        }
+
+        $user = \App\Models\User::where('email', $emails[$role])->first();
+        if (!$user) {
+            return redirect()->back()->with('error', 'Demo user account not found. Please run php artisan db:seed.');
+        }
+
+        Auth::login($user);
+        request()->session()->regenerate();
+
+        return redirect()->route('dashboard')->with('success', '🎭 Presentation Mode: Switched to ' . ucfirst($role) . ' account (' . $user->name . ')');
+    }
 }

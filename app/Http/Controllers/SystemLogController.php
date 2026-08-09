@@ -46,4 +46,39 @@ class SystemLogController extends Controller
         $log->load('user');
         return view('logs.show', compact('log'));
     }
+
+    /**
+     * Export system activity logs as CSV file.
+     */
+    public function exportCsv()
+    {
+        $logs = SystemLog::with('user')->latest()->get();
+        $filename = 'nutrishare_audit_logs_' . date('Ymd_His') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+        ];
+
+        $callback = function () use ($logs) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['ID', 'Timestamp', 'Level', 'User', 'Action', 'Description', 'IP Address', 'User Agent']);
+
+            foreach ($logs as $log) {
+                fputcsv($file, [
+                    $log->id,
+                    $log->created_at->format('Y-m-d H:i:s'),
+                    strtoupper($log->level),
+                    $log->user->name ?? 'System',
+                    $log->action,
+                    $log->description,
+                    $log->ip_address ?? '127.0.0.1',
+                    $log->user_agent ?? 'N/A',
+                ]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }
