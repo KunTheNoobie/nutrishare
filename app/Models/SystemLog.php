@@ -30,6 +30,21 @@ class SystemLog extends Model
     }
 
     /**
+     * Automatically capture IP address and User Agent when creating a log.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function ($log) {
+            if (empty($log->ip_address) && request()) {
+                $log->ip_address = request()->ip() ?: '127.0.0.1';
+            }
+            if (empty($log->user_agent) && request()) {
+                $log->user_agent = request()->userAgent() ?: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)';
+            }
+        });
+    }
+
+    /**
      * SECURITY (Module 4): Sanitize description to prevent log injection.
      * Strips CRLF characters (\r\n) before storing.
      */
