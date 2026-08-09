@@ -100,6 +100,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/claims/{claim}/distribution', [ClaimController::class, 'logDistribution'])->name('claims.distribution');
 
     // ─── Module 4: Inventory & Food Safety (Wong Men Jing) ───
+    Route::get('/inventory/export/csv', [InventoryController::class, 'exportCsv'])->name('inventory.export.csv');
     Route::resource('inventory', InventoryController::class)->parameters(['inventory' => 'inventoryLocation']);
     Route::post('/inventory/food-items', [InventoryController::class, 'addFoodItem'])->name('inventory.add-food-item');
     Route::get('/inventory/signed-link/{donation}', [InventoryController::class, 'generateSignedClaimLink'])->name('inventory.signed-link');

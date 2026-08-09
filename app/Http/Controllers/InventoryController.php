@@ -185,4 +185,46 @@ class InventoryController extends Controller
         return redirect()->route('claims.browse')
             ->with('success', "Signed claim link verified for donation #{$donationId}. Proceed to claim.");
     }
+
+    /**
+     * Export Inventory Facilities as CSV file.
+     */
+    public function exportCsv()
+    {
+        if (Auth::user()->isAdmin() || Auth::user()->isModerator()) {
+            $locations = InventoryLocation::with(['user', 'foodItems'])->get();
+        } else {
+            $locations = Auth::user()->inventoryLocations()->with('foodItems')->get();
+        }
+
+        $filename = 'nutrishare_inventory_report_' . date('Ymd_His') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+        ];
+
+        $callback = function () use ($locations) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['ID', 'Facility Name', 'Address', 'Storage Type', 'Managing Organization', 'Stored Items Count', 'Occupancy (kg)', 'Capacity (kg)', 'Utilization %']);
+
+            foreach ($locations as $loc) {
+                $util = $loc->capacity > 0 ? round(($loc->current_occupancy / $loc->capacity) * 100, 1) . '%' : '0%';
+                fputcsv($file, [
+                    $loc->id,
+                    $loc->name,
+                    $loc->address,
+                    strtoupper($loc->storage_type),
+                    $loc->user->organization_name ?? $loc->user->name,
+                    $loc->foodItems->count(),
+                    $loc->current_occupancy,
+                    $loc->capacity,
+                    $util,
+                ]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }
