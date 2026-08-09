@@ -47,6 +47,20 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 
 ---
 
+## 🔑 Creating Admin & Moderator Accounts
+
+You can create administrative accounts at any time via the custom NutriShare Artisan CLI command:
+
+```bash
+# Create System Admin Account
+php artisan nutrishare:create-admin --name="Admin Name" --email="admin@example.com" --password="Password1!" --role=admin
+
+# Create Platform Moderator Account
+php artisan nutrishare:create-admin --name="Mod Name" --email="mod@example.com" --password="Password1!" --role=moderator
+```
+
+---
+
 ## 🏗️ Software Architecture & Design Patterns
 
 ### 1. Factory Method Pattern (Module 2 — User Creation)
@@ -86,36 +100,38 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 
 ---
 
-## 🗄️ Database Architecture (26 Tables Coverage)
+## 🗄️ Database Architecture (All 26 Tables Breakdown)
 
-The database consists of **18 Application Feature Tables** (100% populated with 10+ records each) and **8 Framework System Tables**:
+The database consists of **18 Application Feature Tables** (10+ records each) and **8 Framework Infrastructure Tables**:
 
-### Application Tables (10+ Records Each)
-1. `users` (12 records) — Core user accounts across all 4 roles.
-2. `donations` (12 records) — Surplus food donation listings.
-3. `food_items` (12 records) — Detailed food items linked to donations.
-4. `categories` (10 records) — Food classification categories.
-5. `allergen_tags` (10 records) — Food safety allergen tags.
-6. `allergen_tag_food_item` (17 records) — Pivot table connecting food items to allergens.
-7. `inventory_locations` (10 records) — NGO storage facilities.
-8. `claims` (10 records) — Claim lifecycle records.
-9. `vehicles` (10 records) — Pickup logistics vehicles & drivers.
-10. `collection_receipts` (10 records) — Digital pickup receipts.
-11. `distribution_logs` (10 records) — SDG 2 Zero Hunger impact logs.
-12. `verification_documents` (10 records) — NGO compliance documents.
-13. `reviews` (10 records) — Peer trust ratings and feedback.
-14. `reports` (10 records) — Platform analytics & SDG impact reports.
-15. `notification_templates` (10 records) — System alert templates.
-16. `notifications` (48 records) — Dispatched user alerts.
-17. `system_logs` (24 records) — Audit logs with IP Address & User Agent.
-18. `password_reset_otps` (10 records) — 6-digit OTP security tokens.
-
-### Framework System Tables
-19. `sessions` — Browser session management.
-20. `cache` & 21. `cache_locks` — Performance query cache.
-22. `jobs`, 23. `job_batches`, & 24. `failed_jobs` — Background queue engine.
-25. `migrations` — Schema versioning.
-26. `password_reset_tokens` — Legacy token storage.
+| # | Database Table Name | Category | Record Count | Description |
+|---|---|---|:---:|---|
+| 1 | `users` | Application | 12 | System Admins, Moderators, NGOs, Donors |
+| 2 | `donations` | Application | 12 | Surplus food donation listings |
+| 3 | `food_items` | Application | 12 | Individual food items with photos & expiry |
+| 4 | `categories` | Application | 10 | Food categories (Produce, Bakery, Dairy, etc.) |
+| 5 | `allergen_tags` | Application | 10 | Allergen safety tags (Gluten, Dairy, Nuts, etc.) |
+| 6 | `allergen_tag_food_item` | Application | 17 | Pivot table linking food items to allergens |
+| 7 | `inventory_locations` | Application | 10 | NGO storage facilities (dry, cold, freezer) |
+| 8 | `claims` | Application | 10 | NGO claim requests across state lifecycles |
+| 9 | `vehicles` | Application | 10 | Logistics vehicles & driver dispatch details |
+| 10 | `collection_receipts` | Application | 10 | Digital pickup receipts with driver notes |
+| 11 | `distribution_logs` | Application | 10 | SDG 2 Zero Hunger impact tracking logs |
+| 12 | `verification_documents` | Application | 10 | NGO registration certs & compliance licenses |
+| 13 | `reviews` | Application | 10 | Peer trust ratings (1-5 stars) & reviews |
+| 14 | `reports` | Application | 10 | Platform analytics & SDG impact reports |
+| 15 | `notification_templates` | Application | 10 | Predefined alert templates |
+| 16 | `notifications` | Application | 48 | Dispatched system & email user alerts |
+| 17 | `system_logs` | Application | 24 | Audit trail logs with IP & User Agent |
+| 18 | `password_reset_otps` | Application | 10 | 6-digit OTP security reset tokens |
+| 19 | `sessions` | Framework | Active | Managed automatically by Laravel session driver |
+| 20 | `cache` | Framework | System | Framework database query cache |
+| 21 | `cache_locks` | Framework | System | Atomic lock manager for cache |
+| 22 | `jobs` | Framework | System | Background task queue queue worker table |
+| 23 | `job_batches` | Framework | System | Batch job processing queue manager |
+| 24 | `failed_jobs` | Framework | System | Failed background queue logger |
+| 25 | `migrations` | Framework | 26 | Database schema migration tracking history |
+| 26 | `password_reset_tokens` | Framework | System | Legacy auth token table |
 
 ---
 
@@ -134,27 +150,21 @@ All accounts use password: **`Password1!`**
 
 ---
 
-## ⚙️ Quickstart & Local Setup Guide
+## ⚙️ Quickstart Guide
 
-1. **Clone & Install Dependencies:**
+1. **Clone & Install:**
    ```bash
    git clone https://github.com/KunTheNoobie/nutrishare.git
    cd nutrishare
    composer install
    ```
 
-2. **Configure Environment:**
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
-
-3. **Wipe & Seed God Tier Database:**
+2. **Wipe & Seed God Tier Database:**
    ```bash
    php artisan migrate:fresh --seed
    ```
 
-4. **Start Application Server:**
+3. **Start Application Server:**
    ```bash
    php artisan serve
    ```
