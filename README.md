@@ -35,7 +35,7 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 - **📊 Interactive Chart.js Analytics Graphs:** Real-time **Food Rescue Category Bar Chart** & **Claim Status Ratio Doughnut Chart** rendered automatically on the Dashboard (`/dashboard`).
 - **🌍 Role-Specific UN SDG 2 Impact Tracker:** Live metrics detailing **Food Rescued (kg)**, **Beneficiaries Fed (People)**, and **CO₂e Environmental Savings (Tons)** personalized for Donors, NGOs, and Admins.
 - **🎭 1-Click Presentation Demo Switcher:** Top navbar dropdown & login page buttons to switch between **Admin**, **Moderator**, **NGO**, and **Donor** in 1 second during live demos (`/demo-login/{role}`).
-- **📥 CSV Data Exporters:** Download CSV audit files from `/logs/export/csv` and inventory storage reports from `/inventory/export/csv`.
+- **📥 CSV Data Exporters:** Download CSV files for Donations Catalog (`/donations/export/csv`), System Audit Logs (`/logs/export/csv`), and Inventory Storage Facilities (`/inventory/export/csv`).
 - **🖨️ Printable Collection Receipts:** One-click receipt print preview layout for physical driver sign-off.
 
 ---

@@ -10,11 +10,16 @@
         </h2>
         <p class="mb-0" style="color: var(--apple-text-muted);">Browse, track, and manage food donation listings on NutriShare.</p>
     </div>
-    @if(Auth::user()->isDonor() || Auth::user()->isAdmin() || Auth::user()->isModerator())
-    <a href="{{ route('donations.create') }}" class="btn btn-ns-primary">
-        <i class="bi bi-plus-circle"></i> Publish Donation
-    </a>
-    @endif
+    <div class="d-flex gap-2">
+        <a href="{{ route('donations.export.csv') }}" class="btn btn-ns-accent">
+            <i class="bi bi-download me-1"></i> Export Catalog CSV
+        </a>
+        @if(Auth::user()->isDonor() || Auth::user()->isAdmin() || Auth::user()->isModerator())
+        <a href="{{ route('donations.create') }}" class="btn btn-ns-primary">
+            <i class="bi bi-plus-circle"></i> Publish Donation
+        </a>
+        @endif
+    </div>
 </div>
 
 <!-- Search & Filter Bar -->

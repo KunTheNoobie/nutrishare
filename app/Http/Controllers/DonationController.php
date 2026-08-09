@@ -182,4 +182,47 @@ class DonationController extends Controller
         return redirect()->route('donations.index')
             ->with('success', 'Donation deleted successfully.');
     }
+
+    /**
+     * Export surplus food donations catalog as CSV file.
+     */
+    public function exportCsv()
+    {
+        if (Auth::user()->isDonor()) {
+            $donations = Donation::with('donor')->where('user_id', Auth::id())->latest()->get();
+        } else {
+            $donations = Donation::with('donor')->latest()->get();
+        }
+
+        $filename = 'nutrishare_donations_catalog_' . date('Ymd_His') . '.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+        ];
+
+        $callback = function () use ($donations) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, ['ID', 'Title', 'Donor Organization', 'Quantity', 'Unit', 'Pickup Address', 'Latitude', 'Longitude', 'Expiry Date', 'Status', 'Published Date']);
+
+            foreach ($donations as $donation) {
+                fputcsv($file, [
+                    $donation->id,
+                    $donation->title,
+                    $donation->donor->organization_name ?? $donation->donor->name,
+                    $donation->quantity,
+                    $donation->unit,
+                    $donation->pickup_address,
+                    $donation->latitude ?? 'N/A',
+                    $donation->longitude ?? 'N/A',
+                    $donation->expiry_date?->format('Y-m-d H:i') ?? 'N/A',
+                    strtoupper($donation->status),
+                    $donation->created_at->format('Y-m-d H:i'),
+                ]);
+            }
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 }

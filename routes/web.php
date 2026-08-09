@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/read-all', [\App\Http\Controllers\NotificationController::class, 'markAllAsRead'])->name('notifications.read-all');
 
     // ─── Module 1: Donation Management (Liew Yi Ler) ───
+    Route::get('/donations/export/csv', [DonationController::class, 'exportCsv'])->name('donations.export.csv');
     Route::resource('donations', DonationController::class);
 
     // ─── Module 2: NGO Verification & Trust (Cheon Jie Han) ───
