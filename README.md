@@ -51,9 +51,10 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 | **Collect Claims & Log SDG Impact** | ✅ | ✅ | ❌ | ✅ (Own) |
 | **Delete Claims** | ✅ | ❌ | ❌ | ✅ (Pending) |
 | **Manage Inventory & Storage Facilities** | ✅ | ✅ | ❌ | ✅ (Own) |
+| **Export CSV Data (Donations / Inventory)** | ✅ | ✅ | ✅ (Own Catalog) | ✅ (Own Inventory) |
 | **Review NGO Verification Docs** | ✅ | ✅ | ❌ | Upload Only |
 | **Generate Platform Analytics Reports** | ✅ | ✅ | ❌ | ❌ |
-| **View Audit Trail & System Activity Logs** | ✅ | ✅ | ❌ | ❌ |
+| **View Audit Trail & Export Security Logs CSV** | ✅ | ✅ | ❌ | ❌ |
 
 ---
 
