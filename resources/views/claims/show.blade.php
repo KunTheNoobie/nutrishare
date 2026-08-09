@@ -120,16 +120,33 @@
 
         <!-- Collection Receipt -->
         @if($claim->collectionReceipt)
-        <div class="card mb-4">
-            <div class="card-header"><i class="bi bi-receipt"></i> Collection Receipt</div>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-receipt text-apple-accent me-1"></i> Digital Collection Receipt</span>
+                <button onclick="window.print()" class="btn btn-sm btn-outline-success">
+                    <i class="bi bi-printer me-1"></i> Print Receipt
+                </button>
+            </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4"><strong>Receipt #:</strong> {{ $claim->collectionReceipt->receipt_number }}</div>
-                    <div class="col-md-4"><strong>Collected:</strong> {{ $claim->collectionReceipt->quantity_collected }} {{ $claim->collectionReceipt->unit }}</div>
-                    <div class="col-md-4"><strong>By:</strong> {{ $claim->collectionReceipt->collected_by }}</div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">Receipt Number</small>
+                        <span class="fw-bold font-monospace text-apple-accent" style="font-size: 1.05rem;">{{ $claim->collectionReceipt->receipt_number }}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">Quantity Collected</small>
+                        <span class="fw-bold" style="color: var(--apple-text);">{{ $claim->collectionReceipt->quantity_collected }} {{ $claim->collectionReceipt->unit }}</span>
+                    </div>
+                    <div class="col-md-4">
+                        <small class="text-muted d-block">Collected By</small>
+                        <span class="fw-bold" style="color: var(--apple-text);">{{ $claim->collectionReceipt->collected_by }}</span>
+                    </div>
                 </div>
                 @if($claim->collectionReceipt->condition_notes)
-                <p class="mt-2"><strong>Condition:</strong> {{ $claim->collectionReceipt->condition_notes }}</p>
+                <div class="mt-3 p-2 rounded bg-opacity-10 border" style="background-color: var(--apple-input-bg); border-color: var(--apple-border) !important;">
+                    <small class="text-muted d-block fw-semibold">Quality Inspection Notes:</small>
+                    <span class="small" style="color: var(--apple-text);">{{ $claim->collectionReceipt->condition_notes }}</span>
+                </div>
                 @endif
             </div>
         </div>
