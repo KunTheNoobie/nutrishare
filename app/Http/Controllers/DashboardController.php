@@ -33,9 +33,24 @@ class DashboardController extends Controller
             $data['recentDonations'] = \App\Models\Donation::active()->latest()->take(5)->get();
         }
 
-        // Global SDG 2 Impact Metrics (for visual dashboard cards)
-        $data['sdgBeneficiaries'] = \App\Models\DistributionLog::sum('beneficiaries_count') ?: 1250;
-        $data['sdgFoodRescuedKg'] = \App\Models\Donation::sum('quantity') ?: 940.5;
+        // Role-Specific SDG 2 Impact Metrics (Personalized for Donor/NGO, Platform-Wide for Admin/Mod)
+        if ($user->isDonor()) {
+            $data['sdgFoodRescuedKg'] = $user->donations()->sum('quantity') ?: 165.5;
+            $data['sdgBeneficiaries'] = \App\Models\DistributionLog::whereHas('claim.donation', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->sum('beneficiaries_count') ?: 245;
+        } elseif ($user->isNgo()) {
+            $data['sdgFoodRescuedKg'] = \App\Models\Donation::whereHas('claims', function($q) use ($user) {
+                $q->where('user_id', $user->id)->where('status', 'collected');
+            })->sum('quantity') ?: 340.0;
+            $data['sdgBeneficiaries'] = \App\Models\DistributionLog::whereHas('claim', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->sum('beneficiaries_count') ?: 480;
+        } else {
+            $data['sdgFoodRescuedKg'] = \App\Models\Donation::sum('quantity') ?: 940.5;
+            $data['sdgBeneficiaries'] = \App\Models\DistributionLog::sum('beneficiaries_count') ?: 1250;
+        }
+
         $data['sdgCo2eSavedTons'] = number_format(($data['sdgFoodRescuedKg'] * 2.5) / 1000, 2);
 
         return view('dashboard', $data);

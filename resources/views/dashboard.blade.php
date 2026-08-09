@@ -29,7 +29,15 @@
                 </div>
                 <div>
                     <h6 class="mb-0 fw-bold" style="color: var(--apple-text);">UN SDG 2 Impact Tracker</h6>
-                    <small class="text-muted">Zero Hunger & Food Rescue Metrics</small>
+                    <small class="text-muted">
+                        @if($user->isDonor())
+                            Your Organization's Contribution
+                        @elseif($user->isNgo())
+                            Your Community Distribution & Rescue Impact
+                        @else
+                            Platform-Wide Zero Hunger & Food Rescue Metrics
+                        @endif
+                    </small>
                 </div>
             </div>
             <div class="col-md-8">
