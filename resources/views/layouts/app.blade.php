@@ -753,7 +753,7 @@
                             <li class="dropdown-header text-uppercase px-3" style="font-size: 0.65rem; font-weight: 700; color: var(--apple-text-muted);">🎭 Demo Switcher</li>
                             <li><a class="dropdown-item small" href="{{ route('demo.login', 'admin') }}" style="color: var(--apple-text);"><i class="bi bi-shield-lock text-apple-danger me-2"></i> Admin (System Admin)</a></li>
                             <li><a class="dropdown-item small" href="{{ route('demo.login', 'moderator') }}" style="color: var(--apple-text);"><i class="bi bi-shield-check text-info me-2"></i> Moderator (Compliance)</a></li>
-                            <li><a class="dropdown-item small" href="{{ route('demo.login', 'ngo') }}" style="color: var(--apple-text);"><i class="bi bi-building-heart text-apple-success me-2"></i> NGO (Food Rescue)</a></li>
+                            <li><a class="dropdown-item small" href="{{ route('demo.login', 'ngo') }}" style="color: var(--apple-text);"><i class="bi bi-box2-heart text-apple-success me-2"></i> NGO (Food Rescue)</a></li>
                             <li><a class="dropdown-item small" href="{{ route('demo.login', 'donor') }}" style="color: var(--apple-text);"><i class="bi bi-shop text-apple-accent me-2"></i> Donor (Sunway Grocer)</a></li>
                             <li><hr class="dropdown-divider border-dark"></li>
                             <li>

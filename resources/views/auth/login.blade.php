@@ -65,7 +65,7 @@
                             <i class="bi bi-shield-check"></i> Moderator
                         </a>
                         <a href="{{ route('demo.login', 'ngo') }}" class="btn btn-outline-success btn-sm py-1 px-2" style="font-size: 0.75rem !important;">
-                            <i class="bi bi-building-heart"></i> NGO
+                            <i class="bi bi-box2-heart"></i> NGO
                         </a>
                         <a href="{{ route('demo.login', 'donor') }}" class="btn btn-outline-primary btn-sm py-1 px-2" style="font-size: 0.75rem !important;">
                             <i class="bi bi-shop"></i> Donor
