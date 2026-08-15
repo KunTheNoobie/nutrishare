@@ -82,6 +82,18 @@ php artisan nutrishare:health-check
 
 ---
 
+## 🧪 Automated Testing Suite (54 Assertions)
+
+Run the full end-to-end automated test suite across all 4 modules, RBAC gates, and CSV exporters:
+
+```bash
+php artisan test
+```
+
+> **Note:** Tests automatically execute on a dedicated, isolated test database (`nutrishare_testing`) configured in `phpunit.xml`. Running tests will **never wipe or overwrite** your primary presentation demo database (`nutrishare`).
+
+---
+
 ## 🏗️ Software Architecture & Design Patterns
 
 ### 1. Factory Method Pattern (Module 2 — User Creation)
