@@ -180,4 +180,105 @@ class NutriShareComprehensiveSystemTest extends TestCase
         $response = $this->actingAs($this->moderator)->delete(route('donations.destroy', $donation));
         $response->assertStatus(403);
     }
+
+    public function test_form_request_vehicle_assignment_validation(): void
+    {
+        $donation = Donation::create([
+            'user_id' => $this->donor->id,
+            'title' => 'Fresh Bread Loaves',
+            'description' => 'Wholemeal bread surplus',
+            'quantity' => 10,
+            'unit' => 'boxes',
+            'pickup_address' => 'Subang Jaya',
+            'expiry_date' => now()->addDays(2),
+            'status' => 'claimed',
+        ]);
+
+        $claim = Claim::create([
+            'user_id' => $this->ngo->id,
+            'donation_id' => $donation->id,
+            'justification' => 'Food distribution for shelter',
+            'pickup_scheduled_at' => now()->addDay(),
+            'status' => 'approved',
+        ]);
+
+        // Assign vehicle with invalid short phone number should fail form validation
+        $response = $this->actingAs($this->ngo)->post(route('claims.vehicle', $claim), [
+            'plate_number' => 'W1234A',
+            'vehicle_type' => 'van',
+            'driver_name' => 'John Driver',
+            'driver_phone' => '123', // Invalid short phone number
+        ]);
+
+        $response->assertSessionHasErrors('driver_phone');
+
+        // Valid vehicle assignment
+        $validResponse = $this->actingAs($this->ngo)->post(route('claims.vehicle', $claim), [
+            'plate_number' => 'W1234A',
+            'vehicle_type' => 'van',
+            'driver_name' => 'John Driver',
+            'driver_phone' => '012-3456789',
+        ]);
+
+        $validResponse->assertRedirect(route('claims.show', $claim));
+        $this->assertDatabaseHas('vehicles', [
+            'claim_id' => $claim->id,
+            'plate_number' => 'W1234A',
+        ]);
+    }
+
+    public function test_inventory_web_service_status_and_food_safety(): void
+    {
+        $location = InventoryLocation::create([
+            'user_id' => $this->ngo->id,
+            'name' => 'Petaling Jaya Cold Warehouse',
+            'address' => 'SS2 Petaling Jaya',
+            'storage_type' => 'cold',
+            'capacity' => 800,
+            'current_occupancy' => 150,
+        ]);
+
+        $item = \App\Models\FoodItem::create([
+            'user_id' => $this->ngo->id,
+            'name' => 'Pasteurized Fresh Milk',
+            'quantity' => 50,
+            'unit' => 'litres',
+            'expiry_date' => now()->addDays(5),
+            'inventory_location_id' => $location->id,
+        ]);
+
+        // Test GET /api/inventory/status (IFA standard)
+        $statusResponse = $this->getJson(route('api.inventory.status') . '?requestID=REQ-INV-001&timestamp=' . now()->toIso8601String());
+        $statusResponse->assertStatus(200);
+        $statusResponse->assertJsonPath('status', 'S');
+        $statusResponse->assertJsonPath('data.requestID', 'REQ-INV-001');
+
+        // Test POST /api/inventory/food-safety-check (IFA standard)
+        $safetyResponse = $this->postJson(route('api.inventory.safety-check'), [
+            'requestID' => 'REQ-SAFE-002',
+            'timestamp' => now()->toIso8601String(),
+            'food_item_id' => $item->id,
+        ]);
+
+        $safetyResponse->assertStatus(200);
+        $safetyResponse->assertJsonPath('status', 'S');
+        $safetyResponse->assertJsonPath('data.food_item.safety_status', 'SAFE');
+    }
+
+    public function test_inventory_location_store_form_request(): void
+    {
+        $response = $this->actingAs($this->ngo)->post(route('inventory.store'), [
+            'name' => 'Klang Ambient Facility',
+            'address' => 'Port Klang Warehouse Zone',
+            'storage_type' => 'ambient',
+            'capacity' => 1200,
+        ]);
+
+        $response->assertRedirect(route('inventory.index'));
+        $this->assertDatabaseHas('inventory_locations', [
+            'name' => 'Klang Ambient Facility',
+            'storage_type' => 'ambient',
+        ]);
+    }
 }
+

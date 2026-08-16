@@ -1,5 +1,26 @@
-@extends('layouts.app')
-@section('title', 'Claim Details')
+@push('styles')
+<style>
+@media print {
+    .demo-switcher-bar, .navbar, footer, .col-lg-5, .btn, .alert, .carousel-control-prev, .carousel-control-next {
+        display: none !important;
+    }
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    .col-lg-7 {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    .card {
+        border: 2px solid #000000 !important;
+        box-shadow: none !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+}
+</style>
+@endpush
 
 @section('content')
 <div class="row g-4">

@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 
+/**
+ * ProfileController — Module 2: User Profile & Security Settings (Cheon Jie Han)
+ */
 class ProfileController extends Controller
 {
     public function edit()
@@ -16,26 +20,10 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function update(Request $request)
+    public function update(UpdateProfileRequest $request)
     {
         $user = auth()->user();
-
-        $rules = [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'phone' => ['required', 'string', 'min:9', 'max:20', 'regex:/^(\+?[\d\s\-\(\)]){9,20}$/'],
-            'notification_preference' => ['required', Rule::in(['email', 'sms', 'both'])],
-            'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:5120'], // 5MB max
-        ];
-
-        if ($user->isNgo()) {
-            $rules['organization_name'] = ['required', 'string', 'max:255'];
-        }
-
-        $validated = $request->validate($rules, [
-            'phone.min' => 'Please enter a valid phone number (at least 9 digits, e.g. 012-3456789 or +60123456789).',
-            'phone.regex' => 'Please enter a valid phone number (at least 9 digits, e.g. 012-3456789 or +60123456789).',
-        ]);
+        $validated = $request->validated();
 
         if ($request->hasFile('photo')) {
             if ($user->profile_photo_path) {
@@ -64,12 +52,9 @@ class ProfileController extends Controller
         return back()->with('success', 'Profile photo removed.');
     }
 
-    public function updatePassword(Request $request)
+    public function updatePassword(UpdatePasswordRequest $request)
     {
-        $validated = $request->validateWithBag('updatePassword', [
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        $validated = $request->validated();
 
         auth()->user()->update([
             'password' => Hash::make($validated['password']),

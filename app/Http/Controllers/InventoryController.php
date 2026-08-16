@@ -7,6 +7,7 @@ use App\Models\FoodItem;
 use App\Models\Category;
 use App\Models\AllergenTag;
 use App\Http\Requests\StoreFoodItemRequest;
+use App\Http\Requests\StoreInventoryLocationRequest;
 use App\Helpers\SecurityHelper;
 use App\Strategies\Notification\NotificationDispatcher;
 use Illuminate\Http\Request;
@@ -54,19 +55,9 @@ class InventoryController extends Controller
     }
 
     /** Store a new inventory location. */
-    public function store(Request $request)
+    public function store(StoreInventoryLocationRequest $request)
     {
-        if (!Auth::user()->isNgo() && !Auth::user()->isAdmin() && !Auth::user()->isModerator()) {
-            abort(403, 'Unauthorized. Inventory locations can only be registered by NGOs, Admins, and Moderators.');
-        }
-
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'address' => 'required|string|max:500',
-            'storage_type' => 'required|in:cold,dry,frozen,ambient',
-            'capacity' => 'required|numeric|min:0.01',
-        ]);
-
+        $validated = $request->validated();
         $validated['user_id'] = Auth::id();
 
         // SECURITY (Module 4): Log injection prevention via sanitized SystemLog
@@ -182,7 +173,7 @@ class InventoryController extends Controller
         // Laravel validates the signature automatically via 'signed' middleware
         // If the URL was tampered with, it returns 403 Forbidden
 
-        return redirect()->route('claims.browse')
+        return redirect()->route('donations.show', $donationId)
             ->with('success', "Signed claim link verified for donation #{$donationId}. Proceed to claim.");
     }
 

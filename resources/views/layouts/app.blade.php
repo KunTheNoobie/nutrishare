@@ -18,10 +18,12 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // Apply saved theme immediately before render to prevent flicker
+        // Apply saved theme and demo mode immediately before render to prevent flicker
         (function() {
             const saved = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', saved);
+            const savedDemo = localStorage.getItem('demo_mode') || 'on';
+            document.documentElement.setAttribute('data-demo-mode', savedDemo);
         })();
     </script>
 
@@ -634,8 +636,16 @@
         [data-theme="light"] .datatable-table > tbody > tr > td { color: #1d1d1f !important; }
         [data-theme="light"] .datatable-input,
         [data-theme="light"] .datatable-selector { background: #ffffff !important; color: #1d1d1f !important; border-color: #e5e5ea !important; }
+
+        /* Global Demo Mode Visibility Controls */
+        [data-demo-mode="off"] .demo-mode-only {
+            display: none !important;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet.js Maps CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nXC0jkQKBWGqcRR-ntRlCFZ0bZDybRe63mzfaWuaCF4=" crossorigin=""></script>
     @stack('styles')
 </head>
 <body>
@@ -680,6 +690,13 @@
                 @endauth
             </ul>
             <ul class="navbar-nav align-items-center gap-2">
+                <!-- Master Demo Mode ON/OFF Toggle Button -->
+                <li class="nav-item me-1">
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2.5 d-inline-flex align-items-center gap-1.5" id="masterDemoToggleBtn" title="Toggle Master Demo Mode ON/OFF" onclick="toggleMasterDemoMode()" style="height: 36px; border: 1px solid var(--apple-border); font-size: 0.78rem;">
+                        <i id="demoToggleIcon" class="bi bi-display text-warning"></i>
+                        <span id="demoToggleText" class="fw-semibold">Demo: ON</span>
+                    </button>
+                </li>
                 <li class="nav-item me-1">
                     <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center p-0" id="themeToggleBtn" title="Toggle Light / Dark Mode" onclick="toggleTheme()" style="width: 36px; height: 36px; border: 1px solid var(--apple-border);">
                         <i id="themeIcon" class="bi bi-moon-stars-fill text-info" style="font-size: 1.05rem; line-height: 1;"></i>
@@ -749,13 +766,13 @@
                         <ul class="dropdown-menu dropdown-menu-end border-dark shadow" style="background-color: var(--apple-surface);">
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}" style="color: var(--apple-text);"><i class="bi bi-speedometer2 text-muted me-2"></i> Dashboard</a></li>
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}" style="color: var(--apple-text);"><i class="bi bi-person-gear text-muted me-2"></i> Profile Settings</a></li>
-                            <li><hr class="dropdown-divider border-dark"></li>
-                            <li class="dropdown-header text-uppercase px-3" style="font-size: 0.65rem; font-weight: 700; color: var(--apple-text-muted);">🎭 Demo Switcher</li>
-                            <li><a class="dropdown-item small" href="{{ route('demo.login', 'admin') }}" style="color: var(--apple-text);"><i class="bi bi-shield-lock text-apple-danger me-2"></i> Admin (System Admin)</a></li>
-                            <li><a class="dropdown-item small" href="{{ route('demo.login', 'moderator') }}" style="color: var(--apple-text);"><i class="bi bi-shield-check text-info me-2"></i> Moderator (Compliance)</a></li>
-                            <li><a class="dropdown-item small" href="{{ route('demo.login', 'ngo') }}" style="color: var(--apple-text);"><i class="bi bi-box2-heart text-apple-success me-2"></i> NGO (Food Rescue)</a></li>
-                            <li><a class="dropdown-item small" href="{{ route('demo.login', 'donor') }}" style="color: var(--apple-text);"><i class="bi bi-shop text-apple-accent me-2"></i> Donor (Sunway Grocer)</a></li>
-                            <li><hr class="dropdown-divider border-dark"></li>
+                            <li class="demo-mode-only"><hr class="dropdown-divider border-dark"></li>
+                            <li class="dropdown-header text-uppercase px-3 demo-mode-only" style="font-size: 0.65rem; font-weight: 700; color: var(--apple-text-muted);">🎭 Demo Switcher</li>
+                            <li class="demo-mode-only"><a class="dropdown-item small" href="{{ route('demo.login', 'admin') }}" style="color: var(--apple-text);"><i class="bi bi-shield-lock text-apple-danger me-2"></i> Admin (System Admin)</a></li>
+                            <li class="demo-mode-only"><a class="dropdown-item small" href="{{ route('demo.login', 'moderator') }}" style="color: var(--apple-text);"><i class="bi bi-shield-check text-info me-2"></i> Moderator (Compliance)</a></li>
+                            <li class="demo-mode-only"><a class="dropdown-item small" href="{{ route('demo.login', 'ngo') }}" style="color: var(--apple-text);"><i class="bi bi-box2-heart text-apple-success me-2"></i> NGO (Food Rescue)</a></li>
+                            <li class="demo-mode-only"><a class="dropdown-item small" href="{{ route('demo.login', 'donor') }}" style="color: var(--apple-text);"><i class="bi bi-shop text-apple-accent me-2"></i> Donor (Sunway Grocer)</a></li>
+                            <li class="demo-mode-only"><hr class="dropdown-divider border-dark"></li>
                             <li>
                                 {{-- SECURITY (Module 3): CSRF token on logout form --}}
                                 <form method="POST" action="{{ route('logout') }}">
@@ -832,10 +849,47 @@ function updateThemeIcon(theme) {
     }
 }
 
-// Update icon on page load
+// Master Demo Mode Toggle Controller
+function toggleMasterDemoMode() {
+    const current = localStorage.getItem('demo_mode') || 'on';
+    const next = current === 'on' ? 'off' : 'on';
+    localStorage.setItem('demo_mode', next);
+    document.documentElement.setAttribute('data-demo-mode', next);
+    updateDemoToggleUI(next);
+}
+
+function updateDemoToggleUI(mode) {
+    const bar = document.getElementById('demoSwitcherBar');
+    const text = document.getElementById('demoToggleText');
+    const icon = document.getElementById('demoToggleIcon');
+    const btn = document.getElementById('masterDemoToggleBtn');
+    
+    if (bar) {
+        bar.style.display = mode === 'off' ? 'none' : 'block';
+    }
+    if (text) {
+        text.innerText = mode === 'off' ? 'Demo: OFF' : 'Demo: ON';
+    }
+    if (icon) {
+        icon.className = mode === 'off' ? 'bi bi-display-slash text-muted' : 'bi bi-display text-warning';
+    }
+    if (btn) {
+        if (mode === 'off') {
+            btn.classList.replace('btn-outline-secondary', 'btn-outline-danger');
+        } else {
+            btn.classList.replace('btn-outline-danger', 'btn-outline-secondary');
+        }
+    }
+}
+
+// Update theme & master demo mode on page load
 document.addEventListener('DOMContentLoaded', function() {
-    const saved = localStorage.getItem('theme') || 'dark';
-    updateThemeIcon(saved);
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    updateThemeIcon(savedTheme);
+
+    const savedDemoMode = localStorage.getItem('demo_mode') || 'on';
+    document.documentElement.setAttribute('data-demo-mode', savedDemoMode);
+    updateDemoToggleUI(savedDemoMode);
 });
 
 // Password field toggle

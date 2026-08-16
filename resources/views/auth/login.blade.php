@@ -55,7 +55,7 @@
                 </div>
 
                 <!-- Presentation Quick Login Buttons -->
-                <div class="pt-3 border-top text-center" style="border-color: var(--apple-border) !important;">
+                <div class="pt-3 border-top text-center demo-mode-only" style="border-color: var(--apple-border) !important;">
                     <small class="text-muted d-block mb-2 fw-semibold" style="font-size: 0.75rem; letter-spacing: 0.5px;">🎭 PRESENTATION QUICK DEMO LOGIN</small>
                     <div class="d-flex flex-wrap justify-content-center gap-1">
                         <a href="{{ route('demo.login', 'admin') }}" class="btn btn-outline-danger btn-sm py-1 px-2" style="font-size: 0.75rem !important;">

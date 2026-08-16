@@ -26,16 +26,16 @@ Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:6,1');
 
-    // Password Reset Routes (OTP-based)
+    // Password Reset Routes (OTP-based) — SECURITY: Throttle:6,1 prevents brute-forcing 6-digit OTP codes
     Route::get('/forgot-password', [\App\Http\Controllers\PasswordResetController::class, 'requestForm'])->name('password.request');
-    Route::post('/forgot-password', [\App\Http\Controllers\PasswordResetController::class, 'sendOtp'])->name('password.email');
+    Route::post('/forgot-password', [\App\Http\Controllers\PasswordResetController::class, 'sendOtp'])->name('password.email')->middleware('throttle:6,1');
     Route::get('/forgot-password/otp', [\App\Http\Controllers\PasswordResetController::class, 'otpForm'])->name('password.otp.form');
-    Route::post('/forgot-password/otp/verify', [\App\Http\Controllers\PasswordResetController::class, 'verifyOtp'])->name('password.otp.verify');
-    Route::post('/forgot-password/otp/resend', [\App\Http\Controllers\PasswordResetController::class, 'resendOtp'])->name('password.otp.resend');
+    Route::post('/forgot-password/otp/verify', [\App\Http\Controllers\PasswordResetController::class, 'verifyOtp'])->name('password.otp.verify')->middleware('throttle:6,1');
+    Route::post('/forgot-password/otp/resend', [\App\Http\Controllers\PasswordResetController::class, 'resendOtp'])->name('password.otp.resend')->middleware('throttle:6,1');
     Route::get('/reset-password/{token}', [\App\Http\Controllers\PasswordResetController::class, 'resetForm'])->name('password.reset');
-    Route::post('/reset-password', [\App\Http\Controllers\PasswordResetController::class, 'resetPassword'])->name('password.update');
+    Route::post('/reset-password', [\App\Http\Controllers\PasswordResetController::class, 'resetPassword'])->name('password.update')->middleware('throttle:6,1');
 });
 
 // Presentation Demo Account Quick Switcher

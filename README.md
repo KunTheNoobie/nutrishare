@@ -82,15 +82,31 @@ php artisan nutrishare:health-check
 
 ---
 
-## 🧪 Automated Testing Suite (54 Assertions)
+## 🧪 Automated Testing Suite (68 Assertions)
 
-Run the full end-to-end automated test suite across all 4 modules, RBAC gates, and CSV exporters:
+Run the full end-to-end automated test suite across all 4 modules, RBAC gates, Web Services, and CSV exporters:
 
 ```bash
 php artisan test
 ```
 
 > **Note:** Tests automatically execute on a dedicated, isolated test database (`nutrishare_testing`) configured in `phpunit.xml`. Running tests will **never wipe or overwrite** your primary presentation demo database (`nutrishare`).
+
+---
+
+## 🌐 Web Services Architecture (IFA Compliance)
+
+All 4 modules expose and consume RESTful web services strictly following the **Interface Agreement (IFA)** standard:
+- **IFA Request Schema:** `{ "requestID": "REQ-...", "timestamp": "ISO-8601", ... }`
+- **IFA Response Schema:** `{ "status": "S|F|E", "timestamp": "ISO-8601", "data": { ... } }`
+
+| Module | Team Member | HTTP Method & Endpoint | Description | Status |
+|---|---|---|---|:---:|
+| **Module 1** | Liew Yi Ler | `GET /api/donations/active` | Exposes active, non-expired surplus food listings | ✅ Operational |
+| **Module 2** | Cheon Jie Han | `POST /api/user/verify-ngo` | Validates NGO legal certification & licensing | ✅ Operational |
+| **Module 3** | Yap Zhing Shuen | `GET /api/claim/details` | Exposes real-time claim lifecycle & logistics state | ✅ Operational |
+| **Module 4** | Wong Men Jing | `GET /api/inventory/status` | Exposes storage capacity & occupancy breakdown | ✅ Operational |
+| **Module 4** | Wong Men Jing | `POST /api/inventory/food-safety-check` | Verifies allergen safety & expiry thresholds | ✅ Operational |
 
 ---
 
@@ -113,12 +129,12 @@ php artisan test
 - Dynamically selects communication channels based on user preferences.
 
 ### 4. Observer Pattern (Module 1 — Event-Driven Notifications)
-- **Observer:** `DonationObserver`
-- Listens for `created` events on `Donation` model to automatically notify verified NGOs.
+- **Observer:** `DonationObserver` & `SendDonationNotificationJob`
+- Listens for `created` events on `Donation` model to automatically notify verified NGOs asynchronously via queueable background jobs.
 
-### 5. Repository Pattern (Module 1 — Data Access)
-- **Repository:** `DonationRepository`
-- Encapsulates Eloquent parameterized query logic for searching and filtering donations.
+### 5. Repository Pattern (Modules 1, 3 & 4 — Data Layer Abstraction)
+- **Repositories:** `DonationRepository`, `ClaimRepository`, `InventoryRepository`
+- Encapsulates Eloquent parameterized query logic and aggregations, completely decoupling controllers from raw queries.
 
 ---
 
@@ -126,10 +142,12 @@ php artisan test
 
 - **OWASP A01: Broken Access Control:** Enforced via Laravel Policies (`DonationPolicy`, `ClaimPolicy`) and `CheckRole` middleware.
 - **OWASP A02: Cryptographic Failures:** Bcrypt password hashing (`ROUND=12`) and signed HMAC URLs for quick-claim actions.
-- **OWASP A03: SQL Injection:** Parameterized queries via Eloquent ORM.
+- **OWASP A03: SQL Injection:** Parameterized queries & PDO prepared statements via Eloquent ORM.
+- **OWASP A04: Parameter Tampering:** HMAC signed routes (`URL::signedRoute`) for quick-claim actions.
 - **OWASP A05: Security Misconfiguration:** CSRF token `@csrf` validation on all HTTP POST/PUT/DELETE forms.
 - **OWASP A07: Stored XSS Prevention:** Automatic Blade HTML escaping `{{ }}` across all views.
 - **OWASP A09: Security Logging & Monitoring:** CRLF sanitization helper (`SecurityHelper`) preventing log injection in `SystemLog`.
+- **Brute-Force Attack Prevention:** `throttle:6,1` rate-limiting middleware applied to `/login` and `/forgot-password/otp/verify`.
 
 ---
 

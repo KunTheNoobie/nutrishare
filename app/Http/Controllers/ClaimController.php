@@ -11,6 +11,10 @@ use App\Http\Requests\StoreClaimRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Requests\AssignVehicleRequest;
+use App\Http\Requests\CreateReceiptRequest;
+use App\Http\Requests\LogDistributionRequest;
+
 /**
  * ClaimController — Module 3: Claim & Logistics Distribution (Hiew Li Wei)
  *
@@ -133,21 +137,11 @@ class ClaimController extends Controller
     }
 
     /** Assign a vehicle to a claim. */
-    public function assignVehicle(Request $request, Claim $claim)
+    public function assignVehicle(AssignVehicleRequest $request, Claim $claim)
     {
         $this->authorize('update', $claim);
 
-        $validated = $request->validate([
-            'plate_number' => 'required|string|max:20',
-            'vehicle_type' => 'required|in:van,truck,car,motorcycle',
-            'driver_name' => 'required|string|max:255',
-            'driver_phone' => ['required', 'string', 'min:9', 'max:20', 'regex:/^(\+?[\d\s\-\(\)]){9,20}$/'],
-            'capacity_kg' => 'nullable|numeric|min:0',
-        ], [
-            'driver_phone.min' => 'Please enter a valid driver phone number (at least 9 digits, e.g. 012-3456789 or +60123456789).',
-            'driver_phone.regex' => 'Please enter a valid driver phone number (at least 9 digits, e.g. 012-3456789 or +60123456789).',
-        ]);
-
+        $validated = $request->validated();
         $validated['claim_id'] = $claim->id;
 
         Vehicle::updateOrCreate(
@@ -160,17 +154,11 @@ class ClaimController extends Controller
     }
 
     /** Generate collection receipt. */
-    public function generateReceipt(Request $request, Claim $claim)
+    public function generateReceipt(CreateReceiptRequest $request, Claim $claim)
     {
         $this->authorize('update', $claim);
 
-        $validated = $request->validate([
-            'quantity_collected' => 'required|numeric|min:0.01',
-            'unit' => 'required|in:kg,litres,items,boxes',
-            'collected_by' => 'required|string|max:255',
-            'condition_notes' => 'nullable|string|max:500',
-        ]);
-
+        $validated = $request->validated();
         $validated['claim_id'] = $claim->id;
         $validated['receipt_number'] = CollectionReceipt::generateReceiptNumber();
         $validated['collected_at'] = now();
@@ -185,18 +173,11 @@ class ClaimController extends Controller
     }
 
     /** Submit distribution log (SDG tracking). */
-    public function logDistribution(Request $request, Claim $claim)
+    public function logDistribution(LogDistributionRequest $request, Claim $claim)
     {
         $this->authorize('update', $claim);
 
-        $validated = $request->validate([
-            'beneficiaries_count' => 'required|integer|min:1',
-            'distribution_location' => 'required|string|max:500',
-            'quantity_distributed' => 'required|numeric|min:0.01',
-            'unit' => 'required|in:kg,litres,items,boxes',
-            'notes' => 'nullable|string|max:1000',
-        ]);
-
+        $validated = $request->validated();
         $validated['claim_id'] = $claim->id;
         $validated['distributed_at'] = now();
 

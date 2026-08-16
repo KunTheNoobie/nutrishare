@@ -8,6 +8,8 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Requests\UploadVerificationDocumentRequest;
+
 /**
  * VerificationController — Module 2: NGO Verification & Trust Management (Cheon Jie Han)
  */
@@ -25,12 +27,9 @@ class VerificationController extends Controller
     }
 
     /** Upload verification document (NGO). */
-    public function upload(Request $request)
+    public function upload(UploadVerificationDocumentRequest $request)
     {
-        $validated = $request->validate([
-            'document_type' => 'required|in:license,registration_cert,tax_exempt',
-            'document' => 'required|file|mimes:pdf,jpg,jpeg,png|max:5120',
-        ]);
+        $validated = $request->validated();
 
         $path = $request->file('document')->store('verification_documents', 'public');
 
