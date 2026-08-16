@@ -309,5 +309,33 @@ class NutriShareComprehensiveSystemTest extends TestCase
             'rating' => 5,
         ]);
     }
+
+    public function test_claims_show_page_renders_successfully(): void
+    {
+        $donation = Donation::create([
+            'user_id' => $this->donor->id,
+            'category_id' => 1,
+            'title' => 'Fresh Artisan Sourdough Bread',
+            'description' => 'Surplus freshly baked sourdough loaves.',
+            'quantity' => 20,
+            'unit' => 'items',
+            'pickup_address' => 'Sunway Pyramid Shopping Mall',
+            'expiry_date' => now()->addDays(2),
+            'status' => 'claimed',
+        ]);
+
+        $claim = Claim::create([
+            'user_id' => $this->ngo->id,
+            'donation_id' => $donation->id,
+            'justification' => 'Food distribution for urban community center.',
+            'pickup_scheduled_at' => now()->addDay(),
+            'status' => 'approved',
+        ]);
+
+        $response = $this->actingAs($this->ngo)->get(route('claims.show', $claim));
+        $response->assertStatus(200);
+        $response->assertSee('Claim #' . $claim->id);
+        $response->assertSee('Fresh Artisan Sourdough Bread');
+    }
 }
 

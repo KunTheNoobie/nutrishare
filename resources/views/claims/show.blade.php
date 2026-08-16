@@ -1,3 +1,6 @@
+@extends('layouts.app')
+@section('title', 'Claim #' . $claim->id . ' Details')
+
 @push('styles')
 <style>
 @media print {
