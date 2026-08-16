@@ -337,5 +337,18 @@ class NutriShareComprehensiveSystemTest extends TestCase
         $response->assertSee('Claim #' . $claim->id);
         $response->assertSee('Fresh Artisan Sourdough Bread');
     }
+
+    public function test_custom_404_and_403_error_pages(): void
+    {
+        // 404 Not Found test
+        $response404 = $this->actingAs($this->donor)->get('/non-existent-page-url');
+        $response404->assertStatus(404);
+        $response404->assertSee('Page Not Found');
+
+        // 403 Forbidden test (Donor accessing NGO verification queue)
+        $response403 = $this->actingAs($this->donor)->get(route('verification.index'));
+        $response403->assertStatus(403);
+        $response403->assertSee('Access Forbidden');
+    }
 }
 
