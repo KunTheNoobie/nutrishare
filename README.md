@@ -90,7 +90,12 @@ Run the full end-to-end automated test suite across all 4 modules, RBAC gates, W
 php artisan test
 ```
 
-> **Note:** Tests automatically execute on a dedicated, isolated test database (`nutrishare_testing`) configured in `phpunit.xml`. Running tests will **never wipe or overwrite** your primary presentation demo database (`nutrishare`).
+### 🛡️ Why `nutrishare_testing` Exists (Database Isolation)
+- In enterprise Laravel software architecture, automated test suites must **never** run against your primary presentation database (`nutrishare`).
+- `phpunit.xml` designates an isolated test database `nutrishare_testing` configured with the `RefreshDatabase` trait.
+- When `php artisan test` runs, Laravel automatically executes temporary test transactions and rolls them back immediately upon completion.
+- **Safety Guarantee:** Running automated tests will **never wipe, mutate, or delete** your primary demo accounts, donations, claims, reviews, or logs in `nutrishare`.
+- **Management:** `nutrishare_testing` is completely automated. It can be safely kept in MySQL or dropped at any time via phpMyAdmin (`DROP DATABASE nutrishare_testing;`); Laravel will re-initialize it automatically whenever `php artisan test` is executed.
 
 ---
 
