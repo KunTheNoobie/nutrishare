@@ -280,5 +280,34 @@ class NutriShareComprehensiveSystemTest extends TestCase
             'storage_type' => 'ambient',
         ]);
     }
+
+    public function test_report_generation_form_request(): void
+    {
+        $response = $this->actingAs($this->admin)->post(route('reports.store'), [
+            'type' => 'sdg_impact',
+            'title' => 'Q3 2026 UN SDG 2 Impact Comprehensive Audit',
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('reports', [
+            'title' => 'Q3 2026 UN SDG 2 Impact Comprehensive Audit',
+            'type' => 'sdg_impact',
+        ]);
+    }
+
+    public function test_submit_user_review_form_request(): void
+    {
+        $response = $this->actingAs($this->donor)->post(route('reviews.submit', $this->ngo), [
+            'rating' => 5,
+            'comment' => 'Outstanding punctuality, hygienic handling, and smooth collection process!',
+        ]);
+
+        $response->assertRedirect();
+        $this->assertDatabaseHas('reviews', [
+            'reviewer_id' => $this->donor->id,
+            'reviewee_id' => $this->ngo->id,
+            'rating' => 5,
+        ]);
+    }
 }
 

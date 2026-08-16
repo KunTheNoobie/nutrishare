@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\UploadVerificationDocumentRequest;
+use App\Http\Requests\ReviewVerificationDocumentRequest;
+use App\Http\Requests\SubmitUserReviewRequest;
 
 /**
  * VerificationController — Module 2: NGO Verification & Trust Management (Cheon Jie Han)
@@ -46,16 +48,13 @@ class VerificationController extends Controller
     }
 
     /** Approve or reject a verification document (Admin). */
-    public function review(Request $request, VerificationDocument $document)
+    public function review(ReviewVerificationDocumentRequest $request, VerificationDocument $document)
     {
-        $validated = $request->validate([
-            'action' => 'required|in:approved,rejected',
-            'admin_remarks' => 'nullable|string|max:500',
-        ]);
+        $validated = $request->validated();
 
         $document->update([
             'status' => $validated['action'],
-            'admin_remarks' => $validated['admin_remarks'],
+            'admin_remarks' => $validated['admin_remarks'] ?? null,
             'reviewed_by' => Auth::id(),
             'reviewed_at' => now(),
         ]);
@@ -77,12 +76,9 @@ class VerificationController extends Controller
     }
 
     /** Submit a review. */
-    public function submitReview(Request $request, User $user)
+    public function submitReview(SubmitUserReviewRequest $request, User $user)
     {
-        $validated = $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-            'comment' => 'required|string|max:500',
-        ]);
+        $validated = $request->validated();
 
         Review::updateOrCreate(
             ['reviewer_id' => Auth::id(), 'reviewee_id' => $user->id],

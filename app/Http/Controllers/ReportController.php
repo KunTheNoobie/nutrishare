@@ -7,6 +7,7 @@ use App\Models\Donation;
 use App\Models\Claim;
 use App\Models\User;
 use App\Models\DistributionLog;
+use App\Http\Requests\StoreReportRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,12 +33,9 @@ class ReportController extends Controller
     }
 
     /** Generate and store a new report. */
-    public function store(Request $request)
+    public function store(StoreReportRequest $request)
     {
-        $validated = $request->validate([
-            'type' => 'required|in:sdg_impact,donation_summary,user_activity',
-            'title' => 'required|string|max:255',
-        ]);
+        $validated = $request->validated();
 
         $content = match ($validated['type']) {
             'sdg_impact' => $this->generateSdgImpactReport(),
