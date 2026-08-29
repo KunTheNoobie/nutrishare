@@ -18,7 +18,7 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 - **Trust & Peer Review System:** Donors and NGOs leave 1–5 star trust ratings and reviews post-collection to foster platform credibility.
 - **OTP Password Reset:** 3-step secure 6-digit OTP verification code flow for password resets.
 
-### Module 3: Claims & Logistics Distribution (Yap Zhing Shuen)
+### Module 3: Claims & Logistics Distribution (Hiew Li Wei)
 - **State-Driven Claims:** **State Pattern** manages claim lifecycles (`pending` ➔ `approved` ➔ `collected`, or `rejected` / `cancelled`).
 - **Logistics & Dispatch:** Assign pickup vehicles (van, truck, car, motorcycle) and driver contact details.
 - **Digital Collection Receipts:** Auto-generated unique receipts (`REC-NUTRI-YYYYMMDD-XXX`) with one-click **Print Receipt** functionality.
@@ -109,7 +109,7 @@ All 4 modules expose and consume RESTful web services strictly following the **I
 |---|---|---|---|:---:|
 | **Module 1** | Liew Yi Ler | `GET /api/donations/active` | Exposes active, non-expired surplus food listings | ✅ Operational |
 | **Module 2** | Cheon Jie Han | `POST /api/user/verify-ngo` | Validates NGO legal certification & licensing | ✅ Operational |
-| **Module 3** | Yap Zhing Shuen | `GET /api/claim/details` | Exposes real-time claim lifecycle & logistics state | ✅ Operational |
+| **Module 3** | Hiew Li Wei | `GET /api/claim/details` | Exposes real-time claim lifecycle & logistics state | ✅ Operational |
 | **Module 4** | Wong Men Jing | `GET /api/inventory/status` | Exposes storage capacity & occupancy breakdown | ✅ Operational |
 | **Module 4** | Wong Men Jing | `POST /api/inventory/food-safety-check` | Verifies allergen safety & expiry thresholds | ✅ Operational |
 
