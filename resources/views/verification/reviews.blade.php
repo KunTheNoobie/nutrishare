@@ -39,17 +39,11 @@
 
 @section('content')
 <div class="container-fluid px-0">
-    <!-- Breadcrumb & Header Section -->
+    <!-- Header Section -->
     <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
         <div>
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb mb-1 small text-muted">
-                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}" class="text-decoration-none text-apple-accent"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Trust & Peer Reviews</li>
-                </ol>
-            </nav>
             <h2 class="fw-bold mb-0" style="color: var(--apple-text);">
-                <i class="bi bi-shield-check text-apple-accent me-2"></i> Trust Profile & Reviews
+                <i class="bi bi-star-fill text-warning me-2"></i> Reviews for {{ $user->name }}
             </h2>
         </div>
         <div class="d-flex align-items-center gap-2">
