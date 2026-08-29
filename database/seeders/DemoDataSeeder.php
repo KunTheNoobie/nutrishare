@@ -415,9 +415,15 @@ class DemoDataSeeder extends Seeder
         }
 
         // ──────────────────────────────────────────────────────────
-        // 13. User Reviews & Ratings (10 Records)
+        // 13. User Reviews & Ratings (15 Records - All Roles Covered)
         // ──────────────────────────────────────────────────────────
+        $adminUser = $userModels['admin@nutrishare.com'];
+        $modUser = $userModels['moderator@nutrishare.com'];
+
         $reviewsData = [
+            ['rev' => $donor1, 'target' => $adminUser, 'rating' => 5, 'comment' => 'Excellent platform administration and rapid support response for food donor accreditation.'],
+            ['rev' => $ngo1, 'target' => $adminUser, 'rating' => 5, 'comment' => 'System Admin verified our NGO documentation within 2 hours. Very efficient platform oversight.'],
+            ['rev' => $ngo2, 'target' => $modUser, 'rating' => 5, 'comment' => 'Platform moderator resolved logistics compliance questions instantly.'],
             ['rev' => $donor1, 'target' => $ngo1, 'rating' => 5, 'comment' => 'Punctual driver, smooth communication, and great food handling!'],
             ['rev' => $donor2, 'target' => $ngo1, 'rating' => 5, 'comment' => 'Very professional team. They collected 250 canned items cleanly.'],
             ['rev' => $donor3, 'target' => $ngo2, 'rating' => 5, 'comment' => 'Kechara team arrived right on schedule with insulated boxes.'],
@@ -428,6 +434,8 @@ class DemoDataSeeder extends Seeder
             ['rev' => $ngo2, 'target' => $donor2, 'rating' => 5, 'comment' => 'Jaya Grocer is a consistent donor helping hundreds of families.'],
             ['rev' => $ngo3, 'target' => $donor3, 'rating' => 5, 'comment' => 'Shangri-La Executive kitchen staff packaged meals perfectly.'],
             ['rev' => $ngo1, 'target' => $donor5, 'rating' => 5, 'comment' => 'High quality baby cereal pouches received in perfect condition.'],
+            ['rev' => $adminUser, 'target' => $ngo1, 'rating' => 5, 'comment' => 'Verified NGO compliance audit passed with distinction.'],
+            ['rev' => $adminUser, 'target' => $donor1, 'rating' => 5, 'comment' => 'Top performing donor with 100% food safety compliance score.'],
         ];
 
         foreach ($reviewsData as $r) {
