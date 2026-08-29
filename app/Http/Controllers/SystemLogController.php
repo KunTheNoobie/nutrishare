@@ -62,6 +62,9 @@ class SystemLogController extends Controller
 
         $callback = function () use ($logs) {
             $file = fopen('php://output', 'w');
+            // Insert UTF-8 Byte Order Mark (BOM) for perfect Microsoft Excel rendering
+            fputs($file, "\xEF\xBB\xBF");
+
             fputcsv($file, ['ID', 'Timestamp', 'Level', 'User', 'Action', 'Description', 'IP Address', 'User Agent']);
 
             foreach ($logs as $log) {

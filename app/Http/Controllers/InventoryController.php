@@ -197,6 +197,9 @@ class InventoryController extends Controller
 
         $callback = function () use ($locations) {
             $file = fopen('php://output', 'w');
+            // Insert UTF-8 Byte Order Mark (BOM) for perfect Microsoft Excel rendering
+            fputs($file, "\xEF\xBB\xBF");
+
             fputcsv($file, ['ID', 'Facility Name', 'Address', 'Storage Type', 'Managing Organization', 'Stored Items Count', 'Occupancy (kg)', 'Capacity (kg)', 'Utilization %']);
 
             foreach ($locations as $loc) {

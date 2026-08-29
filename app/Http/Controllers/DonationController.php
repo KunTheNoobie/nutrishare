@@ -203,6 +203,9 @@ class DonationController extends Controller
 
         $callback = function () use ($donations) {
             $file = fopen('php://output', 'w');
+            // Insert UTF-8 Byte Order Mark (BOM) for perfect Microsoft Excel rendering
+            fputs($file, "\xEF\xBB\xBF");
+
             fputcsv($file, ['ID', 'Title', 'Donor Organization', 'Quantity', 'Unit', 'Pickup Address', 'Latitude', 'Longitude', 'Expiry Date', 'Status', 'Published Date']);
 
             foreach ($donations as $donation) {
@@ -213,11 +216,11 @@ class DonationController extends Controller
                     $donation->quantity,
                     $donation->unit,
                     $donation->pickup_address,
-                    $donation->latitude ?? 'N/A',
-                    $donation->longitude ?? 'N/A',
-                    $donation->expiry_date?->format('Y-m-d H:i') ?? 'N/A',
+                    $donation->latitude !== null ? number_format($donation->latitude, 4, '.', '') : 'N/A',
+                    $donation->longitude !== null ? number_format($donation->longitude, 4, '.', '') : 'N/A',
+                    $donation->expiry_date?->format('Y-m-d') ?? 'N/A',
                     strtoupper($donation->status),
-                    $donation->created_at->format('Y-m-d H:i'),
+                    $donation->created_at->format('Y-m-d'),
                 ]);
             }
             fclose($file);
