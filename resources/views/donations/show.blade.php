@@ -75,10 +75,15 @@
                     </div>
                     <div class="col-md-6">
                         <strong><i class="bi bi-person"></i> Donor:</strong>
-                        {{ $donation->donor->name }}
-                        @if($donation->donor->organization_name)
-                            ({{ $donation->donor->organization_name }})
-                        @endif
+                        <a href="{{ route('reviews.show', $donation->donor) }}" class="text-decoration-none text-apple-accent ms-1" title="View Donor Trust Profile & Reviews">
+                            {{ $donation->donor->name }}
+                            @if($donation->donor->organization_name)
+                                ({{ $donation->donor->organization_name }})
+                            @endif
+                            <span class="badge bg-warning text-dark ms-1">
+                                <i class="bi bi-star-fill"></i> {{ number_format($donation->donor->averageRating(), 1) }} ⭐
+                            </span>
+                        </a>
                     </div>
                 </div>
             </div>

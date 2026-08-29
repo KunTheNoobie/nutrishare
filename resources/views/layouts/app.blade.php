@@ -766,6 +766,7 @@
                         <ul class="dropdown-menu dropdown-menu-end border-dark shadow" style="background-color: var(--apple-surface);">
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}" style="color: var(--apple-text);"><i class="bi bi-speedometer2 text-muted me-2"></i> Dashboard</a></li>
                             <li><a class="dropdown-item" href="{{ route('profile.edit') }}" style="color: var(--apple-text);"><i class="bi bi-person-gear text-muted me-2"></i> Profile Settings</a></li>
+                            <li><a class="dropdown-item" href="{{ route('reviews.show', Auth::user()) }}" style="color: var(--apple-text);"><i class="bi bi-star-fill text-warning me-2"></i> My Trust & Reviews</a></li>
                             <li class="demo-mode-only"><hr class="dropdown-divider border-dark"></li>
                             <li class="dropdown-header text-uppercase px-3 demo-mode-only" style="font-size: 0.65rem; font-weight: 700; color: var(--apple-text-muted);">🎭 Demo Switcher</li>
                             <li class="demo-mode-only"><a class="dropdown-item small" href="{{ route('demo.login', 'admin') }}" style="color: var(--apple-text);"><i class="bi bi-shield-lock text-apple-danger me-2"></i> Admin (System Admin)</a></li>

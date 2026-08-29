@@ -74,8 +74,8 @@
                 <p class="small mb-3" style="color: var(--apple-text-muted);">{{ $claim->donation->description }}</p>
                 <div class="row g-2 small mb-3">
                     <div class="col-md-6"><strong>Quantity:</strong> {{ $claim->donation->quantity }} {{ $claim->donation->unit }}</div>
-                    <div class="col-md-6"><strong>Donor:</strong> {{ $claim->donation->donor->name }}</div>
-                    <div class="col-md-6"><strong>NGO:</strong> {{ $claim->user->organization_name ?? $claim->user->name }}</div>
+                    <div class="col-md-6"><strong>Donor:</strong> <a href="{{ route('reviews.show', $claim->donation->donor) }}" class="text-apple-accent text-decoration-none" title="View Donor Trust Profile">{{ $claim->donation->donor->name }} <i class="bi bi-star-fill text-warning"></i></a></div>
+                    <div class="col-md-6"><strong>NGO:</strong> <a href="{{ route('reviews.show', $claim->user) }}" class="text-apple-accent text-decoration-none" title="View NGO Trust Profile">{{ $claim->user->organization_name ?? $claim->user->name }} <i class="bi bi-star-fill text-warning"></i></a></div>
                     <div class="col-md-6"><strong>Pickup:</strong> {{ $claim->pickup_scheduled_at?->format('d M Y, h:i A') ?? 'TBD' }}</div>
                 </div>
                 <hr class="my-2" style="border-color: var(--apple-border) !important;">
