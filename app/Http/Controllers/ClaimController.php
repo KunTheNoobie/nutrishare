@@ -191,4 +191,29 @@ class ClaimController extends Controller
         return redirect()->route('claims.show', $claim)
             ->with('success', 'Distribution log recorded for SDG impact tracking.');
     }
+
+    /** Update distribution log entry. */
+    public function updateDistributionLog(LogDistributionRequest $request, DistributionLog $log)
+    {
+        $claim = $log->claim;
+        $this->authorize('update', $claim);
+
+        $validated = $request->validated();
+        $log->update($validated);
+
+        return redirect()->route('claims.show', $claim)
+            ->with('success', 'Distribution log updated successfully.');
+    }
+
+    /** Delete distribution log entry. */
+    public function deleteDistributionLog(DistributionLog $log)
+    {
+        $claim = $log->claim;
+        $this->authorize('update', $claim);
+
+        $log->delete();
+
+        return redirect()->route('claims.show', $claim)
+            ->with('success', 'Distribution log entry deleted.');
+    }
 }

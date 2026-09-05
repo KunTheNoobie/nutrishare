@@ -182,7 +182,7 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-people text-apple-accent"></i> Distribution Logs (SDG Impact)</span>
                 <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
-                    {{ $claim->distributionLogs->count() }} Entries
+                    {{ $claim->distributionLogs->count() }} {{ Str::plural('Entry', $claim->distributionLogs->count()) }}
                 </span>
             </div>
             <div class="card-body p-0">
@@ -193,7 +193,8 @@
                                 <th class="ps-4 py-3 fw-semibold small" style="color: var(--apple-text-muted);">Date</th>
                                 <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Location</th>
                                 <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Beneficiaries</th>
-                                <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Qty Distributed</th>
+                                <th class="py-3 fw-semibold small" style="color: var(--apple-text-muted);">Qty Distributed</th>
+                                <th class="pe-4 py-3 fw-semibold small text-end" style="color: var(--apple-text-muted);">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -202,7 +203,25 @@
                             <td class="ps-4 small" style="color: var(--apple-text-muted);"><i class="bi bi-calendar me-1"></i>{{ $log->distributed_at->format('d M Y') }}</td>
                             <td style="color: var(--apple-text);"><i class="bi bi-geo-alt text-apple-accent me-1"></i>{{ $log->distribution_location }}</td>
                             <td><span class="badge badge-success fw-bold">{{ $log->beneficiaries_count }} People</span></td>
-                            <td class="pe-4 text-end" style="color: var(--apple-text);">{{ $log->quantity_distributed }} {{ $log->unit }}</td>
+                            <td style="color: var(--apple-text);">{{ $log->quantity_distributed }} {{ $log->unit }}</td>
+                            <td class="pe-4 text-end">
+                                @if(Auth::user()->isAdmin() || Auth::user()->isModerator() || $claim->user_id === Auth::id())
+                                <div class="btn-group btn-group-sm">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editLogModal{{ $log->id }}" title="Edit Entry">
+                                        <i class="bi bi-pencil-square me-1"></i>Edit
+                                    </button>
+                                    <form method="POST" action="{{ route('claims.distribution.destroy', $log) }}" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this distribution log entry?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger ms-1" title="Delete Entry">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                @else
+                                <span class="text-muted small">—</span>
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                         </tbody>
@@ -277,13 +296,35 @@
         </div>
         @endif
 
-
-
         <!-- Distribution Log Form -->
         @if((Auth::user()->isAdmin() || Auth::user()->isModerator() || $claim->user_id === Auth::id()) && $claim->status === 'collected')
+        @php
+            $defaultLocation = (Auth::user()->organization_name ?? Auth::user()->name) . ' Distribution Center';
+            $firstInventory = Auth::user()->inventoryLocations->first();
+            if ($firstInventory) {
+                $invName = trim($firstInventory->name);
+                $invAddress = trim($firstInventory->address ?? '');
+                if ($invAddress) {
+                    $cleanAddress = preg_replace('/^\((.*)\)$/', '$1', $invAddress);
+                    if (!Str::contains(strtolower($invName), strtolower($cleanAddress)) && !Str::contains(strtolower($cleanAddress), strtolower($invName))) {
+                        $defaultLocation = $invName . ' — ' . $cleanAddress;
+                    } else {
+                        $defaultLocation = $invName;
+                    }
+                } else {
+                    $defaultLocation = $invName;
+                }
+            }
+        @endphp
         <div class="card mb-3 shadow-sm animate-slide-up">
-            <div class="card-header"><i class="bi bi-globe-americas text-apple-success me-1"></i> Log Distribution (SDG)</div>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-globe-americas text-apple-success me-1"></i> Log Distribution (SDG)</span>
+                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25" style="font-size: 0.7rem;">Auto-Filled</span>
+            </div>
             <div class="card-body">
+                <p class="small text-muted mb-3" style="font-size: 0.78rem;">
+                    <i class="bi bi-info-circle text-apple-accent me-1"></i> Pre-filled with calculated estimates. You can edit any field before submitting.
+                </p>
                 <form method="POST" action="{{ route('claims.distribution', $claim) }}">
                     @csrf
                     <div class="mb-2">
@@ -293,23 +334,30 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label text-muted small mb-1"><i class="bi bi-geo-alt me-1"></i> Distribution Location</label>
-                        <input type="text" name="distribution_location" class="form-control form-control-sm @error('distribution_location') is-invalid @enderror" placeholder="Distribution Location" value="{{ old('distribution_location', Auth::user()->inventoryLocations->first()?->name ? (Auth::user()->inventoryLocations->first()->name . ' (' . (Auth::user()->inventoryLocations->first()->address ?: 'NGO Facility') . ')') : ((Auth::user()->organization_name ?? Auth::user()->name) . ' Distribution Center')) }}" required>
+                        <input type="text" name="distribution_location" list="ngoInventoryList" class="form-control form-control-sm @error('distribution_location') is-invalid @enderror" placeholder="e.g. PJ Distribution Center" value="{{ old('distribution_location', $defaultLocation) }}" required>
+                        <datalist id="ngoInventoryList">
+                            @foreach(Auth::user()->inventoryLocations as $loc)
+                                <option value="{{ $loc->name }}{{ $loc->address ? ' — ' . $loc->address : '' }}"></option>
+                            @endforeach
+                        </datalist>
                         @error('distribution_location')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label text-muted small mb-1"><i class="bi bi-box-seam me-1"></i> Quantity</label>
-                        <input type="number" step="0.01" name="quantity_distributed" class="form-control form-control-sm @error('quantity_distributed') is-invalid @enderror" placeholder="Quantity" value="{{ old('quantity_distributed', $claim->donation->quantity) }}" required>
-                        @error('quantity_distributed')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-label text-muted small mb-1"><i class="bi bi-tag me-1"></i> Unit</label>
-                        <select name="unit" class="form-select form-select-sm @error('unit') is-invalid @enderror" required>
-                            <option value="kg" {{ old('unit', $claim->donation->unit) == 'kg' ? 'selected' : '' }}>kg</option>
-                            <option value="litres" {{ old('unit', $claim->donation->unit) == 'litres' ? 'selected' : '' }}>litres</option>
-                            <option value="items" {{ old('unit', $claim->donation->unit) == 'items' ? 'selected' : '' }}>items</option>
-                            <option value="boxes" {{ old('unit', $claim->donation->unit) == 'boxes' ? 'selected' : '' }}>boxes</option>
-                        </select>
-                        @error('unit')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <div class="row g-2 mb-2">
+                        <div class="col-7">
+                            <label class="form-label text-muted small mb-1"><i class="bi bi-box-seam me-1"></i> Quantity</label>
+                            <input type="number" step="0.01" name="quantity_distributed" class="form-control form-control-sm @error('quantity_distributed') is-invalid @enderror" placeholder="Quantity" value="{{ old('quantity_distributed', $claim->donation->quantity) }}" required>
+                            @error('quantity_distributed')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="col-5">
+                            <label class="form-label text-muted small mb-1"><i class="bi bi-tag me-1"></i> Unit</label>
+                            <select name="unit" class="form-select form-select-sm @error('unit') is-invalid @enderror" required>
+                                <option value="kg" {{ old('unit', $claim->donation->unit) == 'kg' ? 'selected' : '' }}>kg</option>
+                                <option value="litres" {{ old('unit', $claim->donation->unit) == 'litres' ? 'selected' : '' }}>litres</option>
+                                <option value="items" {{ old('unit', $claim->donation->unit) == 'items' ? 'selected' : '' }}>items</option>
+                                <option value="boxes" {{ old('unit', $claim->donation->unit) == 'boxes' ? 'selected' : '' }}>boxes</option>
+                            </select>
+                            @error('unit')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
                     </div>
                     <div class="mb-2">
                         <label class="form-label text-muted small mb-1"><i class="bi bi-journal-text me-1"></i> Notes</label>
@@ -325,6 +373,59 @@
         @endif
     </div>
 </div>
+
+@foreach($claim->distributionLogs as $log)
+@if(Auth::user()->isAdmin() || Auth::user()->isModerator() || $claim->user_id === Auth::id())
+<!-- Modal for Editing Distribution Log #{{ $log->id }} -->
+<div class="modal fade" id="editLogModal{{ $log->id }}" tabindex="-1" aria-labelledby="editLogModalLabel{{ $log->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="background-color: var(--apple-card-bg); color: var(--apple-text); border: 1px solid var(--apple-border);">
+            <div class="modal-header py-2" style="border-bottom-color: var(--apple-border);">
+                <h6 class="modal-title fw-bold" id="editLogModalLabel{{ $log->id }}"><i class="bi bi-pencil-square text-apple-accent me-1"></i> Edit Distribution Log Entry</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ route('claims.distribution.update', $log) }}">
+                @csrf
+                @method('PUT')
+                <div class="modal-body text-start">
+                    <div class="mb-2">
+                        <label class="form-label text-muted small mb-1"><i class="bi bi-people me-1"></i> Beneficiaries Count</label>
+                        <input type="number" name="beneficiaries_count" class="form-control form-control-sm" value="{{ old('beneficiaries_count', $log->beneficiaries_count) }}" required min="1">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label text-muted small mb-1"><i class="bi bi-geo-alt me-1"></i> Distribution Location</label>
+                        <input type="text" name="distribution_location" list="ngoInventoryList" class="form-control form-control-sm" value="{{ old('distribution_location', $log->distribution_location) }}" required>
+                    </div>
+                    <div class="row g-2 mb-2">
+                        <div class="col-7">
+                            <label class="form-label text-muted small mb-1"><i class="bi bi-box-seam me-1"></i> Quantity</label>
+                            <input type="number" step="0.01" name="quantity_distributed" class="form-control form-control-sm" value="{{ old('quantity_distributed', $log->quantity_distributed) }}" required>
+                        </div>
+                        <div class="col-5">
+                            <label class="form-label text-muted small mb-1"><i class="bi bi-tag me-1"></i> Unit</label>
+                            <select name="unit" class="form-select form-select-sm" required>
+                                <option value="kg" {{ old('unit', $log->unit) == 'kg' ? 'selected' : '' }}>kg</option>
+                                <option value="litres" {{ old('unit', $log->unit) == 'litres' ? 'selected' : '' }}>litres</option>
+                                <option value="items" {{ old('unit', $log->unit) == 'items' ? 'selected' : '' }}>items</option>
+                                <option value="boxes" {{ old('unit', $log->unit) == 'boxes' ? 'selected' : '' }}>boxes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label text-muted small mb-1"><i class="bi bi-journal-text me-1"></i> Notes</label>
+                        <textarea name="notes" class="form-control form-control-sm" rows="2" placeholder="Distribution Notes (Optional)">{{ old('notes', $log->notes) }}</textarea>
+                    </div>
+                </div>
+                <div class="modal-footer py-2" style="border-top-color: var(--apple-border);">
+                    <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="bi bi-check-lg me-1"></i> Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@endif
+@endforeach
 
 @if($claim->donation->image_paths && count($claim->donation->image_paths) > 0)
 <!-- Modal for Fullscreen Image Viewing -->

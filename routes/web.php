@@ -99,6 +99,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/claims/{claim}/vehicle', [ClaimController::class, 'assignVehicle'])->name('claims.vehicle');
     Route::post('/claims/{claim}/receipt', [ClaimController::class, 'generateReceipt'])->name('claims.receipt');
     Route::post('/claims/{claim}/distribution', [ClaimController::class, 'logDistribution'])->name('claims.distribution');
+    Route::put('/claims/distribution/{log}', [ClaimController::class, 'updateDistributionLog'])->name('claims.distribution.update');
+    Route::delete('/claims/distribution/{log}', [ClaimController::class, 'deleteDistributionLog'])->name('claims.distribution.destroy');
 
     // ─── Module 4: Inventory & Food Safety (Wong Men Jing) ───
     Route::get('/inventory/export/csv', [InventoryController::class, 'exportCsv'])->name('inventory.export.csv');

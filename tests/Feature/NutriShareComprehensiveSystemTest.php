@@ -227,6 +227,60 @@ class NutriShareComprehensiveSystemTest extends TestCase
         ]);
     }
 
+    public function test_update_and_delete_distribution_log(): void
+    {
+        $donation = Donation::create([
+            'user_id' => $this->donor->id,
+            'title' => 'Fresh Milk Packets',
+            'description' => 'Pasteurized milk surplus',
+            'quantity' => 15,
+            'unit' => 'litres',
+            'pickup_address' => 'Subang Jaya',
+            'expiry_date' => now()->addDays(3),
+            'status' => 'claimed',
+        ]);
+
+        $claim = Claim::create([
+            'user_id' => $this->ngo->id,
+            'donation_id' => $donation->id,
+            'justification' => 'Community pantry distribution',
+            'pickup_scheduled_at' => now()->addDay(),
+            'status' => 'collected',
+        ]);
+
+        $log = \App\Models\DistributionLog::create([
+            'claim_id' => $claim->id,
+            'beneficiaries_count' => 20,
+            'distribution_location' => 'Original Location',
+            'quantity_distributed' => 15.00,
+            'unit' => 'litres',
+            'distributed_at' => now(),
+        ]);
+
+        // NGO updates the distribution log
+        $updateResponse = $this->actingAs($this->ngo)->put(route('claims.distribution.update', $log), [
+            'beneficiaries_count' => 35,
+            'distribution_location' => 'Updated Community Center',
+            'quantity_distributed' => 15.00,
+            'unit' => 'litres',
+            'notes' => 'Corrected beneficiary count after tally',
+        ]);
+
+        $updateResponse->assertRedirect(route('claims.show', $claim));
+        $this->assertDatabaseHas('distribution_logs', [
+            'id' => $log->id,
+            'beneficiaries_count' => 35,
+            'distribution_location' => 'Updated Community Center',
+        ]);
+
+        // NGO deletes the distribution log
+        $deleteResponse = $this->actingAs($this->ngo)->delete(route('claims.distribution.destroy', $log));
+        $deleteResponse->assertRedirect(route('claims.show', $claim));
+        $this->assertDatabaseMissing('distribution_logs', [
+            'id' => $log->id,
+        ]);
+    }
+
     public function test_inventory_web_service_status_and_food_safety(): void
     {
         $location = InventoryLocation::create([
