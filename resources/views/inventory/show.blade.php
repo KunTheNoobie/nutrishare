@@ -80,7 +80,9 @@
                             <td style="color: var(--apple-text);">{{ $item->quantity }} {{ $item->unit }}</td>
                             <td>
                                 @if($item->category)
-                                    <span class="action-tag">{{ $item->category->name }}</span>
+                                    <span class="badge" style="background: rgba(41, 151, 255, 0.12); color: #2997ff; border: 1px solid rgba(41, 151, 255, 0.25); font-weight: 500; font-size: 0.78rem; padding: 5px 10px; border-radius: 8px;">
+                                        {{ $item->category->name }}
+                                    </span>
                                 @else
                                     <span style="color: var(--apple-text-muted);">—</span>
                                 @endif
@@ -114,17 +116,19 @@
     @if($canManageInventory)
     <div class="col-md-4">
         <!-- Add Food Item Form -->
-        <div class="card shadow-sm">
-            <div class="card-header"><i class="bi bi-plus-circle text-apple-success"></i> Add Food Item</div>
-            <div class="card-body">
+        <div class="card shadow-sm" style="border-radius: 18px; border: 1px solid var(--apple-border); background: var(--apple-card-bg);">
+            <div class="card-header py-3 fw-semibold" style="border-bottom: 1px solid var(--apple-border); background: transparent; color: var(--apple-text);">
+                <i class="bi bi-plus-circle-fill text-apple-success me-2"></i> Add Food Item
+            </div>
+            <div class="card-body p-4">
                 <form method="POST" action="{{ route('inventory.add-food-item') }}" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="inventory_location_id" value="{{ $inventoryLocation->id }}">
                     
                     @if(Auth::user()->donations->count() > 0)
                     <div class="mb-3">
-                        <label class="form-label text-muted small">Link to Donation (Optional)</label>
-                        <select name="donation_id" class="form-select @error('donation_id') is-invalid @enderror">
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-link-45deg text-apple-accent me-1"></i> Link to Donation <span class="text-muted fw-normal">(Optional)</span></label>
+                        <select name="donation_id" class="form-select @error('donation_id') is-invalid @enderror" style="border-radius: 10px;">
                             <option value="">-- None --</option>
                             @foreach(Auth::user()->donations as $donation)
                                 <option value="{{ $donation->id }}">{{ $donation->title }}</option>
@@ -135,45 +139,51 @@
                     @endif
 
                     <div class="mb-3">
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Food Item Name" value="{{ old('name') }}" required>
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-tag text-apple-accent me-1"></i> Food Item Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="e.g. Organic Honeycrisp Apples" value="{{ old('name') }}" required style="border-radius: 10px;">
                         @error('name')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
                     <div class="mb-3">
-                        <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="2" placeholder="Brief description (optional)">{{ old('description') }}</textarea>
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-card-text text-apple-accent me-1"></i> Description</label>
+                        <textarea name="description" class="form-control @error('description') is-invalid @enderror" rows="2" placeholder="Brief details regarding packaging, condition, or storage..." style="border-radius: 10px;">{{ old('description') }}</textarea>
                         @error('description')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label text-muted small"><i class="bi bi-images me-1"></i> Upload Item Photos (Max 5, optional)</label>
-                        <input type="file" name="images[]" class="form-control form-control-sm @error('images') is-invalid @enderror" multiple accept="image/*">
-                        <div class="form-text text-muted extra-small">Upload up to 5 photos of this food item (JPEG, PNG, WEBP).</div>
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-images text-apple-accent me-1"></i> Upload Item Photos <span class="text-muted fw-normal">(Max 5, optional)</span></label>
+                        <input type="file" name="images[]" class="form-control form-control-sm @error('images') is-invalid @enderror" multiple accept="image/*" style="border-radius: 10px;">
+                        <div class="form-text text-muted" style="font-size: 0.72rem;">JPEG, PNG, WEBP formats up to 2MB each.</div>
                         @error('images')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
                     </div>
                     
                     <div class="mb-3">
-                        <label class="form-label text-muted small"><i class="bi bi-link-45deg me-1"></i> Or Image URL (Optional)</label>
-                        <input type="url" name="image_url" class="form-control form-control-sm @error('image_url') is-invalid @enderror" placeholder="https://example.com/item.jpg" value="{{ old('image_url') }}">
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-link-45deg text-apple-accent me-1"></i> Or Image URL <span class="text-muted fw-normal">(Optional)</span></label>
+                        <input type="url" name="image_url" class="form-control form-control-sm @error('image_url') is-invalid @enderror" placeholder="https://example.com/item.jpg" value="{{ old('image_url') }}" style="border-radius: 10px;">
                         @error('image_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
-                    <div class="row g-2 mb-3">
-                        <div class="col-7">
-                            <input type="number" step="0.01" name="quantity" class="form-control @error('quantity') is-invalid @enderror" placeholder="Qty (e.g. 10.5)" value="{{ old('quantity') }}" required>
-                            @error('quantity')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
-                        <div class="col-5">
-                            <select name="unit" class="form-select @error('unit') is-invalid @enderror" required>
-                                <option value="kg" {{ old('unit') == 'kg' ? 'selected' : '' }}>kg</option>
-                                <option value="litres" {{ old('unit') == 'litres' ? 'selected' : '' }}>litres</option>
-                                <option value="items" {{ old('unit') == 'items' ? 'selected' : '' }}>items</option>
-                            </select>
-                            @error('unit')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    <div class="mb-3">
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-123 text-apple-accent me-1"></i> Quantity & Unit <span class="text-danger">*</span></label>
+                        <div class="row g-2">
+                            <div class="col-7">
+                                <input type="number" step="0.01" name="quantity" class="form-control @error('quantity') is-invalid @enderror" placeholder="Qty (e.g. 10.5)" value="{{ old('quantity') }}" required style="border-radius: 10px;">
+                                @error('quantity')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
+                            <div class="col-5">
+                                <select name="unit" class="form-select @error('unit') is-invalid @enderror" required style="border-radius: 10px;">
+                                    <option value="kg" {{ old('unit') == 'kg' ? 'selected' : '' }}>kg</option>
+                                    <option value="litres" {{ old('unit') == 'litres' ? 'selected' : '' }}>litres</option>
+                                    <option value="items" {{ old('unit') == 'items' ? 'selected' : '' }}>items</option>
+                                </select>
+                                @error('unit')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
                         </div>
                     </div>
                     
                     <div class="mb-3">
-                        <select name="category_id" class="form-select @error('category_id') is-invalid @enderror" required>
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-folder2-open text-apple-accent me-1"></i> Food Category <span class="text-danger">*</span></label>
+                        <select name="category_id" class="form-select @error('category_id') is-invalid @enderror" required style="border-radius: 10px;">
                             <option value="">-- Select Category --</option>
                             @foreach($categories as $cat)
                             <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
@@ -183,13 +193,14 @@
                     </div>
                     
                     <div class="mb-3">
-                        <label class="form-label text-muted small">Expiry Date</label>
-                        <input type="datetime-local" name="expiry_date" class="form-control @error('expiry_date') is-invalid @enderror" value="{{ old('expiry_date') }}" required>
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-calendar-event text-apple-accent me-1"></i> Expiry Date & Time <span class="text-danger">*</span></label>
+                        <input type="datetime-local" name="expiry_date" class="form-control @error('expiry_date') is-invalid @enderror" value="{{ old('expiry_date') }}" required style="border-radius: 10px;">
                         @error('expiry_date')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     
                     <div class="mb-3">
-                        <select name="storage_requirements" class="form-select @error('storage_requirements') is-invalid @enderror" required>
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-thermometer-half text-apple-accent me-1"></i> Storage Requirements <span class="text-danger">*</span></label>
+                        <select name="storage_requirements" class="form-select @error('storage_requirements') is-invalid @enderror" required style="border-radius: 10px;">
                             <option value="dry" {{ old('storage_requirements') == 'dry' ? 'selected' : '' }}>Dry Storage</option>
                             <option value="cold" {{ old('storage_requirements') == 'cold' ? 'selected' : '' }}>Cold Storage</option>
                             <option value="frozen" {{ old('storage_requirements') == 'frozen' ? 'selected' : '' }}>Frozen Storage</option>
@@ -199,7 +210,8 @@
                     </div>
                     
                     <div class="mb-3">
-                        <select name="is_perishable" class="form-select @error('is_perishable') is-invalid @enderror" required>
+                        <label class="form-label small fw-medium" style="color: var(--apple-text);"><i class="bi bi-hourglass-split text-apple-accent me-1"></i> Perishability Status <span class="text-danger">*</span></label>
+                        <select name="is_perishable" class="form-select @error('is_perishable') is-invalid @enderror" required style="border-radius: 10px;">
                             <option value="1" {{ old('is_perishable') == '1' ? 'selected' : '' }}>Highly Perishable</option>
                             <option value="0" {{ old('is_perishable') == '0' ? 'selected' : '' }}>Non-Perishable</option>
                         </select>
@@ -207,18 +219,18 @@
                     </div>
                     
                     <div class="mb-4">
-                        <label class="form-label text-muted small mb-2 d-block">Allergen Tags</label>
+                        <label class="form-label small fw-medium mb-2 d-block" style="color: var(--apple-text);"><i class="bi bi-shield-exclamation text-apple-warning me-1"></i> Allergen Flags</label>
                         <div class="d-flex flex-wrap gap-2">
                             @foreach($allergenTags as $tag)
-                            <div class="form-check">
+                            <div class="form-check me-2 mb-1">
                                 <input class="form-check-input" type="checkbox" name="allergen_tags[]" value="{{ $tag->id }}" id="allergen{{ $tag->id }}" {{ is_array(old('allergen_tags')) && in_array($tag->id, old('allergen_tags')) ? 'checked' : '' }}>
-                                <label class="form-check-label text-muted small" for="allergen{{ $tag->id }}">{{ $tag->name }}</label>
+                                <label class="form-check-label small" for="allergen{{ $tag->id }}" style="color: var(--apple-text-muted); cursor: pointer;">{{ $tag->name }}</label>
                             </div>
                             @endforeach
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-ns-primary w-100 py-2 fw-medium">
+                    <button type="submit" class="btn btn-ns-primary w-100 py-2 fw-medium d-flex align-items-center justify-content-center gap-2" style="border-radius: 980px;">
                         <i class="bi bi-plus-lg"></i> Add Food Item
                     </button>
                 </form>

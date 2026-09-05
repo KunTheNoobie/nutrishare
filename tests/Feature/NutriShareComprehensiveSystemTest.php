@@ -404,5 +404,42 @@ class NutriShareComprehensiveSystemTest extends TestCase
         $response403->assertStatus(403);
         $response403->assertSee('Access Forbidden');
     }
+
+    public function test_verification_document_show_and_download(): void
+    {
+        $doc = \App\Models\VerificationDocument::create([
+            'user_id' => $this->ngo->id,
+            'document_type' => 'registration_cert',
+            'file_path' => 'verification_documents/test_ngo_cert.pdf',
+            'original_filename' => 'test_ngo_cert.pdf',
+            'status' => 'approved',
+            'admin_remarks' => 'Approved by compliance officer',
+        ]);
+
+        // Admin can view file inline (status 200 with PDF content type)
+        $showResponse = $this->actingAs($this->admin)->get(route('verification.file', $doc));
+        $showResponse->assertStatus(200);
+        $this->assertStringContainsString('application/pdf', $showResponse->headers->get('Content-Type') ?? '');
+
+        // Admin can download file (status 200)
+        $downloadResponse = $this->actingAs($this->admin)->get(route('verification.download', $doc));
+        $downloadResponse->assertStatus(200);
+    }
+
+    public function test_admin_governance_profile_and_review_rejection(): void
+    {
+        // Viewing admin review page renders Platform Governance Profile
+        $response = $this->actingAs($this->admin)->get(route('reviews.show', $this->admin));
+        $response->assertStatus(200);
+        $response->assertSee('Platform Governance Profile');
+        $response->assertSee('Peer Review Exemption');
+
+        // Submitting review against admin is rejected
+        $submitResponse = $this->actingAs($this->ngo)->post(route('reviews.submit', $this->admin), [
+            'rating' => 5,
+            'comment' => 'Attempting review on platform admin',
+        ]);
+        $submitResponse->assertSessionHas('error');
+    }
 }
 

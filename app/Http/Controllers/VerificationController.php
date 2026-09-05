@@ -78,6 +78,10 @@ class VerificationController extends Controller
     /** Submit a review. */
     public function submitReview(SubmitUserReviewRequest $request, User $user)
     {
+        if ($user->isAdmin() || $user->isModerator()) {
+            return back()->with('error', 'Platform administrators and moderators cannot receive food exchange peer reviews.');
+        }
+
         $validated = $request->validated();
 
         Review::updateOrCreate(
@@ -96,6 +100,8 @@ class VerificationController extends Controller
             abort(403, 'Unauthorized access.');
         }
 
+        \App\Services\VerificationDocumentService::ensureFileExists($document);
+
         if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($document->file_path)) {
             return back()->with('error', 'File not found on server.');
         }
@@ -110,6 +116,8 @@ class VerificationController extends Controller
         if (!$user->isAdmin() && !$user->isModerator() && $user->id !== $document->user_id) {
             abort(403, 'Unauthorized access.');
         }
+
+        \App\Services\VerificationDocumentService::ensureFileExists($document);
 
         if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($document->file_path)) {
             return back()->with('error', 'File not found on server.');

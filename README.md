@@ -24,9 +24,12 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 - **Multi-Image Support:** Up to 5 high-resolution photos or image URLs per donation item with an interactive photo lightbox viewer.
 - **Event-Driven Notifications:** Real-time system & email alerts dispatched via the **Observer Pattern** when donations are published, claimed, or updated.
 
-### Module 2: NGO Verification & Peer Trust Rating System (Cheon Jie Han)
-- **Document Verification:** NGOs upload registration certificates, tax exemption docs, and food premise licenses for Admin/Moderator approval with custom remarks.
-- **Trust & Peer Review System:** Donors and NGOs leave 1–5 star trust ratings and reviews post-collection to foster platform credibility. Dynamic star badges link directly to interactive user Trust Profiles (`/users/{user}/reviews`).
+### Module 2: NGO Verification, Statutory PDF Engine & Trust Profiles (Cheon Jie Han)
+- **Statutory Document Verification:** NGOs upload registration certificates, tax exemption docs, and food premise licenses for Admin/Moderator approval with custom remarks.
+- **Built-in Statutory PDF Engine:** Automatic high-fidelity PDF rendering and download architecture (`VerificationDocumentService`) generating official compliance documents complete with digital verification hashes, issuing authority details, and PDPA compliance seals without third-party binary dependencies.
+- **Role-Adaptive Trust & Governance Profiles (`/users/{user}/reviews`):**
+  - **Donors & NGOs:** Interactive 5-star peer exchange credibility scores, rating breakdowns, and verified partner review feeds post-collection.
+  - **Admins & Moderators:** Dedicated **Platform Governance Profile** highlighting platform neutrality, statutory oversight mandates (ROS legal validation, identity protection, tamper-evident audit trails), and the UN SDG 2 Zero Hunger Governance Charter.
 - **OTP Password Reset:** 3-step secure 6-digit OTP verification code flow for password resets.
 
 ### Module 3: Claims & Logistics Distribution (Hiew Li Wei)
@@ -37,6 +40,7 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 
 ### Module 4: Inventory & Food Safety Compliance (Wong Men Jing)
 - **Multi-Location Storage:** NGOs manage dry, cold, ambient, and blast freezer inventory facilities with live capacity tracking and CSV exports.
+- **Polished Pantry Management UI:** Cleanly badge-styled food inventory tables, live expiry countdown alerts, and structured, fully-labeled food entry forms with storage requirement selectors, perishability flags, and allergen tags.
 - **Allergen & Expiry Tracking:** Food items tagged with allergen warnings (Gluten, Dairy, Nuts, Soy, Egg, Seafood) and automatic expiry countdowns.
 
 ---
