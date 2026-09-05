@@ -6,23 +6,34 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 
 ---
 
+## 👥 Core Project Team & Module Ownership
+
+| Module | Module Scope | Team Member |
+|---|---|---|
+| **Module 1** | Surplus Food Donation Publishing & Notification Management | **Liew Yi Ler** |
+| **Module 2** | NGO Verification, Peer Trust Rating & User Security | **Cheon Jie Han** |
+| **Module 3** | Claims Lifecycle State Pattern & Logistics Distribution | **Hiew Li Wei** |
+| **Module 4** | Inventory Multi-Storage, Food Safety & Expiry Compliance | **Wong Men Jing** |
+
+---
+
 ## 🚀 Key System Features & Modules
 
 ### Module 1: Donation & Notification Management (Liew Yi Ler)
 - **Surplus Food Publishing:** Donors publish available food donations with photos, quantity, unit, pickup location, map coordinates, and expiry dates.
-- **Multi-Image Support:** Up to 5 high-resolution photos or image URLs per donation item.
+- **Multi-Image Support:** Up to 5 high-resolution photos or image URLs per donation item with an interactive photo lightbox viewer.
 - **Event-Driven Notifications:** Real-time system & email alerts dispatched via the **Observer Pattern** when donations are published, claimed, or updated.
 
 ### Module 2: NGO Verification & Peer Trust Rating System (Cheon Jie Han)
 - **Document Verification:** NGOs upload registration certificates, tax exemption docs, and food premise licenses for Admin/Moderator approval with custom remarks.
-- **Trust & Peer Review System:** Donors and NGOs leave 1–5 star trust ratings and reviews post-collection to foster platform credibility.
+- **Trust & Peer Review System:** Donors and NGOs leave 1–5 star trust ratings and reviews post-collection to foster platform credibility. Dynamic star badges link directly to interactive user Trust Profiles (`/users/{user}/reviews`).
 - **OTP Password Reset:** 3-step secure 6-digit OTP verification code flow for password resets.
 
 ### Module 3: Claims & Logistics Distribution (Hiew Li Wei)
 - **State-Driven Claims:** **State Pattern** manages claim lifecycles (`pending` ➔ `approved` ➔ `collected`, or `rejected` / `cancelled`).
-- **Logistics & Dispatch:** Assign pickup vehicles (van, truck, car, motorcycle) and driver contact details.
-- **Digital Collection Receipts:** Auto-generated unique receipts (`REC-NUTRI-YYYYMMDD-XXX`) with one-click **Print Receipt** functionality.
-- **SDG 2 Impact Tracking:** Record distribution logs detailing beneficiaries count, distribution center, and quantity distributed.
+- **Logistics & Dispatch:** Claiming NGOs assign pickup vehicles (van, truck, car, motorcycle) and driver contact details.
+- **Digital Collection Receipts:** Auto-generated unique receipts (`REC-NUTRI-YYYYMMDD-XXX`) with one-click **Print Receipt** preview layout.
+- **SDG 2 Impact Tracking:** Record, edit, and delete distribution logs detailing beneficiaries count, distribution center, and quantity distributed.
 
 ### Module 4: Inventory & Food Safety Compliance (Wong Men Jing)
 - **Multi-Location Storage:** NGOs manage dry, cold, ambient, and blast freezer inventory facilities with live capacity tracking and CSV exports.
@@ -48,13 +59,49 @@ NutriShare is a state-of-the-art web application engineered to bridge surplus fo
 | **Delete Donations** | ✅ | ❌ | ✅ (Own) | ❌ |
 | **Submit Claims** | ❌ | ❌ | ❌ | ✅ (Verified) |
 | **Approve / Reject Claims** | ✅ | ✅ | ✅ (Own) | ❌ |
-| **Collect Claims & Log SDG Impact** | ✅ | ✅ | ❌ | ✅ (Own) |
+| **Assign Vehicle & Driver Logistics** | ❌ | ❌ | ❌ | ✅ (Own Claim) |
+| **Collect Claims (Mark Collected)** | ❌ | ❌ | ❌ | ✅ (Own Claim) |
+| **Print Collection Receipts** | ✅ | ✅ | ❌ | ✅ (Own Claim) |
+| **Log, Edit & Delete SDG Distribution Logs** | ✅ | ✅ | ❌ | ✅ (Own Claim) |
 | **Delete Claims** | ✅ | ❌ | ❌ | ✅ (Pending) |
 | **Manage Inventory & Storage Facilities** | ✅ | ✅ | ❌ | ✅ (Own) |
 | **Export CSV Data (Donations / Inventory)** | ✅ | ✅ | ✅ (Own Catalog) | ✅ (Own Inventory) |
 | **Review NGO Verification Docs** | ✅ | ✅ | ❌ | Upload Only |
+| **Submit Peer Reviews & Star Ratings** | ❌ | ❌ | ✅ (To NGO) | ✅ (To Donor) |
 | **Generate Platform Analytics Reports** | ✅ | ✅ | ❌ | ❌ |
 | **View Audit Trail & Export Security Logs CSV** | ✅ | ✅ | ❌ | ❌ |
+
+---
+
+## 🎯 Live Presentation Demo Playbook
+
+The database has been seeded with a **God Tier** realistic dataset configured specifically for smooth, flawless live demonstrations:
+
+### 1. The Demo Switcher (`/demo-login/{role}`)
+- Use the quick role pills in the top right navbar to instantly switch between **System Admin**, **Platform Moderator**, **NGO (Food Rescue Foundation)**, and **Donor (Sunway Bakery & Grocer)** without typing passwords.
+
+### 2. Claim State Pattern Lifecycle Demo (`/claims`)
+- **Pending State Demo:** View **Claim #1** or **Claim #2** as Donor or Admin/Mod. Click **Approve** or **Reject**. Notice that Admin/Mod cannot assign vehicles or collect claims.
+- **Vehicle Dispatch Demo:** Switch to **NGO** (`ngo@nutrishare.com`) and open **Claim #3** (Approved, no vehicle). Demonstrate the **Dispatch Transport & Driver** form with plate number, driver name, and phone.
+- **Collection & Digital Receipt Demo:** Open **Claim #4** (Approved, vehicle assigned: Van VHT 1484). Click **Collect**. Watch the State Pattern transition the claim to `collected`, auto-generating **Digital Collection Receipt `REC-NUTRI-20260905-001`**. Click **Print Receipt** to display the clean printer preview.
+- **SDG 2 Distribution Logs Demo:** View any collected claim (e.g. **Claim #5**). Observe the pre-filled auto-fill estimates. Submit a distribution log. Click **Edit** to modify beneficiary count or location, or click **Delete** to demonstrate full CRUD.
+
+### 3. Trust & Peer Review Rating Demo (`/users/{user}/reviews`)
+- Click on any donor or NGO name in the donation or claim details pages.
+- View their verified Trust Profile with 5-star ratings, aggregate averages, and genuine partner testimonials.
+- Submit a new review and rating to demonstrate live credibility updates.
+
+### 4. NGO Legal Verification Queue Demo (`/verification`)
+- Switch to **Admin** or **Moderator**.
+- Navigate to **NGO Verifications** in the top navbar.
+- View **PichaEats Social Enterprise** (`pending` status).
+- Click **Review Document** to inspect their uploaded ROS registration certificate and license, add admin remarks, and approve/reject with real-time audit logging.
+
+### 5. Multi-Storage Inventory & Safety Demo (`/inventory`)
+- Switch to **NGO**.
+- Open **Inventory** to inspect Dry, Cold, Ambient, and Blast Freezer locations with capacity meters.
+- Export inventory facilities to CSV with one click.
+- Test IFA Web Services: `GET /api/inventory/status` and `POST /api/inventory/food-safety-check`.
 
 ---
 
@@ -82,7 +129,7 @@ php artisan nutrishare:health-check
 
 ---
 
-## 🧪 Automated Testing Suite (79 Assertions)
+## 🧪 Automated Testing Suite (85 Assertions)
 
 Run the full end-to-end automated test suite across all 4 modules, RBAC gates, Web Services, and CSV exporters:
 
@@ -158,32 +205,32 @@ All 4 modules expose and consume RESTful web services strictly following the **I
 
 ## 🗄️ Database Architecture (All 26 Tables Breakdown)
 
-The database consists of **18 Application Feature Tables** (10+ to 48+ records each) and **8 Framework Infrastructure Tables**:
+The database consists of **18 Application Feature Tables** (10+ to 21+ records each) and **8 Framework Infrastructure Tables**:
 
 | # | Database Table Name | Category | Record Count | Description |
 |---|---|---|:---:|---|
 | 1 | `users` | Application | 12 | System Admins, Moderators, NGOs, Donors |
-| 2 | `donations` | Application | 12 | Surplus food donation listings |
-| 3 | `food_items` | Application | 16 | Individual food items with photos & expiry |
+| 2 | `donations` | Application | 16 | Surplus food donation listings |
+| 3 | `food_items` | Application | 18 | Individual food items with photos & expiry |
 | 4 | `categories` | Application | 10 | Food categories (Produce, Bakery, Dairy, etc.) |
 | 5 | `allergen_tags` | Application | 10 | Allergen safety tags (Gluten, Dairy, Nuts, etc.) |
-| 6 | `allergen_tag_food_item` | Application | 17 | Pivot table linking food items to allergens |
+| 6 | `allergen_tag_food_item` | Application | 21 | Pivot table linking food items to allergens |
 | 7 | `inventory_locations` | Application | 10 | NGO storage facilities (dry, cold, freezer) |
-| 8 | `claims` | Application | 10 | NGO claim requests across state lifecycles |
-| 9 | `vehicles` | Application | 10 | Logistics vehicles & driver dispatch details |
+| 8 | `claims` | Application | 14 | NGO claim requests across state lifecycles |
+| 9 | `vehicles` | Application | 11 | Logistics vehicles & driver dispatch details |
 | 10 | `collection_receipts` | Application | 10 | Digital pickup receipts with driver notes |
-| 11 | `distribution_logs` | Application | 10 | SDG 2 Zero Hunger impact tracking logs |
+| 11 | `distribution_logs` | Application | 12 | SDG 2 Zero Hunger impact tracking logs |
 | 12 | `verification_documents` | Application | 10 | NGO registration certs & compliance licenses |
 | 13 | `reviews` | Application | 10 | Peer trust ratings (1-5 stars) & reviews |
 | 14 | `reports` | Application | 10 | Platform analytics & SDG impact reports |
 | 15 | `notification_templates` | Application | 10 | Predefined alert templates |
-| 16 | `notifications` | Application | 48 | Dispatched system & email user alerts |
-| 17 | `system_logs` | Application | 25 | Audit trail logs with IP & User Agent |
+| 16 | `notifications` | Application | 14 | Dispatched system & email user alerts |
+| 17 | `system_logs` | Application | 14 | Audit trail logs with IP & User Agent |
 | 18 | `password_reset_otps` | Application | 10 | 6-digit OTP security reset tokens |
 | 19 | `sessions` | Framework | Active | Managed automatically by Laravel session driver |
 | 20 | `cache` | Framework | System | Framework database query cache |
 | 21 | `cache_locks` | Framework | System | Atomic lock manager for cache |
-| 22 | `jobs` | Framework | System | Background task queue queue worker table |
+| 22 | `jobs` | Framework | System | Background task queue worker table |
 | 23 | `job_batches` | Framework | System | Batch job processing queue manager |
 | 24 | `failed_jobs` | Framework | System | Failed background queue logger |
 | 25 | `migrations` | Framework | 26 | Database schema migration tracking history |
@@ -197,12 +244,15 @@ All accounts use password: **`Password1!`**
 
 | User Role | Email Address | Access Level |
 |---|---|---|
-| **System Admin** | `admin@nutrishare.com` | Full CRUD, User Verification, Reports, Audit Logs |
-| **Platform Moderator** | `moderator@nutrishare.com` | Oversight (Create/Read/Update, No Delete) |
-| **NGO (Primary)** | `ngo@nutrishare.com` | Claims, Inventory, Logistics, SDG Impact Logs |
-| **NGO (Secondary)** | `kechara@nutrishare.com` | Claims & Shelter Distribution |
-| **Donor (Primary)** | `donor@nutrishare.com` | Publish Donations, Approve Claims, Reviews |
-| **Donor (Secondary)** | `jayagrocer@nutrishare.com` | Supermarket Donations |
+| **System Admin** | `admin@nutrishare.com` | Full Platform Oversight, NGO Verification, Reports, Audit Logs |
+| **Platform Moderator** | `moderator@nutrishare.com` | Content Moderation & Verification (Create/Read/Update, No Delete) |
+| **NGO (Primary)** | `ngo@nutrishare.com` | Claims, Logistics Dispatch, Collection Receipts, SDG Impact Logs |
+| **NGO (Secondary)** | `kechara@nutrishare.com` | Claims & Soup Kitchen Shelter Distribution |
+| **NGO (Charity)** | `mykasih@nutrishare.com` | B40 Student & Family Food Aid Distribution |
+| **Donor (Primary)** | `donor@nutrishare.com` | Publish Donations, Review Claims, Peer Trust Ratings |
+| **Donor (Supermarket)** | `jayagrocer@nutrishare.com` | Supermarket Surplus Grocery Listings |
+| **Donor (Hypermarket)** | `lotus@nutrishare.com` | Hypermarket Wholesale Food Donations |
+| **Donor (Hotel Catering)** | `shangrila@nutrishare.com` | Executive Hotel Banquet Meals & Juices |
 
 ---
 
@@ -219,8 +269,19 @@ All accounts use password: **`Password1!`**
    ```bash
    php artisan migrate:fresh --seed
    ```
+   *Alternatively, import the pre-built `database/nutrishare_dump.sql` directly into MySQL via phpMyAdmin or MySQL CLI.*
 
-3. **Start Application Server:**
+3. **Verify Health & Diagnostic Checks:**
+   ```bash
+   php artisan nutrishare:health-check
+   ```
+
+4. **Run Automated Test Suite:**
+   ```bash
+   php artisan test
+   ```
+
+5. **Start Application Server:**
    ```bash
    php artisan serve
    ```

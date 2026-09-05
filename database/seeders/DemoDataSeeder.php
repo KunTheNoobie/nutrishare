@@ -66,18 +66,18 @@ class DemoDataSeeder extends Seeder
         // ──────────────────────────────────────────────────────────
         $usersData = [
             // Admin & Mods
-            ['email' => 'admin@nutrishare.com', 'name' => 'System Admin', 'role' => 'admin', 'org' => 'NutriShare HQ', 'phone' => '+60100000001', 'status' => 'approved'],
-            ['email' => 'moderator@nutrishare.com', 'name' => 'Platform Moderator', 'role' => 'moderator', 'org' => 'NutriShare Compliance', 'phone' => '+60100000002', 'status' => 'approved'],
-            ['email' => 'mod2@nutrishare.com', 'name' => 'Sarah Lin (Mod)', 'role' => 'moderator', 'org' => 'NutriShare Safety', 'phone' => '+60100000003', 'status' => 'approved'],
+            ['email' => 'admin@nutrishare.com', 'name' => 'System Admin', 'role' => 'admin', 'org' => 'NutriShare HQ', 'phone' => '+60100000001', 'status' => 'approved', 'addr' => 'Level 18, Menara NutriShare, KL'],
+            ['email' => 'moderator@nutrishare.com', 'name' => 'Platform Moderator', 'role' => 'moderator', 'org' => 'NutriShare Compliance', 'phone' => '+60100000002', 'status' => 'approved', 'addr' => 'NutriShare Compliance Wing, KL'],
+            ['email' => 'mod2@nutrishare.com', 'name' => 'Sarah Lin', 'role' => 'moderator', 'org' => 'NutriShare Safety Unit', 'phone' => '+60100000003', 'status' => 'approved', 'addr' => 'NutriShare Safety Center, PJ'],
             
             // NGOs
-            ['email' => 'ngo@nutrishare.com', 'name' => 'Food Rescue Foundation', 'role' => 'ngo', 'org' => 'Food Rescue Foundation (BBB)', 'phone' => '+60123456789', 'status' => 'approved', 'addr' => '100 Community Way, KL'],
+            ['email' => 'ngo@nutrishare.com', 'name' => 'Food Rescue Foundation', 'role' => 'ngo', 'org' => 'Food Rescue Foundation', 'phone' => '+60123456789', 'status' => 'approved', 'addr' => '100 Community Way, KL'],
             ['email' => 'kechara@nutrishare.com', 'name' => 'Kechara Soup Kitchen', 'role' => 'ngo', 'org' => 'Kechara Soup Kitchen Society', 'phone' => '+60169876543', 'status' => 'approved', 'addr' => '17 Jalan Barat, KL'],
             ['email' => 'mykasih@nutrishare.com', 'name' => 'MyKasih Foundation', 'role' => 'ngo', 'org' => 'MyKasih Charity Trust', 'phone' => '+60134445555', 'status' => 'approved', 'addr' => 'Level 8, Menara LGB, TTDI, KL'],
             ['email' => 'pichaeats@nutrishare.com', 'name' => 'PichaEats Social Enterprise', 'role' => 'ngo', 'org' => 'PichaEats Relief', 'phone' => '+60178889999', 'status' => 'pending', 'addr' => '25 Jalan Bangsar, KL'],
             
             // Donors
-            ['email' => 'donor@nutrishare.com', 'name' => 'Sunway Bakery & Grocer', 'role' => 'donor', 'org' => 'Sunway Bakery & Grocer AAA', 'phone' => '+60198887777', 'status' => 'approved', 'addr' => '789 Sunway Ave, PJ'],
+            ['email' => 'donor@nutrishare.com', 'name' => 'Sunway Bakery & Grocer', 'role' => 'donor', 'org' => 'Sunway Bakery & Grocer', 'phone' => '+60198887777', 'status' => 'approved', 'addr' => '789 Sunway Ave, PJ'],
             ['email' => 'jayagrocer@nutrishare.com', 'name' => 'Jaya Grocer Supermarket', 'role' => 'donor', 'org' => 'Jaya Grocer Outlets', 'phone' => '+60123334444', 'status' => 'approved', 'addr' => '12 Plaza Damansara, KL'],
             ['email' => 'lotus@nutrishare.com', 'name' => 'Lotus Hypermarket Malaysia', 'role' => 'donor', 'org' => 'Lotus Stores Malaysia', 'phone' => '+60187776666', 'status' => 'approved', 'addr' => '3 Jalan Kepong, KL'],
             ['email' => 'shangrila@nutrishare.com', 'name' => 'Shangri-La Hotel Catering', 'role' => 'donor', 'org' => 'Shangri-La Executive Kitchen', 'phone' => '+60112223333', 'status' => 'approved', 'addr' => '11 Jalan Sultan Ismail, KL'],
@@ -111,17 +111,28 @@ class DemoDataSeeder extends Seeder
         $ngo4 = $userModels['pichaeats@nutrishare.com'];
 
         // ──────────────────────────────────────────────────────────
-        // 4. Surplus Food Donations (12 Records)
+        // 4. Surplus Food Donations (16 Records)
         // ──────────────────────────────────────────────────────────
         $donationsList = [
+            // 0: For Claim 0 (Pending)
             [
                 'user_id' => $donor1->id,
                 'title' => 'Fresh Organic Fruits & Veggies Pack',
                 'description' => 'Surplus organic honeycrisp apples, fresh kale, carrots, and avocados from morning stock. Excellent quality.',
                 'quantity' => 120.50, 'unit' => 'kg', 'pickup_address' => '789 Sunway Ave, Loading Bay C, PJ',
-                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(4), 'status' => 'available',
+                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(4), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=2070&auto=format&fit=crop']
             ],
+            // 1: For Claim 1 (Pending)
+            [
+                'user_id' => $donor2->id,
+                'title' => 'Grade A Farm Fresh Eggs & Dairy Milk',
+                'description' => 'Cartons of pasteurized whole milk and fresh farm chicken eggs. Stored in cold chillers.',
+                'quantity' => 80.00, 'unit' => 'boxes', 'pickup_address' => '12 Plaza Damansara, Cold Room, KL',
+                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addDays(5), 'status' => 'claimed',
+                'image_paths' => ['https://images.unsplash.com/photo-1516467508483-a7212febe31a?q=80&w=2072&auto=format&fit=crop']
+            ],
+            // 2: For Claim 2 (Approved, NO vehicle yet)
             [
                 'user_id' => $donor1->id,
                 'title' => 'Artisan Sourdough Breads & Pastries',
@@ -130,38 +141,7 @@ class DemoDataSeeder extends Seeder
                 'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(2), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2072&auto=format&fit=crop']
             ],
-            [
-                'user_id' => $donor2->id,
-                'title' => 'Assorted Canned Soups & Pantry Boxes',
-                'description' => 'Pallet of canned tomato soups, beans, and whole wheat pasta boxes. Long shelf life, ideal for pantry storage.',
-                'quantity' => 250.00, 'unit' => 'items', 'pickup_address' => '12 Plaza Damansara, Storage B, KL',
-                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addMonths(6), 'status' => 'claimed',
-                'image_paths' => ['https://images.unsplash.com/photo-1584473457406-6240486418e9?q=80&w=2072&auto=format&fit=crop']
-            ],
-            [
-                'user_id' => $donor2->id,
-                'title' => 'Grade A Farm Fresh Eggs & Dairy Milk',
-                'description' => 'Cartons of pasteurized whole milk and fresh farm chicken eggs. Stored in cold chillers.',
-                'quantity' => 80.00, 'unit' => 'boxes', 'pickup_address' => '12 Plaza Damansara, Cold Room, KL',
-                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addDays(5), 'status' => 'available',
-                'image_paths' => ['https://images.unsplash.com/photo-1516467508483-a7212febe31a?q=80&w=2072&auto=format&fit=crop']
-            ],
-            [
-                'user_id' => $donor3->id,
-                'title' => 'Cooked Gourmet Buffet Trays (Unserved)',
-                'description' => 'Unserved hotel gala dinner trays: roasted chicken breast, mixed vegetables, and butter rice. Blast frozen.',
-                'quantity' => 20.00, 'unit' => 'boxes', 'pickup_address' => '3 Jalan Kepong, Loading Bay 1, KL',
-                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(2), 'status' => 'claimed',
-                'image_paths' => ['https://images.unsplash.com/photo-1555244162-833832eb1cce?q=80&w=2070&auto=format&fit=crop']
-            ],
-            [
-                'user_id' => $donor3->id,
-                'title' => 'Fresh Salmon Fillets & Seafood Pack',
-                'description' => 'Chilled Atlantic salmon fillets and tiger prawns. Packed in ice crates ready for immediate pick up.',
-                'quantity' => 35.00, 'unit' => 'kg', 'pickup_address' => '3 Jalan Kepong, Fish Counter, KL',
-                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(1), 'status' => 'available',
-                'image_paths' => ['https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=2070&auto=format&fit=crop']
-            ],
+            // 3: For Claim 3 (Approved, WITH vehicle assigned)
             [
                 'user_id' => $donor4->id,
                 'title' => 'Cold Pressed Orange & Apple Juices',
@@ -170,14 +150,34 @@ class DemoDataSeeder extends Seeder
                 'latitude' => 3.1530, 'longitude' => 101.7080, 'expiry_date' => Carbon::now()->addDays(3), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?q=80&w=2070&auto=format&fit=crop']
             ],
+            // 4: For Claim 4 (Collected)
+            [
+                'user_id' => $donor2->id,
+                'title' => 'Assorted Canned Soups & Pantry Boxes',
+                'description' => 'Pallet of canned tomato soups, beans, and whole wheat pasta boxes. Long shelf life, ideal for pantry storage.',
+                'quantity' => 250.00, 'unit' => 'items', 'pickup_address' => '12 Plaza Damansara, Storage B, KL',
+                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addMonths(6), 'status' => 'claimed',
+                'image_paths' => ['https://images.unsplash.com/photo-1584473457406-6240486418e9?q=80&w=2072&auto=format&fit=crop']
+            ],
+            // 5: For Claim 5 (Collected)
+            [
+                'user_id' => $donor3->id,
+                'title' => 'Cooked Gourmet Buffet Trays (Unserved)',
+                'description' => 'Unserved hotel gala dinner trays: roasted chicken breast, mixed vegetables, and butter rice. Blast frozen.',
+                'quantity' => 20.00, 'unit' => 'boxes', 'pickup_address' => '3 Jalan Kepong, Loading Bay 1, KL',
+                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(2), 'status' => 'claimed',
+                'image_paths' => ['https://images.unsplash.com/photo-1555244162-833832eb1cce?q=80&w=2070&auto=format&fit=crop']
+            ],
+            // 6: For Claim 6 (Collected)
             [
                 'user_id' => $donor4->id,
-                'title' => 'Premix Cereal & Breakfast Packs',
+                'title' => 'Premix Cereal & Breakfast Grain Packs',
                 'description' => 'Nutritious oats, cornflakes, and cereal grain boxes for breakfast shelter distribution.',
                 'quantity' => 90.00, 'unit' => 'items', 'pickup_address' => '11 Jalan Sultan Ismail, Pantry, KL',
                 'latitude' => 3.1530, 'longitude' => 101.7080, 'expiry_date' => Carbon::now()->addMonths(4), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1521483451569-e33803c0330c?q=80&w=2070&auto=format&fit=crop']
             ],
+            // 7: For Claim 7 (Collected)
             [
                 'user_id' => $donor5->id,
                 'title' => 'Infant Organic Cereal & Fruit Pouches',
@@ -186,14 +186,7 @@ class DemoDataSeeder extends Seeder
                 'latitude' => 3.1708, 'longitude' => 101.6660, 'expiry_date' => Carbon::now()->addMonths(5), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1596797882870-8c33deeac224?q=80&w=2070&auto=format&fit=crop']
             ],
-            [
-                'user_id' => $donor5->id,
-                'title' => 'Frozen Mixed Peas & Corn Vegetables',
-                'description' => 'Blast frozen green peas, sweet corn, and diced carrots in 1kg commercial packs.',
-                'quantity' => 60.00, 'unit' => 'kg', 'pickup_address' => 'Publika Shopping Gallery, Freezer 4, KL',
-                'latitude' => 3.1708, 'longitude' => 101.6660, 'expiry_date' => Carbon::now()->addMonths(3), 'status' => 'available',
-                'image_paths' => ['https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?q=80&w=2070&auto=format&fit=crop']
-            ],
+            // 8: For Claim 8 (Collected)
             [
                 'user_id' => $donor1->id,
                 'title' => 'Whole Roasted Chicken Meal Trays',
@@ -202,6 +195,7 @@ class DemoDataSeeder extends Seeder
                 'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addHours(36), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=2070&auto=format&fit=crop']
             ],
+            // 9: For Claim 9 (Collected)
             [
                 'user_id' => $donor2->id,
                 'title' => 'Surplus Mineral Water Crate Packs',
@@ -209,7 +203,61 @@ class DemoDataSeeder extends Seeder
                 'quantity' => 40.00, 'unit' => 'boxes', 'pickup_address' => '12 Plaza Damansara, Bay 3, KL',
                 'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addYear(), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1548839140-29a749e1bc4e?q=80&w=2070&auto=format&fit=crop']
-            ]
+            ],
+            // 10: For Claim 10 (Collected)
+            [
+                'user_id' => $donor3->id,
+                'title' => 'Fresh Salmon Fillets & Seafood Pack',
+                'description' => 'Chilled Atlantic salmon fillets and tiger prawns. Packed in ice crates ready for pick up.',
+                'quantity' => 35.00, 'unit' => 'kg', 'pickup_address' => '3 Jalan Kepong, Fish Counter, KL',
+                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(2), 'status' => 'claimed',
+                'image_paths' => ['https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=2070&auto=format&fit=crop']
+            ],
+            // 11: For Claim 11 (Collected)
+            [
+                'user_id' => $donor5->id,
+                'title' => 'Frozen Mixed Peas & Sweet Corn Packs',
+                'description' => 'Blast frozen green peas, sweet corn, and diced carrots in 1kg commercial packs.',
+                'quantity' => 60.00, 'unit' => 'kg', 'pickup_address' => 'Publika Shopping Gallery, Freezer 4, KL',
+                'latitude' => 3.1708, 'longitude' => 101.6660, 'expiry_date' => Carbon::now()->addMonths(3), 'status' => 'claimed',
+                'image_paths' => ['https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?q=80&w=2070&auto=format&fit=crop']
+            ],
+            // 12: For Claim 12 (Collected)
+            [
+                'user_id' => $donor1->id,
+                'title' => 'Fresh Brioche Buns & Morning Croissants',
+                'description' => 'Fluffy French brioche hamburger buns and golden butter croissants.',
+                'quantity' => 50.00, 'unit' => 'items', 'pickup_address' => '789 Sunway Ave, Bakery Dispatch, PJ',
+                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(2), 'status' => 'claimed',
+                'image_paths' => ['https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=2070&auto=format&fit=crop']
+            ],
+            // 13: For Claim 13 (Collected)
+            [
+                'user_id' => $donor2->id,
+                'title' => 'High-Protein Tofu & Soy Milk Bundles',
+                'description' => 'Vacuum sealed organic tofu blocks and chilled unsweetened fresh soy milk.',
+                'quantity' => 45.00, 'unit' => 'boxes', 'pickup_address' => '12 Plaza Damansara, Chiller 2, KL',
+                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addDays(4), 'status' => 'claimed',
+                'image_paths' => ['https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2070&auto=format&fit=crop']
+            ],
+            // 14: Available for Live Demo Claiming
+            [
+                'user_id' => $donor3->id,
+                'title' => 'Garden Fresh Tomatoes & Bell Peppers',
+                'description' => 'Crisp local Cameron Highlands vine tomatoes and tri-color bell peppers. Perfect for kitchen cooking.',
+                'quantity' => 75.00, 'unit' => 'kg', 'pickup_address' => '3 Jalan Kepong, Fresh Bay, KL',
+                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(5), 'status' => 'available',
+                'image_paths' => ['https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=2070&auto=format&fit=crop']
+            ],
+            // 15: Available for Live Demo Claiming
+            [
+                'user_id' => $donor4->id,
+                'title' => 'Assorted Gourmet Sandwiches & Wraps',
+                'description' => 'Pre-packed chicken avocado wraps and smoked turkey breast sandwiches from executive banquet.',
+                'quantity' => 35.00, 'unit' => 'items', 'pickup_address' => '11 Jalan Sultan Ismail, Concierge, KL',
+                'latitude' => 3.1530, 'longitude' => 101.7080, 'expiry_date' => Carbon::now()->addHours(24), 'status' => 'available',
+                'image_paths' => ['https://images.unsplash.com/photo-1528735602780-2552fd46c7af?q=80&w=2073&auto=format&fit=crop']
+            ],
         ];
 
         $donationModels = [];
@@ -221,16 +269,16 @@ class DemoDataSeeder extends Seeder
         // 5. Inventory Locations (10 Records)
         // ──────────────────────────────────────────────────────────
         $locationsData = [
-            ['user' => $ngo1, 'name' => 'Central Storage Facility (NGO Central Facility)', 'addr' => '100 Community Way, KL', 'type' => 'dry', 'cap' => 2000.0],
-            ['user' => $ngo1, 'name' => 'Cold Storage Blast Freezer', 'addr' => '100 Community Way (Block B), KL', 'type' => 'frozen', 'cap' => 800.0],
-            ['user' => $ngo1, 'name' => 'Pantry Storage Room A', 'addr' => '100 Community Way (Room A), KL', 'type' => 'ambient', 'cap' => 1200.0],
+            ['user' => $ngo1, 'name' => 'Central Storage Facility', 'addr' => '100 Community Way, KL', 'type' => 'dry', 'cap' => 2000.0],
+            ['user' => $ngo1, 'name' => 'Cold Storage Blast Freezer', 'addr' => '100 Community Way, Block B, KL', 'type' => 'frozen', 'cap' => 800.0],
+            ['user' => $ngo1, 'name' => 'Dry Pantry Storage Depot', 'addr' => '100 Community Way, Room A, KL', 'type' => 'ambient', 'cap' => 1200.0],
             ['user' => $ngo2, 'name' => 'Kechara Main Shelter Depot', 'addr' => '17 Jalan Barat, KL', 'type' => 'dry', 'cap' => 1500.0],
-            ['user' => $ngo2, 'name' => 'Kechara Walk-in Cooler', 'addr' => '17 Jalan Barat (Kitchen), KL', 'type' => 'cold', 'cap' => 600.0],
+            ['user' => $ngo2, 'name' => 'Kechara Walk-in Chiller', 'addr' => '17 Jalan Barat Kitchen, KL', 'type' => 'cold', 'cap' => 600.0],
             ['user' => $ngo3, 'name' => 'MyKasih Central Distribution Hub', 'addr' => 'Menara LGB, TTDI, KL', 'type' => 'dry', 'cap' => 3000.0],
-            ['user' => $ngo3, 'name' => 'MyKasih Chilled Warehouse', 'addr' => 'Section 13, Petaling Jaya', 'type' => 'cold', 'cap' => 1000.0],
-            ['user' => $ngo4, 'name' => 'PichaEats Kitchen Pantry', 'addr' => '25 Jalan Bangsar, KL', 'type' => 'ambient', 'cap' => 500.0],
-            ['user' => $ngo4, 'name' => 'PichaEats Cold Storage Unit', 'addr' => '25 Jalan Bangsar (Unit 2), KL', 'type' => 'cold', 'cap' => 400.0],
-            ['user' => $ngo1, 'name' => 'Emergency Relief Food Bank', 'addr' => 'Cheras Community Center, KL', 'type' => 'ambient', 'cap' => 2500.0],
+            ['user' => $ngo3, 'name' => 'MyKasih Chilled Coldroom', 'addr' => 'Section 13, Petaling Jaya', 'type' => 'cold', 'cap' => 1000.0],
+            ['user' => $ngo4, 'name' => 'PichaEats Community Kitchen Depot', 'addr' => '25 Jalan Bangsar, KL', 'type' => 'ambient', 'cap' => 500.0],
+            ['user' => $ngo4, 'name' => 'PichaEats Cold Storage Unit', 'addr' => '25 Jalan Bangsar, Unit 2, KL', 'type' => 'cold', 'cap' => 400.0],
+            ['user' => $ngo1, 'name' => 'Cheras Emergency Relief Food Bank', 'addr' => 'Cheras Community Center, KL', 'type' => 'ambient', 'cap' => 2500.0],
         ];
 
         $invLocationModels = [];
@@ -241,30 +289,32 @@ class DemoDataSeeder extends Seeder
                 'address' => $loc['addr'],
                 'storage_type' => $loc['type'],
                 'capacity' => $loc['cap'],
-                'current_occupancy' => rand(50, (int)($loc['cap'] * 0.4))
+                'current_occupancy' => rand(80, (int)($loc['cap'] * 0.45))
             ]);
         }
 
         // ──────────────────────────────────────────────────────────
-        // 6. Food Items (Linked to Donations & Inventory Locations)
+        // 6. Food Items (18 Records)
         // ──────────────────────────────────────────────────────────
         $foodItemsList = [
             ['d' => $donationModels[0], 'loc' => $invLocationModels[0], 'cat' => $catModels['Fresh Produce'], 'name' => 'Organic Honeycrisp Apples', 'qty' => 50.0, 'unit' => 'kg', 'storage' => 'ambient', 'perish' => true],
             ['d' => $donationModels[0], 'loc' => $invLocationModels[1], 'cat' => $catModels['Fresh Produce'], 'name' => 'Fresh Kale & Spinach Bunches', 'qty' => 70.5, 'unit' => 'kg', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[1], 'loc' => $invLocationModels[3], 'cat' => $catModels['Bakery & Pastry'], 'name' => 'Artisan Sourdough Loaf', 'qty' => 45.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => true],
-            ['d' => $donationModels[2], 'loc' => $invLocationModels[3], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Tomato Soup Cans (400g)', 'qty' => 250.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => false],
-            ['d' => $donationModels[3], 'loc' => $invLocationModels[4], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Pasteurized Whole Milk Cartons', 'qty' => 80.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[4], 'loc' => $invLocationModels[4], 'cat' => $catModels['Prepared Meals'], 'name' => 'Roasted Chicken & Rice Trays', 'qty' => 20.0, 'unit' => 'boxes', 'storage' => 'frozen', 'perish' => true],
-            ['d' => $donationModels[5], 'loc' => $invLocationModels[6], 'cat' => $catModels['Seafood & Fish'], 'name' => 'Fresh Atlantic Salmon Fillets', 'qty' => 35.0, 'unit' => 'kg', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[6], 'loc' => $invLocationModels[6], 'cat' => $catModels['Beverages & Juices'], 'name' => 'Cold Pressed Orange Juice (1L)', 'qty' => 150.0, 'unit' => 'litres', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[7], 'loc' => $invLocationModels[5], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Oats & Cornflakes Cereal Packs', 'qty' => 90.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => false],
-            ['d' => $donationModels[8], 'loc' => $invLocationModels[5], 'cat' => $catModels['Baby Food & Formula'], 'name' => 'Infant Purée Banana Pouches', 'qty' => 110.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => false],
-            ['d' => $donationModels[9], 'loc' => $invLocationModels[1], 'cat' => $catModels['Frozen Foods'], 'name' => 'Frozen Sweet Corn & Green Peas', 'qty' => 60.0, 'unit' => 'kg', 'storage' => 'frozen', 'perish' => true],
-            ['d' => $donationModels[10], 'loc' => $invLocationModels[3], 'cat' => $catModels['Meat & Poultry'], 'name' => 'Roasted Chicken Meal Boxes', 'qty' => 30.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[11], 'loc' => $invLocationModels[2], 'cat' => $catModels['Beverages & Juices'], 'name' => 'Bottled Mineral Water Crates', 'qty' => 40.0, 'unit' => 'boxes', 'storage' => 'ambient', 'perish' => false],
-            ['d' => $donationModels[1], 'loc' => $invLocationModels[7], 'cat' => $catModels['Bakery & Pastry'], 'name' => 'French Baguettes Pack', 'qty' => 25.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => true],
-            ['d' => $donationModels[3], 'loc' => $invLocationModels[8], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Farm Fresh Eggs (30-egg Trays)', 'qty' => 15.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
-            ['d' => $donationModels[2], 'loc' => $invLocationModels[9], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Black Beans Canned Packs', 'qty' => 100.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => false],
+            ['d' => $donationModels[1], 'loc' => $invLocationModels[4], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Farm Fresh Grade A Eggs (30-tray)', 'qty' => 40.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[1], 'loc' => $invLocationModels[4], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Pasteurized Whole Milk (1L)', 'qty' => 40.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[2], 'loc' => $invLocationModels[3], 'cat' => $catModels['Bakery & Pastry'], 'name' => 'Artisan Sourdough Loaf', 'qty' => 45.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => true],
+            ['d' => $donationModels[3], 'loc' => $invLocationModels[6], 'cat' => $catModels['Beverages & Juices'], 'name' => 'Cold Pressed Orange Juice (1L)', 'qty' => 150.0, 'unit' => 'litres', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[4], 'loc' => $invLocationModels[3], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Tomato Soup Cans (400g)', 'qty' => 150.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => false],
+            ['d' => $donationModels[4], 'loc' => $invLocationModels[9], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Whole Wheat Pasta (500g)', 'qty' => 100.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => false],
+            ['d' => $donationModels[5], 'loc' => $invLocationModels[4], 'cat' => $catModels['Prepared Meals'], 'name' => 'Roasted Chicken Breast Trays', 'qty' => 20.0, 'unit' => 'boxes', 'storage' => 'frozen', 'perish' => true],
+            ['d' => $donationModels[6], 'loc' => $invLocationModels[5], 'cat' => $catModels['Pantry & Canned Goods'], 'name' => 'Oats & Cornflakes Cereal Packs', 'qty' => 90.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => false],
+            ['d' => $donationModels[7], 'loc' => $invLocationModels[5], 'cat' => $catModels['Baby Food & Formula'], 'name' => 'Infant Purée Banana Pouches', 'qty' => 110.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => false],
+            ['d' => $donationModels[8], 'loc' => $invLocationModels[3], 'cat' => $catModels['Meat & Poultry'], 'name' => 'Roasted Chicken Meal Boxes', 'qty' => 30.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[9], 'loc' => $invLocationModels[2], 'cat' => $catModels['Beverages & Juices'], 'name' => 'Bottled Mineral Water Crates', 'qty' => 40.0, 'unit' => 'boxes', 'storage' => 'ambient', 'perish' => false],
+            ['d' => $donationModels[10], 'loc' => $invLocationModels[6], 'cat' => $catModels['Seafood & Fish'], 'name' => 'Fresh Atlantic Salmon Fillets', 'qty' => 35.0, 'unit' => 'kg', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[11], 'loc' => $invLocationModels[1], 'cat' => $catModels['Frozen Foods'], 'name' => 'Frozen Sweet Corn & Green Peas', 'qty' => 60.0, 'unit' => 'kg', 'storage' => 'frozen', 'perish' => true],
+            ['d' => $donationModels[12], 'loc' => $invLocationModels[7], 'cat' => $catModels['Bakery & Pastry'], 'name' => 'Fresh Brioche Burger Buns', 'qty' => 50.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => true],
+            ['d' => $donationModels[13], 'loc' => $invLocationModels[8], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Organic Firm Tofu Blocks', 'qty' => 45.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
+            ['d' => $donationModels[14], 'loc' => $invLocationModels[0], 'cat' => $catModels['Fresh Produce'], 'name' => 'Cameron Highlands Vine Tomatoes', 'qty' => 75.0, 'unit' => 'kg', 'storage' => 'ambient', 'perish' => true],
         ];
 
         $foodItemModels = [];
@@ -274,7 +324,7 @@ class DemoDataSeeder extends Seeder
                 'inventory_location_id' => $fi['loc']->id,
                 'category_id' => $fi['cat']->id,
                 'name' => $fi['name'],
-                'description' => 'High quality food item inspected for safety compliance.',
+                'description' => 'High quality surplus food inspected for safety and quality compliance.',
                 'quantity' => $fi['qty'],
                 'unit' => $fi['unit'],
                 'expiry_date' => $fi['d']->expiry_date,
@@ -285,35 +335,50 @@ class DemoDataSeeder extends Seeder
         }
 
         // ──────────────────────────────────────────────────────────
-        // 7. Allergen-FoodItem Pivot Relationships
+        // 7. Allergen-FoodItem Pivot Relationships (18+ Records)
         // ──────────────────────────────────────────────────────────
         $foodItemModels[0]->allergenTags()->sync([$tagModels['Gluten']->id]);
         $foodItemModels[1]->allergenTags()->sync([$tagModels['Dairy']->id]);
-        $foodItemModels[2]->allergenTags()->sync([$tagModels['Gluten']->id]);
-        $foodItemModels[3]->allergenTags()->sync([$tagModels['Soy']->id]);
-        $foodItemModels[4]->allergenTags()->sync([$tagModels['Dairy']->id, $tagModels['Egg']->id]);
-        $foodItemModels[5]->allergenTags()->sync([$tagModels['Soy']->id, $tagModels['Gluten']->id]);
-        $foodItemModels[6]->allergenTags()->sync([$tagModels['Seafood']->id]);
-        $foodItemModels[7]->allergenTags()->sync([$tagModels['Sulfites']->id]);
-        $foodItemModels[8]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Contains Nuts']->id]);
-        $foodItemModels[9]->allergenTags()->sync([$tagModels['Soy']->id]);
-        $foodItemModels[10]->allergenTags()->sync([$tagModels['Gluten']->id]);
-        $foodItemModels[11]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Dairy']->id, $tagModels['Contains Nuts']->id]);
+        $foodItemModels[2]->allergenTags()->sync([$tagModels['Egg']->id]);
+        $foodItemModels[3]->allergenTags()->sync([$tagModels['Dairy']->id]);
+        $foodItemModels[4]->allergenTags()->sync([$tagModels['Gluten']->id]);
+        $foodItemModels[5]->allergenTags()->sync([$tagModels['Sulfites']->id]);
+        $foodItemModels[6]->allergenTags()->sync([$tagModels['Soy']->id]);
+        $foodItemModels[7]->allergenTags()->sync([$tagModels['Gluten']->id]);
+        $foodItemModels[8]->allergenTags()->sync([$tagModels['Soy']->id, $tagModels['Gluten']->id]);
+        $foodItemModels[9]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Contains Nuts']->id]);
+        $foodItemModels[10]->allergenTags()->sync([$tagModels['Soy']->id]);
+        $foodItemModels[11]->allergenTags()->sync([$tagModels['Gluten']->id]);
+        $foodItemModels[12]->allergenTags()->sync([$tagModels['Sulfites']->id]);
+        $foodItemModels[13]->allergenTags()->sync([$tagModels['Seafood']->id]);
+        $foodItemModels[14]->allergenTags()->sync([$tagModels['Sulfites']->id]);
+        $foodItemModels[15]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Egg']->id]);
+        $foodItemModels[16]->allergenTags()->sync([$tagModels['Soy']->id]);
+        $foodItemModels[17]->allergenTags()->sync([$tagModels['Sulfites']->id]);
 
         // ──────────────────────────────────────────────────────────
-        // 8. Claims (10 Records in Various Lifecycle States)
+        // 8. Claims (14 Records — Structured for Presentation Demo)
         // ──────────────────────────────────────────────────────────
         $claimsData = [
-            ['don' => $donationModels[1], 'ngo' => $ngo1, 'status' => 'approved', 'just' => 'Distributing artisan sourdough breads for morning breakfast service.'],
-            ['don' => $donationModels[2], 'ngo' => $ngo1, 'status' => 'collected', 'just' => 'Stocking central community pantry with canned soups.'],
-            ['don' => $donationModels[4], 'ngo' => $ngo2, 'status' => 'collected', 'just' => 'Providing gourmet meal boxes to homeless shelter residents.'],
-            ['don' => $donationModels[6], 'ngo' => $ngo2, 'status' => 'approved', 'just' => 'Cold pressed juice distribution for children health program.'],
-            ['don' => $donationModels[7], 'ngo' => $ngo3, 'status' => 'collected', 'just' => 'Cereal packs for B40 school student breakfast assistance.'],
-            ['don' => $donationModels[8], 'ngo' => $ngo3, 'status' => 'collected', 'just' => 'Infant cereal purée pouches for single mother support group.'],
-            ['don' => $donationModels[10], 'ngo' => $ngo1, 'status' => 'collected', 'just' => 'Whole roasted chicken meal boxes for community dinner.'],
-            ['don' => $donationModels[11], 'ngo' => $ngo2, 'status' => 'collected', 'just' => 'Mineral water crate distribution for flood relief center.'],
-            ['don' => $donationModels[0], 'ngo' => $ngo3, 'status' => 'pending', 'just' => 'Fresh organic produce needed for weekend community soup kitchen.'],
-            ['don' => $donationModels[3], 'ngo' => $ngo2, 'status' => 'pending', 'just' => 'Farm fresh eggs and milk needed for children shelter nutrition.'],
+            // Claim 0: Pending (For Donor/Admin to demo APPROVE)
+            ['don' => $donationModels[0], 'ngo' => $ngo1, 'status' => 'pending', 'just' => 'Organic produce needed for weekend community kitchen serving 120 B40 families.'],
+            // Claim 1: Pending (For Donor/Admin to demo REJECT or REVIEW)
+            ['don' => $donationModels[1], 'ngo' => $ngo2, 'status' => 'pending', 'just' => 'Farm fresh eggs and milk needed for children shelter nutrition program.'],
+            // Claim 2: Approved, NO vehicle assigned (For NGO to demo ASSIGN VEHICLE)
+            ['don' => $donationModels[2], 'ngo' => $ngo1, 'status' => 'approved', 'just' => 'Artisan sourdough breads for community breakfast redistribution.'],
+            // Claim 3: Approved, WITH vehicle assigned (For NGO to demo COLLECT button)
+            ['don' => $donationModels[3], 'ngo' => $ngo2, 'status' => 'approved', 'just' => 'Cold pressed juices for youth shelter vitamin supplementation.'],
+            // Claims 4 to 13: Collected (With Receipts, Vehicles & Distribution Logs)
+            ['don' => $donationModels[4], 'ngo' => $ngo1, 'status' => 'collected', 'just' => 'Stocking central community food pantry with nutritious canned goods.'],
+            ['don' => $donationModels[5], 'ngo' => $ngo2, 'status' => 'collected', 'just' => 'Providing gourmet meal boxes to homeless shelter evening dinner.'],
+            ['don' => $donationModels[6], 'ngo' => $ngo3, 'status' => 'collected', 'just' => 'Breakfast cereal grain packs for B40 school students assistance program.'],
+            ['don' => $donationModels[7], 'ngo' => $ngo3, 'status' => 'collected', 'just' => 'Infant cereal purée pouches for single mother welfare support group.'],
+            ['don' => $donationModels[8], 'ngo' => $ngo1, 'status' => 'collected', 'just' => 'Whole roasted chicken meal boxes for community kitchen soup run.'],
+            ['don' => $donationModels[9], 'ngo' => $ngo2, 'status' => 'collected', 'just' => 'Mineral water crate distribution for flood relief emergency center.'],
+            ['don' => $donationModels[10], 'ngo' => $ngo1, 'status' => 'collected', 'just' => 'Chilled Atlantic salmon fillets for elderly welfare shelter meals.'],
+            ['don' => $donationModels[11], 'ngo' => $ngo3, 'status' => 'collected', 'just' => 'Frozen mixed vegetables for community food bank weekly distribution.'],
+            ['don' => $donationModels[12], 'ngo' => $ngo1, 'status' => 'collected', 'just' => 'French brioche buns and morning pastries for shelter breakfast.'],
+            ['don' => $donationModels[13], 'ngo' => $ngo2, 'status' => 'collected', 'just' => 'Fresh firm tofu and soy milk packs for diabetic nutrition pantry.'],
         ];
 
         $claimModels = [];
@@ -328,19 +393,23 @@ class DemoDataSeeder extends Seeder
         }
 
         // ──────────────────────────────────────────────────────────
-        // 9. Vehicles (10 Records)
+        // 9. Vehicles (11 Records: 1 for Approved Claim 3 + 10 for Collected Claims 4-13)
         // ──────────────────────────────────────────────────────────
         $vehiclesData = [
-            ['claim' => $claimModels[0], 'plate' => 'VHT1484', 'type' => 'van', 'driver' => 'Bala Subra', 'phone' => '+60129998888', 'cap' => 800.0],
-            ['claim' => $claimModels[1], 'plate' => 'WKT8899', 'type' => 'truck', 'driver' => 'Ahmad Razak', 'phone' => '+60172223333', 'cap' => 2500.0],
-            ['claim' => $claimModels[2], 'plate' => 'BND5050', 'type' => 'van', 'driver' => 'Lee Wei Hong', 'phone' => '+60193332222', 'cap' => 1000.0],
-            ['claim' => $claimModels[3], 'plate' => 'KDD1234', 'type' => 'car', 'driver' => 'David Tan', 'phone' => '+60114445555', 'cap' => 400.0],
-            ['claim' => $claimModels[4], 'plate' => 'PKK7788', 'type' => 'truck', 'driver' => 'Muthu Kumar', 'phone' => '+60165554444', 'cap' => 3000.0],
-            ['claim' => $claimModels[5], 'plate' => 'VAA9911', 'type' => 'van', 'driver' => 'Siti Nurhaliza', 'phone' => '+60189990000', 'cap' => 750.0],
-            ['claim' => $claimModels[6], 'plate' => 'WYY3344', 'type' => 'truck', 'driver' => 'Chong Meng', 'phone' => '+60132221111', 'cap' => 2000.0],
-            ['claim' => $claimModels[7], 'plate' => 'BPL8822', 'type' => 'van', 'driver' => 'Hassan Basri', 'phone' => '+60176665555', 'cap' => 900.0],
-            ['claim' => $claimModels[8], 'plate' => 'KMC4455', 'type' => 'motorcycle', 'driver' => 'Ravi Arumugam', 'phone' => '+60148883333', 'cap' => 100.0],
-            ['claim' => $claimModels[9], 'plate' => 'WXC6677', 'type' => 'van', 'driver' => 'Jason Wong', 'phone' => '+60127774444', 'cap' => 850.0],
+            // Vehicle for Claim 3 (Approved, ready to collect)
+            ['claim' => $claimModels[3], 'plate' => 'VHT 1484', 'type' => 'van', 'driver' => 'Bala Subra', 'phone' => '+6012-9998888', 'cap' => 800.0],
+            
+            // Vehicles for Collected Claims 4 to 13
+            ['claim' => $claimModels[4], 'plate' => 'WKT 8899', 'type' => 'truck', 'driver' => 'Ahmad Razak', 'phone' => '+6017-2223333', 'cap' => 2500.0],
+            ['claim' => $claimModels[5], 'plate' => 'BND 5050', 'type' => 'van', 'driver' => 'Lee Wei Hong', 'phone' => '+6019-3332222', 'cap' => 1000.0],
+            ['claim' => $claimModels[6], 'plate' => 'PKK 7788', 'type' => 'truck', 'driver' => 'Muthu Kumar', 'phone' => '+6016-5554444', 'cap' => 3000.0],
+            ['claim' => $claimModels[7], 'plate' => 'VAA 9911', 'type' => 'van', 'driver' => 'Siti Nurhaliza', 'phone' => '+6018-9990000', 'cap' => 750.0],
+            ['claim' => $claimModels[8], 'plate' => 'WYY 3344', 'type' => 'truck', 'driver' => 'Chong Meng', 'phone' => '+6013-2221111', 'cap' => 2000.0],
+            ['claim' => $claimModels[9], 'plate' => 'BPL 8822', 'type' => 'van', 'driver' => 'Hassan Basri', 'phone' => '+6017-6665555', 'cap' => 900.0],
+            ['claim' => $claimModels[10], 'plate' => 'KMC 4455', 'type' => 'van', 'driver' => 'Ravi Arumugam', 'phone' => '+6014-8883333', 'cap' => 850.0],
+            ['claim' => $claimModels[11], 'plate' => 'WXC 6677', 'type' => 'van', 'driver' => 'Jason Wong', 'phone' => '+6012-7774444', 'cap' => 850.0],
+            ['claim' => $claimModels[12], 'plate' => 'VEE 2233', 'type' => 'van', 'driver' => 'Farid Kamil', 'phone' => '+6019-4445555', 'cap' => 900.0],
+            ['claim' => $claimModels[13], 'plate' => 'KDD 1234', 'type' => 'car', 'driver' => 'David Tan', 'phone' => '+6011-4445555', 'cap' => 400.0],
         ];
 
         foreach ($vehiclesData as $v) {
@@ -355,9 +424,13 @@ class DemoDataSeeder extends Seeder
         }
 
         // ──────────────────────────────────────────────────────────
-        // 10. Collection Receipts (10 Records)
+        // 10. Collection Receipts (10 Records — for Collected Claims 4-13)
         // ──────────────────────────────────────────────────────────
-        $collectedClaims = [$claimModels[1], $claimModels[2], $claimModels[4], $claimModels[5], $claimModels[6], $claimModels[7], $claimModels[0], $claimModels[3], $claimModels[8], $claimModels[9]];
+        $collectedClaims = [
+            $claimModels[4], $claimModels[5], $claimModels[6], $claimModels[7], $claimModels[8],
+            $claimModels[9], $claimModels[10], $claimModels[11], $claimModels[12], $claimModels[13]
+        ];
+
         foreach ($collectedClaims as $idx => $clm) {
             CollectionReceipt::create([
                 'claim_id' => $clm->id,
@@ -365,40 +438,64 @@ class DemoDataSeeder extends Seeder
                 'quantity_collected' => $clm->donation->quantity,
                 'unit' => $clm->donation->unit,
                 'collected_by' => $clm->user->organization_name ?? $clm->user->name,
-                'condition_notes' => 'Inspected at pickup site — good quality and safety compliance verified.',
+                'condition_notes' => 'Inspected at pickup site — good temperature and food safety compliance verified.',
                 'collected_at' => Carbon::now()->subHours(rand(1, 48))
             ]);
         }
 
         // ──────────────────────────────────────────────────────────
-        // 11. Distribution Logs (10 Records for SDG 2 Impact)
+        // 11. Distribution Logs (12 Records for SDG 2 Impact)
         // ──────────────────────────────────────────────────────────
         foreach ($collectedClaims as $idx => $clm) {
+            $beneficiaries = rand(45, 180);
+            $cleanLocation = $clm->user->address ?? 'Kuala Lumpur Community Distribution Center';
+
             DistributionLog::create([
                 'claim_id' => $clm->id,
-                'beneficiaries_count' => rand(40, 200),
-                'distribution_location' => $clm->user->address ?? 'Kuala Lumpur Community Distribution Hub',
+                'beneficiaries_count' => $beneficiaries,
+                'distribution_location' => $cleanLocation,
                 'quantity_distributed' => $clm->donation->quantity,
                 'unit' => $clm->donation->unit,
-                'notes' => 'Direct distribution to B40 families and shelter residents under SDG 2 Zero Hunger program.',
+                'notes' => 'Direct food aid distribution to B40 families and shelter residents under UN SDG 2 Zero Hunger program.',
                 'distributed_at' => Carbon::now()->subHours(rand(1, 24))
             ]);
         }
+
+        // Extra distribution logs for multi-entry demo on Claims 4 and 5
+        DistributionLog::create([
+            'claim_id' => $claimModels[4]->id,
+            'beneficiaries_count' => 60,
+            'distribution_location' => 'Central Storage Facility — 100 Community Way, KL',
+            'quantity_distributed' => 50.00,
+            'unit' => 'items',
+            'notes' => 'Secondary distribution batch dispatched to Sentul community shelter.',
+            'distributed_at' => Carbon::now()->subHours(12)
+        ]);
+
+        DistributionLog::create([
+            'claim_id' => $claimModels[5]->id,
+            'beneficiaries_count' => 85,
+            'distribution_location' => 'Kechara Main Shelter Depot — 17 Jalan Barat, KL',
+            'quantity_distributed' => 10.00,
+            'unit' => 'boxes',
+            'notes' => 'Emergency evening meal distribution to urban homeless beneficiaries.',
+            'distributed_at' => Carbon::now()->subHours(6)
+        ]);
 
         // ──────────────────────────────────────────────────────────
         // 12. NGO Verification Documents (10 Records)
         // ──────────────────────────────────────────────────────────
         $docsData = [
-            ['user' => $ngo1, 'type' => 'registration_cert', 'file' => 'verification_documents/ngo1_cert.pdf', 'status' => 'approved', 'remarks' => 'Verified against Registrar of Societies Malaysia.'],
-            ['user' => $ngo1, 'type' => 'tax_exempt', 'file' => 'verification_documents/ngo1_tax.pdf', 'status' => 'approved', 'remarks' => 'Inland Revenue Board tax exemption approved.'],
-            ['user' => $ngo2, 'type' => 'registration_cert', 'file' => 'verification_documents/ngo2_cert.pdf', 'status' => 'approved', 'remarks' => 'ROS Certificate confirmed active.'],
-            ['user' => $ngo2, 'type' => 'license', 'file' => 'verification_documents/ngo2_license.pdf', 'status' => 'approved', 'remarks' => 'Food Handler Hygiene License valid.'],
+            ['user' => $ngo1, 'type' => 'registration_cert', 'file' => 'verification_documents/ngo1_cert.pdf', 'status' => 'approved', 'remarks' => 'Verified against Registrar of Societies (ROS) Malaysia database.'],
+            ['user' => $ngo1, 'type' => 'tax_exempt', 'file' => 'verification_documents/ngo1_tax.pdf', 'status' => 'approved', 'remarks' => 'Inland Revenue Board (LHDN) tax exemption status verified active.'],
+            ['user' => $ngo2, 'type' => 'registration_cert', 'file' => 'verification_documents/ngo2_cert.pdf', 'status' => 'approved', 'remarks' => 'ROS Certificate confirmed active and compliant.'],
+            ['user' => $ngo2, 'type' => 'license', 'file' => 'verification_documents/ngo2_license.pdf', 'status' => 'approved', 'remarks' => 'Food Premises & Hygiene Certificate validated.'],
             ['user' => $ngo3, 'type' => 'registration_cert', 'file' => 'verification_documents/ngo3_cert.pdf', 'status' => 'approved', 'remarks' => 'MyKasih Trust Charter verified.'],
-            ['user' => $ngo3, 'type' => 'tax_exempt', 'file' => 'verification_documents/ngo3_tax.pdf', 'status' => 'approved', 'remarks' => 'Tax exemption document verified.'],
-            ['user' => $ngo4, 'type' => 'registration_cert', 'file' => 'verification_documents/ngo4_cert.pdf', 'status' => 'pending', 'remarks' => 'Awaiting admin verification check.'],
-            ['user' => $ngo4, 'type' => 'license', 'file' => 'verification_documents/ngo4_license.pdf', 'status' => 'pending', 'remarks' => 'Under review by platform moderator.'],
-            ['user' => $ngo1, 'type' => 'license', 'file' => 'verification_documents/ngo1_license.pdf', 'status' => 'approved', 'remarks' => 'State Health Dept Food Premises License approved.'],
-            ['user' => $ngo2, 'type' => 'tax_exempt', 'file' => 'verification_documents/ngo2_tax.pdf', 'status' => 'approved', 'remarks' => 'LHDN Tax Exemption status active.'],
+            ['user' => $ngo3, 'type' => 'tax_exempt', 'file' => 'verification_documents/ngo3_tax.pdf', 'status' => 'approved', 'remarks' => 'Tax exemption document approved by compliance team.'],
+            ['user' => $ngo4, 'type' => 'registration_cert', 'file' => 'verification_documents/ngo4_cert.pdf', 'status' => 'pending', 'remarks' => 'Pending review by platform moderator in verification queue.'],
+            ['user' => $ngo4, 'type' => 'license', 'file' => 'verification_documents/ngo4_license.pdf', 'status' => 'pending', 'remarks' => 'Under active review by platform moderator.'],
+            ['user' => $ngo1, 'type' => 'license', 'file' => 'verification_documents/ngo1_license.pdf', 'status' => 'approved', 'remarks' => 'State Health Department Premises License approved.'],
+            ['user' => $ngo2, 'type' => 'tax_exempt', 'file' => 'verification_documents/ngo2_tax.pdf', 'status' => 'approved', 'remarks' => 'LHDN Section 44(6) Tax Exemption status verified.'],
         ];
 
         foreach ($docsData as $doc) {
@@ -418,16 +515,16 @@ class DemoDataSeeder extends Seeder
         // 13. User Reviews & Ratings (10 Records)
         // ──────────────────────────────────────────────────────────
         $reviewsData = [
-            ['rev' => $donor1, 'target' => $ngo1, 'rating' => 5, 'comment' => 'Punctual driver, smooth communication, and great food handling!'],
-            ['rev' => $donor2, 'target' => $ngo1, 'rating' => 5, 'comment' => 'Very professional team. They collected 250 canned items cleanly.'],
-            ['rev' => $donor3, 'target' => $ngo2, 'rating' => 5, 'comment' => 'Kechara team arrived right on schedule with insulated boxes.'],
-            ['rev' => $donor4, 'target' => $ngo2, 'rating' => 4, 'comment' => 'Great initiative! Cold juices were picked up safely.'],
-            ['rev' => $donor4, 'target' => $ngo3, 'rating' => 5, 'comment' => 'MyKasih team handled cereal pack distribution seamlessly.'],
-            ['rev' => $donor5, 'target' => $ngo3, 'rating' => 5, 'comment' => 'Excellent communication and swift pickup at Publika.'],
-            ['rev' => $ngo1, 'target' => $donor1, 'rating' => 5, 'comment' => 'Sunway Bakery provides pristine organic produce and breads!'],
-            ['rev' => $ngo2, 'target' => $donor2, 'rating' => 5, 'comment' => 'Jaya Grocer is a consistent donor helping hundreds of families.'],
-            ['rev' => $ngo3, 'target' => $donor3, 'rating' => 5, 'comment' => 'Shangri-La Executive kitchen staff packaged meals perfectly.'],
-            ['rev' => $ngo1, 'target' => $donor5, 'rating' => 5, 'comment' => 'High quality baby cereal pouches received in perfect condition.'],
+            ['rev' => $donor1, 'target' => $ngo1, 'rating' => 5, 'comment' => 'Punctual driver, smooth logistics coordination, and professional food handling!'],
+            ['rev' => $donor2, 'target' => $ngo1, 'rating' => 5, 'comment' => 'Very reliable NGO partner. Picked up 250 canned items swiftly and cleanly.'],
+            ['rev' => $donor3, 'target' => $ngo2, 'rating' => 5, 'comment' => 'Kechara team arrived exactly on schedule with insulated temperature containers.'],
+            ['rev' => $donor4, 'target' => $ngo2, 'rating' => 4, 'comment' => 'Great communication! Cold juices were transported safely to children shelter.'],
+            ['rev' => $donor4, 'target' => $ngo3, 'rating' => 5, 'comment' => 'MyKasih team handled cereal pack distribution smoothly and sent photo proofs.'],
+            ['rev' => $donor5, 'target' => $ngo3, 'rating' => 5, 'comment' => 'Pristine pickup protocol at Publika. Highly recommended charity partner.'],
+            ['rev' => $ngo1, 'target' => $donor1, 'rating' => 5, 'comment' => 'Sunway Bakery consistently provides fresh organic produce and breads in top shape!'],
+            ['rev' => $ngo2, 'target' => $donor2, 'rating' => 5, 'comment' => 'Jaya Grocer is a stellar donor helping feed hundreds of vulnerable individuals.'],
+            ['rev' => $ngo3, 'target' => $donor3, 'rating' => 5, 'comment' => 'Shangri-La Executive kitchen staff packaged banquet meals with superb care.'],
+            ['rev' => $ngo1, 'target' => $donor5, 'rating' => 5, 'comment' => 'High quality baby cereal pouches received sealed in original protective cartons.'],
         ];
 
         foreach ($reviewsData as $r) {
@@ -461,15 +558,15 @@ class DemoDataSeeder extends Seeder
         }
 
         // ──────────────────────────────────────────────────────────
-        // 15. In-App Notifications (12 Records)
+        // 15. In-App Notifications (14 Records)
         // ──────────────────────────────────────────────────────────
-        for ($i = 0; $i < 12; $i++) {
+        for ($i = 0; $i < 14; $i++) {
             Notification::create([
                 'user_id' => ($i % 2 === 0) ? $donor1->id : $ngo1->id,
                 'notification_template_id' => $templateModels[$i % 10]->id,
-                'donation_id' => $donationModels[$i % 12]->id,
+                'donation_id' => $donationModels[$i % 16]->id,
                 'title' => $templateModels[$i % 10]->subject,
-                'message' => 'Notification alert update regarding NutriShare platform activities.',
+                'message' => 'Notification alert regarding NutriShare surplus food redistribution activity.',
                 'channel' => 'email',
                 'is_read' => ($i % 3 === 0),
                 'sent_at' => Carbon::now()->subHours($i * 3)
@@ -477,21 +574,23 @@ class DemoDataSeeder extends Seeder
         }
 
         // ──────────────────────────────────────────────────────────
-        // 16. System Audit Logs (12 Records)
+        // 16. System Audit Logs (14 Records)
         // ──────────────────────────────────────────────────────────
         $logsData = [
             ['user' => $userModels['admin@nutrishare.com'], 'act' => 'user.login', 'desc' => 'System Admin signed in to admin dashboard.', 'lvl' => 'info'],
-            ['user' => $userModels['moderator@nutrishare.com'], 'act' => 'ngo.verified', 'desc' => 'Moderator approved Food Rescue Foundation registration document.', 'lvl' => 'info'],
-            ['user' => $donor1, 'act' => 'donation.created', 'desc' => 'Donor published Fresh Organic Fruits & Veggies Pack (120.5 kg).', 'lvl' => 'info'],
+            ['user' => $userModels['moderator@nutrishare.com'], 'act' => 'ngo.verified', 'desc' => 'Moderator approved Food Rescue Foundation ROS registration document.', 'lvl' => 'info'],
+            ['user' => $donor1, 'act' => 'donation.created', 'desc' => 'Donor published Fresh Organic Fruits & Veggies Pack (120.50 kg).', 'lvl' => 'info'],
             ['user' => $ngo1, 'act' => 'claim.created', 'desc' => 'NGO submitted claim for Artisan Sourdough Breads & Pastries.', 'lvl' => 'info'],
             ['user' => $donor1, 'act' => 'claim.approved', 'desc' => 'Donor approved claim from Food Rescue Foundation.', 'lvl' => 'info'],
-            ['user' => $ngo1, 'act' => 'vehicle.assigned', 'desc' => 'Assigned pickup van VHT1484 (Driver Bala Subra).', 'lvl' => 'info'],
-            ['user' => $ngo1, 'act' => 'receipt.generated', 'desc' => 'Generated collection receipt REC-NUTRI-20260802-001.', 'lvl' => 'info'],
+            ['user' => $ngo1, 'act' => 'vehicle.assigned', 'desc' => 'Assigned pickup van VHT 1484 (Driver: Bala Subra).', 'lvl' => 'info'],
+            ['user' => $ngo1, 'act' => 'receipt.generated', 'desc' => 'Generated collection receipt REC-NUTRI-20260905-001.', 'lvl' => 'info'],
             ['user' => $ngo1, 'act' => 'distribution.logged', 'desc' => 'Recorded distribution log: 125 beneficiaries fed in KL.', 'lvl' => 'info'],
             ['user' => $userModels['admin@nutrishare.com'], 'act' => 'report.generated', 'desc' => 'Admin generated SDG 2 Zero Hunger Impact Report Q3 2026.', 'lvl' => 'info'],
             ['user' => $ngo1, 'act' => 'inventory.created', 'desc' => 'Registered Central Storage Facility (Capacity: 2,000 kg).', 'lvl' => 'info'],
             ['user' => $donor2, 'act' => 'donation.updated', 'desc' => 'Updated pickup availability details for Canned Soups.', 'lvl' => 'info'],
             ['user' => $userModels['mod2@nutrishare.com'], 'act' => 'system.audit', 'desc' => 'Platform Moderator completed security compliance check.', 'lvl' => 'info'],
+            ['user' => $ngo2, 'act' => 'distribution.logged', 'desc' => 'Kechara recorded distribution of 20 boxes to 85 shelter residents.', 'lvl' => 'info'],
+            ['user' => $userModels['admin@nutrishare.com'], 'act' => 'system.backup', 'desc' => 'Automated nightly database backup completed successfully.', 'lvl' => 'info'],
         ];
 
         foreach ($logsData as $l) {

@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Author: Yap Zhing Shuen
+ * Author: Hiew Li Wei
  * Module 3: Claims & Logistics Distribution
  */
 class AssignVehicleRequest extends FormRequest

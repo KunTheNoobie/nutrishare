@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Claim;
 
 /**
- * Author: Yap Zhing Shuen
+ * Author: Hiew Li Wei
  * Module 3: Claims & Logistics Distribution
  *
  * ClaimRepository — Repository Pattern Implementation (Module 3)
