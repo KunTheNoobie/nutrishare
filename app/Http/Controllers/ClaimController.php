@@ -108,9 +108,9 @@ class ClaimController extends Controller
                 abort(403, 'Unauthorized. Only an Admin, Moderator, or the Donor can approve or reject claims.');
             }
         } elseif ($action === 'collect') {
-            // Admin, Moderator, or the NGO who claimed this donation can collect it
-            if (!$user->isAdmin() && !$user->isModerator() && (!$user->isNgo() || $claim->user_id !== $user->id)) {
-                abort(403, 'Unauthorized. Only the claiming NGO, Moderator, or Admin can mark this donation as collected.');
+            // ONLY the NGO who claimed this donation can collect it
+            if (!$user->isNgo() || $claim->user_id !== $user->id) {
+                abort(403, 'Unauthorized. Only the claiming NGO can mark this donation as collected.');
             }
 
             // BUSINESS RULE: A claim CANNOT be marked as collected until a pickup vehicle (driver & van/truck) has been assigned!
@@ -140,6 +140,11 @@ class ClaimController extends Controller
     public function assignVehicle(AssignVehicleRequest $request, Claim $claim)
     {
         $this->authorize('update', $claim);
+
+        $user = Auth::user();
+        if (!$user->isNgo() || $claim->user_id !== $user->id) {
+            abort(403, 'Unauthorized. Only the claiming NGO can assign vehicle details.');
+        }
 
         $validated = $request->validated();
         $validated['claim_id'] = $claim->id;

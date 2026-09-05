@@ -85,7 +85,7 @@
                 @php
                     $user = Auth::user();
                     $isReviewer = $user->isAdmin() || $user->isModerator() || $claim->donation->user_id === $user->id;
-                    $isClaimingNgo = ($user->isNgo() && $claim->user_id === $user->id) || $user->isAdmin() || $user->isModerator();
+                    $isClaimingNgo = $user->isNgo() && $claim->user_id === $user->id;
 
                     $availableActions = array_filter($stateObject->allowedActions(), function($action) use ($user, $isReviewer, $isClaimingNgo) {
                         if (in_array($action, ['approve', 'reject'])) return $isReviewer;
@@ -94,7 +94,7 @@
                         return false;
                     });
 
-                    $canManageLogistics = $user->isAdmin() || $user->isModerator() || $claim->user_id === $user->id;
+                    $canManageLogistics = $user->isNgo() && $claim->user_id === $user->id;
                 @endphp
                 <div class="alert border-0 shadow-sm" style="background: rgba(41, 151, 255, 0.12); color: var(--apple-text); border: 1px solid rgba(41, 151, 255, 0.25) !important;">
                     <strong>Current State:</strong> 
@@ -244,7 +244,7 @@
         @endif
 
         <!-- Assign Vehicle Form -->
-        @if((Auth::user()->isAdmin() || $claim->user_id === Auth::id()) && $claim->status === 'approved' && !$claim->vehicle)
+        @if(Auth::user()->isNgo() && $claim->user_id === Auth::id() && $claim->status === 'approved' && !$claim->vehicle)
         <div class="card mb-3">
             <div class="card-header"><i class="bi bi-truck me-1"></i> Dispatch Transport & Driver</div>
             <div class="card-body">
