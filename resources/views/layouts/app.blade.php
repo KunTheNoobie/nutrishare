@@ -183,6 +183,29 @@
             font-family: 'Inter', -apple-system, sans-serif !important;
             box-shadow: none !important;
         }
+        .swal2-icon {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            margin: 1.75rem auto 1rem auto !important;
+            box-sizing: content-box !important;
+        }
+        .swal2-icon .swal2-icon-content {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            line-height: 1 !important;
+            width: 100% !important;
+            height: 100% !important;
+            font-size: 3.75em !important;
+        }
+        .swal2-icon.swal2-warning .swal2-icon-content,
+        .swal2-icon.swal2-question .swal2-icon-content,
+        .swal2-icon.swal2-info .swal2-icon-content {
+            margin-top: -0.04em !important;
+        }
 
         [data-theme="light"] .swal2-popup {
             background-color: #ffffff !important;
@@ -288,15 +311,66 @@
             border-color: #e5e5ea !important;
         }
 
-        /* Icon Spacing for Badges and Buttons */
-        .badge i, .btn i {
-            margin-right: 6px !important;
-            display: inline-block;
+        /* ==========================================================================
+           UNIVERSAL ICON ALIGNMENT & SYSTEM-WIDE CENTERING
+           ========================================================================== */
+        
+        /* 1. Base Bootstrap Icon Alignment */
+        i.bi, .bi {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: -0.125em;
+            line-height: 1 !important;
+            flex-shrink: 0;
+        }
+
+        /* 2. Neutralize baseline shift in flex/inline-flex containers for perfect vertical centering */
+        .d-flex i.bi,
+        .d-inline-flex i.bi,
+        .btn i, .btn .bi,
+        .badge i, .badge .bi,
+        .card-header i, .card-header .bi,
+        .alert i, .alert .bi,
+        .nav-link i, .nav-link .bi,
+        .dropdown-item i, .dropdown-item .bi,
+        .input-group-text i, .input-group-text .bi,
+        .modal-title i, .modal-title .bi {
+            vertical-align: 0 !important;
+        }
+
+        /* 3. Global Button & Badge Icon Centering (Zero accidental right-margins) */
+        .btn i, .btn .bi {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+        }
+
+        .badge {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 0.35rem !important;
+            vertical-align: middle !important;
+        }
+        .badge i, .badge .bi {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1 !important;
         }
 
         /* Action Tag High-Contrast Styling */
         .action-tag {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: 0.75rem;
             font-weight: 600;
@@ -306,6 +380,9 @@
             color: #64d2ff !important;
             border: 1px solid rgba(41, 151, 255, 0.35) !important;
             white-space: nowrap;
+        }
+        .action-tag i, .action-tag .bi {
+            margin: 0 !important;
         }
         [data-theme="light"] .action-tag {
             background-color: rgba(0, 102, 204, 0.12) !important;
@@ -337,7 +414,7 @@
             font-weight: 600 !important;
         }
         
-        /* Global Button Overrides for System-wide Uniformity */
+        /* 4. Global Button Overrides for System-wide Uniformity */
         .btn {
             border-radius: 980px !important;
             font-weight: 500 !important;
@@ -349,7 +426,7 @@
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 6px !important;
+            gap: 0.45rem !important;
             font-size: 0.875rem !important;
             box-shadow: none !important;
         }
@@ -358,12 +435,14 @@
             font-size: 0.8rem !important;
             border-radius: 980px !important;
             white-space: nowrap !important;
+            gap: 0.35rem !important;
         }
         .btn-lg {
             padding: 12px 28px !important;
             font-size: 1rem !important;
             border-radius: 980px !important;
             white-space: nowrap !important;
+            gap: 0.5rem !important;
         }
         .btn:hover {
             transform: translateY(-1px) !important;
@@ -372,10 +451,88 @@
         .btn:active {
             transform: translateY(0) !important;
         }
+
+        /* 5. Icon-Only Buttons Centering & Square/Circular Sizing */
+        .btn-icon,
+        .btn-icon-sm,
+        .btn:has(> i:only-child:not(:has(~ *))),
+        .btn:has(> .bi:only-child:not(:has(~ *))) {
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            flex-shrink: 0 !important;
+            border-radius: 50% !important;
+        }
+        .btn-icon.btn-sm,
+        .btn-icon-sm,
+        .btn-sm:has(> i:only-child:not(:has(~ *))),
+        .btn-sm:has(> .bi:only-child:not(:has(~ *))) {
+            width: 32px !important;
+            height: 32px !important;
+            min-width: 32px !important;
+            min-height: 32px !important;
+        }
+        .btn:not(.btn-sm):not(.btn-lg):has(> i:only-child:not(:has(~ *))),
+        .btn:not(.btn-sm):not(.btn-lg):has(> .bi:only-child:not(:has(~ *))) {
+            width: 38px !important;
+            height: 38px !important;
+            min-width: 38px !important;
+            min-height: 38px !important;
+        }
+        .btn-icon.btn-lg,
+        .btn-lg:has(> i:only-child:not(:has(~ *))),
+        .btn-lg:has(> .bi:only-child:not(:has(~ *))) {
+            width: 44px !important;
+            height: 44px !important;
+            min-width: 44px !important;
+            min-height: 44px !important;
+        }
+
+        /* Input group exception for buttons with icons */
         .input-group .btn {
             border-radius: 0 980px 980px 0 !important;
             padding-left: 1.25rem !important;
             padding-right: 1.25rem !important;
+            width: auto !important;
+            min-width: 44px !important;
+            height: auto !important;
+        }
+
+        /* 6. Card Headers, Alerts, Dropdowns & Form Labels Icon Alignment */
+        .card-header {
+            display: flex !important;
+            align-items: center !important;
+        }
+        .card-header i, .card-header .bi {
+            margin-right: 0.5rem !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        .dropdown-item {
+            display: flex !important;
+            align-items: center !important;
+        }
+        .dropdown-item i, .dropdown-item .bi {
+            margin-right: 0.6rem !important;
+            width: 1.25rem !important;
+            text-align: center !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+        }
+        .table td i, .table th i,
+        .table td .bi, .table th .bi {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: -0.125em !important;
+        }
+        .table td .btn i, .table td .btn .bi {
+            margin: 0 !important;
         }
 
         /* Custom Button Colors */

@@ -206,14 +206,14 @@
                             <td style="color: var(--apple-text);">{{ $log->quantity_distributed }} {{ $log->unit }}</td>
                             <td class="pe-4 text-end">
                                 @if(Auth::user()->isAdmin() || Auth::user()->isModerator() || $claim->user_id === Auth::id())
-                                <div class="btn-group btn-group-sm">
+                                <div class="d-inline-flex align-items-center justify-content-end gap-1.5">
                                     <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editLogModal{{ $log->id }}" title="Edit Entry">
-                                        <i class="bi bi-pencil-square me-1"></i>Edit
+                                        <i class="bi bi-pencil-square"></i>Edit
                                     </button>
-                                    <form method="POST" action="{{ route('claims.distribution.destroy', $log) }}" class="d-inline" data-confirm="Are you sure you want to delete this distribution log entry?" data-confirm-title="Delete Distribution Log" data-confirm-btn="Delete Log" data-confirm-color="#ff3b30">
+                                    <form method="POST" action="{{ route('claims.distribution.destroy', $log) }}" class="d-inline m-0" data-confirm="Are you sure you want to delete this distribution log entry?" data-confirm-title="Delete Distribution Log" data-confirm-btn="Delete Log" data-confirm-color="#ff3b30">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger ms-1" title="Delete Entry">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger btn-icon btn-icon-sm" title="Delete Entry">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </form>
