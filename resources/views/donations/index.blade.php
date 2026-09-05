@@ -122,7 +122,7 @@
                             <i class="bi bi-geo-alt text-apple-accent me-1"></i>{{ Str::limit($donation->pickup_address, 35) }}
                         </td>
                         <td class="small" style="color: var(--apple-text-muted);">
-                            <i class="bi bi-calendar me-1"></i>{{ $donation->expiry_date->format('d M Y') }}
+                            <span data-date="{{ $donation->expiry_date->toIso8601String() }}"><i class="bi bi-calendar"></i> {{ $donation->expiry_date->format('d M Y') }}</span>
                         </td>
                         <td>
                             <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }}">

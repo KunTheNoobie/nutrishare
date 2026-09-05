@@ -63,7 +63,9 @@
                         <i class="bi bi-person me-1 text-apple-accent"></i>{{ $report->user->name ?? 'System' }}
                     </td>
                     <td class="small" style="color: var(--apple-text-muted);">
-                        <i class="bi bi-calendar me-1"></i>{{ $report->report_date->format('d M Y, h:i A') }}
+                        <span data-date="{{ $report->report_date->toIso8601String() }}" data-with-time>
+                            <i class="bi bi-calendar"></i> {{ $report->report_date->format('d M Y, h:i A') }}
+                        </span>
                     </td>
                     <td class="pe-4 text-end">
                         <div class="d-inline-flex align-items-center gap-2">
@@ -74,10 +76,10 @@
                                 <i class="bi bi-download"></i> Export
                             </a>
                             @if(Auth::user()->isAdmin())
-                            <form method="POST" action="{{ route('reports.destroy', $report) }}" class="d-inline" data-confirm="Are you sure you want to delete this report?" data-confirm-title="Delete Report" data-confirm-btn="Delete" data-confirm-color="#ff3b30">
+                            <form method="POST" action="{{ route('reports.destroy', $report) }}" class="d-inline m-0" data-confirm="Are you sure you want to delete this report?" data-confirm-title="Delete Report" data-confirm-btn="Delete" data-confirm-color="#ff3b30">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">
-                                    <i class="bi bi-trash"></i>
+                                <button type="submit" class="btn btn-sm btn-outline-danger text-nowrap">
+                                    <i class="bi bi-trash"></i> Delete
                                 </button>
                             </form>
                             @endif

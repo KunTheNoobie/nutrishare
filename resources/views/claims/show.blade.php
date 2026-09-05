@@ -76,7 +76,7 @@
                     <div class="col-md-6"><strong>Quantity:</strong> {{ $claim->donation->quantity }} {{ $claim->donation->unit }}</div>
                     <div class="col-md-6"><strong>Donor:</strong> <a href="{{ route('reviews.show', $claim->donation->donor) }}" class="text-apple-accent text-decoration-none" title="View Donor Trust Profile">{{ $claim->donation->donor->name }} <i class="bi bi-star-fill text-warning"></i></a></div>
                     <div class="col-md-6"><strong>NGO:</strong> <a href="{{ route('reviews.show', $claim->user) }}" class="text-apple-accent text-decoration-none" title="View NGO Trust Profile">{{ $claim->user->organization_name ?? $claim->user->name }} <i class="bi bi-star-fill text-warning"></i></a></div>
-                    <div class="col-md-6"><strong>Pickup:</strong> {{ $claim->pickup_scheduled_at?->format('d M Y, h:i A') ?? 'TBD' }}</div>
+                    <div class="col-md-6"><strong>Pickup:</strong> @if($claim->pickup_scheduled_at)<span data-date="{{ $claim->pickup_scheduled_at->toIso8601String() }}" data-with-time>{{ $claim->pickup_scheduled_at->format('d M Y, h:i A') }}</span>@else TBD @endif</div>
                 </div>
                 <hr class="my-2" style="border-color: var(--apple-border) !important;">
                 <p class="small mb-3"><strong>Justification:</strong> {{ $claim->justification }}</p>
@@ -200,21 +200,25 @@
                         <tbody>
                         @foreach($claim->distributionLogs as $log)
                         <tr class="border-bottom" style="border-color: var(--apple-border) !important;">
-                            <td class="ps-4 small" style="color: var(--apple-text-muted);"><i class="bi bi-calendar me-1"></i>{{ $log->distributed_at->format('d M Y') }}</td>
-                            <td style="color: var(--apple-text);"><i class="bi bi-geo-alt text-apple-accent me-1"></i>{{ $log->distribution_location }}</td>
+                            <td class="ps-4 small" style="color: var(--apple-text-muted);">
+                                <span data-date="{{ $log->distributed_at->toIso8601String() }}">
+                                    <i class="bi bi-calendar"></i> {{ $log->distributed_at->format('d M Y') }}
+                                </span>
+                            </td>
+                            <td style="color: var(--apple-text);"><i class="bi bi-geo-alt text-apple-accent"></i> {{ $log->distribution_location }}</td>
                             <td><span class="badge badge-success fw-bold">{{ $log->beneficiaries_count }} People</span></td>
                             <td style="color: var(--apple-text);">{{ $log->quantity_distributed }} {{ $log->unit }}</td>
                             <td class="pe-4 text-end">
                                 @if(Auth::user()->isAdmin() || Auth::user()->isModerator() || $claim->user_id === Auth::id())
                                 <div class="d-inline-flex align-items-center justify-content-end gap-2">
                                     <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editLogModal{{ $log->id }}" title="Edit Entry">
-                                        <i class="bi bi-pencil-square me-1"></i> Edit
+                                        <i class="bi bi-pencil-square"></i> Edit
                                     </button>
-                                    <form method="POST" action="{{ route('claims.distribution.destroy', $log) }}" class="d-inline m-0 ms-2" data-confirm="Are you sure you want to delete this distribution log entry?" data-confirm-title="Delete Distribution Log" data-confirm-btn="Delete Log" data-confirm-color="#ff3b30">
+                                    <form method="POST" action="{{ route('claims.distribution.destroy', $log) }}" class="d-inline m-0" data-confirm="Are you sure you want to delete this distribution log entry?" data-confirm-title="Delete Distribution Log" data-confirm-btn="Delete Log" data-confirm-color="#ff3b30">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger btn-icon btn-icon-sm" title="Delete Entry">
-                                            <i class="bi bi-trash"></i>
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Entry">
+                                            <i class="bi bi-trash"></i> Delete
                                         </button>
                                     </form>
                                 </div>

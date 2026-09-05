@@ -451,35 +451,55 @@
             font-weight: 600 !important;
         }
         
-        /* 4. Global Button Overrides for System-wide Uniformity */
+        /* 4. Global Button Overrides for System-wide Uniformity & Alignment */
         .btn {
+            height: 38px !important;
+            min-height: 38px !important;
             border-radius: 980px !important;
             font-weight: 500 !important;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-            padding: 8px 20px !important;
-            line-height: 1.4 !important;
+            padding: 0 20px !important;
+            line-height: 1 !important;
             white-space: nowrap !important;
             transition: all 0.2s ease !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
+            vertical-align: middle !important;
             gap: 0.55rem !important;
             font-size: 0.875rem !important;
             box-shadow: none !important;
+            box-sizing: border-box !important;
         }
         .btn-sm {
-            padding: 6px 16px !important;
+            height: 32px !important;
+            min-height: 32px !important;
+            max-height: 32px !important;
+            padding: 0 16px !important;
             font-size: 0.8rem !important;
             border-radius: 980px !important;
             white-space: nowrap !important;
             gap: 0.45rem !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            box-sizing: border-box !important;
         }
         .btn-lg {
-            padding: 12px 28px !important;
+            height: 44px !important;
+            min-height: 44px !important;
+            max-height: 44px !important;
+            padding: 0 26px !important;
             font-size: 1rem !important;
             border-radius: 980px !important;
             white-space: nowrap !important;
             gap: 0.65rem !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            box-sizing: border-box !important;
         }
         .btn:hover {
             transform: translateY(-1px) !important;
@@ -1272,6 +1292,48 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     @endif
 });
+
+// 4. System-Based / Browser Locale Date & Time Formatter
+(function() {
+    function formatSystemDates() {
+        const userLocale = navigator.language || undefined;
+        const dateElements = document.querySelectorAll('[data-date]');
+        if (!dateElements.length) return;
+
+        const dateFormatter = new Intl.DateTimeFormat(userLocale, {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+
+        const dateTimeFormatter = new Intl.DateTimeFormat(userLocale, {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+
+        dateElements.forEach(function(el) {
+            const raw = el.getAttribute('data-date');
+            if (!raw) return;
+            const d = new Date(raw);
+            if (isNaN(d.getTime())) return;
+
+            const withTime = el.hasAttribute('data-with-time');
+            const icon = el.querySelector('i');
+            const iconHtml = icon ? icon.outerHTML + ' ' : '';
+            el.innerHTML = iconHtml + (withTime ? dateTimeFormatter.format(d) : dateFormatter.format(d));
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', formatSystemDates);
+    } else {
+        formatSystemDates();
+    }
+})();
 </script>
 @stack('scripts')
 </body>
