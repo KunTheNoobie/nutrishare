@@ -206,6 +206,21 @@
         .swal2-icon.swal2-info .swal2-icon-content {
             margin-top: -0.04em !important;
         }
+        .swal2-popup.swal2-show {
+            animation: appleModalSpring 0.38s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+        @keyframes appleModalSpring {
+            0% { transform: scale(0.92) translateY(12px); opacity: 0; }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        .swal2-icon.swal2-icon-show {
+            animation: appleIconPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+        @keyframes appleIconPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            60% { transform: scale(1.12); }
+            100% { transform: scale(1); opacity: 1; }
+        }
 
         [data-theme="light"] .swal2-popup {
             background-color: #ffffff !important;
@@ -502,11 +517,17 @@
             box-sizing: border-box !important;
         }
         .btn:hover {
-            transform: translateY(-1px) !important;
-            opacity: 0.92 !important;
+            transform: translateY(-1.5px) !important;
+            opacity: 0.96 !important;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16) !important;
+        }
+        .btn:hover i, .btn:hover .bi {
+            transform: scale(1.12);
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .btn:active {
-            transform: translateY(0) !important;
+            transform: scale(0.97) translateY(0) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
         }
 
         /* 5. Icon-Only Buttons Centering & Square/Circular Sizing (Zero margin so icon is dead center) */
@@ -757,14 +778,180 @@
 
         .form-text { color: #a1a1aa !important; }
 
-        /* Animations */
+        /* ── Top-Tier Apple Animations & Fluid Micro-Interactions Suite ── */
         .animate-slide-up {
-            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            transform: translateY(20px);
+            animation: slideUpFade 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
+        .animate-fade-in {
+            animation: appleFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .animate-pop-in {
+            animation: applePopIn 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+
+        /* Stagger Cascade Utilities */
+        .stagger-1 { animation-delay: 0.05s !important; }
+        .stagger-2 { animation-delay: 0.10s !important; }
+        .stagger-3 { animation-delay: 0.15s !important; }
+        .stagger-4 { animation-delay: 0.20s !important; }
+        .stagger-5 { animation-delay: 0.25s !important; }
+        .stagger-6 { animation-delay: 0.30s !important; }
+        .stagger-7 { animation-delay: 0.35s !important; }
+        .stagger-8 { animation-delay: 0.40s !important; }
+
         @keyframes slideUpFade {
-            to { transform: translateY(0); opacity: 1; }
+            0% { opacity: 0; transform: translateY(18px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes appleFadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        @keyframes applePopIn {
+            0% { opacity: 0; transform: scale(0.94); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Card Elevations & Surface Fluid Physics */
+        .card {
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease !important;
+            will-change: transform, box-shadow;
+        }
+        .card:hover, .card-hover-interactive:hover {
+            transform: translateY(-3.5px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.28) !important;
+            border-color: rgba(255, 255, 255, 0.18) !important;
+        }
+        [data-theme="light"] .card:hover, [data-theme="light"] .card-hover-interactive:hover {
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08) !important;
+            border-color: rgba(0, 102, 204, 0.25) !important;
+        }
+
+        /* Image Zoom on Card Hover */
+        .card-img-zoom {
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+        }
+        .card-img-zoom img {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        .card:hover .card-img-zoom img,
+        .card-hover-interactive:hover .card-img-zoom img {
+            transform: scale(1.05);
+        }
+
+        /* Table Row Cascade Fade-In */
+        .table > tbody > tr {
+            animation: rowCascadeFade 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+            transition: background-color 0.2s ease;
+        }
+        .table > tbody > tr:nth-child(1) { animation-delay: 0.03s; }
+        .table > tbody > tr:nth-child(2) { animation-delay: 0.06s; }
+        .table > tbody > tr:nth-child(3) { animation-delay: 0.09s; }
+        .table > tbody > tr:nth-child(4) { animation-delay: 0.12s; }
+        .table > tbody > tr:nth-child(5) { animation-delay: 0.15s; }
+        .table > tbody > tr:nth-child(6) { animation-delay: 0.18s; }
+        .table > tbody > tr:nth-child(7) { animation-delay: 0.21s; }
+        .table > tbody > tr:nth-child(8) { animation-delay: 0.24s; }
+        .table > tbody > tr:nth-child(9) { animation-delay: 0.27s; }
+        .table > tbody > tr:nth-child(10) { animation-delay: 0.30s; }
+
+        @keyframes rowCascadeFade {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dynamic Live Pulse Dots */
+        .pulse-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+        .pulse-dot-success {
+            background-color: var(--apple-success);
+            animation: pulseRingSuccess 2s infinite ease-out;
+        }
+        .pulse-dot-warning {
+            background-color: #ff9f0a;
+            animation: pulseRingWarning 2s infinite ease-out;
+        }
+        .pulse-dot-primary {
+            background-color: var(--apple-accent);
+            animation: pulseRingPrimary 2s infinite ease-out;
+        }
+        @keyframes pulseRingSuccess {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(52, 199, 89, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 199, 89, 0); }
+        }
+        @keyframes pulseRingWarning {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 159, 10, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(255, 159, 10, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 159, 10, 0); }
+        }
+        @keyframes pulseRingPrimary {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(41, 151, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(41, 151, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(41, 151, 255, 0); }
+        }
+
+        /* Banner Subtle Sheen Light Sweep */
+        .sdg-banner-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .sdg-banner-shimmer::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -150%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transform: skewX(-20deg);
+            animation: bannerSheen 7s infinite ease-in-out;
+            pointer-events: none;
+        }
+        @keyframes bannerSheen {
+            0%, 75% { left: -150%; }
+            100% { left: 150%; }
+        }
+
+        /* Notification Bell Badge Pulse */
+        .nav-badge-count {
+            animation: bellCountPulse 3s infinite ease-in-out;
+        }
+        @keyframes bellCountPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.18); }
+        }
+
+        /* Sleek Apple Custom Glassmorphic Scrollbars */
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.38);
+        }
+        [data-theme="light"] ::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        [data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.38);
+        }
+
+        /* Dropdown Pop Spring */
+        .dropdown-menu.show {
+            animation: applePopIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: top right;
         }
 
         main { flex-grow: 1; display: flex; flex-direction: column; }

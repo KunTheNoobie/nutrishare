@@ -20,7 +20,7 @@
 </div>
 
 <!-- UN SDG 2 Zero Hunger Live Impact Banner -->
-<div class="card shadow-sm mb-4 border-0 animate-slide-up" style="background: linear-gradient(135deg, rgba(0, 102, 204, 0.12) 0%, rgba(40, 205, 65, 0.12) 100%); border: 1px solid var(--apple-border) !important;">
+<div class="card shadow-sm mb-4 border-0 animate-slide-up stagger-1 sdg-banner-shimmer" style="background: linear-gradient(135deg, rgba(0, 102, 204, 0.12) 0%, rgba(40, 205, 65, 0.12) 100%); border: 1px solid var(--apple-border) !important;">
     <div class="card-body p-3">
         <div class="row align-items-center text-center text-md-start g-3">
             <div class="col-md-4 d-flex align-items-center gap-3">
@@ -61,12 +61,14 @@
 </div>
 
 <!-- Interactive Analytics Visual Chart Card -->
-<div class="row g-3 mb-4 mt-2 animate-slide-up">
+<div class="row g-3 mb-4 mt-2 animate-slide-up stagger-2">
     <div class="col-md-7">
-        <div class="card shadow-sm h-100">
+        <div class="card shadow-sm h-100 card-hover-interactive">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-bar-chart-line text-apple-accent me-1"></i> Food Rescue Breakdown by Category</span>
-                <span class="badge border" style="background: var(--apple-input-bg); color: var(--apple-text);">Live Analytics</span>
+                <span class="badge border d-inline-flex align-items-center" style="background: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important;">
+                    <span class="pulse-dot pulse-dot-primary"></span> Live Analytics
+                </span>
             </div>
             <div class="card-body p-3">
                 <canvas id="categoryChart" style="max-height: 220px;"></canvas>
@@ -74,10 +76,12 @@
         </div>
     </div>
     <div class="col-md-5">
-        <div class="card shadow-sm h-100">
+        <div class="card shadow-sm h-100 card-hover-interactive">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span><i class="bi bi-pie-chart text-apple-success me-1"></i> Claim Status Distribution</span>
-                <span class="badge border" style="background: var(--apple-input-bg); color: var(--apple-text);">Real-time</span>
+                <span class="badge border d-inline-flex align-items-center" style="background: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important;">
+                    <span class="pulse-dot pulse-dot-success"></span> Real-time
+                </span>
             </div>
             <div class="card-body p-3 d-flex align-items-center justify-content-center">
                 <canvas id="claimStatusChart" style="max-height: 220px;"></canvas>
@@ -150,9 +154,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 {{-- ── Donor Dashboard ── --}}
 @if($user->isDonor())
-<div class="row g-3 mb-4 animate-slide-up">
+<div class="row g-3 mb-4 animate-slide-up stagger-3">
     <div class="col-md-4">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm card-hover-interactive">
             <div class="card-body text-center py-4">
                 <h2 class="text-apple-accent mb-2" style="font-size: 2.5rem; font-weight: 600;">{{ $totalDonations }}</h2>
                 <p class="text-muted mb-0" style="font-size: 0.95rem;">Total Donations</p>
@@ -160,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm card-hover-interactive">
             <div class="card-body text-center py-4">
                 <h2 class="text-apple-success mb-2" style="font-size: 2.5rem; font-weight: 600;">{{ $activeDonations }}</h2>
                 <p class="text-muted mb-0" style="font-size: 0.95rem;">Active Donations</p>
@@ -168,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card shadow-sm h-100 d-flex justify-content-center align-items-center">
+        <div class="card shadow-sm h-100 card-hover-interactive d-flex justify-content-center align-items-center">
             <div class="card-body text-center py-4 w-100 d-flex flex-column justify-content-center">
                 <a href="{{ route('donations.create') }}" class="btn btn-ns-primary w-100">
                     <i class="bi bi-plus-circle"></i> New Donation
@@ -177,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
 </div>
-<div class="card shadow-sm animate-slide-up">
+<div class="card shadow-sm animate-slide-up stagger-4">
     <div class="card-header"><i class="bi bi-basket text-apple-accent"></i> Recent Donations</div>
     <div class="card-body">
         @forelse($donations as $donation)
@@ -220,9 +224,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 {{-- ── NGO Dashboard ── --}}
 @if($user->isNgo())
-<div class="row g-3 mb-4 animate-slide-up">
+<div class="row g-3 mb-4 animate-slide-up stagger-3">
     <div class="col-md-4">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm card-hover-interactive">
             <div class="card-body text-center py-4">
                 <h2 class="text-apple-accent mb-2" style="font-size: 2.5rem; font-weight: 600;">{{ $totalClaims }}</h2>
                 <p class="text-muted mb-0" style="font-size: 0.95rem;">Total Claims</p>
@@ -230,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm card-hover-interactive">
             <div class="card-body text-center py-4">
                 <h2 class="text-apple-warning mb-2" style="font-size: 2.5rem; font-weight: 600;">{{ $pendingClaims }}</h2>
                 <p class="text-muted mb-0" style="font-size: 0.95rem;">Pending Claims</p>
@@ -238,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     <div class="col-md-4">
-        <div class="card shadow-sm h-100 d-flex justify-content-center align-items-center">
+        <div class="card shadow-sm h-100 card-hover-interactive d-flex justify-content-center align-items-center">
             <div class="card-body text-center py-4 w-100 d-flex flex-column justify-content-center">
                 <a href="{{ route('donations.index') }}" class="btn btn-ns-primary w-100">
                     <i class="bi bi-search"></i> Browse Donations
@@ -398,9 +402,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 {{-- ── Admin / Moderator Dashboard ── --}}
 @if($user->isAdmin() || $user->isModerator())
-<div class="row g-3 mb-4 animate-slide-up">
+<div class="row g-3 mb-4 animate-slide-up stagger-3">
     <div class="col-md-3">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm card-hover-interactive">
             <div class="card-body text-center py-4">
                 <h2 class="text-apple-danger mb-2" style="font-size: 2.5rem; font-weight: 600;">{{ $pendingVerifications }}</h2>
                 <p class="text-muted mb-0" style="font-size: 0.95rem;">Pending Verifications</p>
@@ -408,7 +412,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm card-hover-interactive">
             <div class="card-body text-center py-4">
                 <h2 class="text-apple-accent mb-2" style="font-size: 2.5rem; font-weight: 600;">{{ $totalUsers }}</h2>
                 <p class="text-muted mb-0" style="font-size: 0.95rem;">Total Users</p>
@@ -416,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card shadow-sm">
+        <div class="card shadow-sm card-hover-interactive">
             <div class="card-body text-center py-4">
                 <h2 class="text-apple-success mb-2" style="font-size: 2.5rem; font-weight: 600;">{{ $totalDonations }}</h2>
                 <p class="text-muted mb-0" style="font-size: 0.95rem;">Total Donations</p>
@@ -424,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card shadow-sm h-100 d-flex justify-content-center align-items-center">
+        <div class="card shadow-sm h-100 card-hover-interactive d-flex justify-content-center align-items-center">
             <div class="card-body text-center py-4 w-100 d-flex flex-column justify-content-center gap-2">
                 <a href="{{ route('verification.index') }}" class="btn btn-ns-primary w-100" style="background-color: var(--apple-danger); color: #fff;">
                     <i class="bi bi-shield-check"></i> Review Queue
@@ -437,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 </div>
 
-<div class="card shadow-sm animate-slide-up">
+<div class="card shadow-sm animate-slide-up stagger-4">
     <div class="card-header d-flex justify-content-between align-items-center">
         <span><i class="bi bi-journal-text text-apple-accent"></i> Recent System Activity Logs</span>
         <div class="d-flex align-items-center gap-2">

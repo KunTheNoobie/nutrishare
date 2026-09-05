@@ -125,7 +125,14 @@
                             <span data-date="{{ $donation->expiry_date->toIso8601String() }}"><i class="bi bi-calendar"></i> {{ $donation->expiry_date->format('d M Y') }}</span>
                         </td>
                         <td>
-                            <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }}">
+                            <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : ($donation->status === 'collected' ? 'info' : 'secondary')) }} d-inline-flex align-items-center">
+                                @if($donation->status === 'available')
+                                    <span class="pulse-dot pulse-dot-success"></span>
+                                @elseif($donation->status === 'claimed')
+                                    <span class="pulse-dot pulse-dot-warning"></span>
+                                @elseif($donation->status === 'collected')
+                                    <span class="pulse-dot pulse-dot-primary"></span>
+                                @endif
                                 {{ ucfirst($donation->status) }}
                             </span>
                         </td>
@@ -158,13 +165,13 @@
     <div class="row g-3 animate-slide-up" id="donationsGridView" style="display: none;">
         @forelse($donations as $donation)
         <div class="col-md-6 col-lg-4">
-            <div class="card shadow-sm h-100 border" style="border-color: var(--apple-border) !important; border-radius: 16px; overflow: hidden;">
+            <div class="card shadow-sm h-100 border card-hover-interactive" style="border-color: var(--apple-border) !important; border-radius: 16px; overflow: hidden;">
                 @if($donation->image_paths && count($donation->image_paths) > 0)
                     @php
                         $thumbSrc = Str::startsWith($donation->image_paths[0], ['http://', 'https://']) ? $donation->image_paths[0] : asset('storage/' . $donation->image_paths[0]);
                     @endphp
-                    <div style="height: 160px; overflow: hidden; background: rgba(0,0,0,0.2);">
-                        <img src="{{ $thumbSrc }}" class="w-100 h-100" style="object-fit: cover; transition: transform 0.3s ease;" alt="{{ $donation->title }}">
+                    <div class="card-img-zoom" style="height: 160px; overflow: hidden; background: rgba(0,0,0,0.2);">
+                        <img src="{{ $thumbSrc }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ $donation->title }}">
                     </div>
                 @else
                     <div class="d-flex justify-content-center align-items-center" style="height: 140px; background: rgba(255,255,255,0.03);">
@@ -174,7 +181,12 @@
                 <div class="card-body d-flex flex-column p-3">
                     <div class="d-flex justify-content-between align-items-start mb-2">
                         <h6 class="fw-bold mb-0" style="color: var(--apple-text);">{{ $donation->title }}</h6>
-                        <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }}">
+                        <span class="badge badge-{{ $donation->status === 'available' ? 'success' : ($donation->status === 'claimed' ? 'warning' : 'secondary') }} d-inline-flex align-items-center">
+                            @if($donation->status === 'available')
+                                <span class="pulse-dot pulse-dot-success"></span>
+                            @elseif($donation->status === 'claimed')
+                                <span class="pulse-dot pulse-dot-warning"></span>
+                            @endif
                             {{ ucfirst($donation->status) }}
                         </span>
                     </div>

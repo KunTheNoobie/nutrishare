@@ -32,7 +32,14 @@
         <div class="card mb-4 shadow-sm animate-slide-up">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="mb-0 fw-bold"><i class="bi bi-hand-thumbs-up text-apple-accent me-1"></i> Claim #{{ $claim->id }}</h4>
-                <span class="badge bg-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : ($claim->status === 'collected' ? 'info' : 'secondary')) }} fs-6">
+                <span class="badge bg-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : ($claim->status === 'collected' ? 'info' : 'secondary')) }} fs-6 d-inline-flex align-items-center">
+                    @if($claim->status === 'approved')
+                        <span class="pulse-dot pulse-dot-success"></span>
+                    @elseif($claim->status === 'pending')
+                        <span class="pulse-dot pulse-dot-warning"></span>
+                    @elseif($claim->status === 'collected')
+                        <span class="pulse-dot pulse-dot-primary"></span>
+                    @endif
                     {{ ucfirst($claim->status) }}
                 </span>
             </div>
@@ -98,7 +105,14 @@
                 @endphp
                 <div class="alert border-0 shadow-sm" style="background: rgba(41, 151, 255, 0.12); color: var(--apple-text); border: 1px solid rgba(41, 151, 255, 0.25) !important;">
                     <strong>Current State:</strong> 
-                    <span class="badge badge-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : ($claim->status === 'collected' ? 'info' : 'secondary')) }} ms-1 me-2">
+                    <span class="badge badge-{{ $claim->status === 'approved' ? 'success' : ($claim->status === 'pending' ? 'warning' : ($claim->status === 'collected' ? 'info' : 'secondary')) }} ms-1 me-2 d-inline-flex align-items-center">
+                        @if($claim->status === 'approved')
+                            <span class="pulse-dot pulse-dot-success"></span>
+                        @elseif($claim->status === 'pending')
+                            <span class="pulse-dot pulse-dot-warning"></span>
+                        @elseif($claim->status === 'collected')
+                            <span class="pulse-dot pulse-dot-primary"></span>
+                        @endif
                         {{ ucfirst($stateObject->getStateName()) }}
                     </span>
                     @if(count($availableActions) > 0)

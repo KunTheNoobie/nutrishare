@@ -21,7 +21,7 @@
 </div>
 @endif
 
-<div class="card shadow-sm animate-slide-up">
+<div class="card shadow-sm animate-slide-up stagger-1">
     <div class="card-header d-flex justify-content-between align-items-center">
         <span><i class="bi bi-file-earmark-bar-graph text-apple-accent me-1"></i> Generated Reports List</span>
         <span class="badge border px-3 py-1" style="background-color: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.75rem; font-weight: 500;">
@@ -49,7 +49,7 @@
                         </strong>
                     </td>
                     <td>
-                        <span class="badge badge-{{ $report->type === 'sdg_impact' ? 'success' : ($report->type === 'donation_summary' ? 'warning' : 'primary') }}">
+                        <span class="badge badge-{{ $report->type === 'sdg_impact' ? 'success' : ($report->type === 'donation_summary' ? 'warning' : 'primary') }} d-inline-flex align-items-center">
                             @if($report->type === 'sdg_impact')
                                 <i class="bi bi-globe me-1"></i> SDG Impact
                             @elseif($report->type === 'donation_summary')
