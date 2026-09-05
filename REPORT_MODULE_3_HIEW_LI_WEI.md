@@ -553,63 +553,101 @@ or terminates at `rejected` or `cancelled`.
 
 #### PlantUML Specification (State Pattern):
 ```plantuml
-@startuml Claim_State_Pattern
+@startuml Module_3_State_Pattern
 
 skinparam classAttributeIconSize 0
 skinparam backgroundColor #FFFFFF
-skinparam roundcorner 6
+skinparam roundcorner 4
 skinparam shadowing false
 skinparam defaultFontName "Segoe UI"
 skinparam defaultFontSize 12
 
 skinparam class {
-    BackgroundColor #F8FAFC
-    BorderColor #334155
-    ArrowColor #2563EB
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    ArrowColor #000000
+    FontColor #000000
 }
 
 class Claim <<Context>> {
     - id: Integer
+    - claimCode: String
     - status: String
     __
-    + getStateObject(): ClaimState
-    + transitionTo(action: String): Boolean
+    + getState(): ClaimState
+    + approve(): void
+    + reject(reason: String): void
+    + assignVehicle(data: Map): Vehicle
+    + collect(): void
+    + cancel(): void
+}
+
+class ClaimStateFactory {
+    __
+    + make(claim: Claim): ClaimState
 }
 
 abstract class ClaimState <<abstract>> {
     # claim: Claim
     __
-    + {abstract} handle(action: String): Boolean
-    + {abstract} getStateName(): String
-    + {abstract} allowedActions(): List<String>
-    + canPerform(action: String): Boolean
+    + approve(): void
+    + reject(reason: String): void
+    + assignVehicle(data: Map): Vehicle
+    + collect(): void
+    + cancel(): void
+    + {abstract} getStatusName(): String
 }
 
 class PendingState {
-    + handle(action: String): Boolean
-    + getStateName(): String
-    + allowedActions(): List<String>
+    __
+    + approve(): void
+    + reject(reason: String): void
+    + cancel(): void
+    + getStatusName(): String
 }
 
 class ApprovedState {
-    + handle(action: String): Boolean
-    + getStateName(): String
-    + allowedActions(): List<String>
+    __
+    + assignVehicle(data: Map): Vehicle
+    + collect(): void
+    + cancel(): void
+    + getStatusName(): String
 }
 
-class CollectedState {
-    + handle(action: String): Boolean
-    + getStateName(): String
-    + allowedActions(): List<String>
+class CollectedState <<Terminal State>> {
+    __
+    + getStatusName(): String
 }
+
+class RejectedState <<Terminal State>> {
+    __
+    + getStatusName(): String
+}
+
+class CancelledState <<Terminal State>> {
+    __
+    + getStatusName(): String
+}
+
+' Context Association
+Claim "1" o--> "1" ClaimState : - state
+
+' Context resolves state through factory
+Claim ..> ClaimStateFactory : resolves state >
+
+' Factory creates concrete states
+ClaimStateFactory ..> PendingState : <<creates>>
+ClaimStateFactory ..> ApprovedState : <<creates>>
+ClaimStateFactory ..> CollectedState : <<creates>>
+ClaimStateFactory ..> RejectedState : <<creates>>
+ClaimStateFactory ..> CancelledState : <<creates>>
 
 ' Inheritance
 PendingState -up-|> ClaimState
 ApprovedState -up-|> ClaimState
 CollectedState -up-|> ClaimState
-
-' Context association
-Claim "1" o-- "1" ClaimState : delegates state logic >
+RejectedState -up-|> ClaimState
+CancelledState -up-|> ClaimState
 
 @enduml
 ```
