@@ -174,7 +174,7 @@ php artisan nutrishare:health-check
 
 ---
 
-## 🧪 Automated Testing Suite (85 Assertions)
+## 🧪 Automated Testing Suite (22 Tests, 92 Assertions)
 
 Run the full end-to-end automated test suite across all 4 modules, RBAC gates, Web Services, and CSV exporters:
 

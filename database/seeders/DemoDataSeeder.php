@@ -499,7 +499,7 @@ class DemoDataSeeder extends Seeder
         ];
 
         foreach ($docsData as $doc) {
-            VerificationDocument::create([
+            $createdDoc = VerificationDocument::create([
                 'user_id' => $doc['user']->id,
                 'document_type' => $doc['type'],
                 'file_path' => $doc['file'],
@@ -509,6 +509,7 @@ class DemoDataSeeder extends Seeder
                 'reviewed_by' => 1,
                 'reviewed_at' => $doc['status'] !== 'pending' ? Carbon::now()->subDays(rand(1, 10)) : null
             ]);
+            \App\Services\VerificationDocumentService::ensureFileExists($createdDoc);
         }
 
         // ──────────────────────────────────────────────────────────
