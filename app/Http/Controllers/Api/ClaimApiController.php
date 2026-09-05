@@ -36,6 +36,10 @@ class ClaimApiController extends Controller
         try {
             $ifa = SecurityHelper::validateIfaRequest($request->all());
 
+            $request->merge([
+                'claim_id' => $request->input('claim_id') ?? $request->input('claimId'),
+            ]);
+
             $validated = $request->validate([
                 'claim_id' => 'required|integer|exists:claims,id',
             ]);
