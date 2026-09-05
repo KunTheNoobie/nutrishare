@@ -38,21 +38,23 @@
                 </div>
 
                 <div class="d-flex flex-column align-items-end gap-2 ms-auto mt-3 mt-md-0">
-                    <form method="POST" action="{{ route('verification.review', $doc) }}" class="d-flex align-items-center gap-2">
+                    <form method="POST" action="{{ route('verification.review', $doc) }}" class="d-flex align-items-center gap-2 m-0">
                         @csrf
-                        <input type="text" name="admin_remarks" class="form-control form-control-sm" placeholder="Remarks (optional)" style="width: 220px;">
-                        <button type="submit" name="action" value="approved" class="btn btn-success btn-sm px-3 fw-medium text-nowrap">
-                            <i class="bi bi-check-lg"></i> Approve
-                        </button>
-                        <button type="submit" name="action" value="rejected" class="btn btn-danger btn-sm px-3 fw-medium text-nowrap">
-                            <i class="bi bi-x-lg"></i> Reject
-                        </button>
+                        <input type="text" name="admin_remarks" class="form-control form-control-sm" placeholder="Admin Remarks (optional)" style="width: 220px; height: 32px;">
+                        <div class="d-inline-flex gap-2">
+                            <button type="submit" name="action" value="approved" class="btn btn-success btn-sm fw-medium text-nowrap d-inline-flex align-items-center justify-content-center" style="width: 112px; height: 32px !important; min-height: 32px !important;">
+                                <i class="bi bi-check-lg"></i> Approve
+                            </button>
+                            <button type="submit" name="action" value="rejected" class="btn btn-danger btn-sm fw-medium text-nowrap d-inline-flex align-items-center justify-content-center" style="width: 112px; height: 32px !important; min-height: 32px !important;">
+                                <i class="bi bi-x-lg"></i> Reject
+                            </button>
+                        </div>
                     </form>
-                    <div class="d-flex gap-2">
-                        <a href="{{ route('verification.file', $doc) }}" target="_blank" class="btn btn-sm btn-outline-info px-3">
+                    <div class="d-inline-flex gap-2">
+                        <a href="{{ route('verification.file', $doc) }}" target="_blank" class="btn btn-sm btn-outline-info text-nowrap d-inline-flex align-items-center justify-content-center" style="width: 112px; height: 32px !important; min-height: 32px !important;">
                             <i class="bi bi-eye"></i> View File
                         </a>
-                        <a href="{{ route('verification.download', $doc) }}" class="btn btn-sm btn-outline-primary px-3">
+                        <a href="{{ route('verification.download', $doc) }}" class="btn btn-sm btn-outline-primary text-nowrap d-inline-flex align-items-center justify-content-center" style="width: 112px; height: 32px !important; min-height: 32px !important;">
                             <i class="bi bi-download"></i> Download
                         </a>
                     </div>

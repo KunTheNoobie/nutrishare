@@ -143,17 +143,20 @@
     <div class="col-md-4">
         <!-- Actions sidebar -->
         @if((Auth::user()->isDonor() && $donation->user_id === Auth::id()) || Auth::user()->isAdmin() || Auth::user()->isModerator())
-        <div class="card mb-3">
-            <div class="card-header">Actions</div>
-            <div class="card-body">
-                <a href="{{ route('donations.edit', $donation) }}" class="btn btn-outline-primary btn-sm w-100 mb-2">
-                    <i class="bi bi-pencil"></i> Edit
+        <div class="card mb-3 shadow-sm animate-slide-up">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-semibold"><i class="bi bi-sliders text-apple-accent me-1"></i> Listing Actions</span>
+                <span class="badge border" style="background: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.72rem;">Management</span>
+            </div>
+            <div class="card-body p-3">
+                <a href="{{ route('donations.edit', $donation) }}" class="btn btn-primary btn-sm w-100 d-inline-flex align-items-center justify-content-center gap-2 mb-2" style="height: 38px !important; min-height: 38px !important; font-weight: 600;">
+                    <i class="bi bi-pencil-square"></i> <span>Edit Listing</span>
                 </a>
                 @if(Auth::user()->isAdmin() || (Auth::user()->isDonor() && $donation->user_id === Auth::id()))
-                <form method="POST" action="{{ route('donations.destroy', $donation) }}" data-confirm="Are you sure you want to delete this donation listing? This action cannot be undone." data-confirm-title="Delete Donation" data-confirm-btn="Delete" data-confirm-color="#ff3b30">
+                <form method="POST" action="{{ route('donations.destroy', $donation) }}" class="m-0" data-confirm="Are you sure you want to delete this donation listing? This action cannot be undone." data-confirm-title="Delete Donation" data-confirm-btn="Delete" data-confirm-color="#ff3b30">
                     @csrf @method('DELETE')
-                    <button type="submit" class="btn btn-outline-danger btn-sm w-100">
-                        <i class="bi bi-trash"></i> Delete
+                    <button type="submit" class="btn btn-outline-danger btn-sm w-100 d-inline-flex align-items-center justify-content-center gap-2" style="height: 38px !important; min-height: 38px !important; font-weight: 600;">
+                        <i class="bi bi-trash3"></i> <span>Delete Listing</span>
                     </button>
                 </form>
                 @endif

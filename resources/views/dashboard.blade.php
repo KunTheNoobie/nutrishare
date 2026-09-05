@@ -428,13 +428,13 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     <div class="col-md-3">
-        <div class="card shadow-sm h-100 card-hover-interactive d-flex justify-content-center align-items-center">
-            <div class="card-body text-center py-4 w-100 d-flex flex-column justify-content-center gap-2">
-                <a href="{{ route('verification.index') }}" class="btn btn-ns-primary w-100" style="background-color: var(--apple-danger); color: #fff;">
-                    <i class="bi bi-shield-check"></i> Review Queue
+        <div class="card shadow-sm h-100 card-hover-interactive">
+            <div class="card-body p-3 d-flex flex-column justify-content-center gap-2">
+                <a href="{{ route('verification.index') }}" class="btn btn-danger btn-sm w-100 d-inline-flex align-items-center justify-content-center gap-2" style="height: 38px !important; min-height: 38px !important; font-weight: 600;">
+                    <i class="bi bi-shield-check" style="font-size: 1rem;"></i> <span>Review Queue</span>
                 </a>
-                <a href="{{ route('reports.index') }}" class="btn btn-outline-light w-100">
-                    <i class="bi bi-graph-up"></i> Reports
+                <a href="{{ route('reports.index') }}" class="btn btn-outline-light btn-sm w-100 d-inline-flex align-items-center justify-content-center gap-2" style="height: 38px !important; min-height: 38px !important; font-weight: 600;">
+                    <i class="bi bi-bar-chart-line" style="font-size: 1rem;"></i> <span>View Reports</span>
                 </a>
             </div>
         </div>

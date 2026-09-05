@@ -94,10 +94,17 @@
                     $isReviewer = $user->isAdmin() || $user->isModerator() || $claim->donation->user_id === $user->id;
                     $isClaimingNgo = $user->isNgo() && $claim->user_id === $user->id;
 
-                    $availableActions = array_filter($stateObject->allowedActions(), function($action) use ($user, $isReviewer, $isClaimingNgo) {
+                    $availableActions = array_filter($stateObject->allowedActions(), function($action) use ($user, $isReviewer, $isClaimingNgo, $claim) {
                         if (in_array($action, ['approve', 'reject'])) return $isReviewer;
                         if ($action === 'collect') return $isClaimingNgo;
-                        if ($action === 'cancel') return $isClaimingNgo || $user->isAdmin() || $user->isModerator();
+                        if ($action === 'cancel') {
+                            // On pending claims, only the claiming NGO can withdraw their claim
+                            if ($claim->status === 'pending') {
+                                return $isClaimingNgo;
+                            }
+                            // On approved claims, claiming NGO or Admin can cancel before pickup
+                            return $isClaimingNgo || $user->isAdmin() || $user->isModerator();
+                        }
                         return false;
                     });
 
@@ -253,32 +260,83 @@
     <div class="col-lg-5" style="position: sticky; top: 20px; align-self: flex-start;">
         <!-- State Transition Actions -->
         @if(count($availableActions) > 0)
-        <div class="card mb-3">
-            <div class="card-header">Actions</div>
-            <div class="card-body">
+        <div class="card mb-3 shadow-sm animate-slide-up">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="fw-semibold"><i class="bi bi-lightning-charge text-apple-accent me-1"></i> Claim Actions</span>
+                <span class="badge border" style="background: var(--apple-input-bg); color: var(--apple-text); border-color: var(--apple-border) !important; font-size: 0.72rem;">State Workflow</span>
+            </div>
+            <div class="card-body p-3">
                 @foreach($availableActions as $action)
+                @php
+                    $btnConfig = match($action) {
+                        'approve' => [
+                            'class' => 'btn-success',
+                            'icon' => 'bi-check-circle-fill',
+                            'label' => 'Approve Claim',
+                            'title' => 'Approve Claim',
+                            'msg' => 'Are you sure you want to approve this claim? This will allocate the surplus food to the claiming NGO.',
+                            'color' => '#34c759',
+                        ],
+                        'reject' => [
+                            'class' => 'btn-danger',
+                            'icon' => 'bi-x-circle-fill',
+                            'label' => 'Reject Claim',
+                            'title' => 'Reject Claim',
+                            'msg' => 'Are you sure you want to reject this claim request? This will notify the NGO.',
+                            'color' => '#ff3b30',
+                        ],
+                        'collect' => [
+                            'class' => 'btn-primary',
+                            'icon' => 'bi-box-arrow-in-down',
+                            'label' => 'Confirm Collection',
+                            'title' => 'Confirm Collection',
+                            'msg' => 'Are you sure you want to confirm collection? This will generate the official digital receipt.',
+                            'color' => '#2997ff',
+                        ],
+                        'cancel' => [
+                            'class' => 'btn-outline-danger',
+                            'icon' => 'bi-ban',
+                            'label' => $claim->status === 'pending' ? 'Withdraw Claim Request' : 'Cancel Approved Claim',
+                            'title' => 'Cancel Claim',
+                            'msg' => 'Are you sure you want to cancel this claim? This will return the surplus food donation to available status.',
+                            'color' => '#ff3b30',
+                        ],
+                        default => [
+                            'class' => 'btn-secondary',
+                            'icon' => 'bi-gear',
+                            'label' => ucfirst($action),
+                            'title' => ucfirst($action),
+                            'msg' => 'Proceed with ' . $action . '?',
+                            'color' => '#8e8e93',
+                        ],
+                    };
+                @endphp
                 <form method="POST" action="{{ route('claims.transition', $claim) }}" class="mb-2">
                     @csrf
                     <input type="hidden" name="action" value="{{ $action }}">
                     @if($action === 'collect' && !$claim->vehicle)
-                        <button type="button" class="btn btn-secondary btn-sm w-100" disabled title="Vehicle assignment required before collection">
+                        <button type="button" class="btn btn-secondary btn-sm w-100 d-inline-flex align-items-center justify-content-center gap-2" style="height: 38px !important; min-height: 38px !important; opacity: 0.65;" disabled title="Vehicle assignment required before collection">
                             <i class="bi bi-lock me-1"></i> Collect (Assign Vehicle Below First)
                         </button>
                         <small class="text-warning d-block mt-1 text-center" style="font-size: 0.72rem;">
                             <i class="bi bi-exclamation-triangle me-1"></i>Assign driver & vehicle below to enable collection.
                         </small>
                     @else
-                        <button type="submit" class="btn btn-{{ $action === 'approve' ? 'success' : ($action === 'reject' ? 'danger' : ($action === 'collect' ? 'primary' : 'secondary')) }} btn-sm w-100"
-                                data-confirm="Are you sure you want to {{ $action }} this claim?"
-                                data-confirm-title="{{ ucfirst($action) }} Claim"
-                                data-confirm-btn="Yes, {{ ucfirst($action) }}"
-                                data-confirm-color="{{ $action === 'reject' ? '#ff3b30' : ($action === 'approve' ? '#34c759' : '#2997ff') }}">
-                            <i class="bi bi-{{ $action === 'approve' ? 'check-circle' : ($action === 'reject' ? 'x-circle' : ($action === 'collect' ? 'box-arrow-down' : 'arrow-left')) }}"></i>
-                            {{ ucfirst($action) }}
+                        <button type="submit" class="btn {{ $btnConfig['class'] }} btn-sm w-100 d-inline-flex align-items-center justify-content-center gap-2"
+                                style="height: 38px !important; min-height: 38px !important; font-weight: 600;"
+                                data-confirm="{{ $btnConfig['msg'] }}"
+                                data-confirm-title="{{ $btnConfig['title'] }}"
+                                data-confirm-btn="Yes, {{ $btnConfig['label'] }}"
+                                data-confirm-color="{{ $btnConfig['color'] }}">
+                            <i class="bi {{ $btnConfig['icon'] }}"></i>
+                            <span>{{ $btnConfig['label'] }}</span>
                         </button>
                     @endif
                 </form>
                 @endforeach
+                <small class="text-muted d-block text-center mt-2" style="font-size: 0.72rem;">
+                    <i class="bi bi-info-circle me-1"></i> Actions update claim lifecycle & notify participants.
+                </small>
             </div>
         </div>
         @endif
