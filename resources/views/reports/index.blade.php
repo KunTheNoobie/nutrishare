@@ -74,9 +74,9 @@
                                 <i class="bi bi-download"></i> Export
                             </a>
                             @if(Auth::user()->isAdmin())
-                            <form method="POST" action="{{ route('reports.destroy', $report) }}" class="d-inline">
+                            <form method="POST" action="{{ route('reports.destroy', $report) }}" class="d-inline" data-confirm="Are you sure you want to delete this report?" data-confirm-title="Delete Report" data-confirm-btn="Delete" data-confirm-color="#ff3b30">
                                 @csrf @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this report?')">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
                                     <i class="bi bi-trash"></i>
                                 </button>
                             </form>

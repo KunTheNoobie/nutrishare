@@ -146,7 +146,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const code = syncOtp();
         if (code.length !== 6) {
             e.preventDefault();
-            alert('Please enter all 6 digits of the OTP code.');
+            Swal.fire({
+                icon: 'warning',
+                title: 'Incomplete Verification Code',
+                text: 'Please enter all 6 digits of the OTP code before submitting.',
+                confirmButtonColor: '#2997ff',
+            });
         }
     });
 });

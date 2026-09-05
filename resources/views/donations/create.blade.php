@@ -238,7 +238,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateInputs(lat, lng);
                     addressInput.value = data[0].display_name; // update to detailed address
                 } else {
-                    alert('Address not found!');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Address Not Found',
+                        text: 'Could not locate the entered address on the map. Please check spelling or pin manually.',
+                        confirmButtonColor: '#2997ff',
+                    });
                 }
             });
     });

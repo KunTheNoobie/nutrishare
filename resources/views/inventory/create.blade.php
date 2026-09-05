@@ -154,7 +154,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     marker.setLatLng([lat, lng]);
                     addressInput.value = data[0].display_name;
                 } else {
-                    alert('Address not found on the map!');
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Location Not Found',
+                        text: 'Could not locate the specified address on the map. Please adjust the search term or pin manually.',
+                        confirmButtonColor: '#2997ff',
+                    });
                 }
             });
     });

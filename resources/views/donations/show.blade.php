@@ -150,10 +150,9 @@
                     <i class="bi bi-pencil"></i> Edit
                 </a>
                 @if(Auth::user()->isAdmin() || (Auth::user()->isDonor() && $donation->user_id === Auth::id()))
-                <form method="POST" action="{{ route('donations.destroy', $donation) }}">
+                <form method="POST" action="{{ route('donations.destroy', $donation) }}" data-confirm="Are you sure you want to delete this donation listing? This action cannot be undone." data-confirm-title="Delete Donation" data-confirm-btn="Delete" data-confirm-color="#ff3b30">
                     @csrf @method('DELETE')
-                    <button type="submit" class="btn btn-outline-danger btn-sm w-100"
-                            onclick="return confirm('Are you sure?')">
+                    <button type="submit" class="btn btn-outline-danger btn-sm w-100">
                         <i class="bi bi-trash"></i> Delete
                     </button>
                 </form>

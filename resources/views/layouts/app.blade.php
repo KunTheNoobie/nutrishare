@@ -151,6 +151,14 @@
             border: 1px solid var(--apple-border) !important;
             border-radius: 20px !important;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+        }
+        .swal2-toast {
+            border-radius: 14px !important;
+            padding: 12px 18px !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35) !important;
+            border: 1px solid var(--apple-border) !important;
         }
         .swal2-title {
             color: var(--apple-text) !important;
@@ -166,12 +174,14 @@
             padding: 10px 26px !important;
             font-weight: 500 !important;
             font-family: 'Inter', -apple-system, sans-serif !important;
+            box-shadow: none !important;
         }
         .swal2-cancel {
             border-radius: 980px !important;
             padding: 10px 26px !important;
             font-weight: 500 !important;
             font-family: 'Inter', -apple-system, sans-serif !important;
+            box-shadow: none !important;
         }
 
         [data-theme="light"] .swal2-popup {
@@ -179,6 +189,11 @@
             color: #1d1d1f !important;
             border: 1px solid #e5e5ea !important;
             box-shadow: 0 20px 40px rgba(0,0,0,0.12) !important;
+        }
+        [data-theme="light"] .swal2-toast {
+            background-color: #ffffff !important;
+            border: 1px solid #e5e5ea !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
         }
         [data-theme="light"] .swal2-title {
             color: #1d1d1f !important;
@@ -911,48 +926,159 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// GLOBAL SWEETALERT2 POPUP INTERCEPTOR
-// Replaces native browser 127.0.0.1 says "Are you sure?" popups everywhere!
+// GLOBAL SWEETALERT2 POPUP & CONFIRMATION INTERCEPTOR
+// Eliminates all native browser "127.0.0.1:8000 says" dialogs
+window.alert = function(message) {
+    const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+    Swal.fire({
+        title: 'Notice',
+        text: message,
+        icon: 'info',
+        confirmButtonColor: '#2997ff',
+        confirmButtonText: 'OK',
+        background: isDark ? '#1c1c1e' : '#ffffff',
+        color: isDark ? '#ffffff' : '#1d1d1f',
+        customClass: {
+            popup: 'rounded-4 shadow-lg border border-secondary'
+        }
+    });
+};
+
+function showSweetConfirm(options, callback) {
+    const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+    Swal.fire({
+        title: options.title || 'Confirmation',
+        text: options.text || 'Are you sure you want to proceed?',
+        icon: options.icon || 'warning',
+        showCancelButton: true,
+        confirmButtonColor: options.confirmColor || '#ff3b30',
+        cancelButtonColor: '#8e8e93',
+        confirmButtonText: options.confirmText || 'Yes, proceed',
+        cancelButtonText: options.cancelText || 'Cancel',
+        background: isDark ? '#1c1c1e' : '#ffffff',
+        color: isDark ? '#ffffff' : '#1d1d1f',
+        customClass: {
+            popup: 'rounded-4 shadow-lg border border-secondary'
+        }
+    }).then((result) => {
+        if (result.isConfirmed && typeof callback === 'function') {
+            callback();
+        }
+    });
+}
+
+// 1. Intercept buttons / anchors with data-confirm or onclick*="confirm"
 document.addEventListener('click', function(e) {
-    const target = e.target.closest('[onclick*="confirm"]');
-    if (target) {
-        e.preventDefault();
-        e.stopPropagation();
+    const btn = e.target.closest('[data-confirm], [onclick*="confirm"]');
+    if (!btn) return;
 
-        const onclickVal = target.getAttribute('onclick');
-        const match = onclickVal.match(/confirm\(['"](.+?)['"]\)/);
-        const message = match ? match[1] : 'Are you sure you want to proceed?';
-        const form = target.closest('form');
-
-        const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
-
-        Swal.fire({
-            title: 'Confirmation',
-            text: message,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#ff3b30',
-            cancelButtonColor: '#8e8e93',
-            confirmButtonText: 'Yes, proceed',
-            cancelButtonText: 'Cancel',
-            background: isDark ? '#1c1c1e' : '#ffffff',
-            color: isDark ? '#ffffff' : '#1d1d1f',
-            customClass: {
-                popup: 'rounded-4 shadow-lg border border-secondary'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                target.removeAttribute('onclick');
-                if (form) {
-                    form.submit();
-                } else if (target.tagName === 'A' && target.href) {
-                    window.location.href = target.href;
-                }
-            }
-        });
-        return false;
+    const form = btn.closest('form');
+    // If the button is a submit button inside a form that also has confirmation, let the submit handler manage it
+    if (btn.type === 'submit' && form && (form.hasAttribute('data-confirm') || form.getAttribute('onsubmit')?.includes('confirm('))) {
+        return;
     }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    let text = btn.getAttribute('data-confirm');
+    if (!text && btn.getAttribute('onclick')) {
+        const match = btn.getAttribute('onclick').match(/confirm\(['"](.+?)['"]\)/);
+        text = match ? match[1] : 'Are you sure you want to proceed?';
+    }
+
+    const title = btn.getAttribute('data-confirm-title') || 'Confirmation';
+    const confirmText = btn.getAttribute('data-confirm-btn') || 'Yes, proceed';
+    const confirmColor = btn.getAttribute('data-confirm-color') || (text && text.toLowerCase().includes('delete') ? '#ff3b30' : '#2997ff');
+    const icon = text && text.toLowerCase().includes('delete') ? 'warning' : 'question';
+
+    showSweetConfirm({ title, text, confirmText, confirmColor, icon }, function() {
+        btn.removeAttribute('onclick');
+        btn.removeAttribute('data-confirm');
+        if (form) {
+            form.submit();
+        } else if (btn.tagName === 'A' && btn.href) {
+            window.location.href = btn.href;
+        }
+    });
 }, true);
+
+// 2. Intercept any form submit with data-confirm or onsubmit*="confirm"
+document.addEventListener('submit', function(e) {
+    const form = e.target;
+    const hasDataConfirm = form.hasAttribute('data-confirm');
+    const onsubmitVal = form.getAttribute('onsubmit');
+    const hasOnsubmitConfirm = onsubmitVal && onsubmitVal.includes('confirm(');
+
+    if (!hasDataConfirm && !hasOnsubmitConfirm) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    let text = form.getAttribute('data-confirm');
+    if (!text && onsubmitVal) {
+        const match = onsubmitVal.match(/confirm\(['"](.+?)['"]\)/);
+        text = match ? match[1] : 'Are you sure you want to proceed?';
+    }
+
+    const title = form.getAttribute('data-confirm-title') || 'Confirmation';
+    const confirmText = form.getAttribute('data-confirm-btn') || 'Yes, proceed';
+    const confirmColor = form.getAttribute('data-confirm-color') || (text && text.toLowerCase().includes('delete') ? '#ff3b30' : '#2997ff');
+    const icon = text && text.toLowerCase().includes('delete') ? 'warning' : 'question';
+
+    showSweetConfirm({ title, text, confirmText, confirmColor, icon }, function() {
+        form.removeAttribute('onsubmit');
+        form.removeAttribute('data-confirm');
+        form.submit();
+    });
+}, true);
+
+// 3. Render modern SweetAlert2 Toasts for session flash messages on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+    
+    @if(session('success'))
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'success',
+        title: @json(session('success')),
+        showConfirmButton: false,
+        timer: 3500,
+        timerProgressBar: true,
+        background: isDark ? '#1c1c1e' : '#ffffff',
+        color: isDark ? '#ffffff' : '#1d1d1f',
+    });
+    @endif
+
+    @if(session('error'))
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'error',
+        title: @json(session('error')),
+        showConfirmButton: false,
+        timer: 4500,
+        timerProgressBar: true,
+        background: isDark ? '#1c1c1e' : '#ffffff',
+        color: isDark ? '#ffffff' : '#1d1d1f',
+    });
+    @endif
+
+    @if(session('status'))
+    Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'info',
+        title: @json(session('status')),
+        showConfirmButton: false,
+        timer: 3500,
+        timerProgressBar: true,
+        background: isDark ? '#1c1c1e' : '#ffffff',
+        color: isDark ? '#ffffff' : '#1d1d1f',
+    });
+    @endif
+});
 </script>
 @stack('scripts')
 </body>

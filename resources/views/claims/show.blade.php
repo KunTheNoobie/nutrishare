@@ -210,7 +210,7 @@
                                     <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editLogModal{{ $log->id }}" title="Edit Entry">
                                         <i class="bi bi-pencil-square me-1"></i>Edit
                                     </button>
-                                    <form method="POST" action="{{ route('claims.distribution.destroy', $log) }}" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this distribution log entry?')">
+                                    <form method="POST" action="{{ route('claims.distribution.destroy', $log) }}" class="d-inline" data-confirm="Are you sure you want to delete this distribution log entry?" data-confirm-title="Delete Distribution Log" data-confirm-btn="Delete Log" data-confirm-color="#ff3b30">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger ms-1" title="Delete Entry">
@@ -251,7 +251,10 @@
                         </small>
                     @else
                         <button type="submit" class="btn btn-{{ $action === 'approve' ? 'success' : ($action === 'reject' ? 'danger' : ($action === 'collect' ? 'primary' : 'secondary')) }} btn-sm w-100"
-                                onclick="return confirm('Are you sure you want to {{ $action }} this claim?')">
+                                data-confirm="Are you sure you want to {{ $action }} this claim?"
+                                data-confirm-title="{{ ucfirst($action) }} Claim"
+                                data-confirm-btn="Yes, {{ ucfirst($action) }}"
+                                data-confirm-color="{{ $action === 'reject' ? '#ff3b30' : ($action === 'approve' ? '#34c759' : '#2997ff') }}">
                             <i class="bi bi-{{ $action === 'approve' ? 'check-circle' : ($action === 'reject' ? 'x-circle' : ($action === 'collect' ? 'box-arrow-down' : 'arrow-left')) }}"></i>
                             {{ ucfirst($action) }}
                         </button>
