@@ -7,6 +7,8 @@ use App\Models\VerificationDocument;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 use App\Http\Requests\UploadVerificationDocumentRequest;
 use App\Http\Requests\ReviewVerificationDocumentRequest;
@@ -90,6 +92,39 @@ class VerificationController extends Controller
         );
 
         return redirect()->back()->with('success', 'Review submitted successfully.');
+    }
+
+    /**
+     * Web Service Consumption (Module 2 -> Module 3):
+     * Consumes Module 3's Claim API (GET /api/claim/details) to verify that an interaction
+     * between donor and NGO reached collected/completed status before accepting peer reviews.
+     *
+     * @param int $claimId
+     * @return bool
+     */
+    public function verifyClaimCompletedBeforeReview(int $claimId): bool
+    {
+        try {
+            $response = Http::timeout(10)->get(
+                config('app.url') . '/api/claim/details',
+                [
+                    'requestID' => uniqid('VERIFY-CLAIM-'),
+                    'timestamp' => now()->toIso8601String(),
+                    'claim_id'  => $claimId,
+                ]
+            );
+
+            if ($response->successful()) {
+                $data = $response->json();
+                return ($data['status'] === 'S') && 
+                       in_array($data['data']['claim']['status'] ?? '', ['collected', 'completed']);
+            }
+
+            return false;
+        } catch (\Exception $e) {
+            Log::error('Claim verification API consumption failed: ' . $e->getMessage());
+            return false;
+        }
     }
 
     /** View verification document inline. */

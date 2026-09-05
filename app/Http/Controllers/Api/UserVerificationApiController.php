@@ -65,7 +65,7 @@ class UserVerificationApiController extends Controller
             // Check if they have approved license documents
             $hasValidLicense = VerificationDocument::where('user_id', $user->id)
                 ->where('status', 'approved')
-                ->where('document_type', 'license')
+                ->whereIn('document_type', ['license', 'food_premise_license'])
                 ->exists();
 
             return response()->json(

@@ -18,7 +18,7 @@ class UploadVerificationDocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'document_type' => 'required|in:registration_cert,tax_exemption,food_premise_license,other',
+            'document_type' => 'required|in:registration_cert,tax_exemption,tax_exempt,food_premise_license,license,other',
             'document' => 'required|file|mimes:pdf,jpg,jpeg,png,webp|max:5120',
         ];
     }
