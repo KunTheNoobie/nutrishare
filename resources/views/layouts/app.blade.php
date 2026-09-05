@@ -312,7 +312,7 @@
         }
 
         /* ==========================================================================
-           UNIVERSAL ICON ALIGNMENT & SYSTEM-WIDE CENTERING
+           UNIVERSAL ICON ALIGNMENT, CENTERING & SPACING (System-wide)
            ========================================================================== */
         
         /* 1. Base Bootstrap Icon Alignment */
@@ -339,30 +339,67 @@
             vertical-align: 0 !important;
         }
 
-        /* 3. Global Button & Badge Icon Centering (Zero accidental right-margins) */
-        .btn i, .btn .bi {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            line-height: 1 !important;
+        /* 3. Global Icon Spacing: Guarantee icons NEVER stick to adjacent text or icons */
+        /* Space after icon when followed by text or elements */
+        .btn > i:first-child:not(:only-child),
+        .btn > .bi:first-child:not(:only-child),
+        .badge > i:first-child:not(:only-child),
+        .badge > .bi:first-child:not(:only-child),
+        .nav-link > i:first-child,
+        .nav-link > .bi:first-child,
+        .card-header i,
+        .card-header .bi,
+        .dropdown-item i,
+        .dropdown-item .bi,
+        .alert i,
+        .alert .bi,
+        .modal-title i,
+        .modal-title .bi,
+        .form-label i,
+        .form-label .bi,
+        .table td > i:first-child:not(:only-child),
+        .table td > .bi:first-child:not(:only-child),
+        .table th > i:first-child:not(:only-child),
+        .table th > .bi:first-child:not(:only-child) {
+            margin-right: 0.5rem !important;
+        }
+
+        /* Space before icon when trailing text (e.g. Star badges next to user names) */
+        a > i.bi:last-child:not(:only-child),
+        a > .bi:last-child:not(:only-child),
+        span > i.bi:last-child:not(:only-child),
+        span > .bi:last-child:not(:only-child),
+        .btn > i:last-child:not(:only-child),
+        .btn > .bi:last-child:not(:only-child) {
+            margin-left: 0.4rem !important;
+        }
+
+        /* Spacing between adjacent icons (e.g. consecutive stars, dual status icons) */
+        i.bi + i.bi,
+        .bi + .bi,
+        i + i,
+        svg + svg {
+            margin-left: 0.3rem !important;
+        }
+
+        /* Spacing between adjacent buttons & forms in toolbars or action groups */
+        .btn + .btn,
+        .btn + form,
+        form + .btn,
+        form + form,
+        .btn-icon + .btn-icon,
+        .btn-icon-sm + .btn-icon-sm,
+        .btn-group > .btn + .btn,
+        .btn-group > form {
+            margin-left: 0.6rem !important;
         }
 
         .badge {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 0.35rem !important;
+            gap: 0.4rem !important;
             vertical-align: middle !important;
-        }
-        .badge i, .badge .bi {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            line-height: 1 !important;
         }
 
         /* Action Tag High-Contrast Styling */
@@ -370,7 +407,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 6px;
             font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             font-size: 0.75rem;
             font-weight: 600;
@@ -382,7 +419,7 @@
             white-space: nowrap;
         }
         .action-tag i, .action-tag .bi {
-            margin: 0 !important;
+            margin-right: 0.35rem !important;
         }
         [data-theme="light"] .action-tag {
             background-color: rgba(0, 102, 204, 0.12) !important;
@@ -426,7 +463,7 @@
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            gap: 0.45rem !important;
+            gap: 0.55rem !important;
             font-size: 0.875rem !important;
             box-shadow: none !important;
         }
@@ -435,14 +472,14 @@
             font-size: 0.8rem !important;
             border-radius: 980px !important;
             white-space: nowrap !important;
-            gap: 0.35rem !important;
+            gap: 0.45rem !important;
         }
         .btn-lg {
             padding: 12px 28px !important;
             font-size: 1rem !important;
             border-radius: 980px !important;
             white-space: nowrap !important;
-            gap: 0.5rem !important;
+            gap: 0.65rem !important;
         }
         .btn:hover {
             transform: translateY(-1px) !important;
@@ -452,7 +489,7 @@
             transform: translateY(0) !important;
         }
 
-        /* 5. Icon-Only Buttons Centering & Square/Circular Sizing */
+        /* 5. Icon-Only Buttons Centering & Square/Circular Sizing (Zero margin so icon is dead center) */
         .btn-icon,
         .btn-icon-sm,
         .btn:has(> i:only-child:not(:has(~ *))),
@@ -464,6 +501,15 @@
             text-align: center !important;
             flex-shrink: 0 !important;
             border-radius: 50% !important;
+        }
+        .btn-icon i,
+        .btn-icon .bi,
+        .btn-icon-sm i,
+        .btn-icon-sm .bi,
+        .btn:has(> i:only-child:not(:has(~ *))) i,
+        .btn:has(> .bi:only-child:not(:has(~ *))) .bi {
+            margin: 0 !important;
+            padding: 0 !important;
         }
         .btn-icon.btn-sm,
         .btn-icon-sm,
@@ -505,18 +551,11 @@
             display: flex !important;
             align-items: center !important;
         }
-        .card-header i, .card-header .bi {
-            margin-right: 0.5rem !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-        }
         .dropdown-item {
             display: flex !important;
             align-items: center !important;
         }
         .dropdown-item i, .dropdown-item .bi {
-            margin-right: 0.6rem !important;
             width: 1.25rem !important;
             text-align: center !important;
             display: inline-flex !important;
@@ -530,9 +569,6 @@
             align-items: center !important;
             justify-content: center !important;
             vertical-align: -0.125em !important;
-        }
-        .table td .btn i, .table td .btn .bi {
-            margin: 0 !important;
         }
 
         /* Custom Button Colors */
@@ -863,20 +899,20 @@
             </ul>
             <ul class="navbar-nav align-items-center gap-2">
                 <!-- Master Demo Mode ON/OFF Toggle Button -->
-                <li class="nav-item me-1">
-                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-2.5 d-inline-flex align-items-center gap-1.5" id="masterDemoToggleBtn" title="Toggle Master Demo Mode ON/OFF" onclick="toggleMasterDemoMode()" style="height: 36px; border: 1px solid var(--apple-border); font-size: 0.78rem;">
+                <li class="nav-item me-2">
+                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-3 d-inline-flex align-items-center gap-2" id="masterDemoToggleBtn" title="Toggle Master Demo Mode ON/OFF" onclick="toggleMasterDemoMode()" style="height: 36px; border: 1px solid var(--apple-border); font-size: 0.78rem;">
                         <i id="demoToggleIcon" class="bi bi-display text-warning"></i>
                         <span id="demoToggleText" class="fw-semibold">Demo: ON</span>
                     </button>
                 </li>
-                <li class="nav-item me-1">
+                <li class="nav-item me-2">
                     <button type="button" class="btn btn-sm btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center p-0" id="themeToggleBtn" title="Toggle Light / Dark Mode" onclick="toggleTheme()" style="width: 36px; height: 36px; border: 1px solid var(--apple-border);">
                         <i id="themeIcon" class="bi bi-moon-stars-fill text-info" style="font-size: 1.05rem; line-height: 1;"></i>
                     </button>
                 </li>
                 @auth
                     <!-- Notifications Bell Dropdown -->
-                    <li class="nav-item dropdown me-1">
+                    <li class="nav-item dropdown me-2">
                         <a class="btn btn-sm btn-outline-secondary rounded-circle d-inline-flex align-items-center justify-content-center p-0 position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="System Notifications" style="width: 36px; height: 36px; border: 1px solid var(--apple-border);">
                             <i class="bi bi-bell text-apple-accent d-flex align-items-center justify-content-center" style="font-size: 1.05rem; line-height: 1; margin: 0; width: 100%; height: 100%;"></i>
                             @if(Auth::user()->unreadNotificationsCount() > 0)
