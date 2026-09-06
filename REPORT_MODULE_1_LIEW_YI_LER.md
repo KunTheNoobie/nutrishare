@@ -159,60 +159,126 @@ In strict accordance with object-oriented analysis and enterprise domain modelli
 | - name: String                                                          |
 | - email: String                                                         |
 | - role: String                                                          |
-| - organization_name: String                                             |
-| - verification_status: String                                           |
+| - organizationName: String                                              |
+| - verificationStatus: String                                            |
 +-------------------------------------------------------------------------+
-| + donations(): HasMany<Donation>                                        |
-| + notifications(): HasMany<Notification>                                |
-| + reviewsReceived(): HasMany<Review>                                    |
+| + isDonor(): Boolean                                                    |
+| + isNgo(): Boolean                                                      |
+| + isAdmin(): Boolean                                                    |
 +-------------------------------------------------------------------------+
                                      | 1
-                                     |
-                                     | donor
-                                     |
+                                     | publishes
                                      v 0..*
 +-------------------------------------------------------------------------+
 |                                Donation                                 |
 +-------------------------------------------------------------------------+
 | - id: Integer                                                           |
-| - user_id: Integer                                                      |
 | - title: String                                                         |
 | - description: String                                                   |
 | - quantity: Decimal                                                     |
 | - unit: String                                                          |
-| - pickup_address: String                                                |
+| - pickupAddress: String                                                 |
 | - latitude: Decimal                                                     |
 | - longitude: Decimal                                                    |
-| - expiry_date: DateTime                                                 |
+| - expiryDate: DateTime                                                  |
 | - status: String                                                        |
-| - image_paths: Array                                                    |
+| - imagePaths: List<String>                                              |
 +-------------------------------------------------------------------------+
-| + donor(): BelongsTo<User>                                              |
-| + claims(): HasMany<Claim>                                              |
-| + foodItems(): HasMany<FoodItem>                                        |
-| + notifications(): HasMany<Notification>                                |
-| + scopeActive(query): Builder                                           |
-| + scopeExpired(query): Builder                                          |
+| + isAvailable(): Boolean                                                |
+| + isExpired(): Boolean                                                  |
 +-------------------------------------------------------------------------+
          | 1                                               | 1
-         |                                                 |
-         |                                                 |
+         | yields                                          | claims
          v 0..*                                            v 0..*
 +-----------------------------------+             +-----------------------+
 |             FoodItem              |             |         Claim         |
 +-----------------------------------+             +-----------------------+
 | - id: Integer                     |             | - id: Integer         |
-| - donation_id: Integer            |             | - donation_id: Integer|
-| - name: String                    |             | - user_id: Integer    |
-| - quantity: Decimal               |             | - status: String      |
-| - unit: String                    |             +-----------------------+
-| - category_id: Integer            |             | + donation()          |
-| - storage_requirements: String    |             | + user()              |
-+-----------------------------------+             +-----------------------+
-| + donation(): BelongsTo<Donation> |
-| + category(): BelongsTo<Category> |
-| + allergenTags(): BelongsToMany   |
+| - name: String                    |             | - status: String      |
+| - quantity: Decimal               |             | - pickupScheduledAt   |
+| - unit: String                    |             | - justification       |
+| - storageRequirements: String     |             +-----------------------+
++-----------------------------------+             | + isPending(): Boolean|
+| + isExpired(): Boolean            |             | + isCollected(): Bool |
+| + getDaysRemaining(): Integer     |             +-----------------------+
 +-----------------------------------+
+```
+
+#### PlantUML Specification (Module 1 Entity Classes):
+```plantuml
+@startuml Module_1_Entity_Classes
+
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FFFFFF
+skinparam roundcorner 4
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam defaultFontSize 12
+
+skinparam class {
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    ArrowColor #000000
+    FontColor #000000
+}
+
+class User {
+    - id: Integer
+    - name: String
+    - email: String
+    - role: String
+    - organizationName: String
+    - verificationStatus: String
+    __
+    + isDonor(): Boolean
+    + isNgo(): Boolean
+    + isAdmin(): Boolean
+}
+
+class Donation {
+    - id: Integer
+    - title: String
+    - description: String
+    - quantity: Decimal
+    - unit: String
+    - pickupAddress: String
+    - latitude: Decimal
+    - longitude: Decimal
+    - expiryDate: DateTime
+    - status: String
+    - imagePaths: List<String>
+    __
+    + isAvailable(): Boolean
+    + isExpired(): Boolean
+}
+
+class FoodItem {
+    - id: Integer
+    - name: String
+    - quantity: Decimal
+    - unit: String
+    - storageRequirements: String
+    __
+    + isExpired(): Boolean
+    + getDaysRemaining(): Integer
+}
+
+class Claim {
+    - id: Integer
+    - status: String
+    - pickupScheduledAt: DateTime
+    - justification: String
+    __
+    + isPending(): Boolean
+    + isCollected(): Boolean
+}
+
+' Domain Associations
+User "1" -- "0..*" Donation : publishes >
+Donation "1" *-- "0..*" FoodItem : yields >
+Donation "1" -- "0..*" Claim : targeted by >
+
+@enduml
 ```
 
 ### 3.2 Entity Class Implementation (Eloquent ORM Mapping)
@@ -346,7 +412,68 @@ The Observer Pattern defines a one-to-many dependency between objects so that wh
 +---------------------------------------+                            +-------------------------------+
 |               Donation                |                            |             User              |
 |              (Subject)                |                            |         (role = ngo)          |
-+---------------------------------------+                            +-------------------------------+
+```
+
+#### PlantUML Specification (Observer Pattern):
+```plantuml
+@startuml Module_1_Observer_Pattern
+
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FFFFFF
+skinparam roundcorner 4
+skinparam shadowing false
+skinparam defaultFontName "Segoe UI"
+skinparam defaultFontSize 12
+
+skinparam class {
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    ArrowColor #000000
+    FontColor #000000
+}
+
+class Donation <<Subject>> {
+    - id: Integer
+    - title: String
+    - status: String
+    __
+    + save(): Boolean
+    + update(attributes: Map): Boolean
+}
+
+interface DonationObserverInterface <<Interface>> {
+    + {abstract} onDonationCreated(donation: Donation): void
+    + {abstract} onDonationStatusChanged(donation: Donation, oldStatus: String): void
+}
+
+class DonationObserver <<Observer>> {
+    + created(donation: Donation): void
+    + updated(donation: Donation): void
+    + onDonationCreated(donation: Donation): void
+    + onDonationStatusChanged(donation: Donation, oldStatus: String): void
+}
+
+class SendDonationNotificationJob <<Queueable Job>> {
+    - donation: Donation
+    __
+    + __construct(donation: Donation)
+    + handle(): void
+}
+
+class User {
+    - id: Integer
+    - name: String
+    - role: String
+    - verificationStatus: String
+}
+
+' Relationships
+Donation "1" ..> "1..*" DonationObserver : notifies on event >
+DonationObserver ..|> DonationObserverInterface : implements
+DonationObserver ..> SendDonationNotificationJob : dispatches async >
+SendDonationNotificationJob ..> User : queries & alerts >
+
+@enduml
 ```
 
 ### 4.2 Implementation of Design Pattern
