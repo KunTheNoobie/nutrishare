@@ -562,6 +562,8 @@ skinparam shadowing false
 skinparam defaultFontName "Segoe UI"
 skinparam defaultFontSize 12
 
+skinparam linetype ortho
+
 skinparam class {
     BackgroundColor #FFFFFF
     BorderColor #000000
@@ -629,25 +631,24 @@ class CancelledState <<Terminal State>> {
     + getStatusName(): String
 }
 
-' Context Association
-Claim "1" o--> "1" ClaimState : - state
+' Layout positioning
+Claim -right-> ClaimStateFactory : resolves state >
+Claim "1" *--> "1" ClaimState : - state
 
-' Context resolves state through factory
-Claim ..> ClaimStateFactory : resolves state >
+ClaimStateFactory ..> ClaimState : <<creates>>
 
-' Factory creates concrete states
-ClaimStateFactory ..> PendingState : <<creates>>
-ClaimStateFactory ..> ApprovedState : <<creates>>
-ClaimStateFactory ..> CollectedState : <<creates>>
-ClaimStateFactory ..> RejectedState : <<creates>>
-ClaimStateFactory ..> CancelledState : <<creates>>
+' Order states horizontally in lifecycle order
+PendingState -[hidden]right- ApprovedState
+ApprovedState -[hidden]right- CollectedState
+CollectedState -[hidden]right- RejectedState
+RejectedState -[hidden]right- CancelledState
 
 ' Inheritance
-PendingState -up-|> ClaimState
-ApprovedState -up-|> ClaimState
-CollectedState -up-|> ClaimState
-RejectedState -up-|> ClaimState
-CancelledState -up-|> ClaimState
+ClaimState <|-- PendingState
+ClaimState <|-- ApprovedState
+ClaimState <|-- CollectedState
+ClaimState <|-- RejectedState
+ClaimState <|-- CancelledState
 
 @enduml
 ```
