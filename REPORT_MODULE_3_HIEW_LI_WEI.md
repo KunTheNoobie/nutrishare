@@ -214,26 +214,19 @@ In strict accordance with object-oriented analysis and enterprise domain modelli
 ```plantuml
 @startuml Module_3_Entity_Classes
 
-hide circle
 skinparam classAttributeIconSize 0
 skinparam backgroundColor #FFFFFF
-skinparam roundcorner 0
+skinparam roundcorner 4
 skinparam shadowing false
-skinparam defaultFontName "Helvetica, Arial, sans-serif"
+skinparam defaultFontName "Segoe UI"
 skinparam defaultFontSize 12
-skinparam linetype ortho
-skinparam nodesep 60
-skinparam ranksep 60
 
 skinparam class {
-    BackgroundColor #0D1117
-    BorderColor #FFFFFF
-    FontColor #FFFFFF
-    AttributeFontColor #FFFFFF
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    ArrowColor #000000
+    FontColor #000000
 }
-
-skinparam ArrowColor #000000
-skinparam ArrowFontColor #000000
 
 class User {
     - id: Integer
@@ -563,27 +556,19 @@ or terminates at `rejected` or `cancelled`.
 ```plantuml
 @startuml Module_3_State_Pattern
 
-hide circle
 skinparam classAttributeIconSize 0
 skinparam backgroundColor #FFFFFF
-skinparam roundcorner 0
+skinparam roundcorner 4
 skinparam shadowing false
-skinparam defaultFontName "Helvetica, Arial, sans-serif"
+skinparam defaultFontName "Segoe UI"
 skinparam defaultFontSize 12
-skinparam linetype ortho
-skinparam nodesep 60
-skinparam ranksep 50
 
 skinparam class {
-    BackgroundColor #0D1117
-    BorderColor #FFFFFF
-    FontColor #FFFFFF
-    AttributeFontColor #FFFFFF
-    StereotypeFontColor #AAAAAA
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    ArrowColor #000000
+    FontColor #000000
 }
-
-skinparam ArrowColor #000000
-skinparam ArrowFontColor #000000
 
 class Claim <<Context>> {
     - id: Integer
@@ -645,23 +630,25 @@ class CancelledState <<Terminal State>> {
     + getStatusName(): String
 }
 
-' Layout positioning
-Claim "1" *-[#000000]down-> "1" ClaimState : - state
-Claim .[#000000]down.> ClaimStateFactory : resolves state >
-ClaimStateFactory .[#000000]left.> ClaimState : <<creates>>
+' Context Association
+Claim "1" o--> "1" ClaimState : - state
 
-' Order states horizontally in lifecycle order
-PendingState -[hidden]right- ApprovedState
-ApprovedState -[hidden]right- CollectedState
-CollectedState -[hidden]right- RejectedState
-RejectedState -[hidden]right- CancelledState
+' Context resolves state through factory
+Claim ..> ClaimStateFactory : resolves state >
+
+' Factory creates concrete states
+ClaimStateFactory ..> PendingState : <<creates>>
+ClaimStateFactory ..> ApprovedState : <<creates>>
+ClaimStateFactory ..> CollectedState : <<creates>>
+ClaimStateFactory ..> RejectedState : <<creates>>
+ClaimStateFactory ..> CancelledState : <<creates>>
 
 ' Inheritance
-ClaimState <|-[#000000]- PendingState
-ClaimState <|-[#000000]- ApprovedState
-ClaimState <|-[#000000]- CollectedState
-ClaimState <|-[#000000]- RejectedState
-ClaimState <|-[#000000]- CancelledState
+PendingState -up-|> ClaimState
+ApprovedState -up-|> ClaimState
+CollectedState -up-|> ClaimState
+RejectedState -up-|> ClaimState
+CancelledState -up-|> ClaimState
 
 @enduml
 ```
