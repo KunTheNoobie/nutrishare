@@ -11,7 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 /**
- * Author: Wong Men Jing
+ * @file: app/Http/Controllers/Api/InventoryApiController.php
+ * @author: Wong Men Jing (25WMR09788)
  * Module 4: Inventory & Food Safety Compliance
  *
  * WEB SERVICE - Exposure: GET /api/inventory/status

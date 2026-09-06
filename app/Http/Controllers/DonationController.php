@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * DonationController — Module 1: Donation & Notification Management (Liew Yi Ler)
+ * @file: app/Http/Controllers/DonationController.php
+ * @author: Liew Yi Ler (25WMR09747)
+ * Module 1: Donation & Notification Management
  *
  * SECURITY (Module 1):
  * - SQLi Prevention: Uses Eloquent parameterized queries (OWASP A03)

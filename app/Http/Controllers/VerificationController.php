@@ -15,7 +15,9 @@ use App\Http\Requests\ReviewVerificationDocumentRequest;
 use App\Http\Requests\SubmitUserReviewRequest;
 
 /**
- * VerificationController — Module 2: NGO Verification & Trust Management (Cheon Jie Han)
+ * @file: app/Http/Controllers/VerificationController.php
+ * @author: Cheon Jie Han (25WMR09703)
+ * Module 2: NGO Verification & Trust Management
  */
 class VerificationController extends Controller
 {

@@ -10,7 +10,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * API Controller for NGO Verification endpoints (Module 2).
+ * @file: app/Http/Controllers/Api/UserVerificationApiController.php
+ * @author: Cheon Jie Han (25WMR09703)
+ * Module 2: NGO Verification & Peer Trust Rating System
  *
  * WEB SERVICE - Exposure: POST /api/user/verify-ngo
  *

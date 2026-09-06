@@ -16,7 +16,9 @@ use App\Http\Requests\CreateReceiptRequest;
 use App\Http\Requests\LogDistributionRequest;
 
 /**
- * ClaimController — Module 3: Claim & Logistics Distribution (Hiew Li Wei)
+ * @file: app/Http/Controllers/ClaimController.php
+ * @author: Hiew Li Wei (25WMR09728)
+ * Module 3: Claim & Logistics Distribution
  *
  * SECURITY (Module 3):
  * - IDOR Prevention: Laravel Policies enforce ownership checks (OWASP A01)

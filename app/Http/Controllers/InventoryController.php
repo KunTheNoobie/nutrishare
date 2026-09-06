@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
 
 /**
- * InventoryController — Module 4: Inventory & Food Safety (Wong Men Jing)
+ * @file: app/Http/Controllers/InventoryController.php
+ * @author: Wong Men Jing (25WMR09788)
+ * Module 4: Inventory & Food Safety Compliance
  *
  * SECURITY (Module 4):
  * - Log Injection Prevention: CRLF sanitization via SecurityHelper (OWASP A09)

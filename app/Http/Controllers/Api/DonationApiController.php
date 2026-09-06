@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 /**
- * API Controller for Donation endpoints (Module 1).
+ * @file: app/Http/Controllers/Api/DonationApiController.php
+ * @author: Liew Yi Ler (25WMR09747)
+ * Module 1: Donation & Notification Management
  *
  * WEB SERVICE - Exposure:  GET /api/donations/active
  * WEB SERVICE - Consumption: Calls Module 2's POST /api/user/verify-ngo

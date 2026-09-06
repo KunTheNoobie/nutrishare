@@ -9,7 +9,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * API Controller for Claim endpoints (Module 3).
+ * @file: app/Http/Controllers/Api/ClaimApiController.php
+ * @author: Hiew Li Wei (25WMR09728)
+ * Module 3: Claims & Logistics Distribution
  *
  * WEB SERVICE - Exposure: GET /api/claim/details
  *
