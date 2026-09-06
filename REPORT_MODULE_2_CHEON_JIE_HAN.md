@@ -207,15 +207,16 @@ In accordance with enterprise object-oriented analysis principles (Fowler, 2002)
 
 skinparam classAttributeIconSize 0
 skinparam backgroundColor #FFFFFF
-skinparam roundcorner 6
+skinparam roundcorner 4
 skinparam shadowing false
 skinparam defaultFontName "Segoe UI"
 skinparam defaultFontSize 12
 
 skinparam class {
-    BackgroundColor #F8FAFC
-    BorderColor #334155
-    ArrowColor #2563EB
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    ArrowColor #000000
+    FontColor #000000
 }
 
 class User {
@@ -464,15 +465,16 @@ The Factory Method pattern defines an interface or abstract class for creating a
 
 skinparam classAttributeIconSize 0
 skinparam backgroundColor #FFFFFF
-skinparam roundcorner 6
+skinparam roundcorner 4
 skinparam shadowing false
 skinparam defaultFontName "Segoe UI"
 skinparam defaultFontSize 12
 
 skinparam class {
-    BackgroundColor #F8FAFC
-    BorderColor #334155
-    ArrowColor #2563EB
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    ArrowColor #000000
+    FontColor #000000
 }
 
 abstract class UserCreator <<abstract>> {
