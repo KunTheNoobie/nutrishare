@@ -214,18 +214,26 @@ In strict accordance with object-oriented analysis and enterprise domain modelli
 ```plantuml
 @startuml Module_3_Entity_Classes
 
+hide circle
 skinparam classAttributeIconSize 0
 skinparam backgroundColor #FFFFFF
-skinparam roundcorner 6
+skinparam roundcorner 0
 skinparam shadowing false
-skinparam defaultFontName "Segoe UI"
+skinparam defaultFontName "Helvetica, Arial, sans-serif"
 skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 60
 
 skinparam class {
-    BackgroundColor #F8FAFC
-    BorderColor #334155
-    ArrowColor #2563EB
+    BackgroundColor #0D1117
+    BorderColor #FFFFFF
+    FontColor #FFFFFF
+    AttributeFontColor #FFFFFF
 }
+
+skinparam ArrowColor #000000
+skinparam ArrowFontColor #000000
 
 class User {
     - id: Integer
@@ -555,21 +563,27 @@ or terminates at `rejected` or `cancelled`.
 ```plantuml
 @startuml Module_3_State_Pattern
 
+hide circle
 skinparam classAttributeIconSize 0
 skinparam backgroundColor #FFFFFF
-skinparam roundcorner 4
+skinparam roundcorner 0
 skinparam shadowing false
-skinparam defaultFontName "Segoe UI"
+skinparam defaultFontName "Helvetica, Arial, sans-serif"
 skinparam defaultFontSize 12
-
 skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 50
 
 skinparam class {
-    BackgroundColor #FFFFFF
-    BorderColor #000000
-    ArrowColor #000000
-    FontColor #000000
+    BackgroundColor #0D1117
+    BorderColor #FFFFFF
+    FontColor #FFFFFF
+    AttributeFontColor #FFFFFF
+    StereotypeFontColor #AAAAAA
 }
+
+skinparam ArrowColor #000000
+skinparam ArrowFontColor #000000
 
 class Claim <<Context>> {
     - id: Integer
@@ -632,10 +646,9 @@ class CancelledState <<Terminal State>> {
 }
 
 ' Layout positioning
-Claim -right-> ClaimStateFactory : resolves state >
-Claim "1" *--> "1" ClaimState : - state
-
-ClaimStateFactory ..> ClaimState : <<creates>>
+Claim "1" *-[#000000]down-> "1" ClaimState : - state
+Claim .[#000000]down.> ClaimStateFactory : resolves state >
+ClaimStateFactory .[#000000]left.> ClaimState : <<creates>>
 
 ' Order states horizontally in lifecycle order
 PendingState -[hidden]right- ApprovedState
@@ -644,11 +657,11 @@ CollectedState -[hidden]right- RejectedState
 RejectedState -[hidden]right- CancelledState
 
 ' Inheritance
-ClaimState <|-- PendingState
-ClaimState <|-- ApprovedState
-ClaimState <|-- CollectedState
-ClaimState <|-- RejectedState
-ClaimState <|-- CancelledState
+ClaimState <|-[#000000]- PendingState
+ClaimState <|-[#000000]- ApprovedState
+ClaimState <|-[#000000]- CollectedState
+ClaimState <|-[#000000]- RejectedState
+ClaimState <|-[#000000]- CancelledState
 
 @enduml
 ```
