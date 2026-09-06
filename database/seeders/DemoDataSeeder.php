@@ -120,7 +120,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Fresh Organic Fruits & Veggies Pack',
                 'description' => 'Surplus organic honeycrisp apples, fresh kale, carrots, and avocados from morning stock. Excellent quality.',
                 'quantity' => 120.50, 'unit' => 'kg', 'pickup_address' => '789 Sunway Ave, Loading Bay C, PJ',
-                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(4), 'status' => 'claimed',
+                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(35), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1610832958506-aa56368176cf?q=80&w=2070&auto=format&fit=crop']
             ],
             // 1: For Claim 1 (Pending)
@@ -129,7 +129,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Grade A Farm Fresh Eggs & Dairy Milk',
                 'description' => 'Cartons of pasteurized whole milk and fresh farm chicken eggs. Stored in cold chillers.',
                 'quantity' => 80.00, 'unit' => 'boxes', 'pickup_address' => '12 Plaza Damansara, Cold Room, KL',
-                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addDays(5), 'status' => 'claimed',
+                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addDays(40), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1516467508483-a7212febe31a?q=80&w=2072&auto=format&fit=crop']
             ],
             // 2: For Claim 2 (Approved, NO vehicle yet)
@@ -138,7 +138,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Artisan Sourdough Breads & Pastries',
                 'description' => 'Collection of fresh sourdough loaves, French baguettes, and croissants baked fresh this morning.',
                 'quantity' => 45.00, 'unit' => 'items', 'pickup_address' => '789 Sunway Ave, Bakery Counter, PJ',
-                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(2), 'status' => 'claimed',
+                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(30), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2072&auto=format&fit=crop']
             ],
             // 3: For Claim 3 (Approved, WITH vehicle assigned)
@@ -147,7 +147,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Cold Pressed Orange & Apple Juices',
                 'description' => 'Bottles of 100% natural cold pressed orange and green apple juices. Refrigerated at 4°C.',
                 'quantity' => 150.00, 'unit' => 'litres', 'pickup_address' => '11 Jalan Sultan Ismail, Kitchen, KL',
-                'latitude' => 3.1530, 'longitude' => 101.7080, 'expiry_date' => Carbon::now()->addDays(3), 'status' => 'claimed',
+                'latitude' => 3.1530, 'longitude' => 101.7080, 'expiry_date' => Carbon::now()->addDays(45), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?q=80&w=2070&auto=format&fit=crop']
             ],
             // 4: For Claim 4 (Collected)
@@ -165,7 +165,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Cooked Gourmet Buffet Trays (Unserved)',
                 'description' => 'Unserved hotel gala dinner trays: roasted chicken breast, mixed vegetables, and butter rice. Blast frozen.',
                 'quantity' => 20.00, 'unit' => 'boxes', 'pickup_address' => '3 Jalan Kepong, Loading Bay 1, KL',
-                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(2), 'status' => 'claimed',
+                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(35), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1555244162-833832eb1cce?q=80&w=2070&auto=format&fit=crop']
             ],
             // 6: For Claim 6 (Collected)
@@ -174,7 +174,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Premix Cereal & Breakfast Grain Packs',
                 'description' => 'Nutritious oats, cornflakes, and cereal grain boxes for breakfast shelter distribution.',
                 'quantity' => 90.00, 'unit' => 'items', 'pickup_address' => '11 Jalan Sultan Ismail, Pantry, KL',
-                'latitude' => 3.1530, 'longitude' => 101.7080, 'expiry_date' => Carbon::now()->addMonths(4), 'status' => 'claimed',
+                'latitude' => 3.1530, 'longitude' => 101.7080, 'expiry_date' => Carbon::now()->addMonths(6), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1521483451569-e33803c0330c?q=80&w=2070&auto=format&fit=crop']
             ],
             // 7: For Claim 7 (Collected)
@@ -183,7 +183,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Infant Organic Cereal & Fruit Pouches',
                 'description' => 'Organic baby rice cereal and puréed banana fruit pouches. Safe and sealed.',
                 'quantity' => 110.00, 'unit' => 'items', 'pickup_address' => 'Publika Shopping Gallery, B.I.G., KL',
-                'latitude' => 3.1708, 'longitude' => 101.6660, 'expiry_date' => Carbon::now()->addMonths(5), 'status' => 'claimed',
+                'latitude' => 3.1708, 'longitude' => 101.6660, 'expiry_date' => Carbon::now()->addMonths(6), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1596797882870-8c33deeac224?q=80&w=2070&auto=format&fit=crop']
             ],
             // 8: For Claim 8 (Collected)
@@ -192,7 +192,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Whole Roasted Chicken Meal Trays',
                 'description' => 'Roasted chicken meals served with gravy and mashed potatoes. Ready for immediate dinner service.',
                 'quantity' => 30.00, 'unit' => 'boxes', 'pickup_address' => '789 Sunway Ave, Kitchen C, PJ',
-                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addHours(36), 'status' => 'claimed',
+                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(30), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=2070&auto=format&fit=crop']
             ],
             // 9: For Claim 9 (Collected)
@@ -210,7 +210,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Fresh Salmon Fillets & Seafood Pack',
                 'description' => 'Chilled Atlantic salmon fillets and tiger prawns. Packed in ice crates ready for pick up.',
                 'quantity' => 35.00, 'unit' => 'kg', 'pickup_address' => '3 Jalan Kepong, Fish Counter, KL',
-                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(2), 'status' => 'claimed',
+                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(32), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=2070&auto=format&fit=crop']
             ],
             // 11: For Claim 11 (Collected)
@@ -219,7 +219,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Frozen Mixed Peas & Sweet Corn Packs',
                 'description' => 'Blast frozen green peas, sweet corn, and diced carrots in 1kg commercial packs.',
                 'quantity' => 60.00, 'unit' => 'kg', 'pickup_address' => 'Publika Shopping Gallery, Freezer 4, KL',
-                'latitude' => 3.1708, 'longitude' => 101.6660, 'expiry_date' => Carbon::now()->addMonths(3), 'status' => 'claimed',
+                'latitude' => 3.1708, 'longitude' => 101.6660, 'expiry_date' => Carbon::now()->addMonths(6), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1574316071802-0d684efa7bf5?q=80&w=2070&auto=format&fit=crop']
             ],
             // 12: For Claim 12 (Collected)
@@ -228,7 +228,7 @@ class DemoDataSeeder extends Seeder
                 'title' => 'Fresh Brioche Buns & Morning Croissants',
                 'description' => 'Fluffy French brioche hamburger buns and golden butter croissants.',
                 'quantity' => 50.00, 'unit' => 'items', 'pickup_address' => '789 Sunway Ave, Bakery Dispatch, PJ',
-                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(2), 'status' => 'claimed',
+                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addDays(40), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1555507036-ab1f4038808a?q=80&w=2070&auto=format&fit=crop']
             ],
             // 13: For Claim 13 (Collected)
@@ -237,26 +237,53 @@ class DemoDataSeeder extends Seeder
                 'title' => 'High-Protein Tofu & Soy Milk Bundles',
                 'description' => 'Vacuum sealed organic tofu blocks and chilled unsweetened fresh soy milk.',
                 'quantity' => 45.00, 'unit' => 'boxes', 'pickup_address' => '12 Plaza Damansara, Chiller 2, KL',
-                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addDays(4), 'status' => 'claimed',
+                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addDays(35), 'status' => 'claimed',
                 'image_paths' => ['https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=2070&auto=format&fit=crop']
             ],
-            // 14: Available for Live Demo Claiming
+            // 14: Available for Live Demo Claiming (Generous 45-day window)
             [
                 'user_id' => $donor3->id,
                 'title' => 'Garden Fresh Tomatoes & Bell Peppers',
                 'description' => 'Crisp local Cameron Highlands vine tomatoes and tri-color bell peppers. Perfect for kitchen cooking.',
                 'quantity' => 75.00, 'unit' => 'kg', 'pickup_address' => '3 Jalan Kepong, Fresh Bay, KL',
-                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(5), 'status' => 'available',
+                'latitude' => 3.2100, 'longitude' => 101.6300, 'expiry_date' => Carbon::now()->addDays(45), 'status' => 'available',
                 'image_paths' => ['https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=2070&auto=format&fit=crop']
             ],
-            // 15: Available for Live Demo Claiming
+            // 15: Available for Live Demo Claiming (Generous 50-day window)
             [
                 'user_id' => $donor4->id,
                 'title' => 'Assorted Gourmet Sandwiches & Wraps',
                 'description' => 'Pre-packed chicken avocado wraps and smoked turkey breast sandwiches from executive banquet.',
                 'quantity' => 35.00, 'unit' => 'items', 'pickup_address' => '11 Jalan Sultan Ismail, Concierge, KL',
-                'latitude' => 3.1530, 'longitude' => 101.7080, 'expiry_date' => Carbon::now()->addHours(24), 'status' => 'available',
+                'latitude' => 3.1530, 'longitude' => 101.7080, 'expiry_date' => Carbon::now()->addDays(50), 'status' => 'available',
                 'image_paths' => ['https://images.unsplash.com/photo-1528735602780-2552fd46c7af?q=80&w=2073&auto=format&fit=crop']
+            ],
+            // 16: Available for Live Demo Claiming (Generous 60-day window)
+            [
+                'user_id' => $donor2->id,
+                'title' => 'Premium Greek Yogurt & Chilled Dairy Cups',
+                'description' => 'Organic low-fat Greek yogurt cups and chilled probiotic drinks from morning dairy delivery.',
+                'quantity' => 60.00, 'unit' => 'boxes', 'pickup_address' => '12 Plaza Damansara, Chiller 1, KL',
+                'latitude' => 3.1517, 'longitude' => 101.6558, 'expiry_date' => Carbon::now()->addDays(60), 'status' => 'available',
+                'image_paths' => ['https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=2070&auto=format&fit=crop']
+            ],
+            // 17: Food Safety Compliance Showcase — Urgently Expiring (Yellow Countdown Badge Demo)
+            [
+                'user_id' => $donor1->id,
+                'title' => 'Artisan Brioche Loaves (Expiring Soon - Urgent Rescue)',
+                'description' => 'Fluffy French brioche loaves nearing shelf life threshold. Perfect for immediate charity redistribution.',
+                'quantity' => 25.00, 'unit' => 'items', 'pickup_address' => '789 Sunway Ave, Bakery Dispatch, PJ',
+                'latitude' => 3.0738, 'longitude' => 101.6074, 'expiry_date' => Carbon::now()->addHours(20), 'status' => 'available',
+                'image_paths' => ['https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2072&auto=format&fit=crop']
+            ],
+            // 18: Food Safety Compliance Showcase — Expired Item (Red Warning Badge Demo)
+            [
+                'user_id' => $donor5->id,
+                'title' => 'Chilled Gourmet Salad Bowls (Expired - Safety Hold)',
+                'description' => 'Prepared Mediterranean salads stored past expiration date. Flagged by safety protocol for disposal verification.',
+                'quantity' => 15.00, 'unit' => 'boxes', 'pickup_address' => 'Publika Shopping Gallery, Disposal Bay, KL',
+                'latitude' => 3.1708, 'longitude' => 101.6660, 'expiry_date' => Carbon::now()->subDays(2), 'status' => 'expired',
+                'image_paths' => ['https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=2070&auto=format&fit=crop']
             ],
         ];
 
@@ -315,6 +342,14 @@ class DemoDataSeeder extends Seeder
             ['d' => $donationModels[12], 'loc' => $invLocationModels[7], 'cat' => $catModels['Bakery & Pastry'], 'name' => 'Fresh Brioche Burger Buns', 'qty' => 50.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => true],
             ['d' => $donationModels[13], 'loc' => $invLocationModels[8], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Organic Firm Tofu Blocks', 'qty' => 45.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
             ['d' => $donationModels[14], 'loc' => $invLocationModels[0], 'cat' => $catModels['Fresh Produce'], 'name' => 'Cameron Highlands Vine Tomatoes', 'qty' => 75.0, 'unit' => 'kg', 'storage' => 'ambient', 'perish' => true],
+            // 18: Available gourmet wraps (from Donation 15)
+            ['d' => $donationModels[15], 'loc' => $invLocationModels[2], 'cat' => $catModels['Prepared Meals'], 'name' => 'Assorted Gourmet Sandwiches & Wraps', 'qty' => 35.0, 'unit' => 'items', 'storage' => 'ambient', 'perish' => true],
+            // 19: Available Dairy Cups (from Donation 16 - Generous 60-day shelf life)
+            ['d' => $donationModels[16], 'loc' => $invLocationModels[4], 'cat' => $catModels['Dairy & Eggs'], 'name' => 'Greek Yogurt & Chilled Dairy Cups', 'qty' => 60.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
+            // 20: Safety Showcase (from Donation 17 - Expiring in 20 hours for Yellow Badge demo)
+            ['d' => $donationModels[17], 'loc' => $invLocationModels[3], 'cat' => $catModels['Bakery & Pastry'], 'name' => 'Artisan Brioche Loaves (Urgent Rescue)', 'qty' => 25.0, 'unit' => 'items', 'storage' => 'dry', 'perish' => true],
+            // 21: Safety Showcase (from Donation 18 - Expired 2 days ago for Red Badge demo)
+            ['d' => $donationModels[18], 'loc' => $invLocationModels[2], 'cat' => $catModels['Prepared Meals'], 'name' => 'Gourmet Salad Bowls (Expired Safety Hold)', 'qty' => 15.0, 'unit' => 'boxes', 'storage' => 'cold', 'perish' => true],
         ];
 
         $foodItemModels = [];
@@ -335,7 +370,7 @@ class DemoDataSeeder extends Seeder
         }
 
         // ──────────────────────────────────────────────────────────
-        // 7. Allergen-FoodItem Pivot Relationships (18+ Records)
+        // 7. Allergen-FoodItem Pivot Relationships (22 Records)
         // ──────────────────────────────────────────────────────────
         $foodItemModels[0]->allergenTags()->sync([$tagModels['Gluten']->id]);
         $foodItemModels[1]->allergenTags()->sync([$tagModels['Dairy']->id]);
@@ -355,6 +390,10 @@ class DemoDataSeeder extends Seeder
         $foodItemModels[15]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Egg']->id]);
         $foodItemModels[16]->allergenTags()->sync([$tagModels['Soy']->id]);
         $foodItemModels[17]->allergenTags()->sync([$tagModels['Sulfites']->id]);
+        $foodItemModels[18]->allergenTags()->sync([$tagModels['Gluten']->id, $tagModels['Egg']->id]);
+        $foodItemModels[19]->allergenTags()->sync([$tagModels['Dairy']->id]);
+        $foodItemModels[20]->allergenTags()->sync([$tagModels['Gluten']->id]);
+        $foodItemModels[21]->allergenTags()->sync([$tagModels['Sulfites']->id]);
 
         // ──────────────────────────────────────────────────────────
         // 8. Claims (14 Records — Structured for Presentation Demo)
@@ -387,7 +426,7 @@ class DemoDataSeeder extends Seeder
                 'donation_id' => $cd['don']->id,
                 'user_id' => $cd['ngo']->id,
                 'status' => $cd['status'],
-                'pickup_scheduled_at' => Carbon::now()->addHours(rand(2, 24)),
+                'pickup_scheduled_at' => Carbon::now()->addDays(rand(3, 21)),
                 'justification' => $cd['just']
             ]);
         }
@@ -565,7 +604,7 @@ class DemoDataSeeder extends Seeder
             Notification::create([
                 'user_id' => ($i % 2 === 0) ? $donor1->id : $ngo1->id,
                 'notification_template_id' => $templateModels[$i % 10]->id,
-                'donation_id' => $donationModels[$i % 16]->id,
+                'donation_id' => $donationModels[$i % count($donationModels)]->id,
                 'title' => $templateModels[$i % 10]->subject,
                 'message' => 'Notification alert regarding NutriShare surplus food redistribution activity.',
                 'channel' => 'email',
@@ -652,7 +691,7 @@ class DemoDataSeeder extends Seeder
                 'email' => $o['email'],
                 'otp' => $o['otp'],
                 'verified_at' => $o['verified'] ? Carbon::now() : null,
-                'expires_at' => Carbon::now()->addMinutes(10)
+                'expires_at' => Carbon::now()->addDays(30)
             ]);
         }
     }
