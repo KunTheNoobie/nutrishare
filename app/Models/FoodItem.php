@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
+ * @file: app/Models/FoodItem.php
+ * @author: Wong Men Jing (25WMR09788)
  * FoodItem Model — Individual food items linked to donations (Module 4).
  * Has a Many-to-Many relationship with AllergenTags.
  */

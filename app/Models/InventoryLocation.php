@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
+ * @file: app/Models/InventoryLocation.php
+ * @author: Wong Men Jing (25WMR09788)
  * InventoryLocation Model — Storage facilities (Module 4).
  */
 class InventoryLocation extends Model

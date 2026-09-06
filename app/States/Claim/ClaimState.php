@@ -5,6 +5,8 @@ namespace App\States\Claim;
 use App\Models\Claim;
 
 /**
+ * @file: app/States/Claim/ClaimState.php
+ * @author: Hiew Li Wei (25WMR09728)
  * DESIGN PATTERN: State Pattern — Abstract State (Module 3)
  *
  * Manages the lifecycle of a Claim through discrete states:

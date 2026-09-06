@@ -5,6 +5,8 @@ namespace App\Services\UserFactory;
 use App\Models\User;
 
 /**
+ * @file: app/Services/UserFactory/UserCreator.php
+ * @author: Cheon Jie Han (25WMR09703)
  * DESIGN PATTERN: Factory Method Pattern — Abstract Creator (Module 2)
  *
  * Defines the factory method interface for creating users with

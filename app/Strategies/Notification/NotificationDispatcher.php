@@ -5,6 +5,8 @@ namespace App\Strategies\Notification;
 use App\Models\User;
 
 /**
+ * @file: app/Strategies/Notification/NotificationDispatcher.php
+ * @author: Wong Men Jing (25WMR09788)
  * DESIGN PATTERN: Strategy Pattern — Context/Dispatcher (Module 4)
  *
  * Resolves and invokes the appropriate notification strategy

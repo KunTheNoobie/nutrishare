@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
+ * @file: app/Models/Donation.php
+ * @author: Liew Yi Ler (25WMR09747)
  * Donation Model — Core donation entity (Module 1).
  * Subject in the Observer Pattern: notifies observers when created.
  * Lifecycle: available -> claimed -> collected -> completed | expired

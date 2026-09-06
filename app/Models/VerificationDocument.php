@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
+ * @file: app/Models/VerificationDocument.php
+ * @author: Cheon Jie Han (25WMR09703)
  * VerificationDocument Model — NGO license/document uploads for admin verification (Module 2).
  */
 class VerificationDocument extends Model

@@ -13,6 +13,8 @@ use App\States\Claim\ApprovedState;
 use App\States\Claim\CollectedState;
 
 /**
+ * @file: app/Models/Claim.php
+ * @author: Hiew Li Wei (25WMR09728)
  * Claim Model — NGO claims on donations (Module 3).
  * Uses the State Pattern for lifecycle management.
  * States: PendingState -> ApprovedState -> CollectedState

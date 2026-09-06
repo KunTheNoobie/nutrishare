@@ -12,6 +12,8 @@ use App\Contracts\DonationObserverInterface;
 use App\Jobs\SendDonationNotificationJob;
 
 /**
+ * @file: app/Observers/DonationObserver.php
+ * @author: Liew Yi Ler (25WMR09747)
  * DESIGN PATTERN: Observer Pattern (Module 1 — Donation & Notification Management)
  *
  * This class acts as the Observer that is notified when a Donation (Subject) is
