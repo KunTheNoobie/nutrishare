@@ -116,7 +116,7 @@
     .jump-member3 { background: #b45309; border-color: #fbbf24; }
     .jump-member4 { background: #6d28d9; border-color: #c084fc; }
 
-    /* Section Target Offset (So anchor jumps don't get hidden behind sticky header) */
+    /* Section Target Offset */
     .member-section {
       scroll-margin-top: 130px;
       margin-top: 24px;
@@ -234,18 +234,64 @@
       margin-bottom: 6px;
     }
 
-    /* Code Blocks */
+    /* Web Service Cards — Stacked Vertically (PROVIDE on top, CONSUME below) */
+    .ws-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      width: 100%;
+    }
+    .ws-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .ws-badge-provide {
+      background: rgba(56, 189, 248, 0.2);
+      color: #38bdf8;
+      border: 1px solid rgba(56, 189, 248, 0.45);
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .ws-badge-consume {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.45);
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .ws-endpoint {
+      font-size: 0.88rem;
+      color: #f1f5f9;
+    }
+    .ws-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    /* Code Blocks — Wrapped cleanly so nothing breaks out of the box */
     pre, code { font-family: 'JetBrains Mono', Courier, monospace; }
     pre {
       background: #060911;
       border: 1px solid #1e293b;
       border-radius: var(--radius-sm);
-      padding: 12px;
+      padding: 12px 14px;
       overflow-x: auto;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: #cbd5e1;
-      line-height: 1.45;
-      margin: 8px 0;
+      line-height: 1.5;
+      margin: 6px 0;
+      white-space: pre-wrap;       /* Prevents code from spilling out on PC & phone */
+      word-break: break-word;      /* Breaks long URLs cleanly */
       -webkit-overflow-scrolling: touch;
     }
     .inline-code {
@@ -298,7 +344,7 @@
       font-family: 'Inter', sans-serif;
     }
 
-    /* Gotcha QA Box (Fully Expanded so it always works in WhatsApp) */
+    /* Gotcha QA Box */
     .qa-box {
       background: var(--bg-elevated);
       border: 1px solid #334155;
@@ -522,12 +568,17 @@ public function created(Donation $donation): void {
           </div>
         </div>
 
-        <!-- Web Services -->
-        <h3 style="margin: 20px 0 6px; color: var(--accent-amber); font-size: 0.98rem;">🌐 Web Services (IFA Standard)</h3>
-        <div class="grid-2">
-          <div>
-            <strong>PROVIDE: <code>GET /api/donations/active</code></strong>
-            <pre><code>// app/Http/Controllers/Api/DonationApiController.php (Line 43)
+        <!-- Web Services (CONSUME is placed cleanly below PROVIDE) -->
+        <h3 style="margin: 20px 0 8px; color: var(--accent-amber); font-size: 0.98rem;">🌐 Web Services (IFA Standard)</h3>
+        
+        <!-- PROVIDE ON TOP -->
+        <div class="ws-card">
+          <div class="ws-header">
+            <span class="ws-badge-provide">PROVIDE (EXPOSE)</span>
+            <strong class="ws-endpoint"><code>GET /api/donations/active</code></strong>
+          </div>
+          <p class="ws-desc">Returns catalog of active, unclaimed food donations in strict IFA-compliant format.</p>
+          <pre><code>// app/Http/Controllers/Api/DonationApiController.php (Line 43)
 public function active(Request $request): JsonResponse {
     $ifa = SecurityHelper::validateIfaRequest($request->all());
     $donations = Donation::with('foodItems')->active()->get();
@@ -537,10 +588,16 @@ public function active(Request $request): JsonResponse {
         'total'     => $donations->count(),
     ]), 200);
 }</code></pre>
+        </div>
+
+        <!-- CONSUME DIRECTLY BELOW PROVIDE -->
+        <div class="ws-card">
+          <div class="ws-header">
+            <span class="ws-badge-consume">CONSUME (CALLS MODULE 2)</span>
+            <strong class="ws-endpoint"><code>POST /api/user/verify-ngo</code></strong>
           </div>
-          <div>
-            <strong>CONSUME: Calls Cheon's <code>POST /api/user/verify-ngo</code></strong>
-            <pre><code>// app/Http/Controllers/Api/DonationApiController.php (Line 98)
+          <p class="ws-desc">Calls Cheon's Module 2 before allowing an NGO to place a claim; fails closed if service is down.</p>
+          <pre><code>// app/Http/Controllers/Api/DonationApiController.php (Line 98)
 public function verifyNgoBeforeClaim(int $ngoUserId): bool {
     $response = Http::timeout(10)->post(config('app.url').'/api/user/verify-ngo', [
         'requestID' => uniqid('VERIFY-'),
@@ -549,7 +606,6 @@ public function verifyNgoBeforeClaim(int $ngoUserId): bool {
     ]);
     return $response->successful() && ($response->json()['data']['is_verified'] ?? false);
 }</code></pre>
-          </div>
         </div>
 
         <!-- Gotcha Questions -->
@@ -650,12 +706,17 @@ $user = $creator->createUser($validated);</code></pre>
           </div>
         </div>
 
-        <!-- Web Services -->
-        <h3 style="margin: 20px 0 6px; color: var(--accent-amber); font-size: 0.98rem;">🌐 Web Services (IFA Standard)</h3>
-        <div class="grid-2">
-          <div>
-            <strong>PROVIDE: <code>POST /api/user/verify-ngo</code></strong>
-            <pre><code>// app/Http/Controllers/Api/UserVerificationApiController.php (Line 40)
+        <!-- Web Services (CONSUME is placed cleanly below PROVIDE) -->
+        <h3 style="margin: 20px 0 8px; color: var(--accent-amber); font-size: 0.98rem;">🌐 Web Services (IFA Standard)</h3>
+        
+        <!-- PROVIDE ON TOP -->
+        <div class="ws-card">
+          <div class="ws-header">
+            <span class="ws-badge-provide">PROVIDE (EXPOSE)</span>
+            <strong class="ws-endpoint"><code>POST /api/user/verify-ngo</code></strong>
+          </div>
+          <p class="ws-desc">Validates NGO approval status and approved ROS license documents before permitting claims.</p>
+          <pre><code>// app/Http/Controllers/Api/UserVerificationApiController.php (Line 40)
 public function verifyNgo(Request $request): JsonResponse {
     $ifa = SecurityHelper::validateIfaRequest($request->all());
     $isVerified = $user->verification_status === 'approved';
@@ -667,10 +728,16 @@ public function verifyNgo(Request $request): JsonResponse {
         'trust_rating'=> $user->averageRating(),
     ]), 200);
 }</code></pre>
+        </div>
+
+        <!-- CONSUME DIRECTLY BELOW PROVIDE -->
+        <div class="ws-card">
+          <div class="ws-header">
+            <span class="ws-badge-consume">CONSUME (CALLS MODULE 3)</span>
+            <strong class="ws-endpoint"><code>GET /api/claim/details</code></strong>
           </div>
-          <div>
-            <strong>CONSUME: Calls Hiew's <code>GET /api/claim/details</code></strong>
-            <pre><code>// app/Http/Controllers/VerificationController.php (Line 107)
+          <p class="ws-desc">Queries Hiew's Module 3 to confirm physical food collection took place before accepting peer reviews.</p>
+          <pre><code>// app/Http/Controllers/VerificationController.php (Line 107)
 public function verifyClaimCompletedBeforeReview(int $claimId): bool {
     $response = Http::timeout(10)->get(config('app.url').'/api/claim/details', [
         'requestID' => uniqid('VERIFY-CLAIM-'),
@@ -680,7 +747,6 @@ public function verifyClaimCompletedBeforeReview(int $claimId): bool {
     return $response->successful() && 
         in_array($response->json()['data']['claim']['status'] ?? '', ['collected', 'completed']);
 }</code></pre>
-          </div>
         </div>
 
         <!-- Gotcha Questions -->
@@ -782,12 +848,17 @@ public function allowedActions(): array {
           </div>
         </div>
 
-        <!-- Web Services -->
-        <h3 style="margin: 20px 0 6px; color: var(--accent-green); font-size: 0.98rem;">🌐 Web Services (IFA Standard)</h3>
-        <div class="grid-2">
-          <div>
-            <strong>PROVIDE: <code>GET /api/claim/details</code></strong>
-            <pre><code>// app/Http/Controllers/Api/ClaimApiController.php (Line 36)
+        <!-- Web Services (CONSUME is placed cleanly below PROVIDE) -->
+        <h3 style="margin: 20px 0 8px; color: var(--accent-amber); font-size: 0.98rem;">🌐 Web Services (IFA Standard)</h3>
+        
+        <!-- PROVIDE ON TOP -->
+        <div class="ws-card">
+          <div class="ws-header">
+            <span class="ws-badge-provide">PROVIDE (EXPOSE)</span>
+            <strong class="ws-endpoint"><code>GET /api/claim/details</code></strong>
+          </div>
+          <p class="ws-desc">Returns real-time claim lifecycle state, assigned logistics vehicle details, and collection receipt.</p>
+          <pre><code>// app/Http/Controllers/Api/ClaimApiController.php (Line 36)
 public function details(Request $request): JsonResponse {
     $ifa = SecurityHelper::validateIfaRequest($request->all());
     $claim = Claim::with(['vehicle', 'collectionReceipt'])->find($request->claim_id);
@@ -802,10 +873,16 @@ public function details(Request $request): JsonResponse {
         ],
     ]), 200);
 }</code></pre>
+        </div>
+
+        <!-- CONSUME DIRECTLY BELOW PROVIDE -->
+        <div class="ws-card">
+          <div class="ws-header">
+            <span class="ws-badge-consume">CONSUME (CALLS MODULE 4)</span>
+            <strong class="ws-endpoint"><code>POST /api/inventory/food-safety-check</code></strong>
           </div>
-          <div>
-            <strong>CONSUME: Calls Wong's <code>POST /api/inventory/food-safety-check</code></strong>
-            <pre><code>// app/Services/Clients/SafetyServiceClient.php (Line 31)
+          <p class="ws-desc">Queries Wong's Module 4 to verify microbial and temperature safety compliance before logistics handover.</p>
+          <pre><code>// app/Services/Clients/SafetyServiceClient.php (Line 31)
 public function verifySafetyCompliance(int $foodItemId): bool {
     $response = Http::timeout(5)->post("{$this->baseUrl}/api/inventory/food-safety-check", [
         'requestID'    => 'REQ-SAFE-'.bin2hex(random_bytes(4)),
@@ -814,7 +891,6 @@ public function verifySafetyCompliance(int $foodItemId): bool {
     ]);
     return $response->successful() && ($response->json()['data']['food_item']['safety_status'] ?? '') === 'SAFE';
 }</code></pre>
-          </div>
         </div>
 
         <!-- Gotcha Questions -->
@@ -912,12 +988,17 @@ public function resolveStrategy(string $channel): NotificationStrategyInterface 
           </div>
         </div>
 
-        <!-- Web Services -->
-        <h3 style="margin: 20px 0 6px; color: var(--accent-amber); font-size: 0.98rem;">🌐 Web Services (IFA Standard)</h3>
-        <div class="grid-2">
-          <div>
-            <strong>PROVIDE: <code>POST /api/inventory/food-safety-check</code></strong>
-            <pre><code>// app/Http/Controllers/Api/InventoryApiController.php (Line 73)
+        <!-- Web Services (CONSUME is placed cleanly below PROVIDE) -->
+        <h3 style="margin: 20px 0 8px; color: var(--accent-amber); font-size: 0.98rem;">🌐 Web Services (IFA Standard)</h3>
+        
+        <!-- PROVIDE ON TOP -->
+        <div class="ws-card">
+          <div class="ws-header">
+            <span class="ws-badge-provide">PROVIDE (EXPOSE)</span>
+            <strong class="ws-endpoint"><code>POST /api/inventory/food-safety-check</code> & <code>GET /api/inventory/status</code></strong>
+          </div>
+          <p class="ws-desc">Evaluates cold-chain storage parameters and expiry timestamps to return a certified safety verdict.</p>
+          <pre><code>// app/Http/Controllers/Api/InventoryApiController.php (Line 73)
 public function foodSafetyCheck(Request $request): JsonResponse {
     $ifa = SecurityHelper::validateIfaRequest($request->all());
     $isSafe = ($foodItem->safety_status === 'safe' || $foodItem->safety_status === 'passed')
@@ -927,10 +1008,16 @@ public function foodSafetyCheck(Request $request): JsonResponse {
         'food_item' => ['id' => $foodItem->id, 'safety_status' => $isSafe ? 'SAFE' : 'UNSAFE'],
     ]), 200);
 }</code></pre>
+        </div>
+
+        <!-- CONSUME DIRECTLY BELOW PROVIDE -->
+        <div class="ws-card">
+          <div class="ws-header">
+            <span class="ws-badge-consume">CONSUME (CALLS MODULE 1)</span>
+            <strong class="ws-endpoint"><code>GET /api/donations/active</code></strong>
           </div>
-          <div>
-            <strong>CONSUME: Calls Liew's <code>GET /api/donations/active</code></strong>
-            <pre><code>// app/Http/Controllers/Api/InventoryApiController.php (Line 129)
+          <p class="ws-desc">Queries Liew's Module 1 to forecast incoming food surplus and allocate warehouse storage capacity in advance.</p>
+          <pre><code>// app/Http/Controllers/Api/InventoryApiController.php (Line 129)
 public function fetchActiveDonationsForWarehouse(): array {
     $response = Http::timeout(10)->get(config('app.url').'/api/donations/active', [
         'requestID' => uniqid('INV-PREVIEW-'),
@@ -938,7 +1025,6 @@ public function fetchActiveDonationsForWarehouse(): array {
     ]);
     return $response->successful() ? ($response->json()['data']['donations'] ?? []) : [];
 }</code></pre>
-          </div>
         </div>
 
         <!-- Gotcha Questions -->
