@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0b0f19">
-  <title>NutriShare — Viva Defense Cheat Sheet (BMIT3173)</title>
+  <title>NutriShare — Viva Defense Master Guide (BMIT3173)</title>
   <style>
     :root {
       --bg-main: #0b0f19;
@@ -33,19 +33,12 @@
       background-color: var(--bg-main);
       color: var(--text-primary);
       line-height: 1.55;
-      padding-bottom: 90px;
+      padding-bottom: 80px;
       font-size: 15px;
     }
 
-    /* PURE CSS RADIO TAB ENGINE (Works 100% even if WhatsApp disables JS!) */
-    .tab-radio {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-
     .container {
-      max-width: 1000px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 12px;
     }
@@ -53,15 +46,17 @@
       .container { padding: 20px; }
     }
 
-    /* Sticky Header */
+    /* Sticky Top Quick Jump Bar (Standard HTML Anchors — 100% WhatsApp Proof!) */
     header {
-      background: #0f172a;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 2px solid var(--border-subtle);
       padding: 10px 0 8px;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.65);
+      box-shadow: 0 4px 22px rgba(0,0,0,0.7);
     }
 
     .header-top {
@@ -81,8 +76,8 @@
       color: var(--text-secondary);
     }
 
-    /* Swipeable Tab Pill Bar (Labels triggering Radio inputs) */
-    .tab-bar {
+    /* Swipeable Quick Jump Pill Bar */
+    .jump-bar {
       display: flex;
       flex-wrap: nowrap;
       overflow-x: auto;
@@ -91,76 +86,39 @@
       padding: 4px 2px 6px;
       scrollbar-width: none;
     }
-    .tab-bar::-webkit-scrollbar { display: none; }
+    .jump-bar::-webkit-scrollbar { display: none; }
 
-    .tab-btn {
-      background: #1e293b;
-      border: 1.5px solid #334155;
-      color: var(--text-secondary);
+    .jump-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       padding: 8px 14px;
       border-radius: 9999px;
       font-size: 0.82rem;
       font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      text-decoration: none;
       white-space: nowrap;
       flex-shrink: 0;
-      user-select: none;
       min-height: 38px;
-      transition: background 0.15s ease, color 0.15s ease;
+      border: 1.5px solid transparent;
+      transition: transform 0.1s ease;
     }
-    .tab-btn:active { transform: scale(0.95); }
+    .jump-pill:active { transform: scale(0.95); }
 
-    /* Pure CSS Tab Switching Selectors */
-    .tab-panel { display: none; }
+    .pill-master { background: #1e293b; color: #38bdf8; border-color: #38bdf8; }
+    .pill-mod1   { background: #0284c7; color: #ffffff; border-color: #38bdf8; }
+    .pill-mod2   { background: #059669; color: #ffffff; border-color: #34d399; }
+    .pill-mod3   { background: #d97706; color: #ffffff; border-color: #fbbf24; }
+    .pill-mod4   { background: #7c3aed; color: #ffffff; border-color: #c084fc; }
 
-    #tab-mod1:checked ~ main .panel-mod1 { display: block; }
-    #tab-master:checked ~ main .panel-master { display: block; }
-    #tab-mod2:checked ~ main .panel-mod2 { display: block; }
-    #tab-mod3:checked ~ main .panel-mod3 { display: block; }
-    #tab-mod4:checked ~ main .panel-mod4 { display: block; }
-    #tab-all:checked ~ main .tab-panel { display: block; }
-
-    /* Active Label Styles (Pure CSS) */
-    #tab-mod1:checked ~ header .label-mod1 {
-      background: #0284c7;
-      color: #ffffff;
-      border-color: #38bdf8;
-      box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
-    }
-    #tab-master:checked ~ header .label-master {
-      background: #1e293b;
-      color: #38bdf8;
-      border-color: #38bdf8;
-      box-shadow: 0 2px 10px rgba(56, 189, 248, 0.3);
-    }
-    #tab-mod2:checked ~ header .label-mod2 {
-      background: #059669;
-      color: #ffffff;
-      border-color: #34d399;
-      box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
-    }
-    #tab-mod3:checked ~ header .label-mod3 {
-      background: #d97706;
-      color: #ffffff;
-      border-color: #fbbf24;
-      box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
-    }
-    #tab-mod4:checked ~ header .label-mod4 {
-      background: #7c3aed;
-      color: #ffffff;
-      border-color: #c084fc;
-      box-shadow: 0 2px 10px rgba(168, 85, 247, 0.4);
-    }
-    #tab-all:checked ~ header .label-all {
-      background: #475569;
-      color: #ffffff;
-      border-color: #94a3b8;
+    /* Main Section Anchors with Smooth Offset */
+    section.module-section {
+      scroll-margin-top: 95px;
+      margin-top: 24px;
+      margin-bottom: 34px;
     }
 
-    /* Cards */
+    /* Clean Card Layout */
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -173,10 +131,11 @@
     @media (min-width: 768px) {
       .card { padding: 20px; }
     }
-    .card-mod1 { border-top-color: var(--accent-blue); }
-    .card-mod2 { border-top-color: var(--accent-green); }
-    .card-mod3 { border-top-color: var(--accent-amber); }
-    .card-mod4 { border-top-color: var(--accent-purple); }
+    .card-master { border-top-color: #38bdf8; }
+    .card-mod1   { border-top-color: var(--accent-blue); }
+    .card-mod2   { border-top-color: var(--accent-green); }
+    .card-mod3   { border-top-color: var(--accent-amber); }
+    .card-mod4   { border-top-color: var(--accent-purple); }
 
     .card-header-flex {
       display: flex;
@@ -194,7 +153,7 @@
       }
     }
     .member-title {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -226,7 +185,7 @@
     .title-amber { color: #fbbf24; }
     .title-purple { color: #c084fc; }
 
-    /* Touch Tab Cards (Mobile Friendly) */
+    /* Phone-Friendly Tab Cards List */
     .tab-cards-list {
       display: flex;
       flex-direction: column;
@@ -399,7 +358,7 @@
       font-size: 0.7rem;
       font-weight: 800;
     }
-    .ws-endpoint { font-size: 0.88rem; color: #f1f5f9; }
+    .ws-endpoint { font-size: 0.88rem; color: #f1f5f9; font-family: monospace; }
     .ws-desc { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px; }
 
     /* Collapsible Code Toggles */
@@ -499,57 +458,45 @@
     }
     .qa-answer strong { color: #fde047; }
 
-    /* Mobile Quick Anchor Floating Links */
-    .quick-anchor-bar {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      margin-bottom: 12px;
-      padding-bottom: 4px;
+    /* Bottom Back-to-Top Button */
+    .back-top-row {
+      text-align: center;
+      margin: 16px 0 8px;
     }
-    .quick-pill {
-      font-size: 0.75rem;
-      padding: 4px 10px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      color: var(--text-secondary);
+    .back-top-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 9999px;
+      color: #94a3b8;
+      font-size: 0.78rem;
+      font-weight: 700;
       text-decoration: none;
-      white-space: nowrap;
     }
+    .back-top-btn:active { background: #334155; color: #fff; }
   </style>
 </head>
-<body>
+<body id="top">
 
-  <!-- PURE CSS HIDDEN RADIO INPUTS: Works 100% inside WhatsApp! -->
-  <input type="radio" name="modTab" id="tab-mod1" class="tab-radio" checked>
-  <input type="radio" name="modTab" id="tab-master" class="tab-radio">
-  <input type="radio" name="modTab" id="tab-mod2" class="tab-radio">
-  <input type="radio" name="modTab" id="tab-mod3" class="tab-radio">
-  <input type="radio" name="modTab" id="tab-mod4" class="tab-radio">
-  <input type="radio" name="modTab" id="tab-all" class="tab-radio">
-
-  <!-- Sticky Header with Swipeable Labels -->
+  <!-- Sticky Top Quick-Jump Header -->
   <header>
     <div class="container" style="padding-top: 0; padding-bottom: 0;">
       <div class="header-top">
         <div class="title-group">
-          <h1>NutriShare • Viva Guide</h1>
-          <p>BMIT3173 Oral Defense &bull; WhatsApp Friendly</p>
-        </div>
-        <div>
-          <label for="tab-all" class="tab-btn label-all" style="font-size: 0.72rem; min-height: 30px; padding: 3px 9px;">
-            👁️ Show All
-          </label>
+          <h1>NutriShare • Viva Defense Master Guide</h1>
+          <p>BMIT3173 Integrative Programming &bull; All 4 Members in One Page</p>
         </div>
       </div>
 
-      <nav class="tab-bar" aria-label="Module Navigation Tabs">
-        <label for="tab-mod1" class="tab-btn label-mod1">👤 Mod 1: Liew</label>
-        <label for="tab-master" class="tab-btn label-master">📊 Master Matrix</label>
-        <label for="tab-mod2" class="tab-btn label-mod2">👤 Mod 2: Cheon</label>
-        <label for="tab-mod3" class="tab-btn label-mod3">👤 Mod 3: Hiew</label>
-        <label for="tab-mod4" class="tab-btn label-mod4">👤 Mod 4: Wong</label>
+      <nav class="jump-bar" aria-label="Quick Jump Menu">
+        <a href="#master" class="jump-pill pill-master">📊 Master Matrix</a>
+        <a href="#mod1" class="jump-pill pill-mod1">👤 Mod 1: Liew</a>
+        <a href="#mod2" class="jump-pill pill-mod2">👤 Mod 2: Cheon</a>
+        <a href="#mod3" class="jump-pill pill-mod3">👤 Mod 3: Hiew</a>
+        <a href="#mod4" class="jump-pill pill-mod4">👤 Mod 4: Wong</a>
       </nav>
     </div>
   </header>
@@ -557,21 +504,104 @@
   <main class="container">
 
     <!-- ================================================================= -->
-    <!-- TAB 1: MODULE 1 — LIEW YI LER (DEFAULT OPEN!) -->
+    <!-- SECTION 0: MASTER MATRIX -->
     <!-- ================================================================= -->
-    <div class="tab-panel panel-mod1">
+    <section class="module-section" id="master">
+      <div class="card card-master">
+        <div class="card-header-flex">
+          <div class="member-title" style="color: #38bdf8;">🏆 Master Technical Matrix (All 4 Members)</div>
+          <span class="mod-badge badge-mod1">100% Unique Allocations Verified</span>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">
+          👉 Swipe horizontally on phone to view the whole table.
+        </p>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Member</th>
+                <th>Module &amp; SDG</th>
+                <th>Design Pattern (GoF)</th>
+                <th>Security Threat 1</th>
+                <th>Security Threat 2</th>
+                <th>API Provide</th>
+                <th>API Consume</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Liew Yi Ler</strong><br><span class="inline-code">25WMR09747</span></td>
+                <td><strong>Mod 1</strong>: Donation Publishing &amp; Notifications<br><small style="color: #38bdf8">SDG 2.1 / 2.2</small></td>
+                <td><strong style="color: var(--accent-blue)">Observer Pattern</strong><br><small>Donation / DonationObserver</small></td>
+                <td><strong>CSRF (OWASP A05)</strong><br><small>Synchronizer Token (@csrf)</small></td>
+                <td><strong>Stored XSS (OWASP A07)</strong><br><small>Context Escaping ({{ }})</small></td>
+                <td><span class="inline-code">GET /api/donations/active</span></td>
+                <td>Calls Cheon (Mod 2):<br><span class="inline-code">POST /api/user/verify-ngo</span></td>
+              </tr>
+              <tr>
+                <td><strong>Cheon Jie Han</strong><br><span class="inline-code">25WMR09703</span></td>
+                <td><strong>Mod 2</strong>: NGO Verification &amp; Trust Ratings<br><small style="color: #34d399">SDG 2.1 / 2.4</small></td>
+                <td><strong style="color: var(--accent-green)">Factory Method Pattern</strong><br><small>UserCreator / NgoCreator</small></td>
+                <td><strong>Broken Access Control (A01)</strong><br><small>RBAC (CheckRole middleware)</small></td>
+                <td><strong>OTP Brute-Force (A07)</strong><br><small>throttle:6,1 + 5m Expiry</small></td>
+                <td><span class="inline-code">POST /api/user/verify-ngo</span></td>
+                <td>Calls Hiew (Mod 3):<br><span class="inline-code">GET /api/claim/details</span></td>
+              </tr>
+              <tr>
+                <td><strong>Hiew Li Wei</strong><br><span class="inline-code">25WMR09728</span></td>
+                <td><strong>Mod 3</strong>: Claims &amp; Logistics Distribution<br><small style="color: #fbbf24">SDG 2.1 / 12.3</small></td>
+                <td><strong style="color: var(--accent-amber)">State Pattern</strong><br><small>Pending, Approved, Collected</small></td>
+                <td><strong>BOLA / IDOR (OWASP A01)</strong><br><small>Policy Checks (ClaimPolicy)</small></td>
+                <td><strong>State Tampering (A04)</strong><br><small>Strict Transition Guards</small></td>
+                <td><span class="inline-code">GET /api/claim/details</span></td>
+                <td>Calls Wong (Mod 4):<br><span class="inline-code">POST /api/inventory/food-safety-check</span></td>
+              </tr>
+              <tr>
+                <td><strong>Wong Men Jing</strong><br><span class="inline-code">25WMR09788</span></td>
+                <td><strong>Mod 4</strong>: Inventory &amp; Safety Compliance<br><small style="color: #c084fc">SDG 2.1 / 2.4</small></td>
+                <td><strong style="color: var(--accent-purple)">Strategy Pattern</strong><br><small>NotificationDispatcher (Email, SMS)</small></td>
+                <td><strong>Log / CRLF Injection (A09)</strong><br><small>CRLF Stripping Mutator</small></td>
+                <td><strong>Parameter Tampering (A01)</strong><br><small>HMAC Signed URLs (signedRoute)</small></td>
+                <td><span class="inline-code">POST /api/inventory/food-safety-check</span></td>
+                <td>Calls Liew (Mod 1):<br><span class="inline-code">GET /api/donations/active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="verbatim-box">
+          <div class="verbatim-label">💡 How the 4 Modules Communicate via IFA Web Services:</div>
+          <div class="verbatim-text" style="font-size: 0.86rem;">
+            • <strong>Module 1 (Liew)</strong> calls <strong>Module 2 (Cheon)</strong>: Verifies if claiming NGO is approved before claiming.<br>
+            • <strong>Module 2 (Cheon)</strong> calls <strong>Module 3 (Hiew)</strong>: Verifies claim distribution history before giving trust ratings.<br>
+            • <strong>Module 3 (Hiew)</strong> calls <strong>Module 4 (Wong)</strong>: Checks food storage safety and expiry before allowing pickup.<br>
+            • <strong>Module 4 (Wong)</strong> calls <strong>Module 1 (Liew)</strong>: Queries active surplus food to calculate warehouse capacity.
+          </div>
+        </div>
+
+        <div class="back-top-row">
+          <a href="#top" class="back-top-btn">⬆️ Back to Top Menu</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================= -->
+    <!-- SECTION 1: MODULE 1 — LIEW YI LER -->
+    <!-- ================================================================= -->
+    <section class="module-section" id="mod1">
       
       <!-- HEADER & TABS TO OPEN -->
       <div class="card card-mod1">
         <div class="card-header-flex">
           <div>
-            <div class="member-title" style="color: #38bdf8;">👤 Liew Yi Ler (25WMR09747)</div>
-            <p style="font-size: 0.82rem; color: var(--text-secondary);">Module 1: Surplus Food Donation Publishing &amp; Notifications &bull; SDG 2.1 &amp; 2.2</p>
+            <div class="member-title" style="color: #38bdf8;">👤 Module 1: Liew Yi Ler (25WMR09747)</div>
+            <p style="font-size: 0.82rem; color: var(--text-secondary);">Surplus Food Donation Publishing &amp; Notifications &bull; SDG 2.1 &amp; 2.2</p>
           </div>
           <span class="mod-badge badge-mod1">Observer &bull; CSRF &bull; Stored XSS</span>
         </div>
 
-        <div class="section-title title-blue">📂 Tabs to Open &amp; Exact Lines to Point At:</div>
+        <div class="section-title title-blue">📂 Tabs to Open in VS Code &amp; Exact Lines to Point At:</div>
 
         <div class="tab-cards-list">
           <div class="tab-card-item">
@@ -886,102 +916,27 @@ return $response->successful() && $response->json('data.is_verified');</code></p
         </div>
       </div>
 
-    </div>
-
-    <!-- ================================================================= -->
-    <!-- TAB 0: MASTER MATRIX -->
-    <!-- ================================================================= -->
-    <div class="tab-panel panel-master">
-      <div class="card">
-        <div class="card-header-flex">
-          <div class="member-title" style="color: #38bdf8;">🏆 Master Technical Matrix</div>
-          <span class="mod-badge badge-mod1">All 4 Members &bull; 100% Unique</span>
-        </div>
-        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">
-          👉 Swipe horizontally on phone to view the whole table.
-        </p>
-
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Member</th>
-                <th>Module &amp; SDG</th>
-                <th>Design Pattern (GoF)</th>
-                <th>Security Threat 1</th>
-                <th>Security Threat 2</th>
-                <th>API Provide</th>
-                <th>API Consume</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Liew Yi Ler</strong><br><span class="inline-code">25WMR09747</span></td>
-                <td><strong>Mod 1</strong>: Donation Publishing &amp; Notifications<br><small style="color: #38bdf8">SDG 2.1 / 2.2</small></td>
-                <td><strong style="color: var(--accent-blue)">Observer Pattern</strong><br><small>Donation / DonationObserver</small></td>
-                <td><strong>CSRF (OWASP A05)</strong><br><small>Synchronizer Token (@csrf)</small></td>
-                <td><strong>Stored XSS (OWASP A07)</strong><br><small>Context Escaping ({{ }})</small></td>
-                <td><span class="inline-code">GET /api/donations/active</span></td>
-                <td>Calls Cheon (Mod 2):<br><span class="inline-code">POST /api/user/verify-ngo</span></td>
-              </tr>
-              <tr>
-                <td><strong>Cheon Jie Han</strong><br><span class="inline-code">25WMR09703</span></td>
-                <td><strong>Mod 2</strong>: NGO Verification &amp; Trust Ratings<br><small style="color: #34d399">SDG 2.1 / 2.4</small></td>
-                <td><strong style="color: var(--accent-green)">Factory Method Pattern</strong><br><small>UserCreator / NgoCreator</small></td>
-                <td><strong>Broken Access Control (A01)</strong><br><small>RBAC (CheckRole middleware)</small></td>
-                <td><strong>OTP Brute-Force (A07)</strong><br><small>throttle:6,1 + 5m Expiry</small></td>
-                <td><span class="inline-code">POST /api/user/verify-ngo</span></td>
-                <td>Calls Hiew (Mod 3):<br><span class="inline-code">GET /api/claim/details</span></td>
-              </tr>
-              <tr>
-                <td><strong>Hiew Li Wei</strong><br><span class="inline-code">25WMR09728</span></td>
-                <td><strong>Mod 3</strong>: Claims &amp; Logistics Distribution<br><small style="color: #fbbf24">SDG 2.1 / 12.3</small></td>
-                <td><strong style="color: var(--accent-amber)">State Pattern</strong><br><small>Pending, Approved, Collected</small></td>
-                <td><strong>BOLA / IDOR (OWASP A01)</strong><br><small>Policy Checks (ClaimPolicy)</small></td>
-                <td><strong>State Tampering (A04)</strong><br><small>Strict Transition Guards</small></td>
-                <td><span class="inline-code">GET /api/claim/details</span></td>
-                <td>Calls Wong (Mod 4):<br><span class="inline-code">POST /api/inventory/food-safety-check</span></td>
-              </tr>
-              <tr>
-                <td><strong>Wong Men Jing</strong><br><span class="inline-code">25WMR09788</span></td>
-                <td><strong>Mod 4</strong>: Inventory &amp; Safety Compliance<br><small style="color: #c084fc">SDG 2.1 / 2.4</small></td>
-                <td><strong style="color: var(--accent-purple)">Strategy Pattern</strong><br><small>NotificationDispatcher (Email, SMS)</small></td>
-                <td><strong>Log / CRLF Injection (A09)</strong><br><small>CRLF Stripping Mutator</small></td>
-                <td><strong>Parameter Tampering (A01)</strong><br><small>HMAC Signed URLs (signedRoute)</small></td>
-                <td><span class="inline-code">POST /api/inventory/food-safety-check</span></td>
-                <td>Calls Liew (Mod 1):<br><span class="inline-code">GET /api/donations/active</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="verbatim-box">
-          <div class="verbatim-label">💡 How the 4 Modules Communicate via IFA Web Services:</div>
-          <div class="verbatim-text" style="font-size: 0.86rem;">
-            • <strong>Module 1 (Liew)</strong> calls <strong>Module 2 (Cheon)</strong>: Verifies if claiming NGO is approved before claiming.<br>
-            • <strong>Module 2 (Cheon)</strong> calls <strong>Module 3 (Hiew)</strong>: Verifies claim distribution history before giving trust ratings.<br>
-            • <strong>Module 3 (Hiew)</strong> calls <strong>Module 4 (Wong)</strong>: Checks food storage safety and expiry before allowing pickup.<br>
-            • <strong>Module 4 (Wong)</strong> calls <strong>Module 1 (Liew)</strong>: Queries active surplus food to calculate warehouse capacity.
-          </div>
-        </div>
+      <div class="back-top-row">
+        <a href="#top" class="back-top-btn">⬆️ Back to Top Menu</a>
       </div>
-    </div>
+
+    </section>
 
     <!-- ================================================================= -->
-    <!-- TAB 2: MODULE 2 — CHEON JIE HAN -->
+    <!-- SECTION 2: MODULE 2 — CHEON JIE HAN -->
     <!-- ================================================================= -->
-    <div class="tab-panel panel-mod2">
+    <section class="module-section" id="mod2">
       
       <div class="card card-mod2">
         <div class="card-header-flex">
           <div>
-            <div class="member-title" style="color: #34d399;">👤 Cheon Jie Han (25WMR09703)</div>
-            <p style="font-size: 0.82rem; color: var(--text-secondary);">Module 2: NGO Verification &amp; Peer Trust Rating System &bull; SDG 2.1 &amp; 2.4</p>
+            <div class="member-title" style="color: #34d399;">👤 Module 2: Cheon Jie Han (25WMR09703)</div>
+            <p style="font-size: 0.82rem; color: var(--text-secondary);">NGO Verification &amp; Peer Trust Rating System &bull; SDG 2.1 &amp; 2.4</p>
           </div>
           <span class="mod-badge badge-mod2">Factory Method &bull; Access Control &bull; OTP Throttling</span>
         </div>
 
-        <div class="section-title title-green">📂 Tabs to Open &amp; Exact Lines to Point At:</div>
+        <div class="section-title title-green">📂 Tabs to Open in VS Code &amp; Exact Lines to Point At:</div>
 
         <div class="tab-cards-list">
           <div class="tab-card-item">
@@ -1181,23 +1136,27 @@ return response()->json(SecurityHelper::ifaResponse('S', [
         </div>
       </div>
 
-    </div>
+      <div class="back-top-row">
+        <a href="#top" class="back-top-btn">⬆️ Back to Top Menu</a>
+      </div>
+
+    </section>
 
     <!-- ================================================================= -->
-    <!-- TAB 3: MODULE 3 — HIEW LI WEI -->
+    <!-- SECTION 3: MODULE 3 — HIEW LI WEI -->
     <!-- ================================================================= -->
-    <div class="tab-panel panel-mod3">
+    <section class="module-section" id="mod3">
       
       <div class="card card-mod3">
         <div class="card-header-flex">
           <div>
-            <div class="member-title" style="color: #fbbf24;">👤 Hiew Li Wei (25WMR09728)</div>
-            <p style="font-size: 0.82rem; color: var(--text-secondary);">Module 3: Food Distribution Logistics &amp; Claim Lifecycle &bull; SDG 2.1 &amp; 12.3</p>
+            <div class="member-title" style="color: #fbbf24;">👤 Module 3: Hiew Li Wei (25WMR09728)</div>
+            <p style="font-size: 0.82rem; color: var(--text-secondary);">Food Distribution Logistics &amp; Claim Lifecycle &bull; SDG 2.1 &amp; 12.3</p>
           </div>
           <span class="mod-badge badge-mod3">State Pattern &bull; BOLA / IDOR &bull; State Tampering</span>
         </div>
 
-        <div class="section-title title-amber">📂 Tabs to Open &amp; Exact Lines to Point At:</div>
+        <div class="section-title title-amber">📂 Tabs to Open in VS Code &amp; Exact Lines to Point At:</div>
 
         <div class="tab-cards-list">
           <div class="tab-card-item">
@@ -1394,23 +1353,27 @@ return response()->json(SecurityHelper::ifaResponse('S', [
         </div>
       </div>
 
-    </div>
+      <div class="back-top-row">
+        <a href="#top" class="back-top-btn">⬆️ Back to Top Menu</a>
+      </div>
+
+    </section>
 
     <!-- ================================================================= -->
-    <!-- TAB 4: MODULE 4 — WONG MEN JING -->
+    <!-- SECTION 4: MODULE 4 — WONG MEN JING -->
     <!-- ================================================================= -->
-    <div class="tab-panel panel-mod4">
+    <section class="module-section" id="mod4">
       
       <div class="card card-mod4">
         <div class="card-header-flex">
           <div>
-            <div class="member-title" style="color: #c084fc;">👤 Wong Men Jing (25WMR09788)</div>
-            <p style="font-size: 0.82rem; color: var(--text-secondary);">Module 4: Inventory Logistics &amp; Food Safety Compliance &bull; SDG 2.1 &amp; 2.4</p>
+            <div class="member-title" style="color: #c084fc;">👤 Module 4: Wong Men Jing (25WMR09788)</div>
+            <p style="font-size: 0.82rem; color: var(--text-secondary);">Inventory Logistics &amp; Food Safety Compliance &bull; SDG 2.1 &amp; 2.4</p>
           </div>
           <span class="mod-badge badge-mod4">Strategy &bull; CRLF Injection &bull; HMAC Signed URLs</span>
         </div>
 
-        <div class="section-title title-purple">📂 Tabs to Open &amp; Exact Lines to Point At:</div>
+        <div class="section-title title-purple">📂 Tabs to Open in VS Code &amp; Exact Lines to Point At:</div>
 
         <div class="tab-cards-list">
           <div class="tab-card-item">
@@ -1606,7 +1569,11 @@ return response()->json(SecurityHelper::ifaResponse('S', [
         </div>
       </div>
 
-    </div>
+      <div class="back-top-row">
+        <a href="#top" class="back-top-btn">⬆️ Back to Top Menu</a>
+      </div>
+
+    </section>
 
   </main>
 
