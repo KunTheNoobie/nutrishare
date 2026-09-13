@@ -16,22 +16,22 @@ if exist "%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd" (
 )
 
 echo =========================================================================
-echo  Opening Module 1: Liew Yi Ler (25WMR09747) Tabs in VS Code / IDE...
-echo  Module: Donation Publishing and Notifications
+echo  Opening Module 3: Hiew Li Wei (25WMR09728) Tabs in VS Code / IDE...
+echo  Module: Claims Management and Logistics Distribution
 echo =========================================================================
 
 call "%EDITOR%" -r ^
-  -g "%BASE%app\Contracts\DonationObserverInterface.php:18" ^
-  -g "%BASE%app\Observers\DonationObserver.php:61" ^
-  -g "%BASE%app\Providers\EventServiceProvider.php:27" ^
-  -g "%BASE%app\Jobs\SendDonationNotificationJob.php:39" ^
-  -g "%BASE%app\Http\Controllers\NotificationController.php:12" ^
-  -g "%BASE%app\Models\Notification.php:17" ^
-  -g "%BASE%resources\views\notifications\index.blade.php:7" ^
-  -g "%BASE%resources\views\donations\create.blade.php:18" ^
-  -g "%BASE%resources\views\donations\show.blade.php:19" ^
-  -g "%BASE%app\Http\Controllers\Api\DonationApiController.php:43"
+  -g "%BASE%app\States\Claim\ClaimState.php:18" ^
+  -g "%BASE%app\States\Claim\PendingState.php:12" ^
+  -g "%BASE%app\States\Claim\ApprovedState.php:25" ^
+  -g "%BASE%app\States\Claim\CollectedState.php:12" ^
+  -g "%BASE%app\Models\Claim.php:85" ^
+  -g "%BASE%app\Policies\ClaimPolicy.php:25" ^
+  -g "%BASE%app\Http\Controllers\ClaimController.php:115" ^
+  -g "%BASE%app\Models\Vehicle.php:10" ^
+  -g "%BASE%app\Http\Controllers\Api\ClaimApiController.php:36" ^
+  -g "%BASE%app\Services\Clients\SafetyServiceClient.php:20"
 
 echo.
-echo [SUCCESS] All 10 Module 1 tabs opened successfully in VS Code!
+echo [SUCCESS] All 10 Module 3 tabs opened successfully in VS Code!
 echo.

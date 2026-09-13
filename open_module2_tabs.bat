@@ -16,22 +16,22 @@ if exist "%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd" (
 )
 
 echo =========================================================================
-echo  Opening Module 1: Liew Yi Ler (25WMR09747) Tabs in VS Code / IDE...
-echo  Module: Donation Publishing and Notifications
+echo  Opening Module 2: Cheon Jie Han (25WMR09703) Tabs in VS Code / IDE...
+echo  Module: NGO Verification and Peer Trust Ratings
 echo =========================================================================
 
 call "%EDITOR%" -r ^
-  -g "%BASE%app\Contracts\DonationObserverInterface.php:18" ^
-  -g "%BASE%app\Observers\DonationObserver.php:61" ^
-  -g "%BASE%app\Providers\EventServiceProvider.php:27" ^
-  -g "%BASE%app\Jobs\SendDonationNotificationJob.php:39" ^
-  -g "%BASE%app\Http\Controllers\NotificationController.php:12" ^
-  -g "%BASE%app\Models\Notification.php:17" ^
-  -g "%BASE%resources\views\notifications\index.blade.php:7" ^
-  -g "%BASE%resources\views\donations\create.blade.php:18" ^
-  -g "%BASE%resources\views\donations\show.blade.php:19" ^
-  -g "%BASE%app\Http\Controllers\Api\DonationApiController.php:43"
+  -g "%BASE%app\Services\UserFactory\UserCreator.php:15" ^
+  -g "%BASE%app\Services\UserFactory\NgoCreator.php:14" ^
+  -g "%BASE%app\Services\UserFactory\DonorCreator.php:14" ^
+  -g "%BASE%app\Http\Controllers\AuthController.php:34" ^
+  -g "%BASE%app\Models\VerificationDocument.php:12" ^
+  -g "%BASE%app\Http\Controllers\VerificationController.php:20" ^
+  -g "%BASE%app\Http\Middleware\CheckRole.php:15" ^
+  -g "%BASE%app\Http\Controllers\PasswordResetController.php:25" ^
+  -g "%BASE%app\Http\Controllers\Api\UserVerificationApiController.php:40" ^
+  -g "%BASE%resources\views\verification\index.blade.php:15"
 
 echo.
-echo [SUCCESS] All 10 Module 1 tabs opened successfully in VS Code!
+echo [SUCCESS] All 10 Module 2 tabs opened successfully in VS Code!
 echo.
