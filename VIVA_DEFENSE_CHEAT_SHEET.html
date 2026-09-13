@@ -7,9 +7,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0b0f19">
   <title>NutriShare — Viva Defense Cheat Sheet (BMIT3173)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-main: #0b0f19;
@@ -32,34 +29,39 @@
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg-main);
       color: var(--text-primary);
-      line-height: 1.6;
+      line-height: 1.55;
       padding-bottom: 90px;
       font-size: 15px;
     }
 
+    /* PURE CSS RADIO TAB ENGINE (Works 100% even if WhatsApp disables JS!) */
+    .tab-radio {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
     .container {
-      max-width: 1050px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 12px;
     }
     @media (min-width: 768px) {
-      .container { padding: 22px; }
+      .container { padding: 20px; }
     }
 
-    /* Sticky Mobile Header & Horizontal Swipe Tabs */
+    /* Sticky Header */
     header {
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: #0f172a;
       border-bottom: 2px solid var(--border-subtle);
       padding: 10px 0 8px;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 4px 22px rgba(0,0,0,0.7);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.65);
     }
 
     .header-top {
@@ -72,21 +74,14 @@
       font-size: 1.15rem;
       font-weight: 800;
       color: #38bdf8;
-      letter-spacing: -0.02em;
-    }
-    @media (min-width: 768px) {
-      .title-group h1 { font-size: 1.4rem; }
+      line-height: 1.2;
     }
     .title-group p {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--text-secondary);
     }
 
-    /* Swipeable Tab Pill Bar */
-    .tab-bar-wrapper {
-      position: relative;
-      width: 100%;
-    }
+    /* Swipeable Tab Pill Bar (Labels triggering Radio inputs) */
     .tab-bar {
       display: flex;
       flex-wrap: nowrap;
@@ -99,8 +94,8 @@
     .tab-bar::-webkit-scrollbar { display: none; }
 
     .tab-btn {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid var(--border-subtle);
+      background: #1e293b;
+      border: 1.5px solid #334155;
       color: var(--text-secondary);
       padding: 8px 14px;
       border-radius: 9999px;
@@ -112,52 +107,57 @@
       gap: 6px;
       white-space: nowrap;
       flex-shrink: 0;
-      transition: all 0.2s ease;
+      user-select: none;
       min-height: 38px;
-      font-family: inherit;
+      transition: background 0.15s ease, color 0.15s ease;
     }
-    .tab-btn:active { transform: scale(0.96); }
+    .tab-btn:active { transform: scale(0.95); }
 
-    .tab-btn.active-master {
-      background: #1e293b;
-      color: #38bdf8;
-      border-color: #38bdf8;
-      box-shadow: 0 2px 10px rgba(56, 189, 248, 0.3);
-    }
-    .tab-btn.active-mod1 {
+    /* Pure CSS Tab Switching Selectors */
+    .tab-panel { display: none; }
+
+    #tab-mod1:checked ~ main .panel-mod1 { display: block; }
+    #tab-master:checked ~ main .panel-master { display: block; }
+    #tab-mod2:checked ~ main .panel-mod2 { display: block; }
+    #tab-mod3:checked ~ main .panel-mod3 { display: block; }
+    #tab-mod4:checked ~ main .panel-mod4 { display: block; }
+    #tab-all:checked ~ main .tab-panel { display: block; }
+
+    /* Active Label Styles (Pure CSS) */
+    #tab-mod1:checked ~ header .label-mod1 {
       background: #0284c7;
       color: #ffffff;
       border-color: #38bdf8;
       box-shadow: 0 2px 10px rgba(56, 189, 248, 0.4);
     }
-    .tab-btn.active-mod2 {
+    #tab-master:checked ~ header .label-master {
+      background: #1e293b;
+      color: #38bdf8;
+      border-color: #38bdf8;
+      box-shadow: 0 2px 10px rgba(56, 189, 248, 0.3);
+    }
+    #tab-mod2:checked ~ header .label-mod2 {
       background: #059669;
       color: #ffffff;
       border-color: #34d399;
       box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
     }
-    .tab-btn.active-mod3 {
+    #tab-mod3:checked ~ header .label-mod3 {
       background: #d97706;
       color: #ffffff;
       border-color: #fbbf24;
       box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
     }
-    .tab-btn.active-mod4 {
+    #tab-mod4:checked ~ header .label-mod4 {
       background: #7c3aed;
       color: #ffffff;
       border-color: #c084fc;
       box-shadow: 0 2px 10px rgba(168, 85, 247, 0.4);
     }
-
-    /* Content Panels */
-    .tab-panel {
-      display: none;
-      animation: fadeIn 0.25s ease forwards;
-    }
-    .tab-panel.active { display: block; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
+    #tab-all:checked ~ header .label-all {
+      background: #475569;
+      color: #ffffff;
+      border-color: #94a3b8;
     }
 
     /* Cards */
@@ -194,7 +194,7 @@
       }
     }
     .member-title {
-      font-size: 1.18rem;
+      font-size: 1.15rem;
       font-weight: 800;
       display: flex;
       align-items: center;
@@ -226,14 +226,12 @@
     .title-amber { color: #fbbf24; }
     .title-purple { color: #c084fc; }
 
-    /* Phone-Friendly Mobile Tab Cards (Shown on mobile, table shown on desktop) */
-    .mobile-tab-cards { display: flex; flex-direction: column; gap: 8px; }
-    .desktop-table { display: none; }
-    @media (min-width: 768px) {
-      .mobile-tab-cards { display: none; }
-      .desktop-table { display: block; }
+    /* Touch Tab Cards (Mobile Friendly) */
+    .tab-cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-
     .tab-card-item {
       background: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
@@ -251,7 +249,7 @@
       flex-wrap: wrap;
     }
     .tab-card-file {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: monospace, Courier;
       font-size: 0.82rem;
       font-weight: 700;
       color: #38bdf8;
@@ -270,12 +268,12 @@
       padding: 2px 7px;
       border-radius: 4px;
       font-weight: 700;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: monospace;
       font-size: 0.74rem;
       white-space: nowrap;
     }
 
-    /* Verbatim Box — Phone Optimized */
+    /* Verbatim Box — Phone Optimized High Contrast */
     .verbatim-box {
       background: #241905;
       border: 2px solid var(--accent-amber);
@@ -404,7 +402,7 @@
     .ws-endpoint { font-size: 0.88rem; color: #f1f5f9; }
     .ws-desc { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px; }
 
-    /* Collapsible Code Toggles (Saves huge space on phones) */
+    /* Collapsible Code Toggles */
     details.code-toggle {
       background: var(--bg-code);
       border: 1px solid #1e293b;
@@ -441,7 +439,7 @@
       word-break: break-word;
       color: #cbd5e1;
     }
-    pre, code { font-family: 'JetBrains Mono', Courier, monospace; }
+    pre, code { font-family: monospace, Courier; }
     .inline-code {
       background: rgba(255, 255, 255, 0.1);
       padding: 2px 5px;
@@ -461,7 +459,7 @@
     }
     table {
       width: 100%;
-      min-width: 620px;
+      min-width: 580px;
       border-collapse: collapse;
       text-align: left;
       font-size: 0.8rem;
@@ -501,161 +499,67 @@
     }
     .qa-answer strong { color: #fde047; }
 
-    /* Floating Action Button (Back to Top) */
-    .fab-top {
-      position: fixed;
-      bottom: 18px;
-      right: 16px;
-      background: #0f172a;
-      color: #38bdf8;
-      border: 1.5px solid #38bdf8;
-      padding: 9px 15px;
-      border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 800;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.7);
-      z-index: 999;
-      cursor: pointer;
+    /* Mobile Quick Anchor Floating Links */
+    .quick-anchor-bar {
       display: flex;
-      align-items: center;
-      gap: 5px;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.25s ease;
-      font-family: inherit;
+      gap: 6px;
+      overflow-x: auto;
+      margin-bottom: 12px;
+      padding-bottom: 4px;
     }
-    .fab-top.visible {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
+    .quick-pill {
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      white-space: nowrap;
     }
-    .fab-top:active { transform: scale(0.94); }
   </style>
 </head>
 <body>
 
-  <!-- Sticky Mobile Header with Horizontal Swipe Tabs -->
+  <!-- PURE CSS HIDDEN RADIO INPUTS: Works 100% inside WhatsApp! -->
+  <input type="radio" name="modTab" id="tab-mod1" class="tab-radio" checked>
+  <input type="radio" name="modTab" id="tab-master" class="tab-radio">
+  <input type="radio" name="modTab" id="tab-mod2" class="tab-radio">
+  <input type="radio" name="modTab" id="tab-mod3" class="tab-radio">
+  <input type="radio" name="modTab" id="tab-mod4" class="tab-radio">
+  <input type="radio" name="modTab" id="tab-all" class="tab-radio">
+
+  <!-- Sticky Header with Swipeable Labels -->
   <header>
     <div class="container" style="padding-top: 0; padding-bottom: 0;">
       <div class="header-top">
         <div class="title-group">
           <h1>NutriShare • Viva Guide</h1>
-          <p>BMIT3173 Integrative Programming &bull; Mobile Master Cheat Sheet</p>
+          <p>BMIT3173 Oral Defense &bull; WhatsApp Friendly</p>
         </div>
         <div>
-          <button type="button" class="tab-btn" onclick="toggleViewAll()" id="viewAllBtn" style="border-color: #334155; font-size: 0.75rem; min-height: 32px; padding: 4px 10px;">
+          <label for="tab-all" class="tab-btn label-all" style="font-size: 0.72rem; min-height: 30px; padding: 3px 9px;">
             👁️ Show All
-          </button>
+          </label>
         </div>
       </div>
 
-      <div class="tab-bar-wrapper">
-        <nav class="tab-bar" id="tabBarNav" aria-label="Module Navigation Tabs">
-          <button type="button" class="tab-btn active-master" onclick="switchTab('master')" id="tab-master">
-            📊 Master Matrix
-          </button>
-          <button type="button" class="tab-btn" onclick="switchTab('mod1')" id="tab-mod1">
-            👤 Mod 1: Liew
-          </button>
-          <button type="button" class="tab-btn" onclick="switchTab('mod2')" id="tab-mod2">
-            👤 Mod 2: Cheon
-          </button>
-          <button type="button" class="tab-btn" onclick="switchTab('mod3')" id="tab-mod3">
-            👤 Mod 3: Hiew
-          </button>
-          <button type="button" class="tab-btn" onclick="switchTab('mod4')" id="tab-mod4">
-            👤 Mod 4: Wong
-          </button>
-        </nav>
-      </div>
+      <nav class="tab-bar" aria-label="Module Navigation Tabs">
+        <label for="tab-mod1" class="tab-btn label-mod1">👤 Mod 1: Liew</label>
+        <label for="tab-master" class="tab-btn label-master">📊 Master Matrix</label>
+        <label for="tab-mod2" class="tab-btn label-mod2">👤 Mod 2: Cheon</label>
+        <label for="tab-mod3" class="tab-btn label-mod3">👤 Mod 3: Hiew</label>
+        <label for="tab-mod4" class="tab-btn label-mod4">👤 Mod 4: Wong</label>
+      </nav>
     </div>
   </header>
 
-  <div class="container">
+  <main class="container">
 
     <!-- ================================================================= -->
-    <!-- TAB 0: MASTER MATRIX -->
+    <!-- TAB 1: MODULE 1 — LIEW YI LER (DEFAULT OPEN!) -->
     <!-- ================================================================= -->
-    <div class="tab-panel active" id="panel-master">
-      <div class="card">
-        <div class="card-header-flex">
-          <div class="member-title" style="color: #38bdf8;">🏆 Master Technical Matrix</div>
-          <span class="mod-badge badge-mod1">All 4 Members &bull; 100% Unique</span>
-        </div>
-        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">
-          👉 Swipe horizontally on phone to view the whole table.
-        </p>
-
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Member</th>
-                <th>Module &amp; SDG</th>
-                <th>Design Pattern (GoF)</th>
-                <th>Security Threat 1</th>
-                <th>Security Threat 2</th>
-                <th>API Provide</th>
-                <th>API Consume</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>Liew Yi Ler</strong><br><span class="inline-code">25WMR09747</span></td>
-                <td><strong>Mod 1</strong>: Donation Publishing &amp; Notifications<br><small style="color: #38bdf8">SDG 2.1 / 2.2</small></td>
-                <td><strong style="color: var(--accent-blue)">Observer Pattern</strong><br><small>Donation / DonationObserver</small></td>
-                <td><strong>CSRF (OWASP A05)</strong><br><small>Synchronizer Token (@csrf)</small></td>
-                <td><strong>Stored XSS (OWASP A07)</strong><br><small>Context Escaping ({{ }})</small></td>
-                <td><span class="inline-code">GET /api/donations/active</span></td>
-                <td>Calls Cheon (Mod 2):<br><span class="inline-code">POST /api/user/verify-ngo</span></td>
-              </tr>
-              <tr>
-                <td><strong>Cheon Jie Han</strong><br><span class="inline-code">25WMR09703</span></td>
-                <td><strong>Mod 2</strong>: NGO Verification &amp; Trust Ratings<br><small style="color: #34d399">SDG 2.1 / 2.4</small></td>
-                <td><strong style="color: var(--accent-green)">Factory Method Pattern</strong><br><small>UserCreator / NgoCreator</small></td>
-                <td><strong>Broken Access Control (A01)</strong><br><small>RBAC (CheckRole middleware)</small></td>
-                <td><strong>OTP Brute-Force (A07)</strong><br><small>throttle:6,1 + 5m Expiry</small></td>
-                <td><span class="inline-code">POST /api/user/verify-ngo</span></td>
-                <td>Calls Hiew (Mod 3):<br><span class="inline-code">GET /api/claim/details</span></td>
-              </tr>
-              <tr>
-                <td><strong>Hiew Li Wei</strong><br><span class="inline-code">25WMR09728</span></td>
-                <td><strong>Mod 3</strong>: Claims &amp; Logistics Distribution<br><small style="color: #fbbf24">SDG 2.1 / 12.3</small></td>
-                <td><strong style="color: var(--accent-amber)">State Pattern</strong><br><small>Pending, Approved, Collected</small></td>
-                <td><strong>BOLA / IDOR (OWASP A01)</strong><br><small>Policy Checks (ClaimPolicy)</small></td>
-                <td><strong>State Tampering (A04)</strong><br><small>Strict Transition Guards</small></td>
-                <td><span class="inline-code">GET /api/claim/details</span></td>
-                <td>Calls Wong (Mod 4):<br><span class="inline-code">POST /api/inventory/food-safety-check</span></td>
-              </tr>
-              <tr>
-                <td><strong>Wong Men Jing</strong><br><span class="inline-code">25WMR09788</span></td>
-                <td><strong>Mod 4</strong>: Inventory &amp; Safety Compliance<br><small style="color: #c084fc">SDG 2.1 / 2.4</small></td>
-                <td><strong style="color: var(--accent-purple)">Strategy Pattern</strong><br><small>NotificationDispatcher (Email, SMS)</small></td>
-                <td><strong>Log / CRLF Injection (A09)</strong><br><small>CRLF Stripping Mutator</small></td>
-                <td><strong>Parameter Tampering (A01)</strong><br><small>HMAC Signed URLs (signedRoute)</small></td>
-                <td><span class="inline-code">POST /api/inventory/food-safety-check</span></td>
-                <td>Calls Liew (Mod 1):<br><span class="inline-code">GET /api/donations/active</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="verbatim-box">
-          <div class="verbatim-label">💡 How the 4 Modules Communicate via IFA Web Services:</div>
-          <div class="verbatim-text" style="font-size: 0.86rem;">
-            • <strong>Module 1 (Liew)</strong> calls <strong>Module 2 (Cheon)</strong>: Verifies if the claiming NGO is approved and licensed.<br>
-            • <strong>Module 2 (Cheon)</strong> calls <strong>Module 3 (Hiew)</strong>: Verifies claim distribution history before giving trust ratings.<br>
-            • <strong>Module 3 (Hiew)</strong> calls <strong>Module 4 (Wong)</strong>: Checks food storage safety and expiry before allowing pickup.<br>
-            • <strong>Module 4 (Wong)</strong> calls <strong>Module 1 (Liew)</strong>: Queries active surplus food to calculate warehouse capacity.
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ================================================================= -->
-    <!-- TAB 1: MODULE 1 — LIEW YI LER -->
-    <!-- ================================================================= -->
-    <div class="tab-panel" id="panel-mod1">
+    <div class="tab-panel panel-mod1">
       
       <!-- HEADER & TABS TO OPEN -->
       <div class="card card-mod1">
@@ -669,8 +573,7 @@
 
         <div class="section-title title-blue">📂 Tabs to Open &amp; Exact Lines to Point At:</div>
 
-        <!-- Phone Card View (Mobile) -->
-        <div class="mobile-tab-cards">
+        <div class="tab-cards-list">
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#1 DonationObserverInterface.php</span>
@@ -678,13 +581,15 @@
             </div>
             <div class="tab-card-desc"><strong>Observer Contract:</strong> Declares <code>onDonationCreated()</code> and <code>onDonationStatusChanged()</code>.</div>
           </div>
+
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#2 DonationObserver.php</span>
               <span class="line-callout">Lines 36-38, 61 &amp; 78-85</span>
             </div>
-            <div class="tab-card-desc"><strong>Observer Trigger:</strong> Dispatches async notification job on creation; creates in-app notification when claimed.</div>
+            <div class="tab-card-desc"><strong>Observer Trigger:</strong> Line 61 dispatches notification job; Lines 78-85 alert donor when claimed.</div>
           </div>
+
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#3 EventServiceProvider.php</span>
@@ -692,6 +597,7 @@
             </div>
             <div class="tab-card-desc"><strong>Registration:</strong> Hooks observer to model: <code>Donation::observe(DonationObserver::class);</code></div>
           </div>
+
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#4 SendDonationNotificationJob.php</span>
@@ -699,6 +605,7 @@
             </div>
             <div class="tab-card-desc"><strong>Queue Worker:</strong> Loops approved NGOs, renders template, creates <code>Notification</code> records asynchronously.</div>
           </div>
+
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#5 NotificationController.php</span>
@@ -706,6 +613,7 @@
             </div>
             <div class="tab-card-desc"><strong>Web Controller:</strong> <code>index()</code> serves user inbox; <code>markAsRead()</code> marks alerts as read.</div>
           </div>
+
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#6 Notification.php</span>
@@ -713,6 +621,7 @@
             </div>
             <div class="tab-card-desc"><strong>Model:</strong> Database schema for notifications table (title, message, is_read, channel, timestamps).</div>
           </div>
+
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#7 notifications/index.blade.php</span>
@@ -720,6 +629,7 @@
             </div>
             <div class="tab-card-desc"><strong>Notification UI:</strong> Table listing system alerts, relative timeago, mark all read button, unread blue dots.</div>
           </div>
+
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#8 donations/create.blade.php</span>
@@ -727,6 +637,7 @@
             </div>
             <div class="tab-card-desc"><strong>Security 1 (CSRF):</strong> <code>@csrf</code> directive generates random synchronizer token verified by middleware.</div>
           </div>
+
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#9 donations/show.blade.php</span>
@@ -734,6 +645,7 @@
             </div>
             <div class="tab-card-desc"><strong>Security 2 (Stored XSS):</strong> <code>{{ $donation->description }}</code> automatically calls <code>htmlspecialchars()</code>.</div>
           </div>
+
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#10 DonationApiController.php</span>
@@ -742,42 +654,14 @@
             <div class="tab-card-desc"><strong>Web Services:</strong> <code>active()</code> provides active food API; <code>verifyNgoBeforeClaim()</code> calls Cheon's Module 2.</div>
           </div>
         </div>
-
-        <!-- Desktop Table View -->
-        <div class="desktop-table">
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>File Name</th>
-                  <th>Exact Line(s)</th>
-                  <th>What It Does (Tell the Tutor This)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td><strong>1</strong></td><td><code>DonationObserverInterface.php</code></td><td><span class="line-callout">Lines 18 &amp; 26</span></td><td>Observer contract declaring callbacks.</td></tr>
-                <tr><td><strong>2</strong></td><td><code>DonationObserver.php</code></td><td><span class="line-callout">Lines 36-38, 61 &amp; 78-85</span></td><td>Dispatches notification job; alerts donor when claimed.</td></tr>
-                <tr><td><strong>3</strong></td><td><code>EventServiceProvider.php</code></td><td><span class="line-callout">Line 27</span></td><td>Binds observer: <code>Donation::observe(DonationObserver::class);</code></td></tr>
-                <tr><td><strong>4</strong></td><td><code>SendDonationNotificationJob.php</code></td><td><span class="line-callout">Lines 24, 39-41 &amp; 55-64</span></td><td>Async queue worker notifying verified NGOs.</td></tr>
-                <tr><td><strong>5</strong></td><td><code>NotificationController.php</code></td><td><span class="line-callout">Lines 12-16 &amp; 19-30</span></td><td>Serves `/notifications` inbox and mark-as-read actions.</td></tr>
-                <tr><td><strong>6</strong></td><td><code>Notification.php</code></td><td><span class="line-callout">Lines 17-26 &amp; 55-58</span></td><td>Database model mapping to notifications table.</td></tr>
-                <tr><td><strong>7</strong></td><td><code>notifications/index.blade.php</code></td><td><span class="line-callout">Lines 7-16 &amp; 46-64</span></td><td>Notification Center inbox UI table.</td></tr>
-                <tr><td><strong>8</strong></td><td><code>donations/create.blade.php</code></td><td><span class="line-callout">Line 18</span></td><td>Security: CSRF `@csrf` synchronizer token.</td></tr>
-                <tr><td><strong>9</strong></td><td><code>donations/show.blade.php</code></td><td><span class="line-callout">Line 51</span></td><td>Security: Stored XSS prevention `{{ }}`.</td></tr>
-                <tr><td><strong>10</strong></td><td><code>DonationApiController.php</code></td><td><span class="line-callout">Lines 43-78 &amp; 98-115</span></td><td>Provides active food API &amp; consumes Module 2 verification.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
       </div>
 
-      <!-- NOTIFICATION SUBSYSTEM DEEP DIVE -->
+      <!-- NOTIFICATION SUBSYSTEM -->
       <div class="card card-mod1" style="border-top-color: #f59e0b;">
         <div class="section-title title-amber">🔔 Where is Notification &amp; How Does It Work?</div>
         
         <div class="verbatim-box">
-          <div class="verbatim-label">🗣️ If Tutor Asks: "Where is the Notification in your module?" Say:</div>
+          <div class="verbatim-label">🗣️ If Tutor Asks: "Where is Notification in your module?" Say:</div>
           <div class="verbatim-text">
             "My module has an automated end-to-end notification subsystem. When food is published, the Observer Pattern triggers a background job (`SendDonationNotificationJob`). It queries verified NGOs, renders dynamic templates, saves records into the `notifications` table, and dispatches emails. NGOs see real-time unread badges on the bell icon and manage alerts in the Notification Center."
           </div>
@@ -840,7 +724,7 @@
         </div>
       </div>
 
-      <!-- 60-SECOND SPEAKING SCRIPT -->
+      <!-- 60-SECOND SCRIPT -->
       <div class="card card-mod1">
         <div class="section-title title-blue">⏱️ 60-Second Speaking Script (Simple English):</div>
 
@@ -1005,9 +889,88 @@ return $response->successful() && $response->json('data.is_verified');</code></p
     </div>
 
     <!-- ================================================================= -->
+    <!-- TAB 0: MASTER MATRIX -->
+    <!-- ================================================================= -->
+    <div class="tab-panel panel-master">
+      <div class="card">
+        <div class="card-header-flex">
+          <div class="member-title" style="color: #38bdf8;">🏆 Master Technical Matrix</div>
+          <span class="mod-badge badge-mod1">All 4 Members &bull; 100% Unique</span>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 8px;">
+          👉 Swipe horizontally on phone to view the whole table.
+        </p>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Member</th>
+                <th>Module &amp; SDG</th>
+                <th>Design Pattern (GoF)</th>
+                <th>Security Threat 1</th>
+                <th>Security Threat 2</th>
+                <th>API Provide</th>
+                <th>API Consume</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Liew Yi Ler</strong><br><span class="inline-code">25WMR09747</span></td>
+                <td><strong>Mod 1</strong>: Donation Publishing &amp; Notifications<br><small style="color: #38bdf8">SDG 2.1 / 2.2</small></td>
+                <td><strong style="color: var(--accent-blue)">Observer Pattern</strong><br><small>Donation / DonationObserver</small></td>
+                <td><strong>CSRF (OWASP A05)</strong><br><small>Synchronizer Token (@csrf)</small></td>
+                <td><strong>Stored XSS (OWASP A07)</strong><br><small>Context Escaping ({{ }})</small></td>
+                <td><span class="inline-code">GET /api/donations/active</span></td>
+                <td>Calls Cheon (Mod 2):<br><span class="inline-code">POST /api/user/verify-ngo</span></td>
+              </tr>
+              <tr>
+                <td><strong>Cheon Jie Han</strong><br><span class="inline-code">25WMR09703</span></td>
+                <td><strong>Mod 2</strong>: NGO Verification &amp; Trust Ratings<br><small style="color: #34d399">SDG 2.1 / 2.4</small></td>
+                <td><strong style="color: var(--accent-green)">Factory Method Pattern</strong><br><small>UserCreator / NgoCreator</small></td>
+                <td><strong>Broken Access Control (A01)</strong><br><small>RBAC (CheckRole middleware)</small></td>
+                <td><strong>OTP Brute-Force (A07)</strong><br><small>throttle:6,1 + 5m Expiry</small></td>
+                <td><span class="inline-code">POST /api/user/verify-ngo</span></td>
+                <td>Calls Hiew (Mod 3):<br><span class="inline-code">GET /api/claim/details</span></td>
+              </tr>
+              <tr>
+                <td><strong>Hiew Li Wei</strong><br><span class="inline-code">25WMR09728</span></td>
+                <td><strong>Mod 3</strong>: Claims &amp; Logistics Distribution<br><small style="color: #fbbf24">SDG 2.1 / 12.3</small></td>
+                <td><strong style="color: var(--accent-amber)">State Pattern</strong><br><small>Pending, Approved, Collected</small></td>
+                <td><strong>BOLA / IDOR (OWASP A01)</strong><br><small>Policy Checks (ClaimPolicy)</small></td>
+                <td><strong>State Tampering (A04)</strong><br><small>Strict Transition Guards</small></td>
+                <td><span class="inline-code">GET /api/claim/details</span></td>
+                <td>Calls Wong (Mod 4):<br><span class="inline-code">POST /api/inventory/food-safety-check</span></td>
+              </tr>
+              <tr>
+                <td><strong>Wong Men Jing</strong><br><span class="inline-code">25WMR09788</span></td>
+                <td><strong>Mod 4</strong>: Inventory &amp; Safety Compliance<br><small style="color: #c084fc">SDG 2.1 / 2.4</small></td>
+                <td><strong style="color: var(--accent-purple)">Strategy Pattern</strong><br><small>NotificationDispatcher (Email, SMS)</small></td>
+                <td><strong>Log / CRLF Injection (A09)</strong><br><small>CRLF Stripping Mutator</small></td>
+                <td><strong>Parameter Tampering (A01)</strong><br><small>HMAC Signed URLs (signedRoute)</small></td>
+                <td><span class="inline-code">POST /api/inventory/food-safety-check</span></td>
+                <td>Calls Liew (Mod 1):<br><span class="inline-code">GET /api/donations/active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="verbatim-box">
+          <div class="verbatim-label">💡 How the 4 Modules Communicate via IFA Web Services:</div>
+          <div class="verbatim-text" style="font-size: 0.86rem;">
+            • <strong>Module 1 (Liew)</strong> calls <strong>Module 2 (Cheon)</strong>: Verifies if claiming NGO is approved before claiming.<br>
+            • <strong>Module 2 (Cheon)</strong> calls <strong>Module 3 (Hiew)</strong>: Verifies claim distribution history before giving trust ratings.<br>
+            • <strong>Module 3 (Hiew)</strong> calls <strong>Module 4 (Wong)</strong>: Checks food storage safety and expiry before allowing pickup.<br>
+            • <strong>Module 4 (Wong)</strong> calls <strong>Module 1 (Liew)</strong>: Queries active surplus food to calculate warehouse capacity.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
     <!-- TAB 2: MODULE 2 — CHEON JIE HAN -->
     <!-- ================================================================= -->
-    <div class="tab-panel" id="panel-mod2">
+    <div class="tab-panel panel-mod2">
       
       <div class="card card-mod2">
         <div class="card-header-flex">
@@ -1020,8 +983,7 @@ return $response->successful() && $response->json('data.is_verified');</code></p
 
         <div class="section-title title-green">📂 Tabs to Open &amp; Exact Lines to Point At:</div>
 
-        <!-- Phone Card View -->
-        <div class="mobile-tab-cards">
+        <div class="tab-cards-list">
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#1 UserCreator.php</span>
@@ -1063,25 +1025,6 @@ return $response->successful() && $response->json('data.is_verified');</code></p
               <span class="line-callout">Lines 100-125</span>
             </div>
             <div class="tab-card-desc"><strong>API (Consume):</strong> Calls Module 3's <code>GET /api/claim/details</code> to confirm interaction before rating.</div>
-          </div>
-        </div>
-
-        <!-- Desktop Table View -->
-        <div class="desktop-table">
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr><th>#</th><th>File Name</th><th>Exact Line(s)</th><th>What It Does (Tell the Tutor This)</th></tr>
-              </thead>
-              <tbody>
-                <tr><td><strong>1</strong></td><td><code>UserCreator.php</code></td><td><span class="line-callout">Lines 20 &amp; 38-50</span></td><td>Abstract Factory Creator declaring <code>createUser()</code> and <code>resolve($role)</code>.</td></tr>
-                <tr><td><strong>2</strong></td><td><code>NgoCreator.php</code></td><td><span class="line-callout">Lines 16 &amp; 25-42</span></td><td>Concrete Creator setting default pending status and document requirements.</td></tr>
-                <tr><td><strong>3</strong></td><td><code>CheckRole.php</code></td><td><span class="line-callout">Lines 18-28</span></td><td>RBAC middleware blocking unauthorized access with HTTP 403.</td></tr>
-                <tr><td><strong>4</strong></td><td><code>AuthController.php</code></td><td><span class="line-callout">Lines 40-55</span></td><td>Rate limiter <code>throttle:6,1</code> + OTP single-use invalidation.</td></tr>
-                <tr><td><strong>5</strong></td><td><code>UserVerificationApiController.php</code></td><td><span class="line-callout">Lines 40-83</span></td><td>Provides <code>POST /api/user/verify-ngo</code> for Module 1.</td></tr>
-                <tr><td><strong>6</strong></td><td><code>VerificationController.php</code></td><td><span class="line-callout">Lines 100-125</span></td><td>Consumes Module 3's <code>GET /api/claim/details</code> before rating.</td></tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
@@ -1243,7 +1186,7 @@ return response()->json(SecurityHelper::ifaResponse('S', [
     <!-- ================================================================= -->
     <!-- TAB 3: MODULE 3 — HIEW LI WEI -->
     <!-- ================================================================= -->
-    <div class="tab-panel" id="panel-mod3">
+    <div class="tab-panel panel-mod3">
       
       <div class="card card-mod3">
         <div class="card-header-flex">
@@ -1256,8 +1199,7 @@ return response()->json(SecurityHelper::ifaResponse('S', [
 
         <div class="section-title title-amber">📂 Tabs to Open &amp; Exact Lines to Point At:</div>
 
-        <!-- Phone Card View -->
-        <div class="mobile-tab-cards">
+        <div class="tab-cards-list">
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#1 ClaimState.php</span>
@@ -1299,25 +1241,6 @@ return response()->json(SecurityHelper::ifaResponse('S', [
               <span class="line-callout">Lines 85-110</span>
             </div>
             <div class="tab-card-desc"><strong>API (Consume):</strong> Calls Module 4's <code>POST /api/inventory/food-safety-check</code> before pickup.</div>
-          </div>
-        </div>
-
-        <!-- Desktop Table View -->
-        <div class="desktop-table">
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr><th>#</th><th>File Name</th><th>Exact Line(s)</th><th>What It Does (Tell the Tutor This)</th></tr>
-              </thead>
-              <tbody>
-                <tr><td><strong>1</strong></td><td><code>ClaimState.php</code></td><td><span class="line-callout">Lines 18 &amp; 25-45</span></td><td>Abstract State declaring lifecycle transitions.</td></tr>
-                <tr><td><strong>2</strong></td><td><code>PendingState.php</code></td><td><span class="line-callout">Lines 14 &amp; 22-35</span></td><td>Allows approve/cancel; blocks illegal state jumping.</td></tr>
-                <tr><td><strong>3</strong></td><td><code>ApprovedState.php</code></td><td><span class="line-callout">Lines 14 &amp; 25-38</span></td><td>Allows pickup and vehicle assignment.</td></tr>
-                <tr><td><strong>4</strong></td><td><code>ClaimPolicy.php</code></td><td><span class="line-callout">Lines 25-35</span></td><td>Prevents IDOR/BOLA attacks by verifying ownership.</td></tr>
-                <tr><td><strong>5</strong></td><td><code>ClaimApiController.php</code></td><td><span class="line-callout">Lines 36-75</span></td><td>Provides <code>GET /api/claim/details</code> for Module 2.</td></tr>
-                <tr><td><strong>6</strong></td><td><code>ClaimController.php</code></td><td><span class="line-callout">Lines 85-110</span></td><td>Consumes Module 4's food safety check before pickup.</td></tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
@@ -1476,7 +1399,7 @@ return response()->json(SecurityHelper::ifaResponse('S', [
     <!-- ================================================================= -->
     <!-- TAB 4: MODULE 4 — WONG MEN JING -->
     <!-- ================================================================= -->
-    <div class="tab-panel" id="panel-mod4">
+    <div class="tab-panel panel-mod4">
       
       <div class="card card-mod4">
         <div class="card-header-flex">
@@ -1489,8 +1412,7 @@ return response()->json(SecurityHelper::ifaResponse('S', [
 
         <div class="section-title title-purple">📂 Tabs to Open &amp; Exact Lines to Point At:</div>
 
-        <!-- Phone Card View -->
-        <div class="mobile-tab-cards">
+        <div class="tab-cards-list">
           <div class="tab-card-item">
             <div class="tab-card-top">
               <span class="tab-card-file">#1 NotificationStrategyInterface.php</span>
@@ -1532,25 +1454,6 @@ return response()->json(SecurityHelper::ifaResponse('S', [
               <span class="line-callout">Lines 140-165</span>
             </div>
             <div class="tab-card-desc"><strong>API (Consume):</strong> Calls Module 1's <code>GET /api/donations/active</code> to calculate storage needs.</div>
-          </div>
-        </div>
-
-        <!-- Desktop Table View -->
-        <div class="desktop-table">
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr><th>#</th><th>File Name</th><th>Exact Line(s)</th><th>What It Does (Tell the Tutor This)</th></tr>
-              </thead>
-              <tbody>
-                <tr><td><strong>1</strong></td><td><code>NotificationStrategyInterface.php</code></td><td><span class="line-callout">Lines 12-20</span></td><td>Strategy contract defining <code>send()</code> method.</td></tr>
-                <tr><td><strong>2</strong></td><td><code>NotificationDispatcher.php</code></td><td><span class="line-callout">Lines 20 &amp; 35-50</span></td><td>Context class selecting Email or SMS at runtime.</td></tr>
-                <tr><td><strong>3</strong></td><td><code>SystemLog.php</code></td><td><span class="line-callout">Lines 30-42</span></td><td>Mutator stripping CRLF characters to prevent Log Injection.</td></tr>
-                <tr><td><strong>4</strong></td><td><code>InventoryController.php</code></td><td><span class="line-callout">Lines 65-80</span></td><td>Generates HMAC signed URLs expiring in 30 minutes.</td></tr>
-                <tr><td><strong>5</strong></td><td><code>InventoryApiController.php</code></td><td><span class="line-callout">Lines 80-110</span></td><td>Provides <code>POST /api/inventory/food-safety-check</code> for Module 3.</td></tr>
-                <tr><td><strong>6</strong></td><td><code>InventoryController.php</code></td><td><span class="line-callout">Lines 140-165</span></td><td>Consumes Module 1's active food API to allocate warehouse space.</td></tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
@@ -1705,83 +1608,7 @@ return response()->json(SecurityHelper::ifaResponse('S', [
 
     </div>
 
-  </div>
-
-  <!-- Floating Action Button: Back to Top for easy mobile browsing -->
-  <button id="fabTop" class="fab-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="Back to Top">
-    ⬆️ Top
-  </button>
-
-  <script>
-    // Tab switching logic: Only show ONE module at a time! Clean & mobile-friendly.
-    function switchTab(tabId) {
-      const panels = document.querySelectorAll('.tab-panel');
-      panels.forEach(panel => panel.classList.remove('active'));
-
-      const buttons = document.querySelectorAll('.tab-btn');
-      buttons.forEach(btn => {
-        btn.classList.remove('active-master', 'active-mod1', 'active-mod2', 'active-mod3', 'active-mod4');
-      });
-
-      const targetPanel = document.getElementById('panel-' + tabId);
-      if (targetPanel) {
-        targetPanel.classList.add('active');
-      }
-
-      const targetBtn = document.getElementById('tab-' + tabId);
-      if (targetBtn) {
-        targetBtn.classList.add('active-' + tabId);
-        // Scroll the selected tab pill smoothly into the center of the mobile screen
-        targetBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-      }
-
-      if (history.pushState) {
-        history.pushState(null, null, '#' + tabId);
-      }
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      const viewAllBtn = document.getElementById('viewAllBtn');
-      if (viewAllBtn) {
-        viewAllBtn.innerText = '👁️ Show All';
-      }
-    }
-
-    // Toggle view all modules for print or continuous scrolling
-    let isAllView = false;
-    function toggleViewAll() {
-      const panels = document.querySelectorAll('.tab-panel');
-      const viewAllBtn = document.getElementById('viewAllBtn');
-      if (!isAllView) {
-        panels.forEach(panel => panel.classList.add('active'));
-        viewAllBtn.innerText = '📑 Single View';
-        isAllView = true;
-      } else {
-        isAllView = false;
-        switchTab('master');
-      }
-    }
-
-    // Show/hide floating back to top button
-    window.addEventListener('scroll', () => {
-      const fab = document.getElementById('fabTop');
-      if (window.scrollY > 250) {
-        fab.classList.add('visible');
-      } else {
-        fab.classList.remove('visible');
-      }
-    });
-
-    // On page load, read URL hash to open correct tab
-    window.addEventListener('DOMContentLoaded', () => {
-      const hash = window.location.hash.replace('#', '');
-      if (hash && ['master', 'mod1', 'mod2', 'mod3', 'mod4'].includes(hash)) {
-        switchTab(hash);
-      } else {
-        switchTab('master');
-      }
-    });
-  </script>
+  </main>
 
 </body>
 </html>

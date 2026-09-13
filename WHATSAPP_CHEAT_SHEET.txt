@@ -1,0 +1,79 @@
+========================================================
+📱 NUTRISHARE VIVA DEFENSE — WHATSAPP MASTER CHEAT SHEET
+BMIT3173 Integrative Programming • Oral Defense
+(Copy & Paste directly into WhatsApp Chat / Saved Messages!)
+========================================================
+
+🏆 *MASTER TECHNICAL MATRIX (ALL 4 MEMBERS)*
+• *Liew (Mod 1)*: Observer Pattern | CSRF + Stored XSS | Provide GET /api/donations/active | Calls Cheon (Mod 2)
+• *Cheon (Mod 2)*: Factory Method | Broken Access Control + OTP Throttling | Provide POST /api/user/verify-ngo | Calls Hiew (Mod 3)
+• *Hiew (Mod 3)*: State Pattern | BOLA/IDOR + State Tampering | Provide GET /api/claim/details | Calls Wong (Mod 4)
+• *Wong (Mod 4)*: Strategy Pattern | CRLF Log Injection + Signed URLs | Provide POST /api/inventory/food-safety-check | Calls Liew (Mod 1)
+
+--------------------------------------------------------
+👤 *MODULE 1: LIEW YI LER (25WMR09747)*
+*Surplus Food Donation Publishing & Notifications (SDG 2.1 & 2.2)*
+--------------------------------------------------------
+
+📂 *EXACT TABS & LINES TO HIGHLIGHT:*
+1. `DonationObserverInterface.php` ➔ *Lines 18 & 26* (Observer contract declarations)
+2. `DonationObserver.php` ➔ *Line 61* (Dispatches async job) & *Lines 78-85* (Alerts donor on claim)
+3. `EventServiceProvider.php` ➔ *Line 27* (Registers: `Donation::observe(DonationObserver::class);`)
+4. `SendDonationNotificationJob.php` ➔ *Line 24* (`ShouldQueue`) & *Lines 55-64* (`Notification::create`)
+5. `NotificationController.php` ➔ *Lines 12-16* (`index()`) & *Lines 19-30* (`markAsRead()`)
+6. `Notification.php` ➔ *Lines 17-26* (Database model & schema)
+7. `notifications/index.blade.php` ➔ *Lines 7-16 & 46-64* (Notification Center inbox UI)
+8. `donations/create.blade.php` ➔ *Line 18* (`@csrf` token against CSRF)
+9. `donations/show.blade.php` ➔ *Line 51* (`{{ $donation->description }}` escapes XSS)
+10. `DonationApiController.php` ➔ *Lines 43-80* (Active food API) & *Lines 98-115* (Calls Mod 2)
+
+🔔 *WHERE IS THE NOTIFICATION SUBSYSTEM?*
+🗣️ *If tutor asks "Where is notification in your module?", say:*
+"When food is published, `DonationObserver` triggers a background job (`SendDonationNotificationJob`). It queries verified NGOs, formats dynamic templates, writes records into the `notifications` table, and dispatches emails. NGOs see real-time unread badges on the bell icon and view alerts in the Notification Center (`/notifications`). Emails are simulated live in Mailpit at port 8025."
+
+⏱️ *60-SECOND SPEAKING SCRIPT:*
+1. "First, I log in as a food donor using donor@sunshine.org. I click 'Donate Food', enter title 'Artisan Sourdough Loaves', quantity '25 loaves', and click Publish."
+2. "When I click Publish, our *Observer Pattern* catches the model creation event in `DonationObserver`. It dispatches `SendDonationNotificationJob` to notify nearby NGOs asynchronously in the background without lagging the site."
+3. "When an NGO logs in, they see the red badge count on the *bell icon* in the navbar. Clicking 'View All' opens `/notifications`. Emails also appear in Mailpit at port 8025."
+4. "For security, our form uses `@csrf` tokens against CSRF, and Blade's `{{ }}` escaping against Stored XSS. Lastly, my module provides `GET /api/donations/active` for other modules."
+
+🎯 *DESIGN PATTERN (OBSERVER):*
+🗣️ *Look tutor in eye & say:* "The Observer Pattern is a design pattern where one main subject automatically notifies multiple listening observers whenever its data or state changes, without needing to know who they are."
+
+🛡️ *SECURITY DEFENSES:*
+• *Threat 1: CSRF (OWASP A05)*: Attacker creates hidden external form. Standard validation passes because form text is valid. Defense: `@csrf` token verified by Laravel `VerifyCsrfToken` middleware (HTTP 419 on failure).
+• *Threat 2: Stored XSS (OWASP A07)*: Attacker inputs `<script>` into food description. Validation cannot ban `< >` because legitimate donors use them. Defense: Blade `{{ }}` automatically runs `htmlspecialchars()`.
+
+🌐 *WEB SERVICES:*
+• *Provide*: `GET /api/donations/active` (Returns active surplus food for Mod 3 & 4)
+• *Consume*: `POST /api/user/verify-ngo` (Calls Cheon's Mod 2 before allowing food claims. Fails closed if offline).
+
+--------------------------------------------------------
+👤 *MODULE 2: CHEON JIE HAN (25WMR09703)*
+*NGO Verification & Trust Ratings (SDG 2.1 & 2.4)*
+--------------------------------------------------------
+• *Design Pattern*: Factory Method Pattern (`UserCreator` abstract creator, `NgoCreator` concrete creator).
+• *Exact Lines*: `UserCreator.php` Line 20 & 38; `NgoCreator.php` Line 16 & 25; `CheckRole.php` Line 23.
+• *Security 1*: Broken Access Control (OWASP A01) ➔ Protected by `CheckRole` middleware (`role:admin`).
+• *Security 2*: OTP Brute-Force (OWASP A07) ➔ Protected by `throttle:6,1` rate limiting + 5-min expiry.
+• *Web Services*: Provide `POST /api/user/verify-ngo` | Consume `GET /api/claim/details` (Mod 3).
+
+--------------------------------------------------------
+👤 *MODULE 3: HIEW LI WEI (25WMR09728)*
+*Food Distribution Logistics & Claims (SDG 2.1 & 12.3)*
+--------------------------------------------------------
+• *Design Pattern*: State Pattern (`PendingState`, `ApprovedState`, `CollectedState`).
+• *Exact Lines*: `ClaimState.php` Line 18; `PendingState.php` Line 14; `ClaimPolicy.php` Line 25.
+• *Security 1*: BOLA / IDOR (OWASP A01) ➔ Protected by `ClaimPolicy` checking ownership (`user_id === claim->user_id`).
+• *Security 2*: State Tampering (OWASP A04) ➔ Protected by State Machine guards blocking illegal skips.
+• *Web Services*: Provide `GET /api/claim/details` | Consume `POST /api/inventory/food-safety-check` (Mod 4).
+
+--------------------------------------------------------
+👤 *MODULE 4: WONG MEN JING (25WMR09788)*
+*Inventory Logistics & Food Safety (SDG 2.1 & 2.4)*
+--------------------------------------------------------
+• *Design Pattern*: Strategy Pattern (`NotificationDispatcher`, `EmailNotificationStrategy`, `SmsNotificationStrategy`).
+• *Exact Lines*: `NotificationDispatcher.php` Line 20; `SystemLog.php` Line 30; `InventoryApiController.php` Line 80.
+• *Security 1*: CRLF Log Injection (OWASP A09) ➔ Protected by `SystemLog` mutator stripping `\r\n`.
+• *Security 2*: Parameter Tampering (OWASP A01) ➔ Protected by HMAC signed URLs (`URL::signedRoute`).
+• *Web Services*: Provide `POST /api/inventory/food-safety-check` | Consume `GET /api/donations/active` (Mod 1).
