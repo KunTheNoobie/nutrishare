@@ -464,13 +464,13 @@
 </head>
 <body id="top">
 
-  <!-- Sticky Top Quick-Jump Header (100% WhatsApp & Mobile Proof HTML Anchors) -->
+  <!-- Sticky Top Quick-Jump Header -->
   <header>
     <div class="container" style="padding-top: 0; padding-bottom: 0;">
       <div class="header-top">
         <div class="title-group">
           <h1>NutriShare • Viva Defense Master Guide</h1>
-          <p>BMIT3173 Integrative Programming &bull; All 4 Members in One Continuous View</p>
+          <p>BMIT3173 Integrative Programming &bull; All 4 Members in Unified 7-Card Format</p>
         </div>
       </div>
 
@@ -574,7 +574,7 @@
     <!-- ================================================================= -->
     <section class="module-section" id="mod1">
       
-      <!-- HEADER & TABS TO OPEN -->
+      <!-- CARD 1: HEADER & 10 TABS TO OPEN -->
       <div class="card card-mod1">
         <div class="card-header-flex">
           <div>
@@ -616,7 +616,7 @@
               <span class="tab-card-file">#4 SendDonationNotificationJob.php</span>
               <span class="line-callout">Lines 24, 39-41 &amp; 55-64</span>
             </div>
-            <div class="tab-card-desc"><strong>Queue Worker:</strong> Loops approved NGOs, renders template, creates <code>Notification</code> records asynchronously without blocking HTTP response.</div>
+            <div class="tab-card-desc"><strong>Queue Worker:</strong> Loops approved NGOs, renders template, creates <code>Notification</code> records asynchronously.</div>
           </div>
 
           <div class="tab-card-item">
@@ -669,7 +669,7 @@
         </div>
       </div>
 
-      <!-- NOTIFICATION SUBSYSTEM ARCHITECTURE -->
+      <!-- CARD 2: SUBSYSTEM ARCHITECTURE & CODE -->
       <div class="card card-mod1" style="border-top-color: #f59e0b;">
         <div class="section-title title-amber">🔔 Complete Notification Subsystem Architecture &amp; Code</div>
         
@@ -819,7 +819,7 @@ public function markAsRead(Notification $notification) {
         </div>
       </div>
 
-      <!-- 60-SECOND SPEAKING SCRIPT -->
+      <!-- CARD 3: 60-SECOND SPEAKING SCRIPT -->
       <div class="card card-mod1">
         <div class="section-title title-blue">⏱️ 60-Second Speaking Script (Simple, Natural Spoken English):</div>
 
@@ -844,7 +844,7 @@ public function markAsRead(Notification $notification) {
         </div>
       </div>
 
-      <!-- DESIGN PATTERN: OBSERVER -->
+      <!-- CARD 4: DESIGN PATTERN (OBSERVER) -->
       <div class="card card-mod1">
         <div class="section-title title-blue">🎯 Design Pattern: Observer Pattern (GoF Behavioural)</div>
 
@@ -869,7 +869,7 @@ public function onDonationCreated(Donation $donation): void {
 }</code></pre>
       </div>
 
-      <!-- SECURITY DEFENSES -->
+      <!-- CARD 5: SECURITY DEFENSES -->
       <div class="card card-mod1">
         <div class="section-title title-blue">🛡️ Software Security Defense (Real Threats — NO Basic Validation)</div>
 
@@ -910,7 +910,7 @@ public function onDonationCreated(Donation $donation): void {
         </div>
       </div>
 
-      <!-- WEB SERVICES -->
+      <!-- CARD 6: WEB SERVICES -->
       <div class="card card-mod1">
         <div class="section-title title-blue">🌐 Web Services (IFA Standard: Provide &amp; Consume)</div>
 
@@ -977,7 +977,7 @@ public function verifyNgoBeforeClaim(int $ngoUserId): bool {
         </div>
       </div>
 
-      <!-- TOUGH QUESTIONS -->
+      <!-- CARD 7: TOUGH QUESTIONS -->
       <div class="card card-mod1">
         <div class="section-title title-blue">❓ Tough Tutor Questions (Easy to Understand Answers):</div>
 
@@ -1011,18 +1011,227 @@ public function verifyNgoBeforeClaim(int $ngoUserId): bool {
     <!-- SECTION 2: MODULE 2 — CHEON JIE HAN -->
     <!-- ================================================================= -->
     <section class="module-section" id="mod2">
+      
+      <!-- CARD 1: HEADER & 10 TABS TO OPEN -->
       <div class="card card-mod2">
         <div class="card-header-flex">
           <div>
             <div class="member-title" style="color: #34d399;">👤 Module 2: Cheon Jie Han (25WMR09703)</div>
-            <p style="font-size: 0.84rem; color: var(--text-secondary);">NGO Identity Verification &amp; Peer Trust Ratings &bull; SDG 2.1 &amp; 2.4</p>
+            <p style="font-size: 0.84rem; color: var(--text-secondary);">NGO Identity Verification, Peer Trust Ratings &amp; User Security &bull; SDG 2.1 &amp; 2.4</p>
           </div>
           <span class="mod-badge badge-mod2">Factory Method &bull; Broken Access Control &bull; OTP Brute-Force</span>
         </div>
 
-        <!-- 60-Sec Script -->
+        <div class="section-title title-green">📂 10 VS Code Tabs to Open &amp; Exact Lines to Point At:</div>
+
+        <div class="tab-cards-list">
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#1 UserCreator.php</span>
+              <span class="line-callout">Lines 15-38</span>
+            </div>
+            <div class="tab-card-desc"><strong>Abstract Creator:</strong> Declares <code>createUser()</code> and factory resolver: <code>UserCreator::resolve($role)</code>.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#2 NgoCreator.php</span>
+              <span class="line-callout">Lines 14-35</span>
+            </div>
+            <div class="tab-card-desc"><strong>Concrete Creator:</strong> Sets <code>role => 'ngo'</code> and statutory mandatory status: <code>verification_status => 'pending'</code>.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#3 DonorCreator.php</span>
+              <span class="line-callout">Lines 14-32</span>
+            </div>
+            <div class="tab-card-desc"><strong>Concrete Creator:</strong> Instantiates donor profiles with default immediate active status and bcrypt hashing.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#4 AuthController.php</span>
+              <span class="line-callout">Lines 34-45</span>
+            </div>
+            <div class="tab-card-desc"><strong>Client Controller:</strong> Calls <code>$creator->createUser($validated)</code> and regenerates session to prevent fixation.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#5 VerificationDocument.php</span>
+              <span class="line-callout">Lines 12-28</span>
+            </div>
+            <div class="tab-card-desc"><strong>Model:</strong> Stores government ROS registration certs and food premise license files with UUID paths.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#6 VerificationController.php</span>
+              <span class="line-callout">Lines 20-55 &amp; 100-115</span>
+            </div>
+            <div class="tab-card-desc"><strong>Admin Review &amp; Consume:</strong> <code>review()</code> approves NGO licenses; calls Hiew's Module 3 claim API.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#7 CheckRole.php</span>
+              <span class="line-callout">Lines 15-22</span>
+            </div>
+            <div class="tab-card-desc"><strong>Security 1 (Broken Access Control):</strong> RBAC middleware checking <code>$request->user()->role</code>, aborting with HTTP 403.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#8 PasswordResetController.php</span>
+              <span class="line-callout">Lines 25-45</span>
+            </div>
+            <div class="tab-card-desc"><strong>Security 2 (OTP Brute-Force):</strong> <code>throttle:6,1</code> route middleware, 10-minute expiry, and single-use deletion.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#9 UserVerificationApiController.php</span>
+              <span class="line-callout">Lines 40-85</span>
+            </div>
+            <div class="tab-card-desc"><strong>Web Service PROVIDE:</strong> <code>POST /api/user/verify-ngo</code> returns verified status, license validity, trust rating.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#10 Review.php &amp; ProfileController.php</span>
+              <span class="line-callout">Lines 80-110</span>
+            </div>
+            <div class="tab-card-desc"><strong>Trust Rating Engine:</strong> Calculates cumulative 5-star peer trust rating based on completed collections.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2: SUBSYSTEM ARCHITECTURE & CODE -->
+      <div class="card card-mod2" style="border-top-color: var(--accent-green);">
+        <div class="section-title title-green">🏢 Complete NGO Statutory Verification &amp; Trust Subsystem Architecture &amp; Code</div>
+
+        <div class="verbatim-box" style="border-color: var(--accent-green); background: #062419;">
+          <div class="verbatim-label" style="color: #34d399;">🗣️ If Tutor Asks: "How does NGO Verification &amp; Trust work in your module?" Say:</div>
+          <div class="verbatim-text" style="color: #a7f3d0;">
+            "My module enforces strict statutory safety compliance. When an NGO registers, the Factory Method initializes their account in a mandatory 'pending' status. The NGO must upload official government ROS certificates and premise licenses. Administrators review the documents in a secure admin queue. Once approved, our web service exposes `POST /api/user/verify-ngo` so other modules can confirm legitimacy before releasing food. Peer reviews dynamically update their trust score."
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="flow-step" style="border-left-color: var(--accent-green);">
+          <div class="flow-badge" style="background: var(--accent-green);">1</div>
+          <div style="width: 100%;">
+            <strong style="color: #34d399;">Factory Creation &amp; Pending Enforcement:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Services/UserFactory/NgoCreator.php</code> (<strong>Lines 14–35</strong>)<br>
+              Enforces statutory business invariant: NGOs cannot operate until verified by setting <code>verification_status => 'pending'</code>.
+            </span>
+            <pre><code>// app/Services/UserFactory/NgoCreator.php (Lines 14-35)
+public function createUser(array $data): User {
+    return User::create([
+        'name'                => $data['name'],
+        'email'               => $data['email'],
+        'password'            => Hash::make($data['password']), // Bcrypt hashing
+        'role'                => 'ngo',
+        'verification_status' => 'pending', // Statutory requirement: cannot claim food yet
+        'organization_name'   => $data['organization_name'],
+        'phone'               => $data['phone'] ?? null,
+    ]);
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flow-step" style="border-left-color: var(--accent-green);">
+          <div class="flow-badge" style="background: var(--accent-green);">2</div>
+          <div style="width: 100%;">
+            <strong style="color: #34d399;">License &amp; ROS Document Upload:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Models/VerificationDocument.php</code> (<strong>Lines 12–28</strong>)<br>
+              Stores government ROS certificate, premise license, and registration proof with UUID paths outside webroot.
+            </span>
+            <pre><code>// app/Http/Controllers/VerificationController.php (Lines 25-40)
+public function upload(UploadVerificationDocumentRequest $request) {
+    $path = $request->file('document')->store('verification_docs', 'private');
+    VerificationDocument::create([
+        'user_id'       => Auth::id(),
+        'document_type' => $request->document_type, // 'license', 'food_premise_license'
+        'file_path'     => $path,
+        'status'        => 'pending',
+    ]);
+    return back()->with('success', 'Document submitted for admin review.');
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flow-step" style="border-left-color: var(--accent-green);">
+          <div class="flow-badge" style="background: var(--accent-green);">3</div>
+          <div style="width: 100%;">
+            <strong style="color: #34d399;">Admin Verification Audit Queue:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Http/Controllers/VerificationController.php</code> (<strong>Lines 45–75</strong>)<br>
+              Administrators review uploaded ROS documents, inspect expiry dates, and approve or reject with audit trail logging.
+            </span>
+            <pre><code>// app/Http/Controllers/VerificationController.php (Lines 60-75)
+public function review(Request $request, VerificationDocument $document) {
+    $document->update(['status' => $request->action]); // 'approved' or 'rejected'
+    if ($request->action === 'approved') {
+        $document->user->update(['verification_status' => 'approved']);
+    }
+    SystemLog::create([
+        'user_id'     => Auth::id(),
+        'action'      => 'ngo.verification_' . $request->action,
+        'description' => "Admin reviewed NGO document #{$document->id}",
+    ]);
+    return back()->with('success', "NGO document {$request->action}.");
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="flow-step" style="border-left-color: var(--accent-green);">
+          <div class="flow-badge" style="background: var(--accent-green);">4</div>
+          <div style="width: 100%;">
+            <strong style="color: #34d399;">Web Service Verification Authority:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Http/Controllers/Api/UserVerificationApiController.php</code> (<strong>Lines 40–85</strong>)<br>
+              Exposes IFA-compliant endpoint: verifies NGO account status, valid license existence, and trust rating.
+            </span>
+            <pre><code>// app/Http/Controllers/Api/UserVerificationApiController.php (Lines 65-80)
+$isVerified = $user->verification_status === 'approved';
+$hasValidLicense = VerificationDocument::where('user_id', $user->id)
+    ->where('status', 'approved')
+    ->whereIn('document_type', ['license', 'food_premise_license'])
+    ->exists();
+
+return response()->json(SecurityHelper::ifaResponse('S', [
+    'requestID'   => $ifa['requestID'],
+    'is_verified' => $isVerified && $hasValidLicense,
+    'trust_rating'=> $user->trust_rating ?? 5.0,
+]), 200);</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="flow-step" style="border-left-color: var(--accent-green);">
+          <div class="flow-badge" style="background: var(--accent-green);">5</div>
+          <div>
+            <strong style="color: #34d399;">Peer Trust Rating &amp; Review Engine:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              • <strong>Review Model:</strong> <code>app/Models/Review.php</code> stores rating (1-5 stars) and feedback from donors after claims.<br>
+              • <strong>Trust Calculation:</strong> Recalculates weighted average rating displayed on NGO public profile cards.<br>
+              • <strong>Consume API:</strong> Consumes Hiew's <code>GET /api/claim/details</code> to factor in collection completion rates.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3: 60-SECOND SPEAKING SCRIPT -->
+      <div class="card card-mod2">
         <div class="section-title title-green">⏱️ 60-Second Speaking Script (Simple, Natural Spoken English):</div>
-        
+
         <div class="script-step" style="border-left-color: var(--accent-green);">
           <div class="script-step-num" style="color: var(--accent-green);">Step 1: Demonstration on screen</div>
           <div class="script-text">"I register an NGO named 'Care Foodbank'. Since this is an NGO, statutory food safety rules require it to start in <strong>'pending'</strong> status. Next, I log in as Admin (<code>admin@nutrishare.org</code>), navigate to <strong>Verification Queue</strong>, inspect their government ROS certificate, and approve them."</div>
@@ -1042,10 +1251,12 @@ public function verifyNgoBeforeClaim(int $ngoUserId): bool {
           <div class="script-step-num" style="color: var(--accent-green);">Step 4: Web Services</div>
           <div class="script-text">"My module provides <code>POST /api/user/verify-ngo</code> so Module 1 can check ROS licenses before claims. In return, I consume Hiew's <code>GET /api/claim/details</code> to check past collection reliability before calculating trust ratings."</div>
         </div>
+      </div>
 
-        <!-- Design Pattern: Factory Method -->
+      <!-- CARD 4: DESIGN PATTERN (FACTORY METHOD) -->
+      <div class="card card-mod2">
         <div class="section-title title-green">🎯 Design Pattern: Factory Method Pattern (GoF Creational)</div>
-        
+
         <div class="verbatim-box" style="border-color: var(--accent-green); background: #062419;">
           <div class="verbatim-label" style="color: #34d399;">🗣️ Look Tutor in the Eye &amp; Say:</div>
           <div class="verbatim-text" style="color: #a7f3d0;">
@@ -1083,7 +1294,7 @@ class NgoCreator extends UserCreator {
         return User::create([
             'name'                => $data['name'],
             'email'               => $data['email'],
-            'password'            => bcrypt($data['password']),
+            'password'            => Hash::make($data['password']),
             'role'                => 'ngo',
             'verification_status' => 'pending', // Statutory safety requirement
             'organization_name'   => $data['organization_name'],
@@ -1095,9 +1306,12 @@ class NgoCreator extends UserCreator {
 // 3. Client Call: app/Http/Controllers/AuthController.php (Line 36)
 $creator = UserCreator::resolve($validated['role']);
 $user = $creator->createUser($validated);</code></pre>
+      </div>
 
-        <!-- Security -->
+      <!-- CARD 5: SECURITY DEFENSES -->
+      <div class="card card-mod2">
         <div class="section-title title-green">🛡️ Software Security Defense (Real Threats — NO Basic Validation)</div>
+
         <div class="grid-2">
           <!-- Threat 1 -->
           <div class="card" style="background: var(--bg-elevated); margin: 0; padding: 14px;">
@@ -1106,7 +1320,7 @@ $user = $creator->createUser($validated);</code></pre>
             <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px;">
               <strong>The Attack:</strong> A normal NGO user types <code>/admin/verifications</code> into their browser URL or sends a POST request to <code>/admin/verifications/5/review</code> with <code>action=approved</code> to approve their own organization.<br>
               <strong>Why validation fails:</strong> Form validation only checks that <code>action=approved</code> is a valid string. The data is valid, so validation passes! It cannot check whether the caller is an authorized admin.<br>
-              <strong>NutriShare Defense:</strong> RBAC Middleware (<code>app/Http/Middleware/CheckRole.php</code> Line 15). We guard admin routes with <code>role:admin,moderator</code>. The middleware inspects <code>$request->user()->role</code> directly from the session, aborting unapproved users with <strong>HTTP 403 Forbidden</strong>.
+              <strong>NutriShare Defense:</strong> RBAC Middleware (<code>app/Http/Middleware/CheckRole.php</code> <strong>Line 15</strong>). We guard admin routes with <code>role:admin,moderator</code>. The middleware inspects <code>$request->user()->role</code> directly from the session, aborting unapproved users with <strong>HTTP 403 Forbidden</strong>.
             </p>
             <pre><code>// app/Http/Middleware/CheckRole.php (Line 15)
 public function handle(Request $request, Closure $next, ...$roles): Response {
@@ -1134,10 +1348,12 @@ Route::post('/forgot-password/otp/verify', [PasswordResetController::class, 'ver
     ->middleware('throttle:6,1'); // Max 6 attempts per minute</code></pre>
           </div>
         </div>
+      </div>
 
-        <!-- Web Services -->
+      <!-- CARD 6: WEB SERVICES -->
+      <div class="card card-mod2">
         <div class="section-title title-green">🌐 Web Services (IFA Standard: Provide &amp; Consume)</div>
-        
+
         <!-- PROVIDE -->
         <div class="ws-card">
           <div class="ws-header">
@@ -1191,7 +1407,7 @@ public function verifyNgo(Request $request): JsonResponse {
             <strong class="ws-endpoint"><code>GET /api/claim/details</code></strong>
           </div>
           <p class="ws-desc">Before generating an NGO's annual trust rating report, Module 2 consumes Hiew's endpoint to verify how many claims were successfully collected vs cancelled.</p>
-          <pre><code>// app/Http/Controllers/NgoVerificationController.php (Lines 112-128)
+          <pre><code>// app/Http/Controllers/VerificationController.php (Lines 100-115)
 $response = Http::timeout(5)->get(config('app.url').'/api/claim/details', [
     'requestID' => uniqid('CLAIM-CHECK-'),
     'timestamp' => now()->toIso8601String(),
@@ -1202,8 +1418,10 @@ if ($response->successful() && $response->json('status') === 'S') {
     // Calculate trust rating impact based on collection status
 }</code></pre>
         </div>
+      </div>
 
-        <!-- Tough Questions -->
+      <!-- CARD 7: TOUGH QUESTIONS -->
+      <div class="card card-mod2">
         <div class="section-title title-green">❓ Tough Tutor Questions (Easy to Understand Answers):</div>
 
         <div class="qa-box">
@@ -1236,18 +1454,219 @@ if ($response->successful() && $response->json('status') === 'S') {
     <!-- SECTION 3: MODULE 3 — HIEW LI WEI -->
     <!-- ================================================================= -->
     <section class="module-section" id="mod3">
+      
+      <!-- CARD 1: HEADER & 10 TABS TO OPEN -->
       <div class="card card-mod3">
         <div class="card-header-flex">
           <div>
             <div class="member-title" style="color: #fbbf24;">👤 Module 3: Hiew Li Wei (25WMR09728)</div>
-            <p style="font-size: 0.84rem; color: var(--text-secondary);">Claims Management &amp; Logistics Distribution &bull; SDG 2.1 &amp; 12.3</p>
+            <p style="font-size: 0.84rem; color: var(--text-secondary);">Claims Management, State Pattern &amp; Logistics Distribution &bull; SDG 2.1 &amp; 12.3</p>
           </div>
           <span class="mod-badge badge-mod3">State Pattern &bull; BOLA / IDOR &bull; State Tampering</span>
         </div>
 
-        <!-- 60-Sec Script -->
+        <div class="section-title title-amber">📂 10 VS Code Tabs to Open &amp; Exact Lines to Point At:</div>
+
+        <div class="tab-cards-list">
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#1 ClaimState.php</span>
+              <span class="line-callout">Lines 18-45</span>
+            </div>
+            <div class="tab-card-desc"><strong>Abstract State:</strong> Base class declaring <code>handle($action)</code>, <code>getStateName()</code>, and <code>allowedActions()</code>.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#2 PendingState.php</span>
+              <span class="line-callout">Lines 12-32</span>
+            </div>
+            <div class="tab-card-desc"><strong>Concrete State:</strong> Initial state; allows <code>approve</code> and <code>reject</code>, strictly blocks <code>collect</code>.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#3 ApprovedState.php</span>
+              <span class="line-callout">Lines 25-45 &amp; 94-115</span>
+            </div>
+            <div class="tab-card-desc"><strong>Concrete State:</strong> Enforces vehicle assignment before collection; auto-creates receipt and distribution log.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#4 CollectedState.php</span>
+              <span class="line-callout">Lines 12-30</span>
+            </div>
+            <div class="tab-card-desc"><strong>Concrete State:</strong> Terminal lifecycle state; disallows any further transitions.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#5 Claim.php</span>
+              <span class="line-callout">Lines 85-105</span>
+            </div>
+            <div class="tab-card-desc"><strong>Context Model:</strong> Delegates transitions to state object via <code>getStateObject(): ClaimState</code>.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#6 ClaimPolicy.php</span>
+              <span class="line-callout">Lines 25-40</span>
+            </div>
+            <div class="tab-card-desc"><strong>Security 1 (BOLA / IDOR):</strong> Ensures only claiming NGO, original donor, or admin can view/manage claims.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#7 ClaimController.php</span>
+              <span class="line-callout">Lines 115-135</span>
+            </div>
+            <div class="tab-card-desc"><strong>Security 2 (State Tampering):</strong> Controller queries <code>$state->canPerform($action)</code> to block illegal transitions.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#8 Vehicle.php</span>
+              <span class="line-callout">Lines 10-25</span>
+            </div>
+            <div class="tab-card-desc"><strong>Logistics Model:</strong> Vehicle registration number, capacity, and driver assignment linked to claims.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#9 ClaimApiController.php</span>
+              <span class="line-callout">Lines 36-75</span>
+            </div>
+            <div class="tab-card-desc"><strong>Web Service PROVIDE:</strong> <code>GET /api/claim/details</code> returns lifecycle state, vehicle, and collection receipt.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#10 SafetyServiceClient.php</span>
+              <span class="line-callout">Lines 20-55</span>
+            </div>
+            <div class="tab-card-desc"><strong>Web Service CONSUME:</strong> Consumes Wong's Module 4 <code>POST /api/inventory/food-safety-check</code> before collection.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2: SUBSYSTEM ARCHITECTURE & CODE -->
+      <div class="card card-mod3" style="border-top-color: var(--accent-amber);">
+        <div class="section-title title-amber">🚚 Complete Claims Lifecycle &amp; Logistics Subsystem Architecture &amp; Code</div>
+
+        <div class="verbatim-box" style="border-color: var(--accent-amber); background: #261b05;">
+          <div class="verbatim-label" style="color: #fbbf24;">🗣️ If Tutor Asks: "How does Claims Management &amp; Logistics work in your module?" Say:</div>
+          <div class="verbatim-text" style="color: #fef08a;">
+            "My module controls the end-to-end food claim lifecycle using the GoF State Pattern. When an NGO submits a claim, it enters `PendingState` with pessimistic concurrency locking. The donor reviews and approves it, moving it to `ApprovedState`. To ensure logistics safety, food cannot be collected until an authorized vehicle is assigned. Before final pickup, we consume Module 4's Food Safety API. Upon collection, the system auto-generates an immutable digital Collection Receipt and an SDG Distribution Impact Log."
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="flow-step">
+          <div class="flow-badge">1</div>
+          <div style="width: 100%;">
+            <strong style="color: #fbbf24;">Claim Creation &amp; Concurrency Lock:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Http/Controllers/ClaimController.php</code> (<strong>Lines 45–65</strong>)<br>
+              Uses pessimistic locking <code>lockForUpdate()</code> to eliminate race conditions when multiple NGOs claim simultaneously.
+            </span>
+            <pre><code>// app/Http/Controllers/ClaimController.php (Lines 45-65)
+DB::transaction(function () use ($donationId, $request) {
+    // Pessimistic lock prevents duplicate claims
+    $donation = Donation::where('id', $donationId)->lockForUpdate()->first();
+    if ($donation->status !== 'available') {
+        throw new \Exception('Food listing already claimed.');
+    }
+    $claim = Claim::create([
+        'user_id'     => Auth::id(),
+        'donation_id' => $donation->id,
+        'status'      => 'pending',
+    ]);
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flow-step">
+          <div class="flow-badge">2</div>
+          <div style="width: 100%;">
+            <strong style="color: #fbbf24;">State Pattern Lifecycle Delegation:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Models/Claim.php</code> (<strong>Lines 90–105</strong>)<br>
+              Eloquent model dynamically resolves its behavioral state class:
+            </span>
+            <pre><code>// app/Models/Claim.php (Lines 90-105)
+public function getStateObject(): ClaimState {
+    return match ($this->status) {
+        'approved'  => new ApprovedState($this),
+        'collected' => new CollectedState($this),
+        default     => new PendingState($this),
+    };
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flow-step">
+          <div class="flow-badge">3</div>
+          <div style="width: 100%;">
+            <strong style="color: #fbbf24;">ApprovedState Invariant (Vehicle Assignment):</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/States/Claim/ApprovedState.php</code> (<strong>Lines 35–50</strong>)<br>
+              Guarantees food cannot be picked up without an assigned transport vehicle:
+            </span>
+            <pre><code>// app/States/Claim/ApprovedState.php (Lines 38-46)
+private function collect(): bool {
+    // Invariant check: Cannot collect food without an assigned logistics vehicle
+    if (!$this->claim->vehicle) {
+        return false;
+    }
+    $this->claim->update(['status' => 'collected']);
+    $this->claim->donation->update(['status' => 'collected']);
+    return true;
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="flow-step">
+          <div class="flow-badge">4</div>
+          <div style="width: 100%;">
+            <strong style="color: #fbbf24;">Food Safety Consumption Gate:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Services/Clients/SafetyServiceClient.php</code> (<strong>Lines 25–50</strong>)<br>
+              Consumes Wong's Module 4 endpoint before collection: blocks pickup if food is expired.
+            </span>
+            <pre><code>// app/Services/Clients/SafetyServiceClient.php (Lines 25-50)
+$response = Http::timeout(5)->post(config('app.url').'/api/inventory/food-safety-check', [
+    'requestID'    => uniqid('SAFETY-'),
+    'timestamp'    => now()->toIso8601String(),
+    'food_item_id' => $claim->donation->foodItems->first()?->id,
+]);
+if ($response->successful() && $response->json('data.food_item.safety_status') !== 'SAFE') {
+    throw new \Exception('Food safety check failed: Item has expired.');
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="flow-step">
+          <div class="flow-badge">5</div>
+          <div>
+            <strong style="color: #fbbf24;">Digital Receipt &amp; SDG Distribution Logs:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              • <strong>Collection Receipt:</strong> <code>app/Models/CollectionReceipt.php</code> generates unique receipt number with timestamped proof.<br>
+              • <strong>Distribution Log:</strong> <code>app/Models/DistributionLog.php</code> calculates kg saved, beneficiaries served (SDG 2.1 &amp; 12.3).<br>
+              • <strong>Inventory Auto-Stock:</strong> Directly transfers collected surplus into target warehouse location.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3: 60-SECOND SPEAKING SCRIPT -->
+      <div class="card card-mod3">
         <div class="section-title title-amber">⏱️ 60-Second Speaking Script (Simple, Natural Spoken English):</div>
-        
+
         <div class="script-step" style="border-left-color: var(--accent-amber);">
           <div class="script-step-num" style="color: var(--accent-amber);">Step 1: Demonstration on screen</div>
           <div class="script-text">"I log in as an approved NGO (<code>hope@ngo.org</code>). I browse surplus listings, click <strong>'Claim Food'</strong>, and enter logistics details. The claim starts in <strong>Pending</strong> state. Next, the donor approves it, transitioning it to <strong>Approved</strong>. Finally, once a vehicle arrives, it is marked <strong>Collected</strong> and generates a digital receipt."</div>
@@ -1267,10 +1686,12 @@ if ($response->successful() && $response->json('status') === 'S') {
           <div class="script-step-num" style="color: var(--accent-amber);">Step 4: Web Services</div>
           <div class="script-text">"My module provides <code>GET /api/claim/details</code> so Cheon's Module 2 can check claim history. In return, I consume Wong's <code>POST /api/inventory/food-safety-check</code> before allowing collection to verify that food is not expired."</div>
         </div>
+      </div>
 
-        <!-- Design Pattern: State Pattern -->
+      <!-- CARD 4: DESIGN PATTERN (STATE) -->
+      <div class="card card-mod3">
         <div class="section-title title-amber">🎯 Design Pattern: State Pattern (GoF Behavioural)</div>
-        
+
         <div class="verbatim-box" style="border-color: var(--accent-amber); background: #261b05;">
           <div class="verbatim-label" style="color: #fbbf24;">🗣️ Look Tutor in the Eye &amp; Say:</div>
           <div class="verbatim-text" style="color: #fef08a;">
@@ -1320,9 +1741,12 @@ class ApprovedState extends ClaimState {
         return in_array(strtolower($action), ['collect', 'cancel']);
     }
 }</code></pre>
+      </div>
 
-        <!-- Security -->
+      <!-- CARD 5: SECURITY DEFENSES -->
+      <div class="card card-mod3">
         <div class="section-title title-amber">🛡️ Software Security Defense (Real Threats — NO Basic Validation)</div>
+
         <div class="grid-2">
           <!-- Threat 1 -->
           <div class="card" style="background: var(--bg-elevated); margin: 0; padding: 14px;">
@@ -1331,7 +1755,7 @@ class ApprovedState extends ClaimState {
             <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px;">
               <strong>The Attack:</strong> An NGO changes the URL from <code>/claims/5</code> to <code>/claims/6</code> to view confidential logistics schedules and driver contact numbers belonging to another charity.<br>
               <strong>Why validation fails:</strong> <code>6</code> is a valid positive integer in the database, so route parameter validation passes 100%! Validation cannot verify ownership.<br>
-              <strong>NutriShare Defense:</strong> Policy Authorization (<code>app/Policies/ClaimPolicy.php</code> Line 25). The controller calls <code>$this->authorize('view', $claim)</code>. The policy checks <code>$claim->user_id === $user->id</code> or admin role, aborting intruders with <strong>HTTP 403 Forbidden</strong>.
+              <strong>NutriShare Defense:</strong> Policy Authorization (<code>app/Policies/ClaimPolicy.php</code> <strong>Line 25</strong>). The controller calls <code>$this->authorize('view', $claim)</code>. The policy checks <code>$claim->user_id === $user->id</code> or admin role, aborting intruders with <strong>HTTP 403 Forbidden</strong>.
             </p>
             <pre><code>// app/Policies/ClaimPolicy.php (Line 25)
 public function view(User $user, Claim $claim): bool {
@@ -1348,7 +1772,7 @@ public function view(User $user, Claim $claim): bool {
             <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px;">
               <strong>The Attack:</strong> Attacker sends a forged POST request with <code>action=collect</code> while the claim is still pending, attempting to skip donor approval and vehicle assignment.<br>
               <strong>Why validation fails:</strong> "collect" is a valid string in the allowed actions list, so standard form validation allows it.<br>
-              <strong>NutriShare Defense:</strong> State Machine Guards (<code>ClaimController.php</code> Line 119). The controller queries <code>$stateObject = $claim->getStateObject()</code> and checks <code>$stateObject->canPerform('collect')</code>. Since <code>PendingState</code> returns false, the request is rejected immediately.
+              <strong>NutriShare Defense:</strong> State Machine Guards (<code>ClaimController.php</code> <strong>Line 119</strong>). The controller queries <code>$stateObject = $claim->getStateObject()</code> and checks <code>$stateObject->canPerform('collect')</code>. Since <code>PendingState</code> returns false, the request is rejected immediately.
             </p>
             <pre><code>// app/Http/Controllers/ClaimController.php (Lines 119-125)
 $state = $claim->getStateObject();
@@ -1357,10 +1781,12 @@ if (!$state->canPerform($action)) {
 }</code></pre>
           </div>
         </div>
+      </div>
 
-        <!-- Web Services -->
+      <!-- CARD 6: WEB SERVICES -->
+      <div class="card card-mod3">
         <div class="section-title title-amber">🌐 Web Services (IFA Standard: Provide &amp; Consume)</div>
-        
+
         <!-- PROVIDE -->
         <div class="ws-card">
           <div class="ws-header">
@@ -1405,7 +1831,7 @@ public function details(Request $request): JsonResponse {
             <strong class="ws-endpoint"><code>POST /api/inventory/food-safety-check</code></strong>
           </div>
           <p class="ws-desc">Before letting an NGO confirm collection, Module 3 calls Wong's Module 4 to ensure food has not passed its safe consumption window.</p>
-          <pre><code>// app/Http/Controllers/ClaimController.php (Lines 145-160)
+          <pre><code>// app/Services/Clients/SafetyServiceClient.php (Lines 25-50)
 $response = Http::timeout(5)->post(config('app.url').'/api/inventory/food-safety-check', [
     'requestID'    => uniqid('SAFETY-'),
     'timestamp'    => now()->toIso8601String(),
@@ -1415,8 +1841,10 @@ if ($response->successful() && $response->json('data.food_item.safety_status') !
     return back()->with('error', 'Collection blocked: Food item has exceeded safe shelf life.');
 }</code></pre>
         </div>
+      </div>
 
-        <!-- Tough Questions -->
+      <!-- CARD 7: TOUGH QUESTIONS -->
+      <div class="card card-mod3">
         <div class="section-title title-amber">❓ Tough Tutor Questions (Easy to Understand Answers):</div>
 
         <div class="qa-box">
@@ -1449,18 +1877,223 @@ if ($response->successful() && $response->json('data.food_item.safety_status') !
     <!-- SECTION 4: WONG MEN JING (MODULE 4) -->
     <!-- ================================================================= -->
     <section class="module-section" id="mod4">
+      
+      <!-- CARD 1: HEADER & 10 TABS TO OPEN -->
       <div class="card card-mod4">
         <div class="card-header-flex">
           <div>
             <div class="member-title" style="color: #c084fc;">👤 Module 4: Wong Men Jing (25WMR09788)</div>
-            <p style="font-size: 0.84rem; color: var(--text-secondary);">Inventory &amp; Food Safety Compliance &bull; SDG 2.1 &amp; 2.4</p>
+            <p style="font-size: 0.84rem; color: var(--text-secondary);">Inventory Multi-Storage, Food Safety &amp; Expiry Compliance &bull; SDG 2.1 &amp; 2.4</p>
           </div>
           <span class="mod-badge badge-mod4">Strategy &bull; Log / CRLF Injection &bull; Parameter Tampering</span>
         </div>
 
-        <!-- 60-Sec Script -->
+        <div class="section-title title-purple">📂 10 VS Code Tabs to Open &amp; Exact Lines to Point At:</div>
+
+        <div class="tab-cards-list">
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#1 NotificationStrategyInterface.php</span>
+              <span class="line-callout">Lines 6-18</span>
+            </div>
+            <div class="tab-card-desc"><strong>Strategy Interface:</strong> Defines <code>send($recipient, $subject, $message)</code> and <code>getChannelName()</code>.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#2 EmailStrategy.php</span>
+              <span class="line-callout">Lines 14-30</span>
+            </div>
+            <div class="tab-card-desc"><strong>Concrete Strategy:</strong> Handles routine daily inventory summaries and non-urgent email alerts.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#3 SMSStrategy.php</span>
+              <span class="line-callout">Lines 14-35</span>
+            </div>
+            <div class="tab-card-desc"><strong>Concrete Strategy:</strong> Handles urgent temperature breaches and critical food safety SMS alerts.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#4 NotificationDispatcher.php</span>
+              <span class="line-callout">Lines 30-65</span>
+            </div>
+            <div class="tab-card-desc"><strong>Context Dispatcher:</strong> Dynamically resolves strategy at runtime based on alert urgency or user setting.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#5 FoodItem.php &amp; AllergenTag.php</span>
+              <span class="line-callout">Lines 15-40</span>
+            </div>
+            <div class="tab-card-desc"><strong>Safety Models:</strong> Tracks batch expiry dates, storage temperatures, and allergen tags (peanuts, dairy, gluten).</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#6 InventoryLocation.php</span>
+              <span class="line-callout">Lines 15-38</span>
+            </div>
+            <div class="tab-card-desc"><strong>Storage Facility:</strong> Multi-zone warehouse storage model (ambient, chilled, frozen capacity &amp; current occupancy).</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#7 SystemLog.php</span>
+              <span class="line-callout">Lines 48-63</span>
+            </div>
+            <div class="tab-card-desc"><strong>Security 1 (Log Injection):</strong> Eloquent mutators sanitize CRLF characters (<code>\r\n</code>) before saving log rows.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#8 InventoryController.php</span>
+              <span class="line-callout">Lines 149-180</span>
+            </div>
+            <div class="tab-card-desc"><strong>Security 2 (Signed URLs):</strong> Generates cryptographic HMAC SHA-256 tamper-proof quick-claim links with expiry.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#9 InventoryApiController.php</span>
+              <span class="line-callout">Lines 80-115</span>
+            </div>
+            <div class="tab-card-desc"><strong>Web Service PROVIDE:</strong> <code>POST /api/inventory/food-safety-check</code> evaluates shelf-life and returns certified verdict.</div>
+          </div>
+
+          <div class="tab-card-item">
+            <div class="tab-card-top">
+              <span class="tab-card-file">#10 InventoryRepository.php</span>
+              <span class="line-callout">Lines 35-70</span>
+            </div>
+            <div class="tab-card-desc"><strong>Consume API Client:</strong> Consumes Liew's Module 1 <code>GET /api/donations/active</code> to calculate incoming storage volume.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 2: SUBSYSTEM ARCHITECTURE & CODE -->
+      <div class="card card-mod4" style="border-top-color: var(--accent-purple);">
+        <div class="section-title title-purple">❄️ Complete Inventory Storage &amp; Safety Subsystem Architecture &amp; Code</div>
+
+        <div class="verbatim-box" style="border-color: var(--accent-purple); background: #200833;">
+          <div class="verbatim-label" style="color: #c084fc;">🗣️ If Tutor Asks: "How does Inventory &amp; Food Safety work in your module?" Say:</div>
+          <div class="verbatim-text" style="color: #e9d5ff;">
+            "My module safeguards food safety across multi-facility storage (ambient, chilled, frozen). When food is received, it is tagged with expiry dates and allergen identifiers. When a critical cold-chain threshold is breached (such as dairy exceeding 4°C), the Strategy Pattern dynamically switches from routine Email to urgent SMS dispatch without modifying controller code. Our web service provides certified safety evaluations for logistics pickup, and all audit actions are sanitized against CRLF log injection."
+          </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="flow-step" style="border-left-color: var(--accent-purple);">
+          <div class="flow-badge" style="background: var(--accent-purple);">1</div>
+          <div style="width: 100%;">
+            <strong style="color: #c084fc;">Multi-Storage Facility &amp; Capacity Tracking:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Models/InventoryLocation.php</code> (<strong>Lines 15–38</strong>)<br>
+              Maintains warehouse zones with temperature specs (Ambient 25°C, Chilled 4°C, Frozen -18°C) and max capacity limits.
+            </span>
+            <pre><code>// app/Models/InventoryLocation.php (Lines 15-30)
+protected $fillable = [
+    'user_id',
+    'name',
+    'type',             // 'ambient', 'chilled', 'frozen'
+    'capacity',         // Maximum capacity in kg
+    'current_occupancy',// Current utilized capacity
+    'temperature',      // Live sensor temperature
+];</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flow-step" style="border-left-color: var(--accent-purple);">
+          <div class="flow-badge" style="background: var(--accent-purple);">2</div>
+          <div style="width: 100%;">
+            <strong style="color: #c084fc;">Batch Expiry &amp; Allergen Tagging Engine:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Models/FoodItem.php</code> (<strong>Lines 20–45</strong>)<br>
+              Links each batch to allergen tags (nuts, dairy, gluten) and computes shelf-life windows before dispatch.
+            </span>
+            <pre><code>// app/Models/FoodItem.php (Lines 25-40)
+public function isExpired(): bool {
+    return $this->expiry_date ? $this->expiry_date->isPast() : false;
+}
+
+public function allergenTags(): BelongsToMany {
+    return $this->belongsToMany(AllergenTag::class, 'allergen_tag_food_item');
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flow-step" style="border-left-color: var(--accent-purple);">
+          <div class="flow-badge" style="background: var(--accent-purple);">3</div>
+          <div style="width: 100%;">
+            <strong style="color: #c084fc;">Food Safety Verification Web Service:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Http/Controllers/Api/InventoryApiController.php</code> (<strong>Lines 80–115</strong>)<br>
+              Validates batch safety and returns certified IFA status ('SAFE' vs 'EXPIRED / AT RISK').
+            </span>
+            <pre><code>// app/Http/Controllers/Api/InventoryApiController.php (Lines 95-110)
+$isExpired = $item->expiry_date ? $item->expiry_date->isPast() : false;
+$daysToExpiry = $item->expiry_date ? now()->diffInDays($item->expiry_date, false) : null;
+$isSafe = !$isExpired && ($daysToExpiry === null || $daysToExpiry >= 0);
+
+return response()->json(SecurityHelper::ifaResponse('S', [
+    'requestID' => $ifa['requestID'],
+    'food_item' => [
+        'id'             => $item->id,
+        'name'           => $item->name,
+        'safety_status'  => $isSafe ? 'SAFE' : 'EXPIRED / AT RISK',
+        'days_remaining' => $daysToExpiry,
+    ],
+]), 200);</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="flow-step" style="border-left-color: var(--accent-purple);">
+          <div class="flow-badge" style="background: var(--accent-purple);">4</div>
+          <div style="width: 100%;">
+            <strong style="color: #c084fc;">Strategy Pattern Alert Dispatcher:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              <code>app/Strategies/Notification/NotificationDispatcher.php</code> (<strong>Lines 30–65</strong>)<br>
+              Swaps communication gateway at runtime: critical temperature alerts dispatch SMS; daily reports use Email.
+            </span>
+            <pre><code>// app/Strategies/Notification/NotificationDispatcher.php (Lines 50-65)
+private function resolveStrategy(string $preference): NotificationStrategyInterface {
+    return match ($preference) {
+        'sms'   => new SMSStrategy(),
+        'email' => new EmailStrategy(),
+        default => new EmailStrategy(),
+    };
+}
+
+public function dispatch(User $user, string $subject, string $message): bool {
+    $strategy = $this->resolveStrategy($user->notification_preference);
+    return $strategy->send($user->email, $subject, $message);
+}</code></pre>
+          </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="flow-step" style="border-left-color: var(--accent-purple);">
+          <div class="flow-badge" style="background: var(--accent-purple);">5</div>
+          <div>
+            <strong style="color: #c084fc;">Sanitized Audit Logs &amp; Signed Quick-Claim Links:</strong>
+            <span style="font-size: 0.84rem; color: var(--text-secondary); display: block; margin-top: 2px;">
+              • <strong>CRLF Stripping:</strong> <code>app/Models/SystemLog.php</code> mutator sanitizes control characters before writing audit entries.<br>
+              • <strong>Cryptographic HMAC:</strong> <code>InventoryController.php</code> uses <code>URL::signedRoute()</code> for tamper-proof email action links.<br>
+              • <strong>Consume API:</strong> Queries Liew's active donations to predict warehouse volume needs.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3: 60-SECOND SPEAKING SCRIPT -->
+      <div class="card card-mod4">
         <div class="section-title title-purple">⏱️ 60-Second Speaking Script (Simple, Natural Spoken English):</div>
-        
+
         <div class="script-step" style="border-left-color: var(--accent-purple);">
           <div class="script-step-num" style="color: var(--accent-purple);">Step 1: Demonstration on screen</div>
           <div class="script-text">"I log in as an Inventory Manager. I view warehouse storage facilities, check cold-chain items, and set temperature logs. When a critical food safety threshold is breached (like milk stored above 4°C), the system flags an urgent compliance alert."</div>
@@ -1468,7 +2101,7 @@ if ($response->successful() && $response->json('data.food_item.safety_status') !
 
         <div class="script-step" style="border-left-color: var(--accent-purple);">
           <div class="script-step-num" style="color: var(--accent-purple);">Step 2: Strategy Pattern</div>
-          <div class="script-text">"To notify managers about alerts, we use the <strong>Strategy Pattern</strong>. Routine daily updates use <code>EmailStrategy</code>, while critical cold-chain alerts dynamically switch to <code>SmsStrategy</code>. <code>NotificationDispatcher</code> swaps channels at runtime without touching controller logic."</div>
+          <div class="script-text">"To notify managers about alerts, we use the <strong>Strategy Pattern</strong>. Routine daily updates use <code>EmailStrategy</code>, while critical cold-chain alerts dynamically switch to <code>SMSStrategy</code>. <code>NotificationDispatcher</code> swaps channels at runtime without touching controller logic."</div>
         </div>
 
         <div class="script-step" style="border-left-color: var(--accent-purple);">
@@ -1480,10 +2113,12 @@ if ($response->successful() && $response->json('data.food_item.safety_status') !
           <div class="script-step-num" style="color: var(--accent-purple);">Step 4: Web Services</div>
           <div class="script-text">"My module provides <code>POST /api/inventory/food-safety-check</code> for Hiew's claims module to verify shelf life. In return, I consume Liew's <code>GET /api/donations/active</code> to monitor incoming surplus volume for warehouse capacity planning."</div>
         </div>
+      </div>
 
-        <!-- Design Pattern: Strategy Pattern -->
+      <!-- CARD 4: DESIGN PATTERN (STRATEGY) -->
+      <div class="card card-mod4">
         <div class="section-title title-purple">🎯 Design Pattern: Strategy Pattern (GoF Behavioural)</div>
-        
+
         <div class="verbatim-box" style="border-color: var(--accent-purple); background: #200833;">
           <div class="verbatim-label" style="color: #c084fc;">🗣️ Look Tutor in the Eye &amp; Say:</div>
           <div class="verbatim-text" style="color: #e9d5ff;">
@@ -1500,7 +2135,7 @@ namespace App\Strategies\Notification;
 use App\Models\User;
 
 interface NotificationStrategyInterface {
-    public function send(User $recipient, string $subject, string $message): bool;
+    public function send(string $recipient, string $subject, string $message): bool;
     public function getChannelName(): string;
 }
 
@@ -1510,37 +2145,32 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
 class EmailStrategy implements NotificationStrategyInterface {
-    public function send(User $recipient, string $subject, string $message): bool {
+    public function send(string $recipient, string $subject, string $message): bool {
         Mail::raw($message, function ($mail) use ($recipient, $subject) {
-            $mail->to($recipient->email)->subject("[NutriShare] {$subject}");
+            $mail->to($recipient)->subject("[NutriShare] {$subject}");
         });
         return true;
     }
     public function getChannelName(): string { return 'email'; }
 }
 
-// 3. Context Dispatcher: app/Strategies/Notification/NotificationDispatcher.php (Lines 45-65)
+// 3. Context Dispatcher: app/Strategies/Notification/NotificationDispatcher.php (Lines 30-65)
 namespace App\Strategies\Notification;
 use App\Models\User;
 
 class NotificationDispatcher {
-    public function resolveStrategy(string $channel): NotificationStrategyInterface {
-        return match (strtolower($channel)) {
-            'sms'   => new SmsStrategy(),
-            'email' => new EmailStrategy(),
-            default => new EmailStrategy(),
-        };
-    }
-
-    public function dispatch(User $recipient, string $subject, string $message, ?string $channel = null): bool {
-        $selectedChannel = $channel ?? $recipient->notification_preference ?? 'email';
-        $strategy = $this->resolveStrategy($selectedChannel);
+    public function dispatch(User $user, string $subject, string $message): bool {
+        $strategy = $this->resolveStrategy($user->notification_preference);
+        $recipient = $user->email;
         return $strategy->send($recipient, $subject, $message);
     }
 }</code></pre>
+      </div>
 
-        <!-- Security -->
+      <!-- CARD 5: SECURITY DEFENSES -->
+      <div class="card card-mod4">
         <div class="section-title title-purple">🛡️ Software Security Defense (Real Threats — NO Basic Validation)</div>
+
         <div class="grid-2">
           <!-- Threat 1 -->
           <div class="card" style="background: var(--bg-elevated); margin: 0; padding: 14px;">
@@ -1549,7 +2179,7 @@ class NotificationDispatcher {
             <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px;">
               <strong>The Attack:</strong> An attacker types Carriage Return (<code>\r</code>) and Line Feed (<code>\n</code>) inside a note field: <code>"Chicken\r\n[10:00PM] ADMIN: Superadmin Granted to user=99"</code>. In the log file, it creates a fake second line to deceive admins.<br>
               <strong>Why validation fails:</strong> Note fields legitimately permit multiline text, so standard string validation lets it through.<br>
-              <strong>NutriShare Defense:</strong> Eloquent mutator in <code>app/Models/SystemLog.php</code> (Line 51). It calls <code>SecurityHelper::sanitizeLogInput()</code>, using regex <code>/[\r\n\x00-\x1F\x7F]/</code> to strip control characters before saving.
+              <strong>NutriShare Defense:</strong> Eloquent mutator in <code>app/Models/SystemLog.php</code> (<strong>Line 51</strong>). It calls <code>SecurityHelper::sanitizeLogInput()</code>, using regex <code>/[\r\n\x00-\x1F\x7F]/</code> to strip control characters before saving.
             </p>
             <pre><code>// app/Models/SystemLog.php (Line 51)
 public function setActionAttribute($value): void {
@@ -1564,7 +2194,7 @@ public function setActionAttribute($value): void {
             <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px;">
               <strong>The Attack:</strong> A quick-claim link is generated with <code>?donation=1</code>. An attacker alters it to <code>?donation=2</code> to take another donation.<br>
               <strong>Why validation fails:</strong> <code>2</code> is a valid integer, so validation allows it.<br>
-              <strong>NutriShare Defense:</strong> Cryptographic HMAC SHA-256 Signed URLs (<code>InventoryController.php</code> Line 158). Links are generated with <code>URL::temporarySignedRoute()</code>, appending an HMAC hash generated with our secret <code>APP_KEY</code>. The <code>signed</code> middleware verifies the hash; changing even one character invalidates it with <strong>HTTP 403 Invalid Signature</strong>.
+              <strong>NutriShare Defense:</strong> Cryptographic HMAC SHA-256 Signed URLs (<code>InventoryController.php</code> <strong>Line 158</strong>). Links are generated with <code>URL::temporarySignedRoute()</code>, appending an HMAC hash generated with our secret <code>APP_KEY</code>. The <code>signed</code> middleware verifies the hash; changing even one character invalidates it with <strong>HTTP 403 Invalid Signature</strong>.
             </p>
             <pre><code>// app/Http/Controllers/InventoryController.php (Line 158)
 $signedUrl = URL::temporarySignedRoute(
@@ -1574,10 +2204,12 @@ $signedUrl = URL::temporarySignedRoute(
 );</code></pre>
           </div>
         </div>
+      </div>
 
-        <!-- Web Services -->
+      <!-- CARD 6: WEB SERVICES -->
+      <div class="card card-mod4">
         <div class="section-title title-purple">🌐 Web Services (IFA Standard: Provide &amp; Consume)</div>
-        
+
         <!-- PROVIDE -->
         <div class="ws-card">
           <div class="ws-header">
@@ -1624,7 +2256,7 @@ public function checkSafety(Request $request): JsonResponse {
             <strong class="ws-endpoint"><code>GET /api/donations/active</code></strong>
           </div>
           <p class="ws-desc">Module 4 consumes Liew's endpoint to fetch active surplus food items and calculate available warehouse cold-storage capacity.</p>
-          <pre><code>// app/Http/Controllers/InventoryController.php (Lines 210-225)
+          <pre><code>// app/Repositories/InventoryRepository.php (Lines 35-70)
 $response = Http::timeout(5)->get(config('app.url').'/api/donations/active', [
     'requestID' => uniqid('CAPACITY-CHECK-'),
     'timestamp' => now()->toIso8601String(),
@@ -1634,8 +2266,10 @@ if ($response->successful() && $response->json('status') === 'S') {
     // Calculate total incoming food volume against warehouse capacity
 }</code></pre>
         </div>
+      </div>
 
-        <!-- Tough Questions -->
+      <!-- CARD 7: TOUGH QUESTIONS -->
+      <div class="card card-mod4">
         <div class="section-title title-purple">❓ Tough Tutor Questions (Easy to Understand Answers):</div>
 
         <div class="qa-box">
