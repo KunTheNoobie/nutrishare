@@ -36,7 +36,7 @@
     }
 
     .container {
-      max-width: 960px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 16px;
     }
@@ -97,9 +97,12 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.3);
       border-top: 4px solid var(--accent-blue);
     }
+    .card-purple { border-top-color: var(--accent-purple); }
+    .card-green { border-top-color: var(--accent-green); }
+    .card-amber { border-top-color: var(--accent-amber); }
 
     .section-title {
-      font-size: 1.05rem;
+      font-size: 1.08rem;
       font-weight: 800;
       color: #38bdf8;
       margin-bottom: 12px;
@@ -284,6 +287,30 @@
       font-weight: 700;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.76rem;
+      white-space: nowrap;
+    }
+
+    .flow-step {
+      display: flex;
+      gap: 12px;
+      padding: 12px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+      border-left: 4px solid var(--accent-amber);
+    }
+    .flow-badge {
+      background: var(--accent-amber);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.75rem;
+      border-radius: 50%;
+      width: 26px;
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
   </style>
 </head>
@@ -308,7 +335,9 @@
     <!-- TAB PRESENTATION MATRIX: EXACT FILES & LINE NUMBERS TO POINT AT -->
     <div class="card">
       <div class="section-title">📂 Exact VS Code Tabs to Present & Exact Lines to Point At:</div>
-      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 10px;">These 7 tabs are already pre-opened in your editor. During the presentation, switch to each tab and point to these exact lines:</p>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 10px;">
+        All tabs for Module 1 are pre-opened in your editor. During the presentation, switch to each tab and point to these exact lines:
+      </p>
       
       <div class="table-container">
         <table>
@@ -330,35 +359,53 @@
             <tr>
               <td><strong>2</strong></td>
               <td><code>DonationObserver.php</code></td>
-              <td><span class="line-callout">Lines 36-38 &amp; 61</span></td>
-              <td><strong>Observer Event:</strong> Catches <code>created</code> event and dispatches <code>SendDonationNotificationJob::dispatch($donation)</code>.</td>
+              <td><span class="line-callout">Lines 36-38, 61 &amp; 78-85</span></td>
+              <td><strong>Observer Trigger:</strong> Dispatches async notification job on creation; creates in-app notification when claimed.</td>
             </tr>
             <tr>
               <td><strong>3</strong></td>
               <td><code>EventServiceProvider.php</code></td>
               <td><span class="line-callout">Line 27</span></td>
-              <td><strong>Observer Registration:</strong> Hooks observer to model: <code>Donation::observe(DonationObserver::class);</code></td>
+              <td><strong>Observer Registration:</strong> Binds observer to model: <code>Donation::observe(DonationObserver::class);</code></td>
             </tr>
             <tr>
               <td><strong>4</strong></td>
               <td><code>SendDonationNotificationJob.php</code></td>
-              <td><span class="line-callout">Lines 24 &amp; 35</span></td>
-              <td><strong>Async Queue Worker:</strong> Implements <code>ShouldQueue</code> to notify NGOs in the background without HTTP lag.</td>
+              <td><span class="line-callout">Lines 24, 39-41 &amp; 55-64</span></td>
+              <td><strong>Notification Queue Worker:</strong> Loops all approved NGOs, renders template, creates <code>Notification</code> records asynchronously.</td>
             </tr>
             <tr>
               <td><strong>5</strong></td>
+              <td><code>NotificationController.php</code></td>
+              <td><span class="line-callout">Lines 12-16 &amp; 19-30</span></td>
+              <td><strong>Notification Web Controller:</strong> <code>index()</code> serves user inbox; <code>markAsRead()</code> marks alerts as read.</td>
+            </tr>
+            <tr>
+              <td><strong>6</strong></td>
+              <td><code>Notification.php</code></td>
+              <td><span class="line-callout">Lines 17-26 &amp; 55-58</span></td>
+              <td><strong>Notification Model:</strong> Database schema for notifications table (title, message, is_read, channel, timestamps).</td>
+            </tr>
+            <tr>
+              <td><strong>7</strong></td>
+              <td><code>notifications/index.blade.php</code></td>
+              <td><span class="line-callout">Lines 7-16 &amp; 46-64</span></td>
+              <td><strong>Notification UI Center:</strong> Table listing system alerts, relative timeago, mark all read button, unread blue dots.</td>
+            </tr>
+            <tr>
+              <td><strong>8</strong></td>
               <td><code>donations/create.blade.php</code></td>
               <td><span class="line-callout">Line 18</span></td>
               <td><strong>Security 1 (CSRF):</strong> <code>@csrf</code> directive generates random synchronizer token verified by Laravel middleware.</td>
             </tr>
             <tr>
-              <td><strong>6</strong></td>
+              <td><strong>9</strong></td>
               <td><code>donations/show.blade.php</code></td>
               <td><span class="line-callout">Line 51</span></td>
               <td><strong>Security 2 (Stored XSS):</strong> <code>{{ $donation->description }}</code> automatically calls <code>htmlspecialchars()</code> to neutralize scripts.</td>
             </tr>
             <tr>
-              <td><strong>7</strong></td>
+              <td><strong>10</strong></td>
               <td><code>DonationApiController.php</code></td>
               <td><span class="line-callout">Lines 43-78 &amp; 98-115</span></td>
               <td><strong>Web Services:</strong> <code>active()</code> provides active food API; <code>verifyNgoBeforeClaim()</code> calls Cheon's Module 2.</td>
@@ -366,6 +413,92 @@
           </tbody>
         </table>
       </div>
+    </div>
+
+    <!-- NOTIFICATION SUBSYSTEM DEEP DIVE -->
+    <div class="card card-amber">
+      <div class="section-title">🔔 Where is the Notification Component & How Does It Work?</div>
+      
+      <div class="verbatim-box">
+        <div class="verbatim-label">🗣️ If the Tutor Asks: "Where is the Notification in your module?" Say:</div>
+        <div class="verbatim-text">
+          "My module has an automated end-to-end notification subsystem. When a donor publishes food, the Observer Pattern triggers an asynchronous background job (`SendDonationNotificationJob`). It queries all verified NGOs, formats dynamic templates, writes records into the `notifications` database table, and dispatches email alerts. NGOs see real-time unread badges on the bell icon and manage alerts in the Notification Center."
+        </div>
+      </div>
+
+      <h4 style="font-size: 0.95rem; color: #f59e0b; margin: 14px 0 8px;">The 5-Step Notification Lifecycle (Point this out on screen):</h4>
+
+      <div class="flow-step">
+        <div class="flow-badge">1</div>
+        <div>
+          <strong style="color: #38bdf8;">The Trigger (Observer Pattern):</strong><br>
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">
+            File: <code>app/Observers/DonationObserver.php</code> (<strong>Line 61</strong>)<br>
+            When food is saved, <code>created()</code> calls <code>SendDonationNotificationJob::dispatch($donation)</code>.<br>
+            Also on <strong>Lines 78-85</strong>: When an NGO claims food, it automatically creates an in-app alert for the donor: <em>"Your donation has been claimed by an NGO."</em>
+          </span>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-badge">2</div>
+        <div>
+          <strong style="color: #38bdf8;">The Background Worker (Queue Job):</strong><br>
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">
+            File: <code>app/Jobs/SendDonationNotificationJob.php</code> (<strong>Lines 35–64</strong>)<br>
+            Implements <code>ShouldQueue</code>. Queries approved NGOs (<code>User::where('role', 'ngo')->where('verification_status', 'approved')</code>), loads template <code>donation_created</code>, and inserts alerts into database table <code>notifications</code>. Background queuing ensures the donor's screen doesn't freeze!
+          </span>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-badge">3</div>
+        <div>
+          <strong style="color: #38bdf8;">Database Storage (Eloquent Model):</strong><br>
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">
+            File: <code>app/Models/Notification.php</code> (<strong>Lines 17–26</strong>)<br>
+            Table: <code>notifications</code>. Stores <code>user_id</code>, <code>donation_id</code>, <code>title</code>, <code>message</code>, <code>channel</code> (email/sms), <code>is_read</code>, and <code>sent_at</code>.
+          </span>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-badge">4</div>
+        <div>
+          <strong style="color: #38bdf8;">The Web Controller (Inbox Endpoints):</strong><br>
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">
+            File: <code>app/Http/Controllers/NotificationController.php</code> (<strong>Lines 12–42</strong>)<br>
+            - <code>index()</code>: Fetches paginated user notifications for the inbox page.<br>
+            - <code>markAsRead()</code>: Marks an individual alert as read.<br>
+            - <code>markAllAsRead()</code>: Clears all unread badges at once.
+          </span>
+        </div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-badge">5</div>
+        <div>
+          <strong style="color: #38bdf8;">The User Interface (Bell Icon & Inbox Page):</strong><br>
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">
+            - <strong>Bell Icon in Navbar:</strong> <code>resources/views/layouts/app.blade.php</code> (<strong>Lines 1121–1160</strong>) displays unread count badge (e.g. <code>badge-count</code>) and dropdown preview.<br>
+            - <strong>Full Notification Center:</strong> <code>resources/views/notifications/index.blade.php</code> (URL: <code>http://127.0.0.1:8000/notifications</code>) allows users to view, filter, and mark alerts as read.<br>
+            - <strong>Email Dispatch:</strong> Captured live in <strong>Mailpit</strong> at <code>http://127.0.0.1:8025</code>.
+          </span>
+        </div>
+      </div>
+
+      <pre><code>// app/Jobs/SendDonationNotificationJob.php (Lines 45-64)
+foreach ($ngoUsers as $ngo) {
+    Notification::create([
+        'user_id'                  => $ngo->id,
+        'notification_template_id' => $template?->id,
+        'donation_id'              => $donation->id,
+        'title'                    => 'New Donation Available',
+        'message'                  => "New donation available: {$donation->title} ({$donation->quantity} {$donation->unit})",
+        'channel'                  => $ngo->notification_preference === 'sms' ? 'sms' : 'email',
+        'sent_at'                  => now(),
+    ]);
+}</code></pre>
     </div>
 
     <!-- 60-SECOND DEMO SCRIPT -->
@@ -378,12 +511,17 @@
       </div>
 
       <div class="script-step">
-        <div class="script-step-num">Step 2: How the Design Pattern works here</div>
+        <div class="script-step-num">Step 2: How the Design Pattern & Notifications work here</div>
         <div class="script-text">"When I click Publish, our <strong>Observer Pattern</strong> automatically catches the model creation event in <code>DonationObserver</code>. Instead of writing messy email sending code inside the controller, the observer dispatches a background queue job (<code>SendDonationNotificationJob</code>) to notify nearby NGOs without lagging the website."</div>
       </div>
 
       <div class="script-step">
-        <div class="script-step-num">Step 3: Security & Web Service</div>
+        <div class="script-step-num">Step 3: Showing the Notifications in UI & Mailpit</div>
+        <div class="script-text">"When an NGO logs in, they see the red badge on the <strong>bell icon</strong> in the top navbar. Clicking it opens recent alerts, and clicking 'View All' opens <code>/notifications</code>. Emails are also simulated and visible in Mailpit at port 8025."</div>
+      </div>
+
+      <div class="script-step">
+        <div class="script-step-num">Step 4: Security & Web Service</div>
         <div class="script-text">"For security, our form uses <code>@csrf</code> tokens so malicious external sites cannot forge donations using the donor's cookies. When displaying descriptions, we use Blade's HTML escaping (<code>{{ }}</code>) to block Stored XSS. Lastly, my module provides <code>GET /api/donations/active</code> for other modules to view active food."</div>
       </div>
     </div>
@@ -543,8 +681,8 @@ public function verifyNgoBeforeClaim(int $ngoUserId): bool {
       <div class="section-title">❓ Tough Tutor Questions (Easy to Understand Answers):</div>
 
       <div class="qa-box">
-        <div class="qa-question">Q1: Why not just put the email dispatch code inside DonationController@store?</div>
-        <div class="qa-answer"><strong>Answer:</strong> "If we put it in the controller, it only works when a user clicks the web form. If we import donations from a mobile app API, database seeders, or console commands, the email will never trigger because the controller is bypassed. The Observer hooks into the Eloquent database model lifecycle directly, so notifications work everywhere."</div>
+        <div class="qa-question">Q1: Why not just put the notification/email dispatch code inside DonationController@store?</div>
+        <div class="qa-answer"><strong>Answer:</strong> "If we put it in the controller, it only works when a user clicks the web form. If we import donations from a mobile app API, database seeders, or console commands, the notifications will never trigger because the controller is bypassed. The Observer hooks into the Eloquent database model lifecycle directly, so notifications work everywhere."</div>
       </div>
 
       <div class="qa-box">
@@ -553,8 +691,8 @@ public function verifyNgoBeforeClaim(int $ngoUserId): bool {
       </div>
 
       <div class="qa-box">
-        <div class="qa-question">Q3: How does the Observer Pattern differ from the Publish-Subscribe pattern?</div>
-        <div class="qa-answer"><strong>Answer:</strong> "In classic Observer, the subject knows its observers directly. In Pub-Sub, there is an independent message broker (like Redis or Kafka) in the middle. In Laravel, Eloquent models act as subjects, and Laravel's event dispatcher manages the observer list."</div>
+        <div class="qa-question">Q3: Where can the tutor see the notification after I publish a donation?</div>
+        <div class="qa-answer"><strong>Answer:</strong> "Three places: 1) In the web UI, the recipient user sees a red unread badge count on the <strong>bell icon</strong> in the top navbar; 2) They can open <code>/notifications</code> to view the full Notification Center table; 3) The email is captured live inside <strong>Mailpit</strong> at <code>http://127.0.0.1:8025</code>."</div>
       </div>
 
       <div class="qa-box">
