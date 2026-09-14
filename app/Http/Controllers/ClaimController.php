@@ -10,6 +10,7 @@ use App\Models\DistributionLog;
 use App\Http\Requests\StoreClaimRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests\AssignVehicleRequest;
 use App\Http\Requests\CreateReceiptRequest;
@@ -127,15 +128,16 @@ class ClaimController extends Controller
             }
         }
 
-        $success = $claim->transitionTo($action);
-
-        if ($success) {
-            return redirect()->route('claims.show', $claim)
-                ->with('success', "Claim {$action}d successfully.");
-        }
-
-        return redirect()->route('claims.show', $claim)
-            ->with('error', "Cannot {$action} this claim in its current state.");
+        return DB::transaction(function () use ($claim, $action) {
+            $lockedClaim = Claim::where('id', $claim->id)->lockForUpdate()->firstOrFail();
+            $success = $lockedClaim->transitionTo($action);
+            if ($success) {
+                return redirect()->route('claims.show', $lockedClaim)
+                    ->with('success', "Claim $actiond successfully.");
+            }
+            return redirect()->route('claims.show', $lockedClaim)
+                ->with('error', "Cannot $action this claim in its current state.");
+        });
     }
 
     /** Assign a vehicle to a claim. */
@@ -219,3 +221,4 @@ class ClaimController extends Controller
             ->with('success', 'Distribution log entry deleted.');
     }
 }
+
