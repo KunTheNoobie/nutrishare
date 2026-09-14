@@ -599,9 +599,9 @@
 classDiagram
     direction TB
     class DonationObserverInterface {
-        <<interface>>
-        +onDonationCreated(Donation donation) void
-        +onDonationStatusChanged(Donation donation, string oldStatus) void
+        &lt;&lt;Interface&gt;&gt;
+        +onDonationCreated(donation)
+        +onDonationStatusChanged(donation, oldStatus)
     }
     class Donation {
         +int id
@@ -609,22 +609,22 @@ classDiagram
         +string title
         +float quantity
         +string status
-        +save() bool
+        +save()
     }
     class DonationObserver {
-        +created(Donation donation) void
-        +updated(Donation donation) void
-        +onDonationCreated(Donation donation) void
-        +onDonationStatusChanged(Donation donation, string oldStatus) void
+        +created(donation)
+        +updated(donation)
+        +onDonationCreated(donation)
+        +onDonationStatusChanged(donation, oldStatus)
     }
     class SendDonationNotificationJob {
-        +Donation donation
-        +handle() void
+        +donation
+        +handle()
     }
     
-    DonationObserverInterface <|.. DonationObserver : implements
-    Donation --> DonationObserver : triggers event
-    DonationObserver --> SendDonationNotificationJob : dispatches job
+    DonationObserverInterface &lt;|.. DonationObserver : implements
+    Donation ..&gt; DonationObserver : triggers event
+    DonationObserver ..&gt; SendDonationNotificationJob : dispatches job
               </pre>
             </div>
             <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
@@ -936,15 +936,15 @@ erDiagram
 classDiagram
     direction TB
     class UserCreator {
-        <<abstract>>
-        +create(array data) User
-        #factoryMethod(array data)* User
+        &lt;&lt;Abstract&gt;&gt;
+        +create(data) User
+        +factoryMethod(data) User
     }
     class NgoCreator {
-        #factoryMethod(array data) User
+        +factoryMethod(data) User
     }
     class DonorCreator {
-        #factoryMethod(array data) User
+        +factoryMethod(data) User
     }
     class User {
         +int id
@@ -953,14 +953,14 @@ classDiagram
         +string verification_status
     }
     class AuthController {
-        +register(Request request) Response
+        +register(request) Response
     }
 
-    UserCreator <|-- NgoCreator : inherits
-    UserCreator <|-- DonorCreator : inherits
-    NgoCreator ..> User : instantiates (status=pending)
-    DonorCreator ..> User : instantiates (status=approved)
-    AuthController --> UserCreator : uses factory
+    UserCreator &lt;|-- NgoCreator : inherits
+    UserCreator &lt;|-- DonorCreator : inherits
+    NgoCreator ..&gt; User : instantiates
+    DonorCreator ..&gt; User : instantiates
+    AuthController ..&gt; UserCreator : uses factory
               </pre>
             </div>
             <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
@@ -1273,37 +1273,37 @@ PasswordResetOtp::<span class="code-fn">create</span>([
 classDiagram
     direction TB
     class ClaimState {
-        <<abstract>>
-        #Claim claim
-        +approve()* void
-        +assignVehicle(array details)* void
-        +markCollected()* void
-        +cancel()* void
+        &lt;&lt;Abstract&gt;&gt;
+        #claim
+        +approve()
+        +assignVehicle(details)
+        +markCollected()
+        +cancel()
     }
     class PendingState {
-        +approve() void
-        +cancel() void
+        +approve()
+        +cancel()
     }
     class ApprovedState {
-        +assignVehicle(array details) void
-        +markCollected() void
-        +cancel() void
+        +assignVehicle(details)
+        +markCollected()
+        +cancel()
     }
     class CollectedState {
-        +markCollected() void
+        +markCollected()
     }
     class Claim {
         +int id
         +int donation_id
         +int user_id
         +string status
-        +getState() ClaimState
-        +transitionTo(ClaimState state) void
+        +getState()
+        +transitionTo(state)
     }
 
-    ClaimState <|-- PendingState : implements
-    ClaimState <|-- ApprovedState : implements
-    ClaimState <|-- CollectedState : implements
+    ClaimState &lt;|-- PendingState : implements
+    ClaimState &lt;|-- ApprovedState : implements
+    ClaimState &lt;|-- CollectedState : implements
     Claim "1" o-- "1" ClaimState : holds state
               </pre>
             </div>
@@ -1613,26 +1613,26 @@ erDiagram
 classDiagram
     direction TB
     class NotificationStrategyInterface {
-        <<interface>>
-        +send(User user, string subject, string message) bool
+        &lt;&lt;Interface&gt;&gt;
+        +send(user, subject, message)
     }
     class EmailStrategy {
-        +send(User user, string subject, string message) bool
+        +send(user, subject, message)
     }
     class DatabaseStrategy {
-        +send(User user, string subject, string message) bool
+        +send(user, subject, message)
     }
     class SmsStrategy {
-        +send(User user, string subject, string message) bool
+        +send(user, subject, message)
     }
     class NotificationDispatcher {
-        -NotificationStrategyInterface strategy
-        +dispatch(User user, string subject, string message) void
+        -strategy
+        +dispatch(user, subject, message)
     }
 
-    NotificationStrategyInterface <|.. EmailStrategy : implements
-    NotificationStrategyInterface <|.. DatabaseStrategy : implements
-    NotificationStrategyInterface <|.. SmsStrategy : implements
+    NotificationStrategyInterface &lt;|.. EmailStrategy : implements
+    NotificationStrategyInterface &lt;|.. DatabaseStrategy : implements
+    NotificationStrategyInterface &lt;|.. SmsStrategy : implements
     NotificationDispatcher o-- NotificationStrategyInterface : uses strategy
               </pre>
             </div>
