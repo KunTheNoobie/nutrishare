@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="theme-color" content="#0b0f19">
-  <title>NutriShare â€” Viva Defense Master Cheat Sheet (BMIT3173)</title>
+  <title>NutriShare — Viva Defense Master Cheat Sheet (BMIT3173)</title>
   <style>
     :root {
       --bg-main: #0b0f19;
@@ -20,13 +20,9 @@
       --text-muted: #64748b;
       
       --mod1-accent: #38bdf8;
-      --mod1-glow: rgba(56, 189, 248, 0.15);
       --mod2-accent: #10b981;
-      --mod2-glow: rgba(16, 185, 129, 0.15);
       --mod3-accent: #f59e0b;
-      --mod3-glow: rgba(245, 158, 11, 0.15);
       --mod4-accent: #a855f7;
-      --mod4-glow: rgba(168, 85, 247, 0.15);
       --danger-accent: #ef4444;
       
       --radius-sm: 8px;
@@ -295,36 +291,49 @@
     }
     .warning-banner strong { color: #ffffff; }
 
-    /* Live Security Demo Box */
+    /* Live Security Demo Box inside each threat */
     .live-demo-box {
       background: rgba(16, 185, 129, 0.08);
       border: 1px solid rgba(16, 185, 129, 0.3);
       border-radius: var(--radius-md);
-      padding: 14px 16px;
-      margin: 14px 0 8px;
+      padding: 12px 16px;
+      margin: 10px 0 14px;
     }
     .live-demo-title {
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       font-weight: 800;
       color: #6ee7b7;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
     .live-demo-step {
-      font-size: 0.84rem;
+      font-size: 0.83rem;
       color: #cbd5e1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       line-height: 1.45;
     }
-    .live-demo-step strong { color: #ffffff; }
+    .live-demo-result {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin: 6px 0;
+      font-size: 0.82rem;
+      color: #fca5a5;
+    }
+    .live-demo-explain {
+      font-size: 0.83rem;
+      color: #a7f3d0;
+      margin-top: 4px;
+    }
 
     /* Code Blocks */
     .code-block-wrap {
-      margin: 12px 0;
+      margin: 10px 0;
       background: var(--bg-code);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
@@ -375,7 +384,7 @@
       color: #cbd5e1;
     }
     .checklist li::before {
-      content: "âœ“";
+      content: "✓";
       position: absolute;
       left: 4px;
       color: #10b981;
@@ -446,8 +455,8 @@
     <div class="container" style="padding-top: 0; padding-bottom: 0;">
       <div class="header-top">
         <div class="title-group">
-          <h1>NutriShare â€” Viva Defense Master Guide</h1>
-          <p>TAR UMT BMIT3173 Integrative Programming (Tutorial Group 4) â€” 100% Report & Viva Protocol Aligned</p>
+          <h1>NutriShare — Viva Defense Master Guide</h1>
+          <p>TAR UMT BMIT3173 Integrative Programming (Tutorial Group 4) — 100% Report & Viva Protocol Aligned</p>
         </div>
         <div class="badge-bar">
           <span class="badge badge-info">All 4 Modules</span>
@@ -458,12 +467,11 @@
 
       <!-- Quick Anchor Jump Bar -->
       <nav class="jump-bar" aria-label="Jump to module">
-        <a href="#tutor-protocol" class="jump-pill p-tutor">âš ï¸ Tutor Traps</a>
-        <a href="#live-security-demo" class="jump-pill" style="border-color: rgba(16, 185, 129, 0.5); color: #6ee7b7;">ðŸŽ¬ Live Security Demo</a>
-        <a href="#module-1" class="jump-pill p-mod1">ðŸ“¦ Mod 1: Liew Yi Ler</a>
-        <a href="#module-2" class="jump-pill p-mod2">ðŸ›¡ï¸ Mod 2: Cheon Jie Han</a>
-        <a href="#module-3" class="jump-pill p-mod3">ðŸšš Mod 3: Hiew Li Wei</a>
-        <a href="#module-4" class="jump-pill p-mod4">â„ï¸ Mod 4: Wong Men Jing</a>
+        <a href="#tutor-protocol" class="jump-pill p-tutor">⚠️ Tutor Traps</a>
+        <a href="#module-1" class="jump-pill p-mod1">📦 Mod 1: Liew Yi Ler</a>
+        <a href="#module-2" class="jump-pill p-mod2">🛡️ Mod 2: Cheon Jie Han</a>
+        <a href="#module-3" class="jump-pill p-mod3">🚚 Mod 3: Hiew Li Wei</a>
+        <a href="#module-4" class="jump-pill p-mod4">❄️ Mod 4: Wong Men Jing</a>
       </nav>
     </div>
   </header>
@@ -473,7 +481,7 @@
     <!-- TUTOR VIVA RULES & TRAPS (MISS MALARVILI DEFENSE PROTOCOL) -->
     <section id="tutor-protocol" class="tutor-protocol-card">
       <div class="tutor-header">
-        <div class="tutor-icon">ðŸŽ¯</div>
+        <div class="tutor-icon">🎯</div>
         <div>
           <h2 class="tutor-title">Tutor Defense Sequence & Critical Traps (Miss Malarvili)</h2>
           <p style="font-size: 0.82rem; color: #fca5a5;">She is very direct. Don't waste time on long slides. She grills individually in this exact order:</p>
@@ -482,150 +490,23 @@
 
       <div class="tutor-grid">
         <div class="tutor-step">
-          <div class="tutor-step-num">Step 1 â€” 60s Demo</div>
+          <div class="tutor-step-num">Step 1 — 60s Demo</div>
           <div class="tutor-step-title">Quick Live Run-Through</div>
           <p>Don't explain basic UI or slides. Just log in, perform your 1 main action (e.g. create donation, verify NGO, dispatch claim, add pantry item), and show it on screen. She might even cut you off to jump straight to technicals.</p>
         </div>
 
         <div class="tutor-step">
-          <div class="tutor-step-num">Step 2 â€” Design Pattern</div>
+          <div class="tutor-step-num">Step 2 — Design Pattern</div>
           <div class="tutor-step-title">General Theory First!</div>
           <p><strong>DO NOT look down at your notes!</strong> She will ask: <em>"What is the general purpose of this pattern?"</em> Say the textbook concept in simple words first, then explain why your module needs it, show the UML class diagram, and show the code.</p>
-          <div style="margin-top: 6px; font-size: 0.76rem; color: #f87171;">âš ï¸ <strong>State Pattern Trap:</strong> Must NOT be an enum! Must be separate state classes implementing an interface.</div>
+          <div style="margin-top: 6px; font-size: 0.76rem; color: #f87171;">⚠️ <strong>State Pattern Trap:</strong> Must NOT be an enum! Must be separate state classes implementing an interface.</div>
         </div>
 
         <div class="tutor-step">
-          <div class="tutor-step-num">Step 3 â€” Security & Web Services</div>
+          <div class="tutor-step-num">Step 3 — Security & Web Services</div>
           <div class="tutor-step-title">Real Security + Actual Code</div>
           <p><strong>BIG TRAP:</strong> Basic <code>$request->validate()</code> does NOT count! Use actual mechanisms (@csrf, escaping, RBAC middleware, row locking, signed URLs, CRLF stripping).<br>
           <strong>Web Services:</strong> <strong>DO NOT open routes files!</strong> Show actual Controller method for Provide, and HTTP Client call for Consume.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================================= -->
-    <!-- 4. HOW TO DEMO SOFTWARE SECURITY LIVE ON SCREEN (30S PROOF) -->
-    <!-- ========================================================================= -->
-    <section id="live-security-demo" class="module-section" style="border-top: 4px solid #10b981; background: linear-gradient(180deg, rgba(16, 185, 129, 0.08), rgba(19, 27, 46, 0.95));">
-      <div class="module-meta-header" style="border-bottom-color: rgba(16, 185, 129, 0.25);">
-        <div class="module-title-wrap">
-          <h2 style="color: #6ee7b7; font-size: 1.35rem;">ðŸŽ¬ 4. How to DEMO Software Security Live on Screen (30s Step-by-Step Proof)</h2>
-          <p style="font-size: 0.86rem; color: var(--text-secondary); margin-top: 4px;">
-            If the tutor asks: <em>"You explained the security threats, now prove to me that your application actually defends against them!"</em>, here is the exact script and browser actions for each module:
-          </p>
-        </div>
-        <span class="badge badge-success">Live Defense Proof</span>
-      </div>
-
-      <!-- Module 1 Live Security Demo -->
-      <div class="flow-step-card" style="border-left: 4px solid var(--mod1-accent); margin-bottom: 16px;">
-        <div class="flow-step-header">
-          <span class="flow-step-badge badge-info">Module 1: Liew Yi Ler (25WMR09747)</span>
-          <div class="flow-step-title">CSRF Protection (@csrf) &amp; Stored XSS Escaping</div>
-        </div>
-
-        <div style="margin-bottom: 14px;">
-          <h4 style="color: #7dd3fc; font-size: 0.95rem; margin-bottom: 6px;">ðŸ›¡ï¸ Demo 1: CSRF Protection (Synchronizer Token)</h4>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">1. Go to <code>/donations/create</code>.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">2. Right-click anywhere inside the form &rarr; click <strong>Inspect</strong>.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">3. Show the tutor the hidden field: <code>&lt;input type="hidden" name="_token" value="..."&gt;</code>.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px;">4. In DevTools Elements tab, double-click the value and change it to <code>forged-token</code> or delete the input, then click <strong>Submit Donation</strong>.</p>
-          <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; padding: 8px 12px; margin: 6px 0; font-size: 0.84rem; color: #fca5a5;">
-            <strong>Result on Screen:</strong> Laravel immediately blocks the request and renders <strong>419 | Page Expired</strong>!
-          </div>
-          <p style="font-size: 0.84rem; color: #a7f3d0; margin-top: 4px;"><strong>Explain:</strong> <em>"This proves that cross-site forged requests lacking a cryptographic session token are immediately rejected."</em></p>
-        </div>
-
-        <div>
-          <h4 style="color: #7dd3fc; font-size: 0.95rem; margin-bottom: 6px;">ðŸ›¡ï¸ Demo 2: Stored XSS Protection (Context-Aware Escaping)</h4>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">1. On the donation creation form, in the Title or Description field, type: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code>.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">2. Click <strong>Submit Donation</strong>.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">3. When the details page renders, point out that <strong>no alert box popped up</strong>.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px;">4. Right-click and inspect the text: show the tutor that Blade automatically converted <code>&lt;script&gt;</code> into <code>&amp;lt;script&amp;gt;</code> via <code>htmlspecialchars()</code>, rendering it as harmless literal plaintext!</p>
-        </div>
-      </div>
-
-      <!-- Module 2 Live Security Demo -->
-      <div class="flow-step-card" style="border-left: 4px solid var(--mod2-accent); margin-bottom: 16px;">
-        <div class="flow-step-header">
-          <span class="flow-step-badge badge-success">Module 2: Cheon Jie Han (25WMR09703)</span>
-          <div class="flow-step-title">Broken Access Control (RBAC) &amp; OTP Brute-Force Rate Limiting</div>
-        </div>
-
-        <div style="margin-bottom: 14px;">
-          <h4 style="color: #6ee7b7; font-size: 0.95rem; margin-bottom: 6px;">ðŸ›¡ï¸ Demo 1: Broken Access Control (RBAC Middleware)</h4>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">1. Log in as regular donor (<code>donor@nutrishare.com</code>).</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px;">2. Now in the browser URL bar, manually type: <code>http://localhost:8000/verification</code> and press Enter.</p>
-          <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; padding: 8px 12px; margin: 6px 0; font-size: 0.84rem; color: #fca5a5;">
-            <strong>Result on Screen:</strong> The browser immediately displays <strong>403 | Unauthorized. You do not have the required role to access this resource.</strong>
-          </div>
-          <p style="font-size: 0.84rem; color: #a7f3d0; margin-top: 4px;"><strong>Explain:</strong> <em>"This proves CheckRole middleware actively enforces role boundaries and prevents forced browsing or horizontal/vertical privilege escalation."</em></p>
-        </div>
-
-        <div>
-          <h4 style="color: #6ee7b7; font-size: 0.95rem; margin-bottom: 6px;">ðŸ›¡ï¸ Demo 2: OTP Brute-Force Protection (Rate Limiting)</h4>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">1. Go to <code>/forgot-password</code>, enter <code>donor@nutrishare.com</code>.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px;">2. On the OTP entry screen, enter a wrong OTP (e.g. <code>000000</code>) and click verify rapidly 6 times.</p>
-          <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px; padding: 8px 12px; margin: 6px 0; font-size: 0.84rem; color: #fcd34d;">
-            <strong>Result on Screen:</strong> On the 7th attempt, Laravel immediately blocks with <strong>429 | Too Many Requests</strong>.
-          </div>
-          <p style="font-size: 0.84rem; color: #a7f3d0; margin-top: 4px;"><strong>Explain:</strong> <em>"Our throttle:6,1 middleware restricts attempts to 6 per minute, making automated 6-digit enumeration attacks impossible."</em></p>
-        </div>
-      </div>
-
-      <!-- Module 3 Live Security Demo -->
-      <div class="flow-step-card" style="border-left: 4px solid var(--mod3-accent); margin-bottom: 16px;">
-        <div class="flow-step-header">
-          <span class="flow-step-badge badge-warning">Module 3: Hiew Li Wei (25WMR09728)</span>
-          <div class="flow-step-title">BOLA / IDOR Defense (ClaimPolicy) &amp; Pessimistic Row Locking</div>
-        </div>
-
-        <div style="margin-bottom: 14px;">
-          <h4 style="color: #fcd34d; font-size: 0.95rem; margin-bottom: 6px;">ðŸ›¡ï¸ Demo 1: BOLA / IDOR Defense (ClaimPolicy)</h4>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">1. Log in as NGO (<code>ngo@nutrishare.com</code>).</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px;">2. In the browser URL bar, type: <code>http://localhost:8000/claims/5</code> (Claim #5 does not belong to this NGO).</p>
-          <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; padding: 8px 12px; margin: 6px 0; font-size: 0.84rem; color: #fca5a5;">
-            <strong>Result on Screen:</strong> Laravel immediately halts with <strong>403 | THIS ACTION IS UNAUTHORIZED.</strong>
-          </div>
-          <p style="font-size: 0.84rem; color: #a7f3d0; margin-top: 4px;"><strong>Explain:</strong> <em>"Our ClaimPolicy@view verifies $claim->user_id === $user->id, preventing any charity from viewing or tampering with another NGO's logistics."</em></p>
-        </div>
-
-        <div>
-          <h4 style="color: #fcd34d; font-size: 0.95rem; margin-bottom: 6px;">ðŸ›¡ï¸ Demo 2: Business Invariant / Double-Claim Defense</h4>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">1. Open an Approved claim that has NO vehicle assigned.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px;">2. Attempt to click <strong>"Mark as Collected"</strong>.</p>
-          <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; padding: 8px 12px; margin: 6px 0; font-size: 0.84rem; color: #fca5a5;">
-            <strong>Result on Screen:</strong> The page rejects the transition with an error banner: <em>"Cannot collect donation: Please assign a pickup vehicle (driver &amp; vehicle details) before marking as collected."</em>
-          </div>
-          <p style="font-size: 0.84rem; color: #a7f3d0; margin-top: 4px;"><strong>Explain:</strong> <em>"Our ApprovedState and database row lock lockForUpdate() ensure food can never be handed over without an assigned vehicle or double-claimed simultaneously."</em></p>
-        </div>
-      </div>
-
-      <!-- Module 4 Live Security Demo -->
-      <div class="flow-step-card" style="border-left: 4px solid var(--mod4-accent);">
-        <div class="flow-step-header">
-          <span class="flow-step-badge" style="background: rgba(168, 85, 247, 0.2); color: #d8b4fe;">Module 4: Wong Men Jing (25WMR09788)</span>
-          <div class="flow-step-title">Log Injection (CRLF Stripping) &amp; Parameter Tampering (HMAC URLs)</div>
-        </div>
-
-        <div style="margin-bottom: 14px;">
-          <h4 style="color: #d8b4fe; font-size: 0.95rem; margin-bottom: 6px;">ðŸ›¡ï¸ Demo 1: Log Injection (CRLF Sanitization)</h4>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">1. Go to <code>/inventory/create</code>.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">2. In the facility name field, enter text with simulated CRLF carriage returns: <code>Central Coldroom\r\n[CRITICAL_BREACH] Admin superuser granted</code>.</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px;">3. Submit the form, then navigate to <code>/system-logs</code>.</p>
-          <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px; padding: 8px 12px; margin: 6px 0; font-size: 0.84rem; color: #6ee7b7;">
-            <strong>Result on Screen:</strong> Show the tutor the saved log: <code>SecurityHelper::sanitizeLogInput()</code> and the <code>SystemLog</code> Eloquent mutator stripped <code>\r\n</code> and control characters, flattening the input into a single safe line and preserving audit integrity!
-          </div>
-        </div>
-
-        <div>
-          <h4 style="color: #d8b4fe; font-size: 0.95rem; margin-bottom: 6px;">ðŸ›¡ï¸ Demo 2: Parameter Tampering (Cryptographic Signed URLs)</h4>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 4px;">1. Generate a quick-claim signed URL (e.g., <code>http://localhost:8000/inventory/quick-claim/1?user=2&amp;signature=8f9a...</code>).</p>
-          <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 6px;">2. In the browser address bar, change <code>quick-claim/1</code> to <code>quick-claim/2</code> (tampering with the donation ID) and press Enter.</p>
-          <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 6px; padding: 8px 12px; margin: 6px 0; font-size: 0.84rem; color: #fca5a5;">
-            <strong>Result on Screen:</strong> Laravel immediately aborts with <strong>403 | Invalid Signature</strong>.
-          </div>
-          <p style="font-size: 0.84rem; color: #a7f3d0; margin-top: 4px;"><strong>Explain:</strong> <em>"Because the URL was signed with an HMAC SHA-256 hash of all parameters, tampering with even a single character invalidates the signature."</em></p>
         </div>
       </div>
     </section>
@@ -653,10 +534,10 @@
         </p>
         <ul class="checklist">
           <li><strong>F1.1 Publishing & Photos:</strong> Log in as Donor. Click <strong>"Publish Donation"</strong>. Enter: <em>"Fresh Artisanal Sourdough Bread"</em>, <em>Bakery</em>, <em>25 kg</em>, <em>Mid Valley Megamall</em>, Expiry: <em>3 days ahead</em> $\rightarrow$ click <strong>"Submit Donation"</strong>.</li>
-          <li><strong>F1.2 Catalogue & Search:</strong> On <code>/donations</code>, filter by keyword <em>"Sourdough"</em> or Category <em>"Bakery"</em> to demonstrate instant multi-criteria querying.</li>
-          <li><strong>F1.3 Interactive Map:</strong> Click into the donation $\rightarrow$ show the interactive Leaflet.js map pinned at pickup GPS coordinates.</li>
-          <li><strong>F1.4 Observer Notifications:</strong> Point to the top navbar bell alert showing real-time event-driven alert dispatched to verified NGOs.</li>
-          <li><strong>F1.5 CSV Exporter:</strong> Click <strong>"Export CSV Audit"</strong> on the catalogue to download RFC 4180 audit spreadsheet.</li>
+          <li><strong>F1.2 Catalogue & Search:</strong> On <code>/donations</code>, filter by keyword <em>"Sourdough"</em> or Category <em>"Bakery"</em> to demonstrate instant search and filtering.</li>
+          <li><strong>F1.3 Interactive Map:</strong> Click into the donation $\rightarrow$ show the interactive Leaflet.js map pinned at the exact pickup GPS coordinates.</li>
+          <li><strong>F1.4 Observer Notifications:</strong> Point to the top navbar bell showing the instant notification broadcast to verified NGOs.</li>
+          <li><strong>F1.5 CSV Exporter:</strong> Click <strong>"Export CSV Audit"</strong> on the catalogue to download the CSV report.</li>
         </ul>
       </div>
 
@@ -668,27 +549,27 @@
         </div>
 
         <div class="speech-bubble">
-          <div class="speech-label">ðŸ—£ï¸ Say This Out Loud (General Theory â€” Do NOT read notes):</div>
-          "The <strong>Observer Pattern</strong> defines a one-to-many dependency between objects so that when one object (the <strong>Subject</strong>) changes state, all its registered dependents (the <strong>Observers</strong>) are automatically notified and updated. In enterprise web development, it decouples the core domain transaction from secondary side-effects like sending emails, telemetry logging, and push alerts."
+          <div class="speech-label">🗣️ Say This Out Loud (General Theory — Do NOT read notes):</div>
+          "The <strong>Observer Pattern</strong> defines a one-to-many link between objects. When the main object (the <strong>Subject</strong>) changes state, all registered <strong>Observers</strong> get notified automatically. This separates the main job (saving the donation) from background tasks like sending emails and alerts."
         </div>
 
         <p style="font-size: 0.86rem; margin: 10px 0;">
           <strong>Why & Where in Module 1:</strong>
-          Without the Observer pattern, <code>DonationController@store</code> would become bloated with user querying, email compilation, and notification channels (violating Single Responsibility). We decouple it so the donor gets an instant HTTP response while <code>SendDonationNotificationJob</code> runs asynchronously via Laravel background queues (<code>ShouldQueue</code>).
+          Without the Observer pattern, <code>DonationController</code> would become messy because it would have to find NGOs, build emails, and send alerts directly. With Observer, the donor gets an instant response, and <code>SendDonationNotificationJob</code> handles the notifications in the background.
         </p>
 
         <p style="font-size: 0.84rem; color: var(--text-secondary);">
           <strong>UML Roles & Architecture:</strong><br>
-          â€¢ <strong>Subject (Observable):</strong> <code>Donation</code> model (<code>app/Models/Donation.php</code>) dispatches lifecycle events (<code>created</code>, <code>updated</code>).<br>
-          â€¢ <strong>Observer Contract:</strong> <code>DonationObserverInterface</code> (<code>app/Contracts/DonationObserverInterface.php:12-20</code>) declares <code>onDonationCreated</code> and <code>onDonationStatusChanged</code>.<br>
-          â€¢ <strong>Concrete Observer:</strong> <code>DonationObserver</code> (<code>app/Observers/DonationObserver.php:15-64</code>) listens to Eloquent model events.<br>
-          â€¢ <strong>Async Queue Worker:</strong> <code>SendDonationNotificationJob</code> (<code>app/Jobs/SendDonationNotificationJob.php:25-58</code>) notifies verified NGOs.
+          • <strong>Subject (Observable):</strong> <code>Donation</code> model (<code>app/Models/Donation.php</code>) triggers events when created or updated.<br>
+          • <strong>Observer Interface:</strong> <code>DonationObserverInterface</code> (<code>app/Contracts/DonationObserverInterface.php:12-20</code>) defines <code>onDonationCreated</code> and <code>onDonationStatusChanged</code>.<br>
+          • <strong>Concrete Observer:</strong> <code>DonationObserver</code> (<code>app/Observers/DonationObserver.php:15-35</code>) listens for new donations.<br>
+          • <strong>Background Queue Worker:</strong> <code>SendDonationNotificationJob</code> (<code>app/Jobs/SendDonationNotificationJob.php:25-58</code>) sends notifications to verified NGOs.
         </p>
 
         <div class="code-block-wrap">
           <div class="code-header">
             <span>app/Observers/DonationObserver.php</span>
-            <span class="line-badge">Lines 15â€“35 (Concrete Observer)</span>
+            <span class="line-badge">Lines 15–35 (Concrete Observer)</span>
           </div>
           <pre><code><span class="code-kw">class</span> <span class="code-fn">DonationObserver</span> <span class="code-kw">implements</span> <span class="code-fn">DonationObserverInterface</span>
 {
@@ -699,7 +580,7 @@
 
     <span class="code-kw">public function</span> <span class="code-fn">onDonationCreated</span>(Donation <span class="code-var">$donation</span>): <span class="code-kw">void</span>
     {
-        <span class="code-cm">// Non-blocking async queue dispatch: instant sub-second response for donor</span>
+        <span class="code-cm">// Runs in background queue so donor gets instant response</span>
         SendDonationNotificationJob::<span class="code-fn">dispatch</span>(<span class="code-var">$donation</span>);
     }
 }</code></pre>
@@ -710,64 +591,87 @@
       <div class="flow-step-card">
         <div class="flow-step-header">
           <span class="flow-step-badge badge-danger">3. Software Security</span>
-          <div class="flow-step-title">2 Specific Threats & Secure Coding Defenses (From Report)</div>
+          <div class="flow-step-title">2 Security Threats & Exact Live Demos</div>
         </div>
 
         <div class="warning-banner">
-          <span>âš ï¸</span>
-          <div><strong>Tutor Trap Reminder:</strong> Do NOT show <code>$request->validate()</code>! Basic validation is compulsory and does not count as a secure coding defense! Show the actual security mechanisms below:</div>
+          <span>⚠️</span>
+          <div><strong>Tutor Trap Reminder:</strong> Do NOT show <code>$request->validate()</code>! Basic validation is required for everyone and does not count as security! Show the real defenses below:</div>
         </div>
 
         <!-- Threat 1 -->
-        <div style="margin-bottom: 16px;">
-          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 1: Cross-Site Request Forgery (CSRF â€” OWASP Top 10)</h4>
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 1: Cross-Site Request Forgery (CSRF)</h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Attack Description:</strong> An attacker embeds a hidden script on an external malicious site (e.g., <code>&lt;form action="http://nutrishare.com/donations" method="POST"&gt;</code>). When an authenticated donor visits that page, the browser automatically attaches NutriShare session cookies, silently creating fraudulent listings without the donor's consent.
+            <strong>What is the attack?</strong> A fake external website tricks a logged-in donor's browser into secretly submitting a form, creating fake donations without the donor knowing.
           </p>
           <p style="font-size: 0.84rem; color: #a7f3d0;">
-            <strong>Secure Coding Defense: Synchronizer Token Pattern (<code>@csrf</code> Directive)</strong><br>
-            Every state-modifying form embeds a cryptographically secure 256-bit token uniquely bound to the active session. Laravel's <code>VerifyCsrfToken</code> middleware intercepts incoming POST requests and compares the token. External forged requests lack this token and are terminated immediately with <code>HTTP 419 Page Expired</code>.
+            <strong>How we fix it? Synchronizer Token (<code>@csrf</code>)</strong><br>
+            We add <code>@csrf</code> inside the form. Laravel creates a secret 256-bit token for the session. When the form submits, Laravel checks this token. If the token is missing or altered, Laravel blocks it with <code>419 Page Expired</code>.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>resources/views/donations/create.blade.php</span>
-              <span class="line-badge">Lines 12â€“15 (@csrf Directive)</span>
+              <span class="line-badge">Lines 12–15 (@csrf Directive)</span>
             </div>
             <pre><code><span class="code-kw">&lt;form</span> <span class="code-var">method</span>=<span class="code-str">"POST"</span> <span class="code-var">action</span>=<span class="code-str">"{{ route('donations.store') }}"</span> <span class="code-var">enctype</span>=<span class="code-str">"multipart/form-data"</span><span class="code-kw">&gt;</span>
-    <span class="code-cm">{{-- SECURITY (Module 1): Cryptographic Synchronizer CSRF Token Directive --}}</span>
+    <span class="code-cm">{{-- CSRF Token: Protects against forged external requests --}}</span>
     <span class="code-kw">@csrf</span>
     ...
 <span class="code-kw">&lt;/form&gt;</span></code></pre>
+          </div>
+
+          <!-- Live Demo for Threat 1 -->
+          <div class="live-demo-box">
+            <div class="live-demo-title">🎬 How to Demo CSRF Live to the Tutor (30s):</div>
+            <div class="live-demo-step">1. Go to <code>/donations/create</code>.</div>
+            <div class="live-demo-step">2. Right-click anywhere inside the form &rarr; click <strong>Inspect</strong>.</div>
+            <div class="live-demo-step">3. Show the tutor the hidden input: <code>&lt;input type="hidden" name="_token" value="..."&gt;</code>.</div>
+            <div class="live-demo-step">4. In DevTools Elements tab, double-click the token value and change it to <code>forged-token</code> (or delete it), then click <strong>Submit Donation</strong>.</div>
+            <div class="live-demo-result">
+              <strong>Result on Screen:</strong> Laravel immediately blocks the request and shows <strong>419 | Page Expired</strong>!
+            </div>
+            <div class="live-demo-explain">
+              <strong>What to say to tutor:</strong> <em>"Because the token was altered, Laravel rejected the request. Fake requests from external sites cannot get past this check."</em>
+            </div>
           </div>
         </div>
 
         <!-- Threat 2 -->
         <div>
-          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 2: Stored Cross-Site Scripting (Stored XSS â€” OWASP Top 10 A03:2021 Injection)</h4>
+          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 2: Stored Cross-Site Scripting (Stored XSS)</h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Attack Description:</strong> An adversary injects malicious executable JavaScript inside donation input fields like <code>title</code>, <code>description</code>, or <code>pickup_address</code> (e.g. <code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code>). When an NGO coordinator or admin views the details page, the stored payload executes in their browser session, stealing session tokens.
+            <strong>What is the attack?</strong> A hacker enters malicious JavaScript like <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> into the donation title or description. If displayed without cleaning, the script runs in the browser of any user who opens the page.
           </p>
           <p style="font-size: 0.84rem; color: #a7f3d0;">
-            <strong>Secure Coding Defense: Context-Aware HTML Entity Escaping (Blade Sanitisation)</strong><br>
-            All dynamic data is rendered using Blade's automatic escaping syntax <code>{{ $donation-&gt;title }}</code> which invokes PHP's <code>htmlspecialchars($value, ENT_QUOTES, 'UTF-8')</code>. The payload is converted to harmless literal characters (<code>&amp;lt;script&amp;gt;</code>), completely preventing script execution in the DOM.
+            <strong>How we fix it? Automatic HTML Escaping</strong><br>
+            In Blade views, we print variables using <code>{{ $donation->title }}</code>. Blade automatically runs PHP's <code>htmlspecialchars()</code>, converting <code>&lt;</code> into <code>&amp;lt;</code> and <code>&gt;</code> into <code>&amp;gt;</code> so it renders as safe plain text instead of executing.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>resources/views/donations/show.blade.php</span>
-              <span class="line-badge">Lines 18â€“28 (HTML Entity Escaping)</span>
+              <span class="line-badge">Lines 18–28 (HTML Entity Escaping)</span>
             </div>
-            <pre><code><span class="code-cm">&lt;!-- Automatic Context-Aware Escaping converts &lt;script&gt; into harmless plaintext --&gt;</span>
+            <pre><code><span class="code-cm">&lt;!-- Blade automatically escapes text into safe HTML entities --&gt;</span>
 &lt;h3 class="fw-bold"&gt;<span class="code-kw">{{</span> <span class="code-var">$donation</span>-&gt;title <span class="code-kw">}}</span>&lt;/h3&gt;
 &lt;p class="text-muted"&gt;<span class="code-kw">{{</span> <span class="code-var">$donation</span>-&gt;description <span class="code-kw">}}</span>&lt;/p&gt;
 &lt;span&gt;Pickup Address: <span class="code-kw">{{</span> <span class="code-var">$donation</span>-&gt;pickup_address <span class="code-kw">}}</span>&lt;/span&gt;</code></pre>
           </div>
-        </div>
 
-        <!-- LIVE SECURITY DEMO SCRIPT -->
-        <div class="live-demo-box">
-          <div class="live-demo-title">ðŸŽ¬ How to Demo This Live to the Tutor (30s Live Proof)</div>
-          <div class="live-demo-step"><strong>1. Demo CSRF Defense:</strong> Go to <code>/donations/create</code>. Right-click the form $\rightarrow$ <em>Inspect Element</em>. Show the hidden input <code>&lt;input type="hidden" name="_token" value="..."&gt;</code>. In DevTools, double-click the token value and change it to <code>tampered-token</code>, then click Submit. <strong>Boom! Laravel immediately throws <code>419 | Page Expired</code></strong>, proving forged requests without a valid synchronizer token are rejected!</div>
-          <div class="live-demo-step"><strong>2. Demo Stored XSS Defense:</strong> In the donation Title or Description field, type: <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> and click Submit. On the show page, point out that <strong>no JavaScript pop-up fired</strong>! Right-click and Inspect Element to show it was escaped into harmless <code>&amp;lt;script&amp;gt;alert('XSS')&amp;lt;/script&amp;gt;</code> by Blade.</div>
+          <!-- Live Demo for Threat 2 -->
+          <div class="live-demo-box">
+            <div class="live-demo-title">🎬 How to Demo Stored XSS Live to the Tutor (30s):</div>
+            <div class="live-demo-step">1. On the donation creation form, type <code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code> in the Title field.</div>
+            <div class="live-demo-step">2. Click <strong>Submit Donation</strong>.</div>
+            <div class="live-demo-step">3. On the donation details page, point out that <strong>no pop-up alert appeared</strong>.</div>
+            <div class="live-demo-step">4. Right-click the title text and click <strong>Inspect</strong>: show the tutor that Blade turned <code>&lt;script&gt;</code> into safe <code>&amp;lt;script&amp;gt;</code> text.</div>
+            <div class="live-demo-result" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: #6ee7b7;">
+              <strong>Result on Screen:</strong> Displays literally as text without executing any script!
+            </div>
+            <div class="live-demo-explain">
+              <strong>What to say to tutor:</strong> <em>"Blade automatically escaped the script tags into plain text, so the code cannot run in the browser."</em>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -779,27 +683,27 @@
         </div>
 
         <div class="warning-banner" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #bae6fd;">
-          <span>âš ï¸</span>
+          <span>⚠️</span>
           <div><strong>Tutor Warning:</strong> <strong>DO NOT open <code>routes/api.php</code>!</strong> She said: <em>"I don't want to see routes, show me the code!"</em> Show the Controller method for Provide, and HTTP Client code for Consume!</div>
         </div>
 
         <!-- Provide -->
         <div style="margin-bottom: 16px;">
-          <h4 style="color: #7dd3fc; font-size: 0.95rem; margin-bottom: 4px;">ðŸ“¤ Provide (Expose): <code>GET /api/donations/active</code></h4>
+          <h4 style="color: #7dd3fc; font-size: 0.95rem; margin-bottom: 4px;">📤 Provide (Expose): <code>GET /api/donations/active</code></h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Target Consumers:</strong> Module 3 (Claims & Logistics) to browse claimable items, and Module 4 (Inventory) to forecast incoming warehouse intake.<br>
-            <strong>IFA Envelope:</strong> Returns standardized JSON with <code>status</code> ('S'/'F'/'E'), <code>timestamp</code>, and <code>data.donations</code>.
+            <strong>Who calls this?</strong> Module 3 (Claims) to see available items, and Module 4 (Inventory) to preview incoming food.<br>
+            <strong>Response Format:</strong> Returns standard JSON with <code>status</code> ('S'/'F'/'E'), <code>timestamp</code>, and <code>data.donations</code> list.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/Api/DonationApiController.php</span>
-              <span class="line-badge">Lines 43â€“78 (Provide: active)</span>
+              <span class="line-badge">Lines 43–78 (Provide: active)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">active</span>(Request <span class="code-var">$request</span>): <span class="code-fn">JsonResponse</span>
 {
     <span class="code-var">$ifa</span> = SecurityHelper::<span class="code-fn">validateIfaRequest</span>(<span class="code-var">$request</span>-><span class="code-fn">all</span>());
     <span class="code-var">$donations</span> = Donation::<span class="code-fn">with</span>([<span class="code-str">'donor:id,name,organization_name'</span>, <span class="code-str">'foodItems'</span>])
-        -><span class="code-fn">active</span>() <span class="code-cm">// Scope: available and non-expired</span>
+        -><span class="code-fn">active</span>() <span class="code-cm">// Only available and non-expired items</span>
         -><span class="code-fn">orderBy</span>(<span class="code-str">'created_at'</span>, <span class="code-str">'desc'</span>)
         -><span class="code-fn">get</span>();
 
@@ -814,18 +718,18 @@
 
         <!-- Consume -->
         <div>
-          <h4 style="color: #7dd3fc; font-size: 0.95rem; margin-bottom: 4px;">ðŸ“¥ Consume: Calls Module 2's <code>POST /api/user/verify-ngo</code></h4>
+          <h4 style="color: #7dd3fc; font-size: 0.95rem; margin-bottom: 4px;">📥 Consume: Calls Module 2's <code>POST /api/user/verify-ngo</code></h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Why Module 1 Needs It:</strong> Before allowing any NGO to claim food, Module 1 consumes Module 2's API to ensure the NGO has statutory approval and a valid premise health license. Fails-closed if unverified.
+            <strong>Why we call this?</strong> Before an NGO can claim food, Module 1 calls Module 2 to verify that the NGO has approved registration and a valid license.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/Api/DonationApiController.php</span>
-              <span class="line-badge">Lines 98â€“124 (Consume: verifyNgoBeforeClaim)</span>
+              <span class="line-badge">Lines 98–124 (Consume: verifyNgoBeforeClaim)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">verifyNgoBeforeClaim</span>(<span class="code-kw">int</span> <span class="code-var">$ngoUserId</span>): <span class="code-kw">bool</span>
 {
-    <span class="code-cm">// CONSUME Module 2's API endpoint with IFA parameters</span>
+    <span class="code-cm">// Calls Module 2 to check NGO approval status</span>
     <span class="code-var">$response</span> = Http::<span class="code-fn">timeout</span>(<span class="code-var">10</span>)-><span class="code-fn">post</span>(config(<span class="code-str">'app.url'</span>) . <span class="code-str">'/api/user/verify-ngo'</span>, [
         <span class="code-str">'requestID'</span> =&gt; uniqid(<span class="code-str">'VERIFY-'</span>),
         <span class="code-str">'timestamp'</span> =&gt; now()-><span class="code-fn">toIso8601String</span>(),
@@ -841,9 +745,9 @@
           </div>
         </div>
 
-        <!-- 6 Tabs Sequence Reference -->
+        <!-- 6 Tabs Reference -->
         <div class="preopen-card">
-          <div class="preopen-header">?? VS Code 6 Pre-Opened Tabs in Exact Sequence (One-click: open_module1_tabs.bat)</div>
+          <div class="preopen-header">📂 VS Code 6 Pre-Opened Tabs in Exact Sequence (One-click: open_module1_tabs.bat)</div>
           <ul class="preopen-list">
             <li>Tab 1: <strong>app/Contracts/DonationObserverInterface.php:12-20</strong> (Pattern Interface)</li>
             <li>Tab 2: <strong>app/Observers/DonationObserver.php:15-35</strong> (Pattern Concrete Observer)</li>
@@ -878,11 +782,11 @@
           Credentials: <code>admin@nutrishare.com</code> / <code>Password1!</code> (or <code>password123</code>)
         </p>
         <ul class="checklist">
-          <li><strong>F2.1 Governance Queue & Document Audit:</strong> Log in as Admin. Click <strong>"NGO Verification Queue"</strong> (<code>/verification</code>). Find pending NGO (e.g. Kechara Soup Kitchen).</li>
-          <li><strong>Inline Document Inspection:</strong> Click <strong>"Preview File"</strong> to demonstrate in-browser statutory license viewing (MIME validated, stored on public disk).</li>
-          <li><strong>Governance Decision:</strong> Click <strong>"Approve"</strong> with remark <em>"ROS & premise health license verified."</em> Point out account state flips from <code>pending</code> to <code>approved</code>.</li>
-          <li><strong>F2.2 Trust & Peer Reviews:</strong> Open <code>/users/2/reviews</code> to show the 1-to-5 star rating breakdown and idempotent review upserting (<code>updateOrCreate</code>).</li>
-          <li><strong>F2.3 Cryptographic OTP Password Reset:</strong> Open <code>/forgot-password</code> to show the 3-stage OTP credential recovery workflow.</li>
+          <li><strong>F2.1 Document Audit Queue:</strong> Log in as Admin. Click <strong>"NGO Verification Queue"</strong> (<code>/verification</code>). Pick a pending NGO (e.g. Kechara Soup Kitchen).</li>
+          <li><strong>Inline Document Inspection:</strong> Click <strong>"Preview File"</strong> to show the NGO's certificate inside the browser.</li>
+          <li><strong>Approval Decision:</strong> Click <strong>"Approve"</strong> with remarks: <em>"ROS & premise license verified."</em> NGO account status flips from <code>pending</code> to <code>approved</code>.</li>
+          <li><strong>F2.2 Trust & Reviews:</strong> Open <code>/users/2/reviews</code> to show star ratings and feedback.</li>
+          <li><strong>F2.3 OTP Password Reset:</strong> Open <code>/forgot-password</code> to show the 3-step OTP password reset screen.</li>
         </ul>
       </div>
 
@@ -894,27 +798,27 @@
         </div>
 
         <div class="speech-bubble mod2">
-          <div class="speech-label">ðŸ—£ï¸ Say This Out Loud (General Theory â€” Do NOT read notes):</div>
-          "The <strong>Factory Method Pattern</strong> defines an interface or abstract class for creating an object, but allows subclasses to decide which class to instantiate. It delegates instantiation logic to specialized creators, decoupling client callers from concrete classes and encapsulating business validation and initial state setup."
+          <div class="speech-label">🗣️ Say This Out Loud (General Theory — Do NOT read notes):</div>
+          "The <strong>Factory Method Pattern</strong> gives us an interface or abstract class for creating objects, but lets subclasses decide which exact class to create. It moves the setup and creation code into separate creator classes, so the registration controller stays simple."
         </div>
 
         <p style="font-size: 0.86rem; margin: 10px 0;">
           <strong>Why & Where in Module 2:</strong>
-          Without the Factory Method, <code>AuthController@register</code> would contain fragile switch-case ladders for different roles. Commercial donors can be approved immediately, but NGOs must strictly be initialized with <code>verification_status = 'pending'</code>, audit logs, and admin notifications. Hardcoding this in <code>NgoCreator</code> prevents any programming mistake from accidentally creating an unvetted active NGO.
+          Commercial donors can be approved immediately when they sign up, but NGOs must start with <code>verification_status = 'pending'</code> until an admin checks their documents. Putting this inside <code>NgoCreator</code> ensures an NGO can never accidentally be created with approved status without an audit.
         </p>
 
         <p style="font-size: 0.84rem; color: var(--text-secondary);">
           <strong>UML Roles & Architecture:</strong><br>
-          â€¢ <strong>Abstract Creator:</strong> <code>UserCreator</code> (<code>app/Services/UserFactory/UserCreator.php:12-32</code>) declares <code>createUser(array $baseData): User</code> and <code>resolve(string $role)</code>.<br>
-          â€¢ <strong>Concrete Creators:</strong> <code>NgoCreator</code> (<code>app/Services/UserFactory/NgoCreator.php:11-45</code>), <code>DonorCreator</code>, <code>AdminCreator</code>.<br>
-          â€¢ <strong>Product:</strong> <code>User</code> domain entity.<br>
-          â€¢ <strong>Client:</strong> <code>AuthController@register</code> (<code>app/Http/Controllers/AuthController.php:98-112</code>) calls <code>UserCreator::resolve($role)->createUser($data)</code>.
+          • <strong>Abstract Creator:</strong> <code>UserCreator</code> (<code>app/Services/UserFactory/UserCreator.php:12-32</code>) defines <code>createUser()</code> and <code>resolve($role)</code>.<br>
+          • <strong>Concrete Creators:</strong> <code>NgoCreator</code> (<code>app/Services/UserFactory/NgoCreator.php:11-45</code>), <code>DonorCreator</code>, <code>AdminCreator</code>.<br>
+          • <strong>Product:</strong> <code>User</code> model.<br>
+          • <strong>Client:</strong> <code>AuthController@register</code> (<code>app/Http/Controllers/AuthController.php:98-112</code>) calls <code>UserCreator::resolve($role)->createUser($data)</code>.
         </p>
 
         <div class="code-block-wrap">
           <div class="code-header">
             <span>app/Services/UserFactory/NgoCreator.php</span>
-            <span class="line-badge">Lines 11â€“26 (Concrete Creator)</span>
+            <span class="line-badge">Lines 11–26 (Concrete Creator)</span>
           </div>
           <pre><code><span class="code-kw">class</span> <span class="code-fn">NgoCreator</span> <span class="code-kw">extends</span> <span class="code-fn">UserCreator</span>
 {
@@ -925,7 +829,7 @@
             <span class="code-str">'email'</span>               =&gt; <span class="code-var">$baseData</span>[<span class="code-str">'email'</span>],
             <span class="code-str">'password'</span>            =&gt; Hash::<span class="code-fn">make</span>(<span class="code-var">$baseData</span>[<span class="code-str">'password'</span>]),
             <span class="code-str">'role'</span>                =&gt; <span class="code-str">'ngo'</span>,
-            <span class="code-str">'verification_status'</span> =&gt; <span class="code-str">'pending'</span>, <span class="code-cm">// Statutory regulatory invariant</span>
+            <span class="code-str">'verification_status'</span> =&gt; <span class="code-str">'pending'</span>, <span class="code-cm">// Always starts pending</span>
             <span class="code-str">'organization_name'</span>   =&gt; <span class="code-var">$baseData</span>[<span class="code-str">'organization_name'</span>] ?? <span class="code-kw">null</span>,
         ]);
         <span class="code-var">$this</span>-><span class="code-fn">postCreationSetup</span>(<span class="code-var">$user</span>);
@@ -939,23 +843,23 @@
       <div class="flow-step-card">
         <div class="flow-step-header">
           <span class="flow-step-badge badge-danger">3. Software Security</span>
-          <div class="flow-step-title">2 Specific Threats & Secure Coding Defenses (From Report)</div>
+          <div class="flow-step-title">2 Security Threats & Exact Live Demos</div>
         </div>
 
         <!-- Threat 1 -->
-        <div style="margin-bottom: 16px;">
-          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 1: Broken Access Control & Privilege Escalation (OWASP Top 10 A01:2021)</h4>
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 1: Broken Access Control & Privilege Escalation</h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Attack Description:</strong> An attacker or unverified NGO attempts forced browsing to <code>GET /verification</code> or sends a direct POST request to <code>POST /verification/{document}/review</code> with <code>action=approved</code> to unilaterally approve their own organization without statutory audit.
+            <strong>What is the attack?</strong> A regular donor or unverified NGO tries to type the admin URL <code>/verification</code> directly into their browser bar to see the admin queue and approve themselves.
           </p>
           <p style="font-size: 0.84rem; color: #a7f3d0;">
-            <strong>Secure Coding Defense: RBAC Route Middleware & FormRequest Policy Gates</strong><br>
-            All administrative routes are protected by <code>CheckRole</code> middleware requiring <code>role:admin,moderator</code>. In addition, <code>ReviewVerificationDocumentRequest</code> enforces a secondary policy gate: <code>authorize()</code> returns false if the user is not an admin or moderator, blocking privilege escalation with HTTP 403.
+            <strong>How we fix it? Role Middleware (<code>CheckRole</code>)</strong><br>
+            All admin routes are wrapped in <code>CheckRole</code> middleware requiring <code>role:admin,moderator</code>. In addition, <code>ReviewVerificationDocumentRequest</code> has an <code>authorize()</code> check. If a non-admin tries to enter, Laravel blocks them with <code>403 Forbidden</code>.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Middleware/CheckRole.php</span>
-              <span class="line-badge">Lines 14â€“22 (RBAC Middleware)</span>
+              <span class="line-badge">Lines 14–22 (RBAC Middleware)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">handle</span>(Request <span class="code-var">$request</span>, Closure <span class="code-var">$next</span>, ...<span class="code-var">$roles</span>)
 {
@@ -965,29 +869,40 @@
     <span class="code-kw">return</span> <span class="code-var">$next</span>(<span class="code-var">$request</span>);
 }</code></pre>
           </div>
+
+          <!-- Live Demo for Threat 1 -->
+          <div class="live-demo-box">
+            <div class="live-demo-title">🎬 How to Demo Broken Access Control Live to the Tutor (30s):</div>
+            <div class="live-demo-step">1. Log in as a normal donor (<code>donor@nutrishare.com</code>).</div>
+            <div class="live-demo-step">2. In your browser URL bar, type: <code>http://localhost:8000/verification</code> and press Enter.</div>
+            <div class="live-demo-result">
+              <strong>Result on Screen:</strong> The browser immediately displays <strong>403 | Unauthorized. You do not have the required role to access this resource.</strong>
+            </div>
+            <div class="live-demo-explain">
+              <strong>What to say to tutor:</strong> <em>"The CheckRole middleware checked my role. Because I am logged in as a donor, it blocked me from opening the admin verification queue."</em>
+            </div>
+          </div>
         </div>
 
         <!-- Threat 2 -->
         <div>
-          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 2: OTP Brute-Force & Account Takeover (OWASP Top 10 A07:2021)</h4>
+          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 2: OTP Brute-Force & Account Takeover</h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Attack Description:</strong> Password recovery mechanisms using 6-digit numeric OTPs have a search space of only 1,000,000 possibilities. Without throttling, an attacker floods <code>POST /forgot-password/otp/verify</code> with automated scripts, guessing the token within minutes to seize control of user accounts.
+            <strong>What is the attack?</strong> An attacker uses an automated bot to guess the 6-digit password reset OTP by testing thousands of numbers per second.
           </p>
           <p style="font-size: 0.84rem; color: #a7f3d0;">
-            <strong>Secure Coding Defense: Cryptographic Token Invalidation, Sliding Expiry & Throttling</strong><br>
-            1) Old OTPs are deleted before issuing new ones to eliminate replay attacks.<br>
-            2) Generated via cryptographically secure <code>random_int(0, 999999)</code> with a strict 10-minute expiry (<code>now()->addMinutes(10)</code>).<br>
-            3) Routes enforce rate limiting via <code>middleware('throttle:6,1')</code> (max 6 attempts per minute per IP address).
+            <strong>How we fix it? Expiry Windows & Rate Limiting (<code>throttle:6,1</code>)</strong><br>
+            We generate random 6-digit OTPs that expire in 10 minutes and delete old ones. In <code>routes/web.php</code>, we apply <code>middleware('throttle:6,1')</code>. This restricts guessing to 6 tries per minute.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/PasswordResetController.php</span>
-              <span class="line-badge">Lines 30â€“48 (Cryptographic OTP Pipeline)</span>
+              <span class="line-badge">Lines 30–48 (OTP Expiry & Generation)</span>
             </div>
-            <pre><code><span class="code-cm">// Invalidate pre-existing OTPs to prevent replay attacks</span>
+            <pre><code><span class="code-cm">// Delete old OTPs so they cannot be reused</span>
 PasswordResetOtp::<span class="code-fn">where</span>(<span class="code-str">'email'</span>, <span class="code-var">$request</span>->email)-><span class="code-fn">delete</span>();
 
-<span class="code-cm">// Generate cryptographically random 6-digit token with strict 10-min expiry</span>
+<span class="code-cm">// Create random 6-digit OTP with strict 10-minute expiry</span>
 <span class="code-var">$otp</span> = <span class="code-fn">str_pad</span>((<span class="code-kw">string</span>) <span class="code-fn">random_int</span>(<span class="code-var">0</span>, <span class="code-var">999999</span>), <span class="code-var">6</span>, <span class="code-str">'0'</span>, STR_PAD_LEFT);
 PasswordResetOtp::<span class="code-fn">create</span>([
     <span class="code-str">'email'</span>      =&gt; <span class="code-var">$request</span>->email,
@@ -995,13 +910,19 @@ PasswordResetOtp::<span class="code-fn">create</span>([
     <span class="code-str">'expires_at'</span> =&gt; <span class="code-fn">now</span>()-><span class="code-fn">addMinutes</span>(<span class="code-var">10</span>),
 ]);</code></pre>
           </div>
-        </div>
 
-        <!-- LIVE SECURITY DEMO SCRIPT -->
-        <div class="live-demo-box">
-          <div class="live-demo-title">ðŸŽ¬ How to Demo This Live to the Tutor (30s Live Proof)</div>
-          <div class="live-demo-step"><strong>1. Demo RBAC Protection (Broken Access Control):</strong> Log in as regular donor (<code>donor@nutrishare.com</code>). Now manually type the admin URL in your browser: <code>http://localhost:8000/verification</code> and press Enter. <strong>Boom! Laravel immediately blocks with <code>403 | Unauthorized. You do not have the required role</code></strong>, proving <code>CheckRole</code> middleware stops privilege escalation!</div>
-          <div class="live-demo-step"><strong>2. Demo OTP Defense:</strong> Go to <code>/forgot-password</code>, enter <code>donor@nutrishare.com</code>. Check Mailpit (<code>http://localhost:8025</code>) to show the generated 6-digit numeric OTP with 10-minute expiry. Enter a wrong OTP and click verify repeatedly 6 times rapidly. <strong>On the 7th attempt, Laravel immediately returns <code>429 | Too Many Requests</code></strong>, proving brute-force attacks are completely neutralized by <code>throttle:6,1</code>!</div>
+          <!-- Live Demo for Threat 2 -->
+          <div class="live-demo-box">
+            <div class="live-demo-title">🎬 How to Demo OTP Rate Limiting Live to the Tutor (30s):</div>
+            <div class="live-demo-step">1. Go to <code>/forgot-password</code> and enter <code>donor@nutrishare.com</code>.</div>
+            <div class="live-demo-step">2. On the OTP screen, enter a wrong OTP (e.g. <code>000000</code>) and click verify 6 times quickly.</div>
+            <div class="live-demo-result">
+              <strong>Result on Screen:</strong> On the 7th attempt, Laravel immediately blocks with <strong>429 | Too Many Requests</strong>!
+            </div>
+            <div class="live-demo-explain">
+              <strong>What to say to tutor:</strong> <em>"Our throttle middleware limits guesses to 6 attempts per minute. An automated bot cannot brute-force the 6 digits."</em>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1014,15 +935,15 @@ PasswordResetOtp::<span class="code-fn">create</span>([
 
         <!-- Provide -->
         <div style="margin-bottom: 16px;">
-          <h4 style="color: #6ee7b7; font-size: 0.95rem; margin-bottom: 4px;">ðŸ“¤ Provide (Expose): <code>POST /api/user/verify-ngo</code></h4>
+          <h4 style="color: #6ee7b7; font-size: 0.95rem; margin-bottom: 4px;">📤 Provide (Expose): <code>POST /api/user/verify-ngo</code></h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Target Consumers:</strong> Module 1 (Donations) before claims, and Module 3 (Claims & Logistics).<br>
-            <strong>IFA Envelope:</strong> Returns <code>status</code> ('S'/'F'/'E'), <code>data.is_verified</code>, <code>data.has_valid_license</code>, and <code>data.trust_rating</code>.
+            <strong>Who calls this?</strong> Module 1 (Donations) before allowing food claims, and Module 3 (Logistics).<br>
+            <strong>Response Format:</strong> Returns <code>status</code> ('S'/'F'/'E'), <code>data.is_verified</code>, <code>data.has_valid_license</code>, and <code>data.trust_rating</code>.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/Api/UserVerificationApiController.php</span>
-              <span class="line-badge">Lines 40â€“75 (Provide: verifyNgo)</span>
+              <span class="line-badge">Lines 40–75 (Provide: verifyNgo)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">verifyNgo</span>(Request <span class="code-var">$request</span>): <span class="code-fn">JsonResponse</span>
 {
@@ -1047,14 +968,14 @@ PasswordResetOtp::<span class="code-fn">create</span>([
 
         <!-- Consume -->
         <div>
-          <h4 style="color: #6ee7b7; font-size: 0.95rem; margin-bottom: 4px;">ðŸ“¥ Consume: Calls Module 3's <code>GET /api/claim/details</code></h4>
+          <h4 style="color: #6ee7b7; font-size: 0.95rem; margin-bottom: 4px;">📥 Consume: Calls Module 3's <code>GET /api/claim/details</code></h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Why Module 2 Needs It:</strong> Before accepting peer ratings/reviews between a donor and an NGO, Module 2 calls Module 3 to confirm that a legitimate food claim reached <code>collected</code> or <code>completed</code> status.
+            <strong>Why we call this?</strong> Before letting a donor and NGO leave reviews for each other, Module 2 checks Module 3 to make sure a real food claim actually completed.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/VerificationController.php</span>
-              <span class="line-badge">Lines 107â€“130 (Consume: verifyClaimCompletedBeforeReview)</span>
+              <span class="line-badge">Lines 107–130 (Consume: verifyClaimCompletedBeforeReview)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">verifyClaimCompletedBeforeReview</span>(<span class="code-kw">int</span> <span class="code-var">$claimId</span>): <span class="code-kw">bool</span>
 {
@@ -1074,16 +995,16 @@ PasswordResetOtp::<span class="code-fn">create</span>([
           </div>
         </div>
 
-        <!-- 6 Tabs Sequence Reference -->
+        <!-- 6 Tabs Reference -->
         <div class="preopen-card">
-          <div class="preopen-header">?? VS Code 6 Pre-Opened Tabs in Exact Sequence (One-click: open_module1_tabs.bat)</div>
+          <div class="preopen-header">📂 VS Code 6 Pre-Opened Tabs in Exact Sequence (One-click: open_module2_tabs.bat)</div>
           <ul class="preopen-list">
-            <li>Tab 1: <strong>app/Contracts/DonationObserverInterface.php:12-20</strong> (Pattern Interface)</li>
-            <li>Tab 2: <strong>app/Observers/DonationObserver.php:15-35</strong> (Pattern Concrete Observer)</li>
-            <li>Tab 3: <strong>resources/views/donations/create.blade.php:12-15</strong> (Security 1: CSRF @csrf Token)</li>
-            <li>Tab 4: <strong>resources/views/donations/show.blade.php:18-28</strong> (Security 2: Stored XSS Escaping)</li>
-            <li>Tab 5: <strong>app/Http/Controllers/Api/DonationApiController.php:43-78</strong> (Web Service Provide: active)</li>
-            <li>Tab 6: <strong>app/Jobs/SendDonationNotificationJob.php:25-58</strong> (Async Queue Worker & verifyNgo)</li>
+            <li>Tab 1: <strong>app/Services/UserFactory/UserCreator.php:12-32</strong> (Pattern Abstract Creator)</li>
+            <li>Tab 2: <strong>app/Services/UserFactory/NgoCreator.php:11-45</strong> (Pattern Concrete Creator)</li>
+            <li>Tab 3: <strong>app/Http/Middleware/CheckRole.php:14-22</strong> (Security 1: RBAC Middleware)</li>
+            <li>Tab 4: <strong>app/Http/Controllers/PasswordResetController.php:30-48</strong> (Security 2: Cryptographic OTP Recovery)</li>
+            <li>Tab 5: <strong>app/Http/Controllers/Api/UserVerificationApiController.php:40-75</strong> (Web Service Provide: verifyNgo)</li>
+            <li>Tab 6: <strong>app/Http/Controllers/VerificationController.php:107-130</strong> (Web Service Consume: verifyClaimCompletedBeforeReview)</li>
           </ul>
         </div>
       </div>
@@ -1111,10 +1032,10 @@ PasswordResetOtp::<span class="code-fn">create</span>([
           Credentials: <code>pichaeats@nutrishare.com</code> (or <code>donor@nutrishare.com</code>) / <code>Password1!</code>
         </p>
         <ul class="checklist">
-          <li><strong>F3.1 State Pattern Claim Lifecycle:</strong> Log in as Donor. Open <code>/claims/5</code>. Demonstrate State Pattern: click <strong>"Approve"</strong> (Transitions <code>PendingState</code> $\rightarrow$ <code>ApprovedState</code>).</li>
-          <li><strong>F3.2 Fleet Dispatch Assignment:</strong> Notice vehicle panel unlocks! Fill vehicle: <em>Van</em>, Plate: <em>WXY 8892</em>, Driver: <em>Ahmad Zaki (012-3456789)</em> $\rightarrow$ click <strong>"Assign Vehicle"</strong>.</li>
-          <li><strong>F3.3 Digital Collection Receipt:</strong> Click <strong>"Mark as Collected"</strong>. Point out automatic generation of immutable receipt <code>REC-NUTRI-20260906-005</code> with physical signature lines and print modal.</li>
-          <li><strong>F3.4 SDG 2 Distribution Logging:</strong> Fill distribution log: <em>"Pusat Jagaan Kasih"</em>, Beneficiaries: <em>85</em>, Distributed Mass: <em>20 kg</em> $\rightarrow$ show real-time SDG 2 tracker update.</li>
+          <li><strong>F3.1 State Pattern Lifecycle:</strong> Log in as Donor. Open <code>/claims/5</code>. Click <strong>"Approve"</strong> (transitions <code>PendingState</code> $\rightarrow$ <code>ApprovedState</code>).</li>
+          <li><strong>F3.2 Fleet Dispatch:</strong> Notice the vehicle panel unlocks! Fill vehicle details: <em>Van</em>, Plate: <em>WXY 8892</em>, Driver: <em>Ahmad Zaki</em> $\rightarrow$ click <strong>"Assign Vehicle"</strong>.</li>
+          <li><strong>F3.3 Digital Collection Receipt:</strong> Click <strong>"Mark as Collected"</strong>. Point out the generated receipt <code>REC-NUTRI-20260906-005</code> with print layout.</li>
+          <li><strong>F3.4 SDG 2 Distribution Log:</strong> Fill the distribution log table with destination and beneficiary count $\rightarrow$ show real-time SDG 2 tracker update.</li>
         </ul>
       </div>
 
@@ -1122,41 +1043,41 @@ PasswordResetOtp::<span class="code-fn">create</span>([
       <div class="flow-step-card">
         <div class="flow-step-header">
           <span class="flow-step-badge badge-warning">2. Design Pattern</span>
-          <div class="flow-step-title">State Pattern (GoF Behavioural) â€” NOT an Enum!</div>
+          <div class="flow-step-title">State Pattern (GoF Behavioural) — NOT an Enum!</div>
         </div>
 
         <div class="speech-bubble mod3">
-          <div class="speech-label">ðŸ—£ï¸ Say This Out Loud (General Theory â€” Do NOT read notes):</div>
-          "The <strong>State Pattern</strong> allows an object to alter its behavior when its internal state changes, appearing as if the object changed its class. It encapsulates state-specific behaviors inside dedicated state classes and eliminates conditional <code>if-else</code> or <code>switch</code> statements."
+          <div class="speech-label">🗣️ Say This Out Loud (General Theory — Do NOT read notes):</div>
+          "The <strong>State Pattern</strong> allows an object to change its behavior when its internal state changes, as if it changed its class. It puts state rules inside separate classes instead of using long, fragile <code>if-else</code> or <code>switch</code> statements."
         </div>
 
         <div class="warning-banner">
-          <span>âš ï¸</span>
-          <div><strong>CRITICAL TUTOR WARNING:</strong> If asked about State Pattern, <strong>never say it is an Enum!</strong> Miss Malarvili rejects enums as violating the Open/Closed Principle. Emphasize that we have full polymorphic classes: <code>PendingState</code>, <code>ApprovedState</code>, and <code>CollectedState</code> implementing <code>ClaimState</code>!</div>
+          <span>⚠️</span>
+          <div><strong>CRITICAL TUTOR WARNING:</strong> If asked about State Pattern, <strong>never say it is an Enum!</strong> Miss Malarvili rejects enums as violating the Open/Closed Principle. Emphasize that we have full classes: <code>PendingState</code>, <code>ApprovedState</code>, and <code>CollectedState</code> implementing <code>ClaimState</code>!</div>
         </div>
 
         <p style="font-size: 0.86rem; margin: 10px 0;">
           <strong>Why & Where in Module 3:</strong>
-          Enforces business invariants at the domain layer. For example, food cannot be collected while still in <code>PendingState</code>; and in <code>ApprovedState</code>, collection is blocked unless a transport vehicle has been assigned.
+          Enforces business rules at the code level. For example, food cannot be collected while still in <code>PendingState</code>; and in <code>ApprovedState</code>, collection is blocked unless a pickup vehicle has been assigned.
         </p>
 
         <p style="font-size: 0.84rem; color: var(--text-secondary);">
           <strong>UML Roles & Architecture:</strong><br>
-          â€¢ <strong>Context:</strong> <code>Claim</code> model (<code>app/Models/Claim.php:68-83</code>) delegates to <code>getStateObject()</code> and <code>transitionTo($action)</code>.<br>
-          â€¢ <strong>Abstract State:</strong> <code>ClaimState</code> (<code>app/States/Claim/ClaimState.php:8-22</code>) declares <code>handle()</code> and <code>allowedActions()</code>.<br>
-          â€¢ <strong>Concrete States:</strong> <code>PendingState</code> (approve/reject), <code>ApprovedState</code> (<code>app/States/Claim/ApprovedState.php:22-42</code>) (collect/cancel + enforces vehicle assignment), <code>CollectedState</code> (terminal immutable state).
+          • <strong>Context:</strong> <code>Claim</code> model (<code>app/Models/Claim.php:68-83</code>) delegates to <code>getStateObject()</code> and <code>transitionTo($action)</code>.<br>
+          • <strong>Abstract State:</strong> <code>ClaimState</code> (<code>app/States/Claim/ClaimState.php:8-22</code>) declares <code>handle()</code> and <code>allowedActions()</code>.<br>
+          • <strong>Concrete States:</strong> <code>PendingState</code> (approve/reject), <code>ApprovedState</code> (<code>app/States/Claim/ApprovedState.php:22-42</code>) (collect/cancel + checks vehicle), <code>CollectedState</code> (final state).
         </p>
 
         <div class="code-block-wrap">
           <div class="code-header">
             <span>app/States/Claim/ApprovedState.php</span>
-            <span class="line-badge">Lines 22â€“42 (Concrete State Class)</span>
+            <span class="line-badge">Lines 22–42 (Concrete State Class)</span>
           </div>
           <pre><code><span class="code-kw">class</span> <span class="code-fn">ApprovedState</span> <span class="code-kw">extends</span> <span class="code-fn">ClaimState</span>
 {
     <span class="code-kw">private function</span> <span class="code-fn">collect</span>(): <span class="code-kw">bool</span>
     {
-        <span class="code-cm">// Invariant: Transport vehicle must be assigned prior to collection</span>
+        <span class="code-cm">// Rule: Must have vehicle assigned before collecting</span>
         <span class="code-kw">if</span> (!<span class="code-var">$this</span>->claim->vehicle) {
             <span class="code-kw">return false</span>;
         }
@@ -1164,7 +1085,7 @@ PasswordResetOtp::<span class="code-fn">create</span>([
         <span class="code-var">$this</span>->claim-><span class="code-fn">update</span>([<span class="code-str">'status'</span> =&gt; <span class="code-str">'collected'</span>]);
         <span class="code-var">$this</span>->claim->donation-><span class="code-fn">update</span>([<span class="code-str">'status'</span> =&gt; <span class="code-str">'collected'</span>]);
 
-        <span class="code-cm">// Automatically issue tamper-evident collection receipt</span>
+        <span class="code-cm">// Automatically creates official collection receipt</span>
         CollectionReceipt::<span class="code-fn">firstOrCreate</span>([<span class="code-str">'claim_id'</span> =&gt; <span class="code-var">$this</span>->claim->id], [
             <span class="code-str">'receipt_number'</span> =&gt; <span class="code-str">'REC-NUTRI-'</span> . <span class="code-fn">date</span>(<span class="code-str">'Ymd'</span>) . <span class="code-str">'-'</span> . <span class="code-fn">sprintf</span>(<span class="code-str">'%03d'</span>, <span class="code-var">$this</span>->claim->id),
         ]);
@@ -1178,23 +1099,23 @@ PasswordResetOtp::<span class="code-fn">create</span>([
       <div class="flow-step-card">
         <div class="flow-step-header">
           <span class="flow-step-badge badge-danger">3. Software Security</span>
-          <div class="flow-step-title">2 Specific Threats & Secure Coding Defenses (From Report)</div>
+          <div class="flow-step-title">2 Security Threats & Exact Live Demos</div>
         </div>
 
         <!-- Threat 1 -->
-        <div style="margin-bottom: 16px;">
-          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 1: Broken Object Level Authorisation (BOLA / IDOR â€” OWASP Top 10 A01:2021)</h4>
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 1: Broken Object Level Authorization (BOLA / IDOR)</h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Attack Description:</strong> An attacker logged in as NGO "A" modifies the route parameter from <code>/claims/12/assign-vehicle</code> to <code>/claims/14/assign-vehicle</code>, attempting to manipulate vehicle credentials or driver details belonging to a rival charity.
+            <strong>What is the attack?</strong> An NGO user changes the URL from <code>/claims/12</code> to <code>/claims/14</code> to see or change another charity's driver and vehicle details.
           </p>
           <p style="font-size: 0.84rem; color: #a7f3d0;">
-            <strong>Secure Coding Defense: Policy-Driven Authorisation (<code>ClaimPolicy</code> Gates)</strong><br>
-            Every controller method invokes <code>$this-&gt;authorize('view', $claim)</code> and <code>$this-&gt;authorize('update', $claim)</code>. The policy strictly verifies that the user is an admin/moderator, the claiming NGO (<code>$claim-&gt;user_id === $user-&gt;id</code>), or the owning donor (<code>$claim-&gt;donation-&gt;user_id === $user-&gt;id</code>). Tampered direct object references return HTTP 403.
+            <strong>How we fix it? Policy Authorization (<code>ClaimPolicy</code>)</strong><br>
+            Every controller method calls <code>$this-&gt;authorize('view', $claim)</code>. The policy checks if you are an admin, the claiming NGO (<code>$claim-&gt;user_id === $user-&gt;id</code>), or the owning donor. If not, Laravel blocks access with <code>403 Forbidden</code>.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Policies/ClaimPolicy.php</span>
-              <span class="line-badge">Lines 33â€“40 (Policy IDOR Gate)</span>
+              <span class="line-badge">Lines 33–40 (Policy IDOR Gate)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">view</span>(User <span class="code-var">$user</span>, Claim <span class="code-var">$claim</span>): <span class="code-kw">bool</span>
 {
@@ -1204,25 +1125,38 @@ PasswordResetOtp::<span class="code-fn">create</span>([
     <span class="code-kw">return false</span>;
 }</code></pre>
           </div>
+
+          <!-- Live Demo for Threat 1 -->
+          <div class="live-demo-box">
+            <div class="live-demo-title">🎬 How to Demo BOLA / IDOR Live to the Tutor (30s):</div>
+            <div class="live-demo-step">1. Log in as an NGO (<code>ngo@nutrishare.com</code>).</div>
+            <div class="live-demo-step">2. In your browser URL bar, type: <code>http://localhost:8000/claims/5</code> (Claim #5 belongs to a different NGO). Press Enter.</div>
+            <div class="live-demo-result">
+              <strong>Result on Screen:</strong> Laravel immediately stops and shows <strong>403 | THIS ACTION IS UNAUTHORIZED.</strong>
+            </div>
+            <div class="live-demo-explain">
+              <strong>What to say to tutor:</strong> <em>"The ClaimPolicy checked my user ID against the claim's user_id. Since I don't own Claim #5, it blocked access."</em>
+            </div>
+          </div>
         </div>
 
         <!-- Threat 2 -->
         <div>
-          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 2: State Manipulation & Race Conditions (OWASP Top 10 A04:2021 Insecure Design)</h4>
+          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 2: State Manipulation & Race Conditions</h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Attack Description:</strong> Attackers submit injected JSON payloads like <code>{"status": "collected"}</code> directly to endpoints, or send rapid concurrent requests to approve and collect the same claim simultaneously, creating double-allocation race conditions.
+            <strong>What is the attack?</strong> An attacker skips steps by sending a fake <code>status: collected</code> request directly, or two users try to approve/collect the same claim at the exact same split-second.
           </p>
           <p style="font-size: 0.84rem; color: #a7f3d0;">
-            <strong>Secure Coding Defense: Database Transactions with Pessimistic Row Locking</strong><br>
-            All state transitions execute inside <code>DB::transaction(...)</code> using <code>Claim::where('id', $claim->id)->lockForUpdate()->firstOrFail()</code>. The row is locked at the database engine level until the transaction commits, completely preventing race conditions and unauthorized state transitions.
+            <strong>How we fix it? Database Row Locking (<code>lockForUpdate</code>)</strong><br>
+            All status changes run inside <code>DB::transaction(...)</code> using <code>Claim::where('id', $claim->id)->lockForUpdate()</code>. This locks the database row until the update finishes, preventing race conditions and keeping data clean.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/ClaimController.php</span>
-              <span class="line-badge">Lines 131â€“141 (Pessimistic Row Locking)</span>
+              <span class="line-badge">Lines 131–141 (Pessimistic Row Locking)</span>
             </div>
             <pre><code><span class="code-kw">return</span> DB::<span class="code-fn">transaction</span>(<span class="code-kw">function</span> () <span class="code-kw">use</span> (<span class="code-var">$claim</span>, <span class="code-var">$action</span>) {
-    <span class="code-cm">// Pessimistic row locking prevents concurrent race condition tampering</span>
+    <span class="code-cm">// Locks the database row so no one else can modify it simultaneously</span>
     <span class="code-var">$lockedClaim</span> = Claim::<span class="code-fn">where</span>(<span class="code-str">'id'</span>, <span class="code-var">$claim</span>->id)-><span class="code-fn">lockForUpdate</span>()-><span class="code-fn">firstOrFail</span>();
     <span class="code-var">$success</span> = <span class="code-var">$lockedClaim</span>-><span class="code-fn">transitionTo</span>(<span class="code-var">$action</span>);
     <span class="code-kw">if</span> (<span class="code-var">$success</span>) {
@@ -1233,13 +1167,19 @@ PasswordResetOtp::<span class="code-fn">create</span>([
         -><span class="code-fn">with</span>(<span class="code-str">'error'</span>, <span class="code-str">"Cannot {$action} this claim in its current state."</span>);
 });</code></pre>
           </div>
-        </div>
 
-        <!-- LIVE SECURITY DEMO SCRIPT -->
-        <div class="live-demo-box">
-          <div class="live-demo-title">ðŸŽ¬ How to Demo This Live to the Tutor (30s Live Proof)</div>
-          <div class="live-demo-step"><strong>1. Demo BOLA / IDOR Defense:</strong> Log in as an NGO user (e.g. <code>ngo@nutrishare.com</code>). Now manually type <code>http://localhost:8000/claims/5</code> into your browser URL bar (Claim #5 belongs to PichaEats / a different NGO). Hit Enter. <strong>Boom! Laravel displays <code>403 | THIS ACTION IS UNAUTHORIZED.</code></strong>, proving <code>ClaimPolicy@view</code> blocked unauthorized direct object referencing!</div>
-          <div class="live-demo-step"><strong>2. Demo Invariant Defense:</strong> Open an Approved claim that has NO vehicle assigned yet. Try to click "Mark as Collected" or submit action <code>collect</code>. Point out that the State Machine and row-locked transaction reject the transition: <em>"Cannot collect donation: Please assign a pickup vehicle before marking as collected"</em>!</div>
+          <!-- Live Demo for Threat 2 -->
+          <div class="live-demo-box">
+            <div class="live-demo-title">🎬 How to Demo State Invariants Live to the Tutor (30s):</div>
+            <div class="live-demo-step">1. Open an Approved claim that has NO vehicle assigned yet.</div>
+            <div class="live-demo-step">2. Try to click <strong>"Mark as Collected"</strong>.</div>
+            <div class="live-demo-result">
+              <strong>Result on Screen:</strong> The page rejects it with an error alert: <em>"Cannot collect donation: Please assign a pickup vehicle (driver & vehicle details) before marking as collected."</em>
+            </div>
+            <div class="live-demo-explain">
+              <strong>What to say to tutor:</strong> <em>"The State Pattern and row locking ensure business rules cannot be bypassed. You cannot mark food as collected without a vehicle."</em>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1252,15 +1192,15 @@ PasswordResetOtp::<span class="code-fn">create</span>([
 
         <!-- Provide -->
         <div style="margin-bottom: 16px;">
-          <h4 style="color: #fcd34d; font-size: 0.95rem; margin-bottom: 4px;">ðŸ“¤ Provide (Expose): <code>GET /api/claim/details</code></h4>
+          <h4 style="color: #fcd34d; font-size: 0.95rem; margin-bottom: 4px;">📤 Provide (Expose): <code>GET /api/claim/details</code></h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Target Consumers:</strong> Module 2 (Peer Trust Ratings) before reviews, Module 1, and logistics portals.<br>
-            <strong>IFA Envelope:</strong> Returns <code>status</code> ('S'/'F'/'E'), <code>data.claim.status</code>, <code>data.claim.current_state</code>, <code>data.claim.allowed_actions</code>, logistics vehicle, and receipt number.
+            <strong>Who calls this?</strong> Module 2 (Reviews) to check if a claim is completed, Module 1, and logistics portals.<br>
+            <strong>Response Format:</strong> Returns <code>status</code> ('S'/'F'/'E'), <code>data.claim.status</code>, <code>data.claim.current_state</code>, allowed actions, vehicle details, and receipt number.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/Api/ClaimApiController.php</span>
-              <span class="line-badge">Lines 40â€“75 (Provide: details)</span>
+              <span class="line-badge">Lines 40–75 (Provide: details)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">details</span>(Request <span class="code-var">$request</span>): <span class="code-fn">JsonResponse</span>
 {
@@ -1287,14 +1227,14 @@ PasswordResetOtp::<span class="code-fn">create</span>([
 
         <!-- Consume -->
         <div>
-          <h4 style="color: #fcd34d; font-size: 0.95rem; margin-bottom: 4px;">ðŸ“¥ Consume: Calls Module 4's <code>POST /api/inventory/food-safety-check</code></h4>
+          <h4 style="color: #fcd34d; font-size: 0.95rem; margin-bottom: 4px;">📥 Consume: Calls Module 4's <code>POST /api/inventory/food-safety-check</code></h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Why Module 3 Needs It:</strong> Before finalizing logistics handover, Module 3 calls Module 4 to verify that the food item has not expired and meets food safety and allergen compliance thresholds.
+            <strong>Why we call this?</strong> Before handing over food for transport, Module 3 calls Module 4 to make sure the food items have not passed their expiry date.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Services/Clients/SafetyServiceClient.php</span>
-              <span class="line-badge">Lines 25â€“58 (Consume: verifySafetyCompliance)</span>
+              <span class="line-badge">Lines 25–58 (Consume: verifySafetyCompliance)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">verifySafetyCompliance</span>(<span class="code-kw">int</span> <span class="code-var">$foodItemId</span>): <span class="code-kw">bool</span>
 {
@@ -1309,21 +1249,21 @@ PasswordResetOtp::<span class="code-fn">create</span>([
         <span class="code-kw">return</span> (<span class="code-var">$data</span>[<span class="code-str">'status'</span>] === <span class="code-str">'S'</span>) &amp;&amp;
                ((<span class="code-var">$data</span>[<span class="code-str">'data'</span>][<span class="code-str">'food_item'</span>][<span class="code-str">'safety_status'</span>] ?? <span class="code-str">''</span>) === <span class="code-str">'SAFE'</span>);
     }
-    <span class="code-kw">return false</span>; <span class="code-cm">// Fail-secure</span>
+    <span class="code-kw">return false</span>;
 }</code></pre>
           </div>
         </div>
 
-        <!-- 6 Tabs Sequence Reference -->
+        <!-- 6 Tabs Reference -->
         <div class="preopen-card">
-          <div class="preopen-header">?? VS Code 6 Pre-Opened Tabs in Exact Sequence (One-click: open_module1_tabs.bat)</div>
+          <div class="preopen-header">📂 VS Code 6 Pre-Opened Tabs in Exact Sequence (One-click: open_module3_tabs.bat)</div>
           <ul class="preopen-list">
-            <li>Tab 1: <strong>app/Contracts/DonationObserverInterface.php:12-20</strong> (Pattern Interface)</li>
-            <li>Tab 2: <strong>app/Observers/DonationObserver.php:15-35</strong> (Pattern Concrete Observer)</li>
-            <li>Tab 3: <strong>resources/views/donations/create.blade.php:12-15</strong> (Security 1: CSRF @csrf Token)</li>
-            <li>Tab 4: <strong>resources/views/donations/show.blade.php:18-28</strong> (Security 2: Stored XSS Escaping)</li>
-            <li>Tab 5: <strong>app/Http/Controllers/Api/DonationApiController.php:43-78</strong> (Web Service Provide: active)</li>
-            <li>Tab 6: <strong>app/Jobs/SendDonationNotificationJob.php:25-58</strong> (Async Queue Worker & verifyNgo)</li>
+            <li>Tab 1: <strong>app/States/Claim/ClaimState.php:8-22</strong> (Pattern Abstract State Class)</li>
+            <li>Tab 2: <strong>app/States/Claim/ApprovedState.php:22-42</strong> (Pattern Concrete State Class)</li>
+            <li>Tab 3: <strong>app/Policies/ClaimPolicy.php:33-40</strong> (Security 1: BOLA/IDOR Policy Gate)</li>
+            <li>Tab 4: <strong>app/Http/Controllers/ClaimController.php:131-141</strong> (Security 2: Pessimistic Row Lock & Transaction)</li>
+            <li>Tab 5: <strong>app/Http/Controllers/Api/ClaimApiController.php:40-75</strong> (Web Service Provide: details)</li>
+            <li>Tab 6: <strong>app/Services/Clients/SafetyServiceClient.php:25-58</strong> (Web Service Consume: verifySafetyCompliance)</li>
           </ul>
         </div>
       </div>
@@ -1351,12 +1291,12 @@ PasswordResetOtp::<span class="code-fn">create</span>([
           Credentials: <code>ngo@nutrishare.com</code> (or <code>admin@nutrishare.com</code>) / <code>Password1!</code>
         </p>
         <ul class="checklist">
-          <li><strong>F4.1 Facilities & Map Pinning:</strong> Open <code>/inventory/create</code>. Show reverse geocoding via OpenStreetMap Leaflet.js map to set warehouse storage coordinates.</li>
-          <li><strong>F4.2 Dual-Mode Directory:</strong> On <code>/inventory</code>, demonstrate the view switcher (Detailed Table View vs. Visual Responsive Cards) with real-time occupancy meters.</li>
-          <li><strong>F4.3 Ingestion & Photos:</strong> Click into Facility #1. Show perishable food item logging with photo proofs and storage requirements (Cold Room / Ambient).</li>
-          <li><strong>F4.4 Allergen Flags & Expiry Badges:</strong> Point out prominent allergen tags (Gluten, Dairy) and red high-contrast warning badges for expired/at-risk items.</li>
-          <li><strong>F4.5 RFC 4180 CSV Export:</strong> Click <strong>"Export CSV Audit"</strong> to demonstrate streamed UTF-8 BOM CSV export for health audits.</li>
-          <li><strong>F4.6 Strategy Dispatching:</strong> Show confirmation alerts dynamically routed via Email/SMS Strategy based on user preference.</li>
+          <li><strong>F4.1 Facilities & Map Pinning:</strong> Open <code>/inventory/create</code>. Show how clicking on the Leaflet map automatically pins warehouse GPS coordinates.</li>
+          <li><strong>F4.2 Dual-Mode Directory:</strong> On <code>/inventory</code>, toggle between Table View and Visual Card Grid to show warehouse capacity meters.</li>
+          <li><strong>F4.3 Ingestion & Photos:</strong> Click into Facility #1. Show perishable food item entry with photos and storage conditions (Cold Room / Ambient).</li>
+          <li><strong>F4.4 Allergen Flags & Expiry Badges:</strong> Point out the allergen tags (Gluten, Dairy) and red warning badges for expired food items.</li>
+          <li><strong>F4.5 CSV Audit Exporter:</strong> Click <strong>"Export CSV Audit"</strong> to download the warehouse inventory report.</li>
+          <li><strong>F4.6 Strategy Dispatching:</strong> Show confirmation alerts dynamically sent via Email or SMS Strategy based on user choice.</li>
         </ul>
       </div>
 
@@ -1368,33 +1308,33 @@ PasswordResetOtp::<span class="code-fn">create</span>([
         </div>
 
         <div class="speech-bubble mod4">
-          <div class="speech-label">ðŸ—£ï¸ Say This Out Loud (General Theory â€” Do NOT read notes):</div>
-          "The <strong>Strategy Pattern</strong> defines a family of algorithms, encapsulates each one into a dedicated class, and makes them interchangeable at runtime. It lets the algorithm vary independently from the clients that use it, eliminating brittle if-else ladders and ensuring high cohesion."
+          <div class="speech-label">🗣️ Say This Out Loud (General Theory — Do NOT read notes):</div>
+          "The <strong>Strategy Pattern</strong> defines a set of algorithms, puts each one into its own class, and makes them interchangeable at runtime. It lets the sending method change independently from the controllers that use it, getting rid of messy <code>if-else</code> blocks."
         </div>
 
         <p style="font-size: 0.86rem; margin: 10px 0;">
           <strong>Why & Where in Module 4:</strong>
-          After a food item is added to inventory, the system dispatches a confirmation alert. The Strategy Pattern swaps the notification channel dynamically at runtime based on the user's preference (<code>notification_preference</code>) or alert urgencyâ€”using <code>EmailStrategy</code> for standard emails or <code>SMSStrategy</code> for urgent telephony alerts, without changing controller code.
+          When food is added to inventory, the system sends an alert. The Strategy Pattern picks the right delivery channel at runtime (using <code>EmailStrategy</code> for emails or <code>SMSStrategy</code> for SMS) based on user preference, without changing the inventory controller code.
         </p>
 
         <p style="font-size: 0.84rem; color: var(--text-secondary);">
           <strong>UML Roles & Architecture:</strong><br>
-          â€¢ <strong>Strategy Interface:</strong> <code>NotificationStrategyInterface</code> (<code>app/Strategies/Notification/NotificationStrategyInterface.php:14-24</code>) declares <code>send()</code> and <code>getChannelName()</code>.<br>
-          â€¢ <strong>Concrete Strategies:</strong> <code>EmailStrategy</code> (<code>app/Strategies/Notification/EmailStrategy.php:14-34</code>) and <code>SMSStrategy</code> (<code>app/Strategies/Notification/SMSStrategy.php:14-34</code>).<br>
-          â€¢ <strong>Context / Dispatcher:</strong> <code>NotificationDispatcher</code> (<code>app/Strategies/Notification/NotificationDispatcher.php:12-42</code>) resolves strategy based on user preference.<br>
-          â€¢ <strong>Client:</strong> <code>InventoryController@addFoodItem</code> (<code>app/Http/Controllers/InventoryController.php:134-142</code>) triggers delivery via the dispatcher.
+          • <strong>Strategy Interface:</strong> <code>NotificationStrategyInterface</code> (<code>app/Strategies/Notification/NotificationStrategyInterface.php:14-24</code>) defines <code>send()</code> and <code>getChannelName()</code>.<br>
+          • <strong>Concrete Strategies:</strong> <code>EmailStrategy</code> (<code>app/Strategies/Notification/EmailStrategy.php:14-34</code>) and <code>SMSStrategy</code> (<code>app/Strategies/Notification/SMSStrategy.php:14-34</code>).<br>
+          • <strong>Context / Dispatcher:</strong> <code>NotificationDispatcher</code> (<code>app/Strategies/Notification/NotificationDispatcher.php:12-42</code>) selects the strategy.<br>
+          • <strong>Client:</strong> <code>InventoryController@addFoodItem</code> (<code>app/Http/Controllers/InventoryController.php:134-142</code>) calls the dispatcher.
         </p>
 
         <div class="code-block-wrap">
           <div class="code-header">
             <span>app/Strategies/Notification/NotificationDispatcher.php</span>
-            <span class="line-badge">Lines 12â€“42 (Strategy Context / Dispatcher)</span>
+            <span class="line-badge">Lines 12–42 (Strategy Context / Dispatcher)</span>
           </div>
           <pre><code><span class="code-kw">class</span> <span class="code-fn">NotificationDispatcher</span>
 {
     <span class="code-kw">public function</span> <span class="code-fn">dispatch</span>(User <span class="code-var">$user</span>, <span class="code-kw">string</span> <span class="code-var">$subject</span>, <span class="code-kw">string</span> <span class="code-var">$message</span>): <span class="code-kw">bool</span>
     {
-        <span class="code-cm">// Dynamic runtime strategy resolution</span>
+        <span class="code-cm">// Picks email or sms strategy dynamically at runtime</span>
         <span class="code-var">$strategy</span> = <span class="code-var">$this</span>-><span class="code-fn">resolveStrategy</span>(<span class="code-var">$user</span>->notification_preference ?? <span class="code-str">'email'</span>);
         <span class="code-var">$recipient</span> = <span class="code-var">$this</span>-><span class="code-fn">getRecipient</span>(<span class="code-var">$user</span>, <span class="code-var">$strategy</span>);
         <span class="code-kw">return</span> <span class="code-var">$strategy</span>-><span class="code-fn">send</span>(<span class="code-var">$recipient</span>, <span class="code-var">$subject</span>, <span class="code-var">$message</span>);
@@ -1407,72 +1347,92 @@ PasswordResetOtp::<span class="code-fn">create</span>([
       <div class="flow-step-card">
         <div class="flow-step-header">
           <span class="flow-step-badge badge-danger">3. Software Security</span>
-          <div class="flow-step-title">2 Specific Threats & Secure Coding Defenses (From Report)</div>
+          <div class="flow-step-title">2 Security Threats & Exact Live Demos</div>
         </div>
 
         <!-- Threat 1 -->
-        <div style="margin-bottom: 16px;">
-          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 1: Log Injection / CRLF Injection (OWASP Top 10 A09:2021 Logging Failures)</h4>
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 1: Log Injection / CRLF Injection</h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Attack Description:</strong> Untrusted user input written directly to system logs allows attackers to inject Carriage Return (<code>\r</code>) and Line Feed (<code>\n</code>) sequences (e.g. <code>Coldroom\r\n[2026-09-06] ADMIN: Granted Superuser...</code>), forging statutory audit entries or concealing unauthorized actions.
+            <strong>What is the attack?</strong> An attacker types Enter keys (<code>\r\n</code>) into a facility name, like <code>Coldroom\r\n[ALERT] Superuser granted</code>. When saved to logs, it creates a fake extra line that confuses admins during audits.
           </p>
           <p style="font-size: 0.84rem; color: #a7f3d0;">
-            <strong>Secure Coding Defense: Server-Side CRLF Sanitisation via Mutators & SecurityHelper</strong><br>
-            <code>SecurityHelper::sanitizeLogInput()</code> strips all <code>\r</code>, <code>\n</code>, and ASCII control characters (0â€“31). To make bypass impossible, <code>SystemLog</code> Eloquent mutators (<code>setDescriptionAttribute</code> and <code>setActionAttribute</code>) automatically sanitize every log entry prior to database storage.
+            <strong>How we fix it? CRLF Sanitization in Mutators</strong><br>
+            In <code>app/Helpers/SecurityHelper.php:14-35</code> and <code>app/Models/SystemLog.php:47-62</code>, our mutator strips all <code>\r</code> and <code>\n</code> characters before saving to the database, flattening the input into a single safe line.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Models/SystemLog.php & app/Helpers/SecurityHelper.php</span>
-              <span class="line-badge">Lines 47â€“62 (CRLF Sanitisation Mutators)</span>
+              <span class="line-badge">Lines 47–62 (CRLF Sanitisation Mutators)</span>
             </div>
-            <pre><code><span class="code-cm">// app/Helpers/SecurityHelper.php: Lines 14-35</span>
+            <pre><code><span class="code-cm">// app/Helpers/SecurityHelper.php: Strips Enter keys</span>
 <span class="code-kw">public static function</span> <span class="code-fn">sanitizeLogInput</span>(<span class="code-kw">string</span> <span class="code-var">$input</span>): <span class="code-kw">string</span>
 {
     <span class="code-var">$sanitized</span> = <span class="code-fn">str_replace</span>([<span class="code-str">"\r\n"</span>, <span class="code-str">"\r"</span>, <span class="code-str">"\n"</span>], <span class="code-str">' '</span>, <span class="code-var">$input</span>);
     <span class="code-kw">return</span> <span class="code-fn">trim</span>(<span class="code-fn">preg_replace</span>(<span class="code-str">'/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/'</span>, <span class="code-str">''</span>, <span class="code-var">$sanitized</span>));
 }
 
-<span class="code-cm">// app/Models/SystemLog.php: Lines 47-54 (Eloquent Model Mutator)</span>
+<span class="code-cm">// app/Models/SystemLog.php: Mutator cleans description automatically</span>
 <span class="code-kw">public function</span> <span class="code-fn">setDescriptionAttribute</span>(<span class="code-kw">string</span> <span class="code-var">$value</span>): <span class="code-kw">void</span>
 {
     <span class="code-var">$this</span>->attributes[<span class="code-str">'description'</span>] = SecurityHelper::<span class="code-fn">sanitizeLogInput</span>(<span class="code-var">$value</span>);
 }</code></pre>
           </div>
+
+          <!-- Live Demo for Threat 1 -->
+          <div class="live-demo-box">
+            <div class="live-demo-title">🎬 How to Demo Log Injection Live to the Tutor (30s):</div>
+            <div class="live-demo-step">1. Go to <code>/inventory/create</code>.</div>
+            <div class="live-demo-step">2. In the Facility Name, type text with simulated newlines: <code>Central Coldroom\r\n[ALERT] Superuser granted</code>.</div>
+            <div class="live-demo-step">3. Submit the form, then go to <code>/system-logs</code>.</div>
+            <div class="live-demo-result" style="background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); color: #6ee7b7;">
+              <strong>Result on Screen:</strong> Show the saved log line: the newlines were removed and the text is flattened into one clean line!
+            </div>
+            <div class="live-demo-explain">
+              <strong>What to say to tutor:</strong> <em>"The SystemLog mutator automatically stripped the Enter keys (\r\n), so an attacker cannot fake an extra log line."</em>
+            </div>
+          </div>
         </div>
 
         <!-- Threat 2 -->
         <div>
-          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 2: Parameter Tampering & IDOR on Action URLs (OWASP Top 10 A01/A04)</h4>
+          <h4 style="color: #f87171; font-size: 0.95rem; margin-bottom: 4px;">Threat 2: Parameter Tampering on Action Links</h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Attack Description:</strong> In quick-claim action URLs (e.g. <code>/inventory/quick-claim/4?user=5</code>), an adversary alters the query string parameters from donation #4 to donation #7 or changes the user ID to hijack high-value supplies or bypass allocation limits.
+            <strong>What is the attack?</strong> If we send a quick-claim link like <code>/inventory/quick-claim/1?user=2</code>, an attacker changes <code>quick-claim/1</code> to <code>quick-claim/2</code> in their URL bar to steal someone else's food allocation.
           </p>
           <p style="font-size: 0.84rem; color: #a7f3d0;">
-            <strong>Secure Coding Defense: Cryptographic HMAC URL Signing (<code>URL::signedRoute</code>)</strong><br>
-            All quick-action links are cryptographically signed using HMAC SHA-256 bound to the application's secret key. The route enforces Laravel's <code>signed</code> middleware. Any modification to parameters invalidates the HMAC signature and aborts with an HTTP 403 Forbidden.
+            <strong>How we fix it? Cryptographic Signed URLs (<code>URL::signedRoute</code>)</strong><br>
+            We sign the URL with an HMAC hash using our secret key. If anyone alters the URL parameters, the digital signature breaks, and Laravel immediately rejects it with <code>403 Invalid Signature</code>.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/InventoryController.php</span>
-              <span class="line-badge">Lines 146â€“160 (HMAC URL Signing)</span>
+              <span class="line-badge">Lines 146–160 (HMAC URL Signing)</span>
             </div>
-            <pre><code><span class="code-cm">// Generates tamper-evident URL with HMAC SHA-256 signature</span>
+            <pre><code><span class="code-cm">// Signs URL with secret key so it cannot be tampered with</span>
 <span class="code-var">$signedUrl</span> = URL::<span class="code-fn">signedRoute</span>(<span class="code-str">'inventory.quick-claim'</span>, [
     <span class="code-str">'donation'</span> =&gt; <span class="code-var">$donationId</span>,
     <span class="code-str">'user'</span>     =&gt; Auth::<span class="code-fn">id</span>(),
 ]);
 
-<span class="code-cm">// routes/web.php (Lines 111-115) enforces validation:</span>
+<span class="code-cm">// routes/web.php (Lines 111-115) enforces the signature:</span>
 Route::<span class="code-fn">get</span>(<span class="code-str">'/inventory/quick-claim/{donation}'</span>, [InventoryController::<span class="code-kw">class</span>, <span class="code-str">'quickClaim'</span>])
     -><span class="code-fn">name</span>(<span class="code-str">'inventory.quick-claim'</span>)
-    -><span class="code-fn">middleware</span>(<span class="code-str">'signed'</span>); <span class="code-cm">// Auto-rejects tampered URLs with 403</span></code></pre>
+    -><span class="code-fn">middleware</span>(<span class="code-str">'signed'</span>); <span class="code-cm">// Blocks tampered links with 403</span></code></pre>
           </div>
-        </div>
 
-        <!-- LIVE SECURITY DEMO SCRIPT -->
-        <div class="live-demo-box">
-          <div class="live-demo-title">ðŸŽ¬ How to Demo This Live to the Tutor (30s Live Proof)</div>
-          <div class="live-demo-step"><strong>1. Demo Log Injection (CRLF Sanitisation):</strong> Go to <code>/inventory/create</code>. When adding a facility, enter name with CRLF characters: <code>Kechara Coldroom\r\n[CRITICAL_ALERT] Superuser escalated</code>. Submit and open <code>/system-logs</code>. Point out that <strong>no separate log entry was created</strong>â€”the string was flattened and stripped of <code>\r\n</code> by <code>SecurityHelper::sanitizeLogInput()</code> and the <code>SystemLog</code> mutator!</div>
-          <div class="live-demo-step"><strong>2. Demo HMAC Signed Route Protection:</strong> Generate a quick-claim URL (e.g. <code>/inventory/quick-claim/1?user=2&amp;signature=8f9a...</code>). In the browser address bar, change <code>quick-claim/1</code> to <code>quick-claim/2</code> (tampering with the donation ID). Press Enter. <strong>Boom! Laravel immediately halts with <code>403 | Invalid Signature</code></strong>, proving HMAC SHA-256 prevents parameter tampering!</div>
+          <!-- Live Demo for Threat 2 -->
+          <div class="live-demo-box">
+            <div class="live-demo-title">🎬 How to Demo Parameter Tampering Live to the Tutor (30s):</div>
+            <div class="live-demo-step">1. Open a signed quick-claim URL (e.g. <code>http://localhost:8000/inventory/quick-claim/1?user=2&amp;signature=8f9a...</code>).</div>
+            <div class="live-demo-step">2. In your browser URL bar, change <code>quick-claim/1</code> to <code>quick-claim/2</code>. Press Enter.</div>
+            <div class="live-demo-result">
+              <strong>Result on Screen:</strong> Laravel immediately displays <strong>403 | Invalid Signature</strong>!
+            </div>
+            <div class="live-demo-explain">
+              <strong>What to say to tutor:</strong> <em>"The URL was signed with a secret hash. Changing the donation ID broke the signature, so Laravel rejected the request."</em>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1485,15 +1445,15 @@ Route::<span class="code-fn">get</span>(<span class="code-str">'/inventory/quick
 
         <!-- Provide -->
         <div style="margin-bottom: 16px;">
-          <h4 style="color: #d8b4fe; font-size: 0.95rem; margin-bottom: 4px;">ðŸ“¤ Provide (Expose): <code>GET /api/inventory/status</code> & <code>POST /api/inventory/food-safety-check</code></h4>
+          <h4 style="color: #d8b4fe; font-size: 0.95rem; margin-bottom: 4px;">📤 Provide (Expose): <code>GET /api/inventory/status</code> & <code>POST /api/inventory/food-safety-check</code></h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Target Consumers:</strong> Module 3 (Claims & Logistics) uses <code>food-safety-check</code> before dispatching transport vehicles.<br>
-            <strong>IFA Envelope:</strong> Returns <code>status</code> ('S'/'F'/'E'), <code>timestamp</code>, and <code>data.food_item.safety_status</code> ('SAFE' or 'EXPIRED / AT RISK').
+            <strong>Who calls this?</strong> Module 3 (Claims) calls <code>food-safety-check</code> before dispatching food.<br>
+            <strong>Response Format:</strong> Returns <code>status</code> ('S'/'F'/'E'), <code>timestamp</code>, and <code>data.food_item.safety_status</code> ('SAFE' or 'EXPIRED / AT RISK').
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/Api/InventoryApiController.php</span>
-              <span class="line-badge">Lines 80â€“120 (Provide: checkSafety)</span>
+              <span class="line-badge">Lines 80–120 (Provide: checkSafety)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">checkSafety</span>(Request <span class="code-var">$request</span>): <span class="code-fn">JsonResponse</span>
 {
@@ -1519,14 +1479,14 @@ Route::<span class="code-fn">get</span>(<span class="code-str">'/inventory/quick
 
         <!-- Consume -->
         <div>
-          <h4 style="color: #d8b4fe; font-size: 0.95rem; margin-bottom: 4px;">ðŸ“¥ Consume: Calls Module 1's <code>GET /api/donations/active</code></h4>
+          <h4 style="color: #d8b4fe; font-size: 0.95rem; margin-bottom: 4px;">📥 Consume: Calls Module 1's <code>GET /api/donations/active</code></h4>
           <p style="font-size: 0.84rem; color: var(--text-secondary); margin-bottom: 6px;">
-            <strong>Why Module 4 Needs It:</strong> Allows NGO inventory managers to preview incoming regional surplus donations to forecast inbound warehouse intake and reserve cold room capacity before shipments arrive.
+            <strong>Why we call this?</strong> Allows warehouse managers to preview incoming donations in advance so they can reserve cold room space before the truck arrives.
           </p>
           <div class="code-block-wrap">
             <div class="code-header">
               <span>app/Http/Controllers/Api/InventoryApiController.php</span>
-              <span class="line-badge">Lines 125â€“150 (Consume: fetchActiveDonationsForWarehouse)</span>
+              <span class="line-badge">Lines 125–150 (Consume: fetchActiveDonationsForWarehouse)</span>
             </div>
             <pre><code><span class="code-kw">public function</span> <span class="code-fn">fetchActiveDonationsForWarehouse</span>(): <span class="code-kw">array</span>
 {
@@ -1544,16 +1504,16 @@ Route::<span class="code-fn">get</span>(<span class="code-str">'/inventory/quick
           </div>
         </div>
 
-        <!-- 6 Tabs Sequence Reference -->
+        <!-- 6 Tabs Reference -->
         <div class="preopen-card">
-          <div class="preopen-header">?? VS Code 6 Pre-Opened Tabs in Exact Sequence (One-click: open_module1_tabs.bat)</div>
+          <div class="preopen-header">📂 VS Code 6 Pre-Opened Tabs in Exact Sequence (One-click: open_module4_tabs.bat)</div>
           <ul class="preopen-list">
-            <li>Tab 1: <strong>app/Contracts/DonationObserverInterface.php:12-20</strong> (Pattern Interface)</li>
-            <li>Tab 2: <strong>app/Observers/DonationObserver.php:15-35</strong> (Pattern Concrete Observer)</li>
-            <li>Tab 3: <strong>resources/views/donations/create.blade.php:12-15</strong> (Security 1: CSRF @csrf Token)</li>
-            <li>Tab 4: <strong>resources/views/donations/show.blade.php:18-28</strong> (Security 2: Stored XSS Escaping)</li>
-            <li>Tab 5: <strong>app/Http/Controllers/Api/DonationApiController.php:43-78</strong> (Web Service Provide: active)</li>
-            <li>Tab 6: <strong>app/Jobs/SendDonationNotificationJob.php:25-58</strong> (Async Queue Worker & verifyNgo)</li>
+            <li>Tab 1: <strong>app/Strategies/Notification/NotificationStrategyInterface.php:14-24</strong> (Pattern Strategy Interface)</li>
+            <li>Tab 2: <strong>app/Strategies/Notification/EmailStrategy.php:14-34</strong> (Pattern Concrete Strategy)</li>
+            <li>Tab 3: <strong>app/Models/SystemLog.php:47-62</strong> (Security 1: CRLF Sanitization Mutators)</li>
+            <li>Tab 4: <strong>app/Http/Controllers/InventoryController.php:146-160</strong> (Security 2: Cryptographic HMAC Signed URLs)</li>
+            <li>Tab 5: <strong>app/Http/Controllers/Api/InventoryApiController.php:80-120</strong> (Web Service Provide: checkSafety)</li>
+            <li>Tab 6: <strong>app/Strategies/Notification/NotificationDispatcher.php:12-42</strong> (Pattern Context / Dispatcher & Consume)</li>
           </ul>
         </div>
       </div>
@@ -1563,8 +1523,7 @@ Route::<span class="code-fn">get</span>(<span class="code-str">'/inventory/quick
 
   <!-- Bottom Quick Switcher Bar -->
   <nav class="bottom-bar" aria-label="Quick jump between modules">
-    <a href="#tutor-protocol" class="bottom-btn" style="border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">âš ï¸ Traps</a>
-    <a href="#live-security-demo" class="bottom-btn" style="border-color: rgba(16, 185, 129, 0.4); color: #6ee7b7;">ðŸŽ¬ Sec Demo</a>
+    <a href="#tutor-protocol" class="bottom-btn" style="border-color: rgba(239, 68, 68, 0.4); color: #fca5a5;">⚠️ Traps</a>
     <a href="#module-1" class="bottom-btn" style="border-color: rgba(56, 189, 248, 0.4); color: #7dd3fc;">Mod 1</a>
     <a href="#module-2" class="bottom-btn" style="border-color: rgba(168, 85, 247, 0.4); color: #6ee7b7;">Mod 2</a>
     <a href="#module-3" class="bottom-btn" style="border-color: rgba(245, 158, 11, 0.4); color: #fcd34d;">Mod 3</a>
@@ -1573,5 +1532,3 @@ Route::<span class="code-fn">get</span>(<span class="code-str">'/inventory/quick
 
 </body>
 </html>
-
-
