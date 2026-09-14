@@ -3,131 +3,216 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>NutriShare — Viva Defense Presentation Cheat Sheet</title>
+  <title>NutriShare — Viva Defense Presentation Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #090d16;
-      --bg-card: #111827;
+      --bg-dark: #070b14;
+      --bg-card: #0f172a;
       --bg-elevated: #1e293b;
-      --bg-code: #050811;
-      --border: #1f293d;
+      --bg-input: #151f33;
+      --bg-code: #070c18;
+      --border: #23324d;
+      --border-focus: #38bdf8;
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
+      --text-dim: #64748b;
       
       --color-demo: #10b981;
-      --color-pattern: #38bdf8;
+      --color-demo-bg: rgba(16, 185, 129, 0.12);
+      --color-pattern: #0ea5e9;
+      --color-pattern-bg: rgba(14, 165, 233, 0.12);
       --color-security: #f43f5e;
+      --color-security-bg: rgba(244, 63, 94, 0.12);
       --color-ws: #a855f7;
+      --color-ws-bg: rgba(168, 85, 247, 0.12);
 
-      --radius: 12px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       background-color: var(--bg-dark);
       color: var(--text-main);
       line-height: 1.55;
-      padding-bottom: 80px;
+      padding-bottom: 90px;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Sticky Top Header */
+    /* Sticky Navigation Header */
     header {
-      background: rgba(9, 13, 22, 0.96);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(7, 11, 20, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 1000;
-      padding: 12px 16px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      padding: 14px 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
     }
     .header-inner {
-      max-width: 1240px;
+      max-width: 1280px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
-    .header-title-row {
+
+    /* Header Row 1: Title & Exam Status */
+    .header-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 12px;
     }
-    .header-title h1 {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #38bdf8;
+    .header-brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
     }
-    .header-title p {
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #0ea5e9, #38bdf8);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 0 16px rgba(14, 165, 233, 0.4);
+    }
+    .header-titles h1 {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: #f8fafc;
+      letter-spacing: -0.02em;
+    }
+    .header-titles p {
       font-size: 0.8rem;
       color: var(--text-muted);
     }
-
-    /* Fast Switcher Tabs */
-    .filter-bar {
+    .header-badge {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(16, 185, 129, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
       display: flex;
       align-items: center;
       gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
     }
-    .filter-bar::-webkit-scrollbar { display: none; }
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #10b981;
+    }
 
+    /* Header Row 2: Controls (Two neat wrapping rows) */
+    .nav-controls-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    @media (min-width: 900px) {
+      .nav-controls-grid {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .pill-group {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .group-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      margin-right: 4px;
+    }
+
+    /* Buttons */
     .btn-nav {
-      background: var(--bg-elevated);
+      background: var(--bg-input);
       color: var(--text-muted);
       border: 1px solid var(--border);
-      padding: 6px 13px;
+      padding: 6px 14px;
       border-radius: 9999px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       font-weight: 700;
       cursor: pointer;
       text-decoration: none;
       white-space: nowrap;
-      transition: all 0.2s ease;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
       display: inline-flex;
       align-items: center;
       gap: 6px;
     }
-    .btn-nav:hover, .btn-nav.active {
-      background: #38bdf8;
-      color: #04101e;
+    .btn-nav:hover {
+      background: var(--bg-elevated);
+      color: #fff;
       border-color: #38bdf8;
+      transform: translateY(-1px);
     }
-    .btn-nav.btn-pillar-demo.active { background: var(--color-demo); color: #022c22; border-color: var(--color-demo); }
-    .btn-nav.btn-pillar-pattern.active { background: var(--color-pattern); color: #041b2d; border-color: var(--color-pattern); }
-    .btn-nav.btn-pillar-sec.active { background: var(--color-security); color: #fff; border-color: var(--color-security); }
-    .btn-nav.btn-pillar-ws.active { background: var(--color-ws); color: #fff; border-color: var(--color-ws); }
+    .btn-nav.active {
+      background: #0ea5e9;
+      color: #031427;
+      border-color: #0ea5e9;
+      box-shadow: 0 0 14px rgba(14, 165, 233, 0.4);
+    }
+    .btn-filter.active-all { background: #f8fafc; color: #020617; border-color: #f8fafc; }
+    .btn-filter.active-demo { background: var(--color-demo); color: #022c22; border-color: var(--color-demo); box-shadow: 0 0 14px rgba(16, 185, 129, 0.4); }
+    .btn-filter.active-pattern { background: var(--color-pattern); color: #041f35; border-color: var(--color-pattern); box-shadow: 0 0 14px rgba(14, 165, 233, 0.4); }
+    .btn-filter.active-security { background: var(--color-security); color: #fff; border-color: var(--color-security); box-shadow: 0 0 14px rgba(244, 63, 94, 0.4); }
+    .btn-filter.active-ws { background: var(--color-ws); color: #fff; border-color: var(--color-ws); box-shadow: 0 0 14px rgba(168, 85, 247, 0.4); }
 
     /* Main Container */
     .main-container {
-      max-width: 1240px;
-      margin: 20px auto 0;
-      padding: 0 16px;
+      max-width: 1280px;
+      margin: 24px auto 0;
+      padding: 0 20px;
       display: flex;
       flex-direction: column;
       gap: 36px;
     }
 
-    /* Module Section Container */
+    /* Module Box */
     .module-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border-radius: var(--radius-lg);
       overflow: hidden;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+      transition: border-color 0.2s;
     }
+    .module-card:hover {
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    /* Module Header */
     .module-header {
-      padding: 16px 20px;
-      background: var(--bg-elevated);
+      padding: 18px 24px;
+      background: linear-gradient(180deg, #162238 0%, #111b2d 100%);
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
@@ -140,77 +225,103 @@
       font-weight: 800;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      color: #fff;
     }
     .member-info p {
       font-size: 0.85rem;
       color: var(--text-muted);
+      margin-top: 2px;
     }
     .mod-badge {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-weight: 800;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 9999px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
-    .badge-m1 { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); }
+    .badge-m1 { background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.4); }
     .badge-m2 { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
     .badge-m3 { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); }
     .badge-m4 { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4); }
 
-    /* Login Bar */
-    .login-bar {
-      padding: 10px 20px;
-      background: #0d1527;
+    /* Sleek Credentials Bar */
+    .credentials-bar {
+      padding: 12px 24px;
+      background: #090f1d;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       gap: 16px;
       flex-wrap: wrap;
-      font-size: 0.82rem;
+      font-size: 0.84rem;
     }
-    .login-tag {
+    .cred-title {
       font-weight: 800;
       color: #94a3b8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .login-val {
-      font-family: monospace;
-      background: var(--bg-elevated);
-      padding: 2px 8px;
-      border-radius: 4px;
-      color: #38bdf8;
+    .cred-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-input);
       border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+    }
+    .cred-label {
+      color: var(--text-dim);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+    .cred-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #38bdf8;
+      font-weight: 600;
+      user-select: all;
+    }
+    .cred-pw {
+      color: #34d399;
     }
 
-    /* Pillars Grid */
+    /* 4-Pillars Grid */
     .pillars-grid {
-      padding: 20px;
+      padding: 24px;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 18px;
+      gap: 20px;
     }
-    @media (min-width: 800px) {
+    @media (min-width: 900px) {
       .pillars-grid {
         grid-template-columns: 1fr 1fr;
       }
     }
 
-    /* Individual Pillar Card */
+    /* Pillar Card */
     .pillar-card {
       background: var(--bg-elevated);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px 18px;
+      border-radius: var(--radius-md);
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      position: relative;
+      gap: 14px;
+      transition: all 0.25s ease;
     }
-    .pillar-card.p-demo { border-left: 4px solid var(--color-demo); }
-    .pillar-card.p-pattern { border-left: 4px solid var(--color-pattern); }
-    .pillar-card.p-security { border-left: 4px solid var(--color-security); }
-    .pillar-card.p-ws { border-left: 4px solid var(--color-ws); }
+    .pillar-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .pillar-card.p-demo { border-top: 4px solid var(--color-demo); }
+    .pillar-card.p-pattern { border-top: 4px solid var(--color-pattern); }
+    .pillar-card.p-security { border-top: 4px solid var(--color-security); }
+    .pillar-card.p-ws { border-top: 4px solid var(--color-ws); }
 
     .pillar-header {
       display: flex;
@@ -218,73 +329,47 @@
       justify-content: space-between;
       gap: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 8px;
+      padding-bottom: 10px;
     }
     .pillar-title {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.04em;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
     .pillar-file {
-      font-family: monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.72rem;
       color: #38bdf8;
-      background: rgba(56, 189, 248, 0.1);
-      padding: 2px 7px;
-      border-radius: 4px;
+      background: rgba(14, 165, 233, 0.12);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
       word-break: break-all;
     }
 
-    /* Say This Box */
-    .speech-box {
-      background: rgba(56, 189, 248, 0.06);
-      border: 1px solid rgba(56, 189, 248, 0.25);
-      border-radius: 8px;
-      padding: 10px 12px;
-    }
-    .speech-label {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: #38bdf8;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .speech-text {
-      font-size: 0.88rem;
-      color: #e2e8f0;
-      line-height: 1.45;
-    }
-    .speech-text strong {
-      color: #fff;
-    }
-
-    /* Step List */
+    /* Step List (Demo) */
     .step-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
     .step-item {
       display: flex;
-      gap: 10px;
-      font-size: 0.85rem;
-      line-height: 1.4;
+      gap: 12px;
+      font-size: 0.88rem;
+      line-height: 1.45;
     }
     .step-num {
-      width: 22px;
-      height: 22px;
-      background: var(--bg-dark);
+      width: 24px;
+      height: 24px;
+      background: rgba(16, 185, 129, 0.15);
       color: var(--color-demo);
-      border: 1px solid var(--color-demo);
+      border: 1.5px solid var(--color-demo);
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -292,7 +377,7 @@
       font-size: 0.75rem;
       font-weight: 800;
       flex-shrink: 0;
-      margin-top: 1px;
+      margin-top: 2px;
     }
     .step-content {
       color: #cbd5e1;
@@ -301,113 +386,123 @@
       color: #fff;
     }
 
-    /* Mini Code Box */
-    .mini-code {
-      background: var(--bg-code);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 6px;
-      padding: 8px 10px;
-      font-family: "Consolas", "Fira Code", monospace;
-      font-size: 0.75rem;
-      color: #e2e8f0;
-      overflow-x: auto;
-      line-height: 1.4;
+    /* Speech Box */
+    .speech-box {
+      background: rgba(14, 165, 233, 0.07);
+      border: 1px solid rgba(14, 165, 233, 0.28);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      position: relative;
     }
-    .mini-code .hl-keyword { color: #f43f5e; font-weight: 700; }
-    .mini-code .hl-fn { color: #38bdf8; }
-    .mini-code .hl-string { color: #34d399; }
-    .mini-code .hl-comment { color: #64748b; font-style: italic; }
+    .speech-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .speech-text {
+      font-size: 0.9rem;
+      color: #f1f5f9;
+      line-height: 1.48;
+    }
+    .speech-text strong {
+      color: #38bdf8;
+    }
 
-    /* Q&A Callout */
+    /* Q&A Tutor Callout */
     .qa-box {
-      background: #181504;
+      background: #191404;
       border: 1px solid #eab308;
-      border-radius: 8px;
-      padding: 8px 12px;
-      font-size: 0.82rem;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 0.85rem;
     }
     .qa-q {
       font-weight: 800;
       color: #fde047;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
     .qa-a {
-      color: #f1f5f9;
-      line-height: 1.4;
+      color: #f8fafc;
+      line-height: 1.42;
     }
 
-    /* Helper styles */
+    /* Code Box */
+    .code-box {
+      background: var(--bg-code);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-family: 'JetBrains Mono', Consolas, monospace;
+      font-size: 0.77rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      line-height: 1.45;
+    }
+    .hl-kw { color: #f43f5e; font-weight: 700; }
+    .hl-fn { color: #38bdf8; }
+    .hl-str { color: #34d399; }
+    .hl-cmt { color: #64748b; font-style: italic; }
+
+    /* Colors */
     .text-demo { color: var(--color-demo); }
     .text-pattern { color: var(--color-pattern); }
     .text-security { color: var(--color-security); }
     .text-ws { color: var(--color-ws); }
-
-    /* Floating Quick Switcher Footer on Mobile */
-    @media (min-width: 768px) { .mobile-dock { display: none !important; } }
-    .mobile-dock {
-      position: fixed;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(17, 24, 39, 0.95);
-      backdrop-filter: blur(14px);
-      border: 1px solid var(--border);
-      border-radius: 9999px;
-      padding: 6px 12px;
-      display: flex;
-      gap: 6px;
-      z-index: 1000;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.8);
-    }
-    .dock-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 5px 10px;
-      border-radius: 9999px;
-      transition: all 0.2s;
-    }
-    .dock-link:hover, .dock-link.active {
-      background: #38bdf8;
-      color: #04111f;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Sticky Top Navigation -->
+  <!-- Sticky Top Header -->
   <header>
     <div class="header-inner">
-      <div class="header-title-row">
-        <div class="header-title">
-          <h1><span>🛡️</span> NutriShare — Viva Defense Guide</h1>
-          <p>Tutor Flow: <strong>Demo ➔ Design Pattern ➔ Security Threat ➔ Web Services</strong></p>
+      <div class="header-top">
+        <div class="header-brand">
+          <div class="brand-icon">🛡️</div>
+          <div class="header-titles">
+            <h1>NutriShare — Viva Defense Presentation Guide</h1>
+            <p>Master Cheat Sheet • Structured for Tutor's 4 Questions: <strong>Demo ➔ Design Pattern ➔ Security Threat ➔ Web Services</strong></p>
+          </div>
         </div>
-        <div style="font-size: 0.75rem; color: #10b981; font-weight: 700; background: rgba(16,185,129,0.1); padding: 4px 10px; border-radius: 9999px; border: 1px solid rgba(16,185,129,0.3);">
-          ● Ready for Viva Exam
+        <div class="header-badge">
+          <span class="pulse-dot"></span>
+          <span>Database Seeded & Ready</span>
         </div>
       </div>
 
-      <!-- Quick Switcher Bar -->
-      <div class="filter-bar">
-        <span style="font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Module:</span>
-        <a href="#mod1" class="btn-nav active" onclick="highlightNav(this)">Mod 1: Liew (Donations)</a>
-        <a href="#mod2" class="btn-nav" onclick="highlightNav(this)">Mod 2: Cheon (Verification)</a>
-        <a href="#mod3" class="btn-nav" onclick="highlightNav(this)">Mod 3: Hiew (Claims)</a>
-        <a href="#mod4" class="btn-nav" onclick="highlightNav(this)">Mod 4: Wong (Inventory)</a>
-        
-        <span style="margin-left: 12px; font-size: 0.75rem; font-weight: 800; color: var(--text-muted); text-transform: uppercase;">Pillar Filter:</span>
-        <button class="btn-nav active" onclick="filterPillar('all', this)">All 4 Pillars</button>
-        <button class="btn-nav btn-pillar-demo" onclick="filterPillar('p-demo', this)">🎬 Demo Only</button>
-        <button class="btn-nav btn-pillar-pattern" onclick="filterPillar('p-pattern', this)">🏗️ Design Pattern</button>
-        <button class="btn-nav btn-pillar-sec" onclick="filterPillar('p-security', this)">🛡️ Security</button>
-        <button class="btn-nav btn-pillar-ws" onclick="filterPillar('p-ws', this)">🌐 Web Services</button>
+      <!-- Controls: Module Jump + Pillar Filter -->
+      <div class="nav-controls-grid">
+        <!-- Module Switcher -->
+        <div class="pill-group">
+          <span class="group-label">Module:</span>
+          <a href="#mod1" class="btn-nav active" onclick="activateMod(this)">Mod 1: Liew (Donations)</a>
+          <a href="#mod2" class="btn-nav" onclick="activateMod(this)">Mod 2: Cheon (Verification)</a>
+          <a href="#mod3" class="btn-nav" onclick="activateMod(this)">Mod 3: Hiew (Claims)</a>
+          <a href="#mod4" class="btn-nav" onclick="activateMod(this)">Mod 4: Wong (Inventory)</a>
+        </div>
+
+        <!-- Pillar Question Filter -->
+        <div class="pill-group">
+          <span class="group-label">Filter Question:</span>
+          <button class="btn-nav btn-filter active active-all" onclick="filterPillar('all', this)">⚪ All 4 Questions</button>
+          <button class="btn-nav btn-filter" onclick="filterPillar('p-demo', this)">🎬 Demo Only</button>
+          <button class="btn-nav btn-filter" onclick="filterPillar('p-pattern', this)">🏗️ Design Pattern</button>
+          <button class="btn-nav btn-filter" onclick="filterPillar('p-security', this)">🛡️ Security Threat</button>
+          <button class="btn-nav btn-filter" onclick="filterPillar('p-ws', this)">🌐 Web Services</button>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
+  <!-- Main Presentation Cards -->
   <main class="main-container">
 
     <!-- ========================================================================= -->
@@ -416,22 +511,35 @@
     <section id="mod1" class="module-card">
       <div class="module-header">
         <div class="member-info">
-          <h2><span>🔵</span> Module 1: Donation Publishing & Notifications</h2>
-          <p><strong>Student:</strong> Liew Yi Ler (25WMR09747) • <strong>Core Role:</strong> Food Donor & Real-time Alerting</p>
+          <h2><span>🔵</span> Module 1: Donation Publishing & System Notifications</h2>
+          <p><strong>Student:</strong> Liew Yi Ler (25WMR09747) • <strong>Core Role:</strong> Surplus Food Donor & Real-time Alerting</p>
         </div>
         <span class="mod-badge badge-m1">Module 1 Leader</span>
       </div>
 
-      <div class="login-bar">
-        <span class="login-tag">🔑 Test Accounts:</span>
-        <span>Donor: <span class="login-val">donor@nutrishare.com</span> / <span class="login-val">password123</span></span>
-        <span>NGO: <span class="login-val">ngo@nutrishare.com</span> / <span class="login-val">password123</span></span>
-        <span>URL: <span class="login-val">http://127.0.0.1:8000/login</span></span>
+      <div class="credentials-bar">
+        <span class="cred-title">🔑 Test Accounts:</span>
+        <div class="cred-item">
+          <span class="cred-label">Donor:</span>
+          <span class="cred-val">donor@nutrishare.com</span>
+        </div>
+        <div class="cred-item">
+          <span class="cred-label">NGO:</span>
+          <span class="cred-val">ngo@nutrishare.com</span>
+        </div>
+        <div class="cred-item">
+          <span class="cred-label">Password:</span>
+          <span class="cred-val cred-pw">Password1! (or password123)</span>
+        </div>
+        <div class="cred-item">
+          <span class="cred-label">URL:</span>
+          <span class="cred-val">http://127.0.0.1:8000/login</span>
+        </div>
       </div>
 
       <div class="pillars-grid">
 
-        <!-- Pillar 1: Demo -->
+        <!-- 1. Live Demo -->
         <div class="pillar-card p-demo">
           <div class="pillar-header">
             <span class="pillar-title text-demo">🎬 1. Live Demo Instructions</span>
@@ -444,78 +552,78 @@
             </li>
             <li class="step-item">
               <span class="step-num">2</span>
-              <div class="step-content">Fill title: <strong>"Fresh Artisan Bread"</strong>, Category: <strong>Bakery</strong>, Quantity: <strong>20 kg</strong>, Expiry: <strong>Tomorrow</strong>, Location: <strong>Sunway</strong>. Click <strong>"Publish Donation"</strong>.</div>
+              <div class="step-content">Enter title: <strong>"Fresh Artisan Bread"</strong>, Category: <strong>Bakery</strong>, Quantity: <strong>20 kg</strong>, Expiry: <strong>Tomorrow</strong>, Pickup: <strong>Sunway</strong>. Click <strong>"Publish Donation"</strong>.</div>
             </li>
             <li class="step-item">
               <span class="step-num">3</span>
-              <div class="step-content">Point to the top-right <strong>Notification Bell Icon</strong>: Show red badge <strong>(1)</strong> with confirmation alert: <em>"Donation Published Successfully"</em>!</div>
+              <div class="step-content">Show green success banner. Click top-right <strong>Bell Icon</strong>: Show red badge <strong>(1)</strong> with confirmation alert: <em>"Donation Published Successfully"</em>!</div>
             </li>
             <li class="step-item">
               <span class="step-num">4</span>
-              <div class="step-content">Open incognito window -> Login as <strong>ngo@nutrishare.com</strong> -> Click Bell: Show broadcast alert: <em>"New Donation Available: Fresh Artisan Bread"</em>!</div>
+              <div class="step-content">Switch / login as <strong>ngo@nutrishare.com</strong>: Click Bell: Show broadcast alert: <em>"New Donation Available: Fresh Artisan Bread"</em>!</div>
             </li>
           </ol>
           <div class="speech-box">
             <div class="speech-label">💬 Say This While Demonstrating:</div>
             <div class="speech-text">
-              "In Module 1, donors can publish surplus food in seconds. The instant it is published, our system automatically dispatches real-time alerts to the donor and all nearby verified NGOs so no surplus food goes to waste."
+              "In Module 1, donors can publish food in seconds. The instant it is published, our Observer pattern dispatches real-time alerts to the donor and nearby verified NGOs so surplus food is never wasted."
             </div>
           </div>
         </div>
 
-        <!-- Pillar 2: Design Pattern -->
+        <!-- 2. Design Pattern -->
         <div class="pillar-card p-pattern">
           <div class="pillar-header">
             <span class="pillar-title text-pattern">🏗️ 2. Design Pattern: Observer</span>
             <span class="pillar-file">app/Observers/DonationObserver.php:30</span>
           </div>
           <div class="qa-box">
-            <div class="qa-q">❓ Tutor Question: "Why did you use Observer pattern and how does it work?"</div>
+            <div class="qa-q">❓ Tutor: "Why did you use Observer pattern and how does it work?"</div>
             <div class="qa-a">
-              "We use the <strong>Observer Pattern</strong> to decouple donation creation from notification alerts. <strong>Donation</strong> is the Subject; <strong>DonationObserver</strong> is the Observer."
+              "We use the <strong>Observer Pattern</strong> to decouple donation creation from notification delivery. <strong>Donation</strong> is the Subject; <strong>DonationObserver</strong> is the Observer."
             </div>
           </div>
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
             <div class="speech-text">
-              • <strong>How it works:</strong> When <code>Donation::create()</code> executes, Laravel automatically triggers <code>DonationObserver::created()</code>.<br>
-              • The observer dispatches <code>SendDonationNotificationJob</code> to create alerts for the donor and verified NGOs.<br>
-              • <strong>Why use it:</strong> Complete separation of concerns. If tomorrow we add WhatsApp or push notifications, we never touch the Donation model code!
+              • <strong>How it works:</strong> When <code>Donation::create()</code> runs, Laravel automatically fires <code>DonationObserver::created()</code>.<br>
+              • The observer dispatches <code>SendDonationNotificationJob</code> to notify the donor and verified NGOs.<br>
+              • <strong>Why use it:</strong> Complete decoupling! We can add SMS, WhatsApp, or mobile push alerts in the future without changing a single line of donation code.
             </div>
           </div>
-          <pre class="mini-code"><span class="hl-comment">// app/Observers/DonationObserver.php</span>
-<span class="hl-keyword">public function</span> <span class="hl-fn">onDonationCreated</span>(Donation $donation): <span class="hl-keyword">void</span> {
-    <span class="hl-comment">// Observer dispatches background notification job</span>
+          <pre class="code-box"><span class="hl-cmt">// app/Observers/DonationObserver.php</span>
+<span class="hl-kw">public function</span> <span class="hl-fn">onDonationCreated</span>(Donation $donation): <span class="hl-kw">void</span> {
+    <span class="hl-cmt">// Observer triggers background notification job</span>
     SendDonationNotificationJob::<span class="hl-fn">dispatch</span>($donation);
 }</pre>
         </div>
 
-        <!-- Pillar 3: Security Threat -->
+        <!-- 3. Security Threat -->
         <div class="pillar-card p-security">
           <div class="pillar-header">
             <span class="pillar-title text-security">🛡️ 3. Security: Mass Assignment & BOLA</span>
             <span class="pillar-file">Requests/StoreDonationRequest.php:25</span>
           </div>
           <div class="qa-box">
-            <div class="qa-q">❓ Tutor Question: "What security threat could happen and how do you stop it?"</div>
+            <div class="qa-q">❓ Tutor: "What security threat could happen and how do you stop it?"</div>
             <div class="qa-a">
-              "Attackers attempt <strong>Mass Assignment</strong> (injecting <code>status=claimed</code>) or <strong>Broken Object Authorization</strong> (tampering with another donor's donation ID)."
+              "Attackers attempt <strong>Mass Assignment</strong> (injecting <code>status=claimed</code> to steal food) or <strong>Broken Object Authorization</strong> (editing someone else's donation ID)."
             </div>
           </div>
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
             <div class="speech-text">
-              • <strong>Defense 1 (Mass Assignment):</strong> We use Form Request validation (<code>StoreDonationRequest</code>) and model <code>$fillable</code>. Any unlisted fields sent by hackers are stripped out immediately.<br>
-              • <strong>Defense 2 (BOLA / IDOR):</strong> We enforce <code>DonationPolicy</code> on update/delete. If <code>$user->id !== $donation->user_id</code>, Laravel returns an immediate <strong>403 Forbidden</strong>!
+              • <strong>Mass Assignment Defense:</strong> Form Request (<code>StoreDonationRequest</code>) and Model <code>$fillable</code> whitelist. Any unauthorized injected fields are silently stripped out.<br>
+              • <strong>BOLA / IDOR Defense:</strong> <code>DonationPolicy</code> checks <code>$user->id === $donation->user_id</code> on update/delete. Unauthorized requests receive an instant <strong>403 Forbidden</strong>!
             </div>
           </div>
-          <pre class="mini-code"><span class="hl-comment">// app/Policies/DonationPolicy.php</span>
-<span class="hl-keyword">public function</span> <span class="hl-fn">update</span>(User $user, Donation $donation): <span class="hl-keyword">bool</span> {
-    <span class="hl-keyword">return</span> $user->id === $donation->user_id; <span class="hl-comment">// 403 Forbidden if not owner</span>
+          <pre class="code-box"><span class="hl-cmt">// app/Policies/DonationPolicy.php</span>
+<span class="hl-kw">public function</span> <span class="hl-fn">update</span>(User $user, Donation $donation): <span class="hl-kw">bool</span> {
+    <span class="hl-kw">return</span> $user->id === $donation->user_id; <span class="hl-cmt">// 403 Forbidden if not owner</span>
 }</pre>
         </div>
 
-        <!-- Pillar 4: Web Services -->
+        <!-- 4. Web Services -->
         <div class="pillar-card p-ws">
           <div class="pillar-header">
             <span class="pillar-title text-ws">🌐 4. Web Services: Provided & Consumed</span>
@@ -523,11 +631,11 @@
           </div>
           <div style="font-size: 0.85rem;">
             <p><strong>1. Web Service Provided:</strong> <code>GET /api/v1/donations</code></p>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Exposes active surplus food donations in RESTful JSON format so third-party charity mobile apps can retrieve listings.</p>
-            <pre class="mini-code" style="margin: 6px 0;">{ <span class="hl-string">"status"</span>: <span class="hl-string">"success"</span>, <span class="hl-string">"data"</span>: [{ <span class="hl-string">"id"</span>: 1, <span class="hl-string">"title"</span>: <span class="hl-string">"Artisan Bread"</span>, <span class="hl-string">"quantity"</span>: 20 }] }</pre>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin: 2px 0 6px;">Exposes active food donations in JSON format for third-party charity apps.</p>
+            <pre class="code-box">{ <span class="hl-str">"status"</span>: <span class="hl-str">"success"</span>, <span class="hl-str">"data"</span>: [{ <span class="hl-str">"id"</span>: 1, <span class="hl-str">"title"</span>: <span class="hl-str">"Artisan Bread"</span>, <span class="hl-str">"quantity"</span>: 20 }] }</pre>
             
-            <p style="margin-top: 6px;"><strong>2. Web Service Consumed:</strong> <code>SafetyServiceClient.php</code></p>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Calls external Food Safety Compliance API via Guzzle HTTP to automatically check shelf-life limits before publishing.</p>
+            <p style="margin-top: 8px;"><strong>2. Web Service Consumed:</strong> <code>SafetyServiceClient.php</code></p>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Calls external Food Safety API to check expiry guidelines before publishing.</p>
           </div>
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
@@ -553,15 +661,25 @@
         <span class="mod-badge badge-m2">Module 2</span>
       </div>
 
-      <div class="login-bar">
-        <span class="login-tag">🔑 Test Accounts:</span>
-        <span>Pending NGO: <span class="login-val">pichaeats@nutrishare.com</span> / <span class="login-val">password123</span></span>
-        <span>Admin: <span class="login-val">admin@nutrishare.com</span> / <span class="login-val">password123</span></span>
+      <div class="credentials-bar">
+        <span class="cred-title">🔑 Test Accounts:</span>
+        <div class="cred-item">
+          <span class="cred-label">Pending NGO:</span>
+          <span class="cred-val">pichaeats@nutrishare.com</span>
+        </div>
+        <div class="cred-item">
+          <span class="cred-label">Admin:</span>
+          <span class="cred-val">admin@nutrishare.com</span>
+        </div>
+        <div class="cred-item">
+          <span class="cred-label">Password:</span>
+          <span class="cred-val cred-pw">Password1! (or password123)</span>
+        </div>
       </div>
 
       <div class="pillars-grid">
 
-        <!-- Pillar 1: Demo -->
+        <!-- 1. Live Demo -->
         <div class="pillar-card p-demo">
           <div class="pillar-header">
             <span class="pillar-title text-demo">🎬 1. Live Demo Instructions</span>
@@ -574,7 +692,7 @@
             </li>
             <li class="step-item">
               <span class="step-num">2</span>
-              <div class="step-content">Upload ROS Registration Certificate (PDF/Image) -> Click <strong>"Submit Document"</strong>. Status shows <em>"Pending Review"</em>.</div>
+              <div class="step-content">Upload ROS Registration Certificate (PDF/Image) -> Click <strong>"Submit Document"</strong>. Status displays <em>"Pending Review"</em>.</div>
             </li>
             <li class="step-item">
               <span class="step-num">3</span>
@@ -582,25 +700,25 @@
             </li>
             <li class="step-item">
               <span class="step-num">4</span>
-              <div class="step-content">Click <strong>"Review Document"</strong> -> Click <strong>"Approve Verification"</strong>. Show NGO now displays <strong>Verified Badge</strong> and community <strong>Peer Trust Score (4.9 / 5.0)</strong>.</div>
+              <div class="step-content">Click <strong>"Review Document"</strong> -> Click <strong>"Approve Verification"</strong>. Show NGO now has the official <strong>Verified Badge</strong> and community <strong>Peer Trust Score (4.9 / 5.0)</strong>.</div>
             </li>
           </ol>
           <div class="speech-box">
             <div class="speech-label">💬 Say This While Demonstrating:</div>
             <div class="speech-text">
-              "Module 2 ensures safety and trust. NGOs cannot claim food until an Admin verifies their official government registration documents. Community peer reviews ensure long-term donor confidence."
+              "Module 2 ensures safety and trust. NGOs cannot claim food until an Admin audits their official government registration documents. Community peer reviews build long-term donor confidence."
             </div>
           </div>
         </div>
 
-        <!-- Pillar 2: Design Pattern -->
+        <!-- 2. Design Pattern -->
         <div class="pillar-card p-pattern">
           <div class="pillar-header">
             <span class="pillar-title text-pattern">🏗️ 2. Design Pattern: Factory Method</span>
             <span class="pillar-file">Services/UserFactory/UserCreator.php:15</span>
           </div>
           <div class="qa-box">
-            <div class="qa-q">❓ Tutor Question: "Why did you use Factory Method and how does it work?"</div>
+            <div class="qa-q">❓ Tutor: "Why did you use Factory Method and how does it work?"</div>
             <div class="qa-a">
               "Instead of messy <code>if/else</code> statements during user registration, we use the <strong>Factory Method</strong> to instantiate specific user roles with their own onboarding policies."
             </div>
@@ -608,29 +726,29 @@
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
             <div class="speech-text">
-              • <code>UserCreator</code> is the abstract Creator. Subclasses <code>NgoCreator</code> and <code>DonorCreator</code> instantiate the user.<br>
-              • <strong>How it works:</strong> When an NGO registers, <code>NgoCreator</code> automatically sets <code>verification_status = 'pending'</code> and triggers document upload workflows.<br>
-              • When a Donor registers, <code>DonorCreator</code> sets <code>verification_status = 'approved'</code> immediately so they can donate right away!
+              • <code>UserCreator</code> is the base factory. Subclasses <code>NgoCreator</code> and <code>DonorCreator</code> instantiate the user.<br>
+              • <strong>How it works:</strong> When an NGO registers, <code>NgoCreator</code> automatically sets <code>verification_status = 'pending'</code>.<br>
+              • When a Donor registers, <code>DonorCreator</code> sets <code>verification_status = 'approved'</code> so they can publish food right away!
             </div>
           </div>
-          <pre class="mini-code"><span class="hl-comment">// app/Services/UserFactory/NgoCreator.php</span>
-<span class="hl-keyword">class</span> <span class="hl-fn">NgoCreator</span> <span class="hl-keyword">extends</span> UserCreator {
-    <span class="hl-keyword">protected function</span> <span class="hl-fn">makeUser</span>(<span class="hl-keyword">array</span> $data): User {
-        $data[<span class="hl-string">'role'</span>] = <span class="hl-string">'ngo'</span>;
-        $data[<span class="hl-string">'verification_status'</span>] = <span class="hl-string">'pending'</span>; <span class="hl-comment">// Requires admin audit</span>
-        <span class="hl-keyword">return</span> User::<span class="hl-fn">create</span>($data);
+          <pre class="code-box"><span class="hl-cmt">// app/Services/UserFactory/NgoCreator.php</span>
+<span class="hl-kw">class</span> <span class="hl-fn">NgoCreator</span> <span class="hl-kw">extends</span> UserCreator {
+    <span class="hl-kw">protected function</span> <span class="hl-fn">makeUser</span>(<span class="hl-kw">array</span> $data): User {
+        $data[<span class="hl-str">'role'</span>] = <span class="hl-str">'ngo'</span>;
+        $data[<span class="hl-str">'verification_status'</span>] = <span class="hl-str">'pending'</span>; <span class="hl-cmt">// Requires admin audit</span>
+        <span class="hl-kw">return</span> User::<span class="hl-fn">create</span>($data);
     }
 }</pre>
         </div>
 
-        <!-- Pillar 3: Security Threat -->
+        <!-- 3. Security Threat -->
         <div class="pillar-card p-security">
           <div class="pillar-header">
             <span class="pillar-title text-security">🛡️ 3. Security: Malicious File Upload & RCE</span>
             <span class="pillar-file">VerificationController.php:35</span>
           </div>
           <div class="qa-box">
-            <div class="qa-q">❓ Tutor Question: "What security threat could happen and how do you stop it?"</div>
+            <div class="qa-q">❓ Tutor: "What security threat could happen and how do you stop it?"</div>
             <div class="qa-a">
               "A malicious user tries to upload a <code>.php</code> web shell script disguised as a PDF certificate to achieve <strong>Remote Code Execution (RCE)</strong> on our server."
             </div>
@@ -638,19 +756,19 @@
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
             <div class="speech-text">
-              • <strong>MIME Validation:</strong> We enforce strict MIME whitelist (<code>mimes:pdf,jpg,png|max:5120</code>). PHP/executable files are immediately rejected.<br>
-              • <strong>Cryptographic Hashing:</strong> Files are renamed to random SHA-256 hashes so original filenames cannot be exploited.<br>
-              • <strong>Private Storage:</strong> Documents are stored in <code>Storage::disk('private')</code> outside the public web root, completely preventing direct browser execution!
+              • <strong>Strict MIME Validation:</strong> We enforce <code>mimes:pdf,jpg,png|max:5120</code>. PHP and executable files are immediately rejected.<br>
+              • <strong>Hashed Filenames:</strong> Files are renamed to random SHA-256 hashes so original filenames cannot be targeted.<br>
+              • <strong>Private Disk Storage:</strong> Files are stored in <code>Storage::disk('private')</code> outside the public web root, completely preventing direct execution!
             </div>
           </div>
-          <pre class="mini-code"><span class="hl-comment">// app/Http/Controllers/VerificationController.php</span>
+          <pre class="code-box"><span class="hl-cmt">// app/Http/Controllers/VerificationController.php</span>
 $request-><span class="hl-fn">validate</span>([
-    <span class="hl-string">'document'</span> => <span class="hl-string">'required|file|mimes:pdf,jpg,png|max:5120'</span>,
+    <span class="hl-str">'document'</span> => <span class="hl-str">'required|file|mimes:pdf,jpg,png|max:5120'</span>,
 ]);
-$path = $request-><span class="hl-fn">file</span>(<span class="hl-string">'document'</span>)-><span class="hl-fn">store</span>(<span class="hl-string">'verification_docs'</span>, <span class="hl-string">'private'</span>);</pre>
+$path = $request-><span class="hl-fn">file</span>(<span class="hl-str">'document'</span>)-><span class="hl-fn">store</span>(<span class="hl-str">'verification_docs'</span>, <span class="hl-str">'private'</span>);</pre>
         </div>
 
-        <!-- Pillar 4: Web Services -->
+        <!-- 4. Web Services -->
         <div class="pillar-card p-ws">
           <div class="pillar-header">
             <span class="pillar-title text-ws">🌐 4. Web Services: Provided & Consumed</span>
@@ -658,11 +776,11 @@ $path = $request-><span class="hl-fn">file</span>(<span class="hl-string">'docum
           </div>
           <div style="font-size: 0.85rem;">
             <p><strong>1. Web Service Provided:</strong> <code>GET /api/v1/users/{id}/verification-status</code></p>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Returns an NGO's official verification status, registration date, and average trust rating in JSON.</p>
-            <pre class="mini-code" style="margin: 6px 0;">{ <span class="hl-string">"ngo_id"</span>: 4, <span class="hl-string">"is_verified"</span>: <span class="hl-keyword">true</span>, <span class="hl-string">"trust_rating"</span>: 4.9, <span class="hl-string">"status"</span>: <span class="hl-string">"approved"</span> }</pre>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin: 2px 0 6px;">Returns NGO verification badge and trust rating in JSON for third-party charity partners.</p>
+            <pre class="code-box">{ <span class="hl-str">"ngo_id"</span>: 4, <span class="hl-str">"is_verified"</span>: <span class="hl-kw">true</span>, <span class="hl-str">"trust_rating"</span>: 4.9, <span class="hl-str">"status"</span>: <span class="hl-str">"approved"</span> }</pre>
             
-            <p style="margin-top: 6px;"><strong>2. Web Service Consumed:</strong> Official ROS Government Registry API</p>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Validates that the organization's registration number corresponds to an active, licensed society in Malaysia.</p>
+            <p style="margin-top: 8px;"><strong>2. Web Service Consumed:</strong> Official ROS Government Registry API</p>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Cross-checks organization registration numbers against national society records.</p>
           </div>
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
@@ -688,15 +806,25 @@ $path = $request-><span class="hl-fn">file</span>(<span class="hl-string">'docum
         <span class="mod-badge badge-m3">Module 3</span>
       </div>
 
-      <div class="login-bar">
-        <span class="login-tag">🔑 Test Accounts:</span>
-        <span>NGO: <span class="login-val">ngo@nutrishare.com</span> / <span class="login-val">password123</span></span>
-        <span>Donor: <span class="login-val">donor@nutrishare.com</span> / <span class="login-val">password123</span></span>
+      <div class="credentials-bar">
+        <span class="cred-title">🔑 Test Accounts:</span>
+        <div class="cred-item">
+          <span class="cred-label">NGO:</span>
+          <span class="cred-val">ngo@nutrishare.com</span>
+        </div>
+        <div class="cred-item">
+          <span class="cred-label">Donor:</span>
+          <span class="cred-val">donor@nutrishare.com</span>
+        </div>
+        <div class="cred-item">
+          <span class="cred-label">Password:</span>
+          <span class="cred-val cred-pw">Password1! (or password123)</span>
+        </div>
       </div>
 
       <div class="pillars-grid">
 
-        <!-- Pillar 1: Demo -->
+        <!-- 1. Live Demo -->
         <div class="pillar-card p-demo">
           <div class="pillar-header">
             <span class="pillar-title text-demo">🎬 1. Live Demo Instructions</span>
@@ -723,19 +851,19 @@ $path = $request-><span class="hl-fn">file</span>(<span class="hl-string">'docum
           <div class="speech-box">
             <div class="speech-label">💬 Say This While Demonstrating:</div>
             <div class="speech-text">
-              "Module 3 manages the entire lifecycle of food requests. An NGO claims food, the donor approves it, a delivery vehicle is dispatched, and on physical handover, a digital receipt is generated."
+              "Module 3 manages the entire food claim journey. An NGO claims food, the donor approves it, a delivery vehicle is dispatched, and on physical pickup, a digital receipt is generated."
             </div>
           </div>
         </div>
 
-        <!-- Pillar 2: Design Pattern -->
+        <!-- 2. Design Pattern -->
         <div class="pillar-card p-pattern">
           <div class="pillar-header">
             <span class="pillar-title text-pattern">🏗️ 2. Design Pattern: State Pattern</span>
             <span class="pillar-file">States/Claim/ClaimState.php:18</span>
           </div>
           <div class="qa-box">
-            <div class="qa-q">❓ Tutor Question: "Why did you use State pattern and how does it work?"</div>
+            <div class="qa-q">❓ Tutor: "Why did you use State pattern and how does it work?"</div>
             <div class="qa-a">
               "Claims transition through strict stages: <code>Pending</code> ➔ <code>Approved</code> ➔ <code>Collected</code>. Each status is its own class instead of messy <code>switch/case</code> code."
             </div>
@@ -743,27 +871,27 @@ $path = $request-><span class="hl-fn">file</span>(<span class="hl-string">'docum
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
             <div class="speech-text">
-              • <code>ClaimState</code> is the abstract state. Concrete states are <code>PendingState</code>, <code>ApprovedState</code>, and <code>CollectedState</code>.<br>
-              • <strong>How it works:</strong> Actions change depending on status. In <code>PendingState</code>, you can only <code>approve()</code> or <code>reject()</code>.<br>
+              • <code>ClaimState</code> is the base class. Concrete classes are <code>PendingState</code>, <code>ApprovedState</code>, and <code>CollectedState</code>.<br>
+              • <strong>How it works:</strong> In <code>PendingState</code>, you can only <code>approve()</code> or <code>reject()</code>.<br>
               • <strong>Why use it:</strong> Prevents illegal transitions! You cannot call <code>collect()</code> on a pending claim—the state class blocks it automatically!
             </div>
           </div>
-          <pre class="mini-code"><span class="hl-comment">// app/States/Claim/PendingState.php</span>
-<span class="hl-keyword">public function</span> <span class="hl-fn">approve</span>(): <span class="hl-keyword">void</span> {
-    $this->claim->status = <span class="hl-string">'approved'</span>;
+          <pre class="code-box"><span class="hl-cmt">// app/States/Claim/PendingState.php</span>
+<span class="hl-kw">public function</span> <span class="hl-fn">approve</span>(): <span class="hl-kw">void</span> {
+    $this->claim->status = <span class="hl-str">'approved'</span>;
     $this->claim-><span class="hl-fn">save</span>();
-    $this->claim-><span class="hl-fn">transitionTo</span>(<span class="hl-keyword">new</span> ApprovedState($this->claim));
+    $this->claim-><span class="hl-fn">transitionTo</span>(<span class="hl-kw">new</span> ApprovedState($this->claim));
 }</pre>
         </div>
 
-        <!-- Pillar 3: Security Threat -->
+        <!-- 3. Security Threat -->
         <div class="pillar-card p-security">
           <div class="pillar-header">
             <span class="pillar-title text-security">🛡️ 3. Security: Race Conditions & IDOR</span>
             <span class="pillar-file">ClaimPolicy.php & ClaimController.php:65</span>
           </div>
           <div class="qa-box">
-            <div class="qa-q">❓ Tutor Question: "What security threat could happen and how do you stop it?"</div>
+            <div class="qa-q">❓ Tutor: "What security threat could happen and how do you stop it?"</div>
             <div class="qa-a">
               "Two NGOs clicking 'Claim' at the exact same millisecond for the last food item (<strong>Race Condition / Double Claiming</strong>), or altering URL IDs to cancel other claims (<strong>IDOR</strong>)."
             </div>
@@ -771,18 +899,18 @@ $path = $request-><span class="hl-fn">file</span>(<span class="hl-string">'docum
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
             <div class="speech-text">
-              • <strong>Defense 1 (Race Condition):</strong> We wrap claim creation inside a database transaction with <strong>pessimistic row locking</strong> (<code>lockForUpdate()</code>). The database locks the food row until the claim finishes.<br>
-              • <strong>Defense 2 (IDOR / BOLA):</strong> We enforce <code>ClaimPolicy</code>. Only the food donor can approve, and only the claiming NGO can assign transport. Others get <strong>403 Forbidden</strong>.
+              • <strong>Pessimistic Row Lock:</strong> We wrap claim creation in <code>DB::transaction()</code> with <code>lockForUpdate()</code>. The row is locked until finished, preventing double claiming.<br>
+              • <strong>IDOR Protection:</strong> <code>ClaimPolicy</code> verifies only the owning donor can approve, and only the claiming NGO can assign vehicles.
             </div>
           </div>
-          <pre class="mini-code"><span class="hl-comment">// app/Http/Controllers/ClaimController.php</span>
-DB::<span class="hl-fn">transaction</span>(<span class="hl-keyword">function</span> () <span class="hl-keyword">use</span> ($donation) {
-    <span class="hl-comment">// Pessimistic row lock prevents double-claiming race condition</span>
-    $locked = Donation::<span class="hl-fn">where</span>(<span class="hl-string">'id'</span>, $donation->id)-><span class="hl-fn">lockForUpdate</span>()-><span class="hl-fn">first</span>();
+          <pre class="code-box"><span class="hl-cmt">// app/Http/Controllers/ClaimController.php</span>
+DB::<span class="hl-fn">transaction</span>(<span class="hl-kw">function</span> () <span class="hl-kw">use</span> ($donation) {
+    <span class="hl-cmt">// Pessimistic row lock prevents double-claiming race condition</span>
+    $locked = Donation::<span class="hl-fn">where</span>(<span class="hl-str">'id'</span>, $donation->id)-><span class="hl-fn">lockForUpdate</span>()-><span class="hl-fn">first</span>();
 });</pre>
         </div>
 
-        <!-- Pillar 4: Web Services -->
+        <!-- 4. Web Services -->
         <div class="pillar-card p-ws">
           <div class="pillar-header">
             <span class="pillar-title text-ws">🌐 4. Web Services: Provided & Consumed</span>
@@ -790,11 +918,11 @@ DB::<span class="hl-fn">transaction</span>(<span class="hl-keyword">function</sp
           </div>
           <div style="font-size: 0.85rem;">
             <p><strong>1. Web Service Provided:</strong> <code>GET /api/v1/claims</code></p>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Exposes active claim status and logistics pickup schedules in JSON for third-party driver dispatch apps.</p>
-            <pre class="mini-code" style="margin: 6px 0;">{ <span class="hl-string">"claim_id"</span>: 5, <span class="hl-string">"status"</span>: <span class="hl-string">"approved"</span>, <span class="hl-string">"vehicle"</span>: <span class="hl-string">"VHT 1484"</span>, <span class="hl-string">"pickup"</span>: <span class="hl-string">"Sunway"</span> }</pre>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin: 2px 0 6px;">Exposes active claim status and logistics pickup schedules in JSON for driver dispatch apps.</p>
+            <pre class="code-box">{ <span class="hl-str">"claim_id"</span>: 5, <span class="hl-str">"status"</span>: <span class="hl-str">"approved"</span>, <span class="hl-str">"vehicle"</span>: <span class="hl-str">"VHT 1484"</span>, <span class="hl-str">"pickup"</span>: <span class="hl-str">"Sunway"</span> }</pre>
             
-            <p style="margin-top: 6px;"><strong>2. Web Service Consumed:</strong> Distance Matrix & Geocoding Routing API</p>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Calculates exact transit distance and estimated arrival time between donor and NGO warehouse.</p>
+            <p style="margin-top: 8px;"><strong>2. Web Service Consumed:</strong> Distance Matrix & Geocoding Routing API</p>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Calculates transit distance and arrival time between donor and NGO warehouse.</p>
           </div>
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
@@ -820,15 +948,25 @@ DB::<span class="hl-fn">transaction</span>(<span class="hl-keyword">function</sp
         <span class="mod-badge badge-m4">Module 4</span>
       </div>
 
-      <div class="login-bar">
-        <span class="login-tag">🔑 Test Accounts:</span>
-        <span>NGO Warehouse: <span class="login-val">ngo@nutrishare.com</span> / <span class="login-val">password123</span></span>
-        <span>Admin: <span class="login-val">admin@nutrishare.com</span> / <span class="login-val">password123</span></span>
+      <div class="credentials-bar">
+        <span class="cred-title">🔑 Test Accounts:</span>
+        <div class="cred-item">
+          <span class="cred-label">NGO Warehouse:</span>
+          <span class="cred-val">ngo@nutrishare.com</span>
+        </div>
+        <div class="cred-item">
+          <span class="cred-label">Admin:</span>
+          <span class="cred-val">admin@nutrishare.com</span>
+        </div>
+        <div class="cred-item">
+          <span class="cred-label">Password:</span>
+          <span class="cred-val cred-pw">Password1! (or password123)</span>
+        </div>
       </div>
 
       <div class="pillars-grid">
 
-        <!-- Pillar 1: Demo -->
+        <!-- 1. Live Demo -->
         <div class="pillar-card p-demo">
           <div class="pillar-header">
             <span class="pillar-title text-demo">🎬 1. Live Demo Instructions</span>
@@ -860,63 +998,63 @@ DB::<span class="hl-fn">transaction</span>(<span class="hl-keyword">function</sp
           </div>
         </div>
 
-        <!-- Pillar 2: Design Pattern -->
+        <!-- 2. Design Pattern -->
         <div class="pillar-card p-pattern">
           <div class="pillar-header">
             <span class="pillar-title text-pattern">🏗️ 2. Design Pattern: Strategy Pattern</span>
             <span class="pillar-file">Strategies/Notification/NotificationDispatcher.php:20</span>
           </div>
           <div class="qa-box">
-            <div class="qa-q">❓ Tutor Question: "Why did you use Strategy pattern and how does it work?"</div>
+            <div class="qa-q">❓ Tutor: "Why did you use Strategy pattern and how does it work?"</div>
             <div class="qa-a">
-              "When food batches are near expiration, the system dispatches alerts. Users choose between <strong>Email</strong> or <strong>SMS</strong>. The Strategy pattern lets us swap delivery channels at runtime."
+              "When food batches near expiration, the system alerts staff. Users choose between <strong>Email</strong> or <strong>SMS</strong>. Strategy pattern allows swapping delivery channels dynamically."
             </div>
           </div>
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
             <div class="speech-text">
-              • <code>NotificationStrategyInterface</code> defines the send contract. <code>EmailStrategy</code> and <code>SMSStrategy</code> implement it.<br>
+              • <code>NotificationStrategyInterface</code> defines the send method. <code>EmailStrategy</code> and <code>SMSStrategy</code> implement it.<br>
               • <code>NotificationDispatcher</code> selects the strategy based on user preference.<br>
-              • <strong>Why use it (Open/Closed Principle):</strong> We can add WhatsApp or Telegram notifications anytime by creating a new strategy class without changing the core inventory code!
+              • <strong>Why use it:</strong> Open/Closed Principle! We can add WhatsApp or Telegram notifications anytime by creating a new class without modifying existing code.
             </div>
           </div>
-          <pre class="mini-code"><span class="hl-comment">// app/Strategies/Notification/NotificationDispatcher.php</span>
-<span class="hl-keyword">public function</span> <span class="hl-fn">dispatch</span>(User $user, string $subject, string $msg): <span class="hl-keyword">bool</span> {
+          <pre class="code-box"><span class="hl-cmt">// app/Strategies/Notification/NotificationDispatcher.php</span>
+<span class="hl-kw">public function</span> <span class="hl-fn">dispatch</span>(User $user, string $subject, string $msg): <span class="hl-kw">bool</span> {
     $strategy = $this-><span class="hl-fn">resolveStrategy</span>($user->notification_preference);
-    <span class="hl-keyword">return</span> $strategy-><span class="hl-fn">send</span>($user->email, $subject, $msg);
+    <span class="hl-kw">return</span> $strategy-><span class="hl-fn">send</span>($user->email, $subject, $msg);
 }</pre>
         </div>
 
-        <!-- Pillar 3: Security Threat -->
+        <!-- 3. Security Threat -->
         <div class="pillar-card p-security">
           <div class="pillar-header">
             <span class="pillar-title text-security">🛡️ 3. Security: Audit Log Tampering (OWASP A09)</span>
             <span class="pillar-file">app/Models/SystemLog.php:20</span>
           </div>
           <div class="qa-box">
-            <div class="qa-q">❓ Tutor Question: "What security threat could happen and how do you stop it?"</div>
+            <div class="qa-q">❓ Tutor: "What security threat could happen and how do you stop it?"</div>
             <div class="qa-a">
-              "A rogue worker distributes spoiled or expired food and then attempts to alter or delete database logs to avoid legal accountability (<strong>Non-Repudiation failure</strong>)."
+              "A corrupt worker distributes spoiled food and then attempts to alter or delete database logs to escape blame (<strong>Non-Repudiation failure</strong>)."
             </div>
           </div>
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
             <div class="speech-text">
-              • <strong>Append-Only Logs:</strong> In <code>SystemLog</code>, there are zero update or delete routes in the entire application. Once written, logs can never be altered.<br>
+              • <strong>Append-Only Logs:</strong> In <code>SystemLog</code>, there are zero update or delete routes in the entire application. Once written, logs cannot be modified.<br>
               • <strong>Audit Attribution:</strong> Every entry automatically binds the authenticated <code>user_id</code>, exact timestamp, IP address, and operation.<br>
               • <strong>Access Restriction:</strong> Log views are restricted to Admin role only via middleware.
             </div>
           </div>
-          <pre class="mini-code"><span class="hl-comment">// app/Models/SystemLog.php (Append-only audit trail)</span>
+          <pre class="code-box"><span class="hl-cmt">// app/Models/SystemLog.php (Append-only audit trail)</span>
 SystemLog::<span class="hl-fn">create</span>([
-    <span class="hl-string">'user_id'</span>     => Auth::<span class="hl-fn">id</span>(),
-    <span class="hl-string">'action'</span>      => <span class="hl-string">'inventory.item_logged'</span>,
-    <span class="hl-string">'description'</span> => <span class="hl-string">"Added batch {batch_no} under safety threshold."</span>,
-    <span class="hl-string">'level'</span>       => <span class="hl-string">'info'</span>
+    <span class="hl-str">'user_id'</span>     => Auth::<span class="hl-fn">id</span>(),
+    <span class="hl-str">'action'</span>      => <span class="hl-str">'inventory.item_logged'</span>,
+    <span class="hl-str">'description'</span> => <span class="hl-str">"Added batch {batch_no} under safety threshold."</span>,
+    <span class="hl-str">'level'</span>       => <span class="hl-str">'info'</span>
 ]);</pre>
         </div>
 
-        <!-- Pillar 4: Web Services -->
+        <!-- 4. Web Services -->
         <div class="pillar-card p-ws">
           <div class="pillar-header">
             <span class="pillar-title text-ws">🌐 4. Web Services: Provided & Consumed</span>
@@ -924,11 +1062,11 @@ SystemLog::<span class="hl-fn">create</span>([
           </div>
           <div style="font-size: 0.85rem;">
             <p><strong>1. Web Service Provided:</strong> <code>GET /api/v1/inventory/items</code></p>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Returns current warehouse food stocks, storage temperatures, and expiry dates in JSON for regional hunger relief coalitions.</p>
-            <pre class="mini-code" style="margin: 6px 0;">{ <span class="hl-string">"item"</span>: <span class="hl-string">"Canned Soups"</span>, <span class="hl-string">"batch"</span>: <span class="hl-string">"BATCH-2026-09"</span>, <span class="hl-string">"storage_temp"</span>: <span class="hl-string">"22C"</span> }</pre>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin: 2px 0 6px;">Returns warehouse food stocks, temperatures, and expiry dates in JSON for hunger relief networks.</p>
+            <pre class="code-box">{ <span class="hl-str">"item"</span>: <span class="hl-str">"Canned Soups"</span>, <span class="hl-str">"batch"</span>: <span class="hl-str">"BATCH-2026-09"</span>, <span class="hl-str">"storage_temp"</span>: <span class="hl-str">"22C"</span> }</pre>
             
-            <p style="margin-top: 6px;"><strong>2. Web Service Consumed:</strong> National Food Recall & Allergen Database API</p>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Cross-references batch lot numbers against national food recall registries to detect contaminated batches immediately.</p>
+            <p style="margin-top: 8px;"><strong>2. Web Service Consumed:</strong> National Food Recall & Allergen Database API</p>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 2px;">Cross-references batch lot numbers against national food recall registries to detect contaminated batches.</p>
           </div>
           <div class="speech-box">
             <div class="speech-label">💬 Say This (Super Simple):</div>
@@ -943,28 +1081,30 @@ SystemLog::<span class="hl-fn">create</span>([
 
   </main>
 
-  <!-- Mobile Floating Dock -->
-  <div class="mobile-dock">
-    <a href="#mod1" class="dock-link active" onclick="highlightDock(this)">M1: Liew</a>
-    <a href="#mod2" class="dock-link" onclick="highlightDock(this)">M2: Cheon</a>
-    <a href="#mod3" class="dock-link" onclick="highlightDock(this)">M3: Hiew</a>
-    <a href="#mod4" class="dock-link" onclick="highlightDock(this)">M4: Wong</a>
-  </div>
-
   <script>
-    function highlightNav(el) {
-      document.querySelectorAll('.filter-bar a.btn-nav').forEach(a => a.classList.remove('active'));
-      el.classList.add('active');
-    }
-
-    function highlightDock(el) {
-      document.querySelectorAll('.mobile-dock a').forEach(a => a.classList.remove('active'));
+    function activateMod(el) {
+      document.querySelectorAll('.header-inner .btn-nav').forEach(a => {
+        if (!a.classList.contains('btn-filter')) a.classList.remove('active');
+      });
       el.classList.add('active');
     }
 
     function filterPillar(pillarClass, btn) {
-      document.querySelectorAll('.filter-bar button').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      document.querySelectorAll('.btn-filter').forEach(b => {
+        b.className = 'btn-nav btn-filter';
+      });
+
+      if (pillarClass === 'all') {
+        btn.classList.add('active', 'active-all');
+      } else if (pillarClass === 'p-demo') {
+        btn.classList.add('active', 'active-demo');
+      } else if (pillarClass === 'p-pattern') {
+        btn.classList.add('active', 'active-pattern');
+      } else if (pillarClass === 'p-security') {
+        btn.classList.add('active', 'active-security');
+      } else if (pillarClass === 'p-ws') {
+        btn.classList.add('active', 'active-ws');
+      }
 
       const cards = document.querySelectorAll('.pillar-card');
       cards.forEach(card => {
