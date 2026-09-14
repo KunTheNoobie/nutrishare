@@ -26,16 +26,24 @@ echo   [3] SECURITY:        Policy-Driven Authorization (ClaimPolicy) + Row Lock
 echo   [4] WEB SERVICES:    Provide: details() -^> Consume: verifySafetyCompliance()
 echo =========================================================================
 echo.
-echo Opening 5 presentation tabs in VS Code (matching Viva Guide)...
+echo Opening 6 presentation tabs in VS Code in exact viva sequence (left-to-right)...
+echo   Tab 1: ClaimState.php:8           (Pattern Abstract State Class)
+echo   Tab 2: ApprovedState.php:22       (Pattern Concrete State Class)
+echo   Tab 3: ClaimPolicy.php:33         (Security 1: BOLA/IDOR Policy Gate)
+echo   Tab 4: ClaimController.php:131    (Security 2: Pessimistic Row Locking lockForUpdate)
+echo   Tab 5: ClaimApiController.php:40  (Web Service Provide: details)
+echo   Tab 6: SafetyServiceClient.php:25 (Web Service Consume: verifySafetyCompliance)
+echo.
 
 call "%EDITOR%" -r ^
   -g "%BASE%app\States\Claim\ClaimState.php:8" ^
-  -g "%BASE%app\States\Claim\ApprovedState.php:7" ^
-  -g "%BASE%app\Policies\ClaimPolicy.php:14" ^
+  -g "%BASE%app\States\Claim\ApprovedState.php:22" ^
+  -g "%BASE%app\Policies\ClaimPolicy.php:33" ^
+  -g "%BASE%app\Http\Controllers\ClaimController.php:131" ^
   -g "%BASE%app\Http\Controllers\Api\ClaimApiController.php:40" ^
-  -g "%BASE%app\Services\Clients\SafetyServiceClient.php:26"
+  -g "%BASE%app\Services\Clients\SafetyServiceClient.php:25"
 
 echo.
-echo [SUCCESS] 5 Module 3 tabs opened cleanly!
+echo [SUCCESS] All 6 Module 3 tabs opened in exact presentation sequence!
 echo.
 pause
