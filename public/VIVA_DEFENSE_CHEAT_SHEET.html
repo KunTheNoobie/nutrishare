@@ -447,6 +447,8 @@
     }
     .bottom-btn:hover { background: var(--border-subtle); transform: translateY(-1px); }
   </style>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function() { mermaid.initialize({ startOnLoad: true, theme: "dark", securityLevel: "loose" }); });</script>
 </head>
 <body>
 
@@ -585,7 +587,92 @@
     }
 }</code></pre>
         </div>
+              <!-- UML & ENTITY DIAGRAMS (MODULE 1) -->
+        <div class="diagram-section" style="margin-top: 16px; background: rgba(6, 9, 17, 0.6); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px;">
+          <div style="font-weight: 700; color: #38bdf8; margin-bottom: 12px; font-size: 0.92rem; display: flex; align-items: center; gap: 8px;">
+            <span>📐 Module 1 Diagrams: UML Class Diagram & Entity Diagram (ERD)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
+              <div style="font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px;">1. UML Class Diagram (Observer Pattern)</div>
+              <pre class="mermaid">
+classDiagram
+    direction TB
+    class DonationObserverInterface {
+        <<interface>>
+        +onDonationCreated(Donation donation) void
+        +onDonationStatusChanged(Donation donation, string oldStatus) void
+    }
+    class Donation {
+        +int id
+        +int user_id
+        +string title
+        +float quantity
+        +string status
+        +save() bool
+    }
+    class DonationObserver {
+        +created(Donation donation) void
+        +updated(Donation donation) void
+        +onDonationCreated(Donation donation) void
+        +onDonationStatusChanged(Donation donation, string oldStatus) void
+    }
+    class SendDonationNotificationJob {
+        +Donation donation
+        +handle() void
+    }
+    
+    DonationObserverInterface <|.. DonationObserver : implements
+    Donation --> DonationObserver : triggers event
+    DonationObserver --> SendDonationNotificationJob : dispatches job
+              </pre>
+            </div>
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
+              <div style="font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px;">2. Entity Diagram (Database ERD - Module 1)</div>
+              <pre class="mermaid">
+erDiagram
+    USERS ||--o{ DONATIONS : "publishes (1:N)"
+    DONATIONS ||--o{ FOOD_ITEMS : "contains (1:N)"
+    USERS ||--o{ NOTIFICATIONS : "receives (1:N)"
+    
+    USERS {
+        int id PK
+        string name
+        string email
+        string role "donor | ngo | admin"
+        string organization_name
+    }
+    DONATIONS {
+        int id PK
+        int user_id FK
+        string title
+        double quantity
+        string unit
+        string pickup_address
+        datetime expiry_date
+        string status
+    }
+    FOOD_ITEMS {
+        int id PK
+        int donation_id FK
+        int category_id FK
+        string name
+        double quantity
+        datetime expiry_date
+    }
+    NOTIFICATIONS {
+        int id PK
+        int user_id FK
+        string title
+        text message
+        boolean is_read
+    }
+              </pre>
+            </div>
+          </div>
+        </div>
       </div>
+
 
       <!-- 3. SOFTWARE SECURITY -->
       <div class="flow-step-card">
@@ -837,7 +924,88 @@
     }
 }</code></pre>
         </div>
+              <!-- UML & ENTITY DIAGRAMS (MODULE 2) -->
+        <div class="diagram-section" style="margin-top: 16px; background: rgba(6, 9, 17, 0.6); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px;">
+          <div style="font-weight: 700; color: #10b981; margin-bottom: 12px; font-size: 0.92rem; display: flex; align-items: center; gap: 8px;">
+            <span>📐 Module 2 Diagrams: UML Class Diagram & Entity Diagram (ERD)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
+              <div style="font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px;">1. UML Class Diagram (Factory Method Pattern)</div>
+              <pre class="mermaid">
+classDiagram
+    direction TB
+    class UserCreator {
+        <<abstract>>
+        +create(array data) User
+        #factoryMethod(array data)* User
+    }
+    class NgoCreator {
+        #factoryMethod(array data) User
+    }
+    class DonorCreator {
+        #factoryMethod(array data) User
+    }
+    class User {
+        +int id
+        +string name
+        +string role
+        +string verification_status
+    }
+    class AuthController {
+        +register(Request request) Response
+    }
+
+    UserCreator <|-- NgoCreator : inherits
+    UserCreator <|-- DonorCreator : inherits
+    NgoCreator ..> User : instantiates (status=pending)
+    DonorCreator ..> User : instantiates (status=approved)
+    AuthController --> UserCreator : uses factory
+              </pre>
+            </div>
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
+              <div style="font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px;">2. Entity Diagram (Database ERD - Module 2)</div>
+              <pre class="mermaid">
+erDiagram
+    USERS ||--o{ VERIFICATION_DOCUMENTS : "submits (1:N)"
+    USERS ||--o{ REVIEWS : "reviews / rated (1:N)"
+    USERS ||--o{ PASSWORD_RESET_OTPS : "requests (1:N)"
+
+    USERS {
+        int id PK
+        string name
+        string email
+        string role "admin | moderator | ngo | donor"
+        string organization_name
+        string verification_status "pending | approved | rejected"
+    }
+    VERIFICATION_DOCUMENTS {
+        int id PK
+        int user_id FK
+        string document_type
+        string file_path
+        string status
+        text admin_remarks
+    }
+    REVIEWS {
+        int id PK
+        int reviewer_id FK
+        int target_user_id FK
+        int rating
+        text comment
+    }
+    PASSWORD_RESET_OTPS {
+        int id PK
+        string email
+        string otp_hash
+        datetime expires_at
+    }
+              </pre>
+            </div>
+          </div>
+        </div>
       </div>
+
 
       <!-- 3. SOFTWARE SECURITY -->
       <div class="flow-step-card">
@@ -1093,7 +1261,99 @@ PasswordResetOtp::<span class="code-fn">create</span>([
     }
 }</code></pre>
         </div>
+              <!-- UML & ENTITY DIAGRAMS (MODULE 3) -->
+        <div class="diagram-section" style="margin-top: 16px; background: rgba(6, 9, 17, 0.6); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px;">
+          <div style="font-weight: 700; color: #f59e0b; margin-bottom: 12px; font-size: 0.92rem; display: flex; align-items: center; gap: 8px;">
+            <span>📐 Module 3 Diagrams: UML Class Diagram & Entity Diagram (ERD)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
+              <div style="font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px;">1. UML Class Diagram (State Pattern)</div>
+              <pre class="mermaid">
+classDiagram
+    direction TB
+    class ClaimState {
+        <<abstract>>
+        #Claim claim
+        +approve()* void
+        +assignVehicle(array details)* void
+        +markCollected()* void
+        +cancel()* void
+    }
+    class PendingState {
+        +approve() void
+        +cancel() void
+    }
+    class ApprovedState {
+        +assignVehicle(array details) void
+        +markCollected() void
+        +cancel() void
+    }
+    class CollectedState {
+        +markCollected() void
+    }
+    class Claim {
+        +int id
+        +int donation_id
+        +int user_id
+        +string status
+        +getState() ClaimState
+        +transitionTo(ClaimState state) void
+    }
+
+    ClaimState <|-- PendingState : implements
+    ClaimState <|-- ApprovedState : implements
+    ClaimState <|-- CollectedState : implements
+    Claim "1" o-- "1" ClaimState : holds state
+              </pre>
+            </div>
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
+              <div style="font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px;">2. Entity Diagram (Database ERD - Module 3)</div>
+              <pre class="mermaid">
+erDiagram
+    DONATIONS ||--o{ CLAIMS : "claimed_in (1:N)"
+    USERS ||--o{ CLAIMS : "makes_claim (1:N)"
+    CLAIMS ||--|| VEHICLES : "assigned_vehicle (1:1)"
+    CLAIMS ||--|| COLLECTION_RECEIPTS : "generates_receipt (1:1)"
+    CLAIMS ||--o{ DISTRIBUTION_LOGS : "tracks_distribution (1:N)"
+
+    CLAIMS {
+        int id PK
+        int donation_id FK
+        int user_id FK
+        string status
+        datetime pickup_scheduled_at
+        text justification
+    }
+    VEHICLES {
+        int id PK
+        int claim_id FK
+        string plate_number
+        string vehicle_type
+        string driver_name
+        double capacity_kg
+    }
+    COLLECTION_RECEIPTS {
+        int id PK
+        int claim_id FK
+        string receipt_number
+        double quantity_collected
+        string collected_by
+        datetime collected_at
+    }
+    DISTRIBUTION_LOGS {
+        int id PK
+        int claim_id FK
+        int beneficiaries_count
+        string distribution_location
+        double quantity_distributed
+    }
+              </pre>
+            </div>
+          </div>
+        </div>
       </div>
+
 
       <!-- 3. SOFTWARE SECURITY -->
       <div class="flow-step-card">
@@ -1341,7 +1601,91 @@ PasswordResetOtp::<span class="code-fn">create</span>([
     }
 }</code></pre>
         </div>
+              <!-- UML & ENTITY DIAGRAMS (MODULE 4) -->
+        <div class="diagram-section" style="margin-top: 16px; background: rgba(6, 9, 17, 0.6); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px;">
+          <div style="font-weight: 700; color: #a855f7; margin-bottom: 12px; font-size: 0.92rem; display: flex; align-items: center; gap: 8px;">
+            <span>📐 Module 4 Diagrams: UML Class Diagram & Entity Diagram (ERD)</span>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
+              <div style="font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px;">1. UML Class Diagram (Strategy Pattern)</div>
+              <pre class="mermaid">
+classDiagram
+    direction TB
+    class NotificationStrategyInterface {
+        <<interface>>
+        +send(User user, string subject, string message) bool
+    }
+    class EmailStrategy {
+        +send(User user, string subject, string message) bool
+    }
+    class DatabaseStrategy {
+        +send(User user, string subject, string message) bool
+    }
+    class SmsStrategy {
+        +send(User user, string subject, string message) bool
+    }
+    class NotificationDispatcher {
+        -NotificationStrategyInterface strategy
+        +dispatch(User user, string subject, string message) void
+    }
+
+    NotificationStrategyInterface <|.. EmailStrategy : implements
+    NotificationStrategyInterface <|.. DatabaseStrategy : implements
+    NotificationStrategyInterface <|.. SmsStrategy : implements
+    NotificationDispatcher o-- NotificationStrategyInterface : uses strategy
+              </pre>
+            </div>
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 12px; overflow-x: auto;">
+              <div style="font-size: 0.82rem; font-weight: 600; color: #94a3b8; margin-bottom: 8px;">2. Entity Diagram (Database ERD - Module 4)</div>
+              <pre class="mermaid">
+erDiagram
+    USERS ||--o{ INVENTORY_LOCATIONS : "owns (1:N)"
+    INVENTORY_LOCATIONS ||--o{ FOOD_ITEMS : "stores (1:N)"
+    CATEGORIES ||--o{ FOOD_ITEMS : "categorizes (1:N)"
+    FOOD_ITEMS }|--|{ ALLERGEN_TAGS : "tagged_with (N:M)"
+    USERS ||--o{ SYSTEM_LOGS : "generates (1:N)"
+
+    INVENTORY_LOCATIONS {
+        int id PK
+        int user_id FK
+        string name
+        string address
+        string storage_type
+        double capacity
+        double current_occupancy
+    }
+    CATEGORIES {
+        int id PK
+        string name
+        text description
+    }
+    FOOD_ITEMS {
+        int id PK
+        int inventory_location_id FK
+        int category_id FK
+        string name
+        double quantity
+        string storage_requirements
+        datetime expiry_date
+    }
+    ALLERGEN_TAGS {
+        int id PK
+        string name
+    }
+    SYSTEM_LOGS {
+        int id PK
+        int user_id FK
+        string action
+        text description
+        string level
+    }
+              </pre>
+            </div>
+          </div>
+        </div>
       </div>
+
 
       <!-- 3. SOFTWARE SECURITY -->
       <div class="flow-step-card">
