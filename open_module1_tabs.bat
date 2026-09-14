@@ -18,23 +18,24 @@ if exist "%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd" (
 cls
 echo =========================================================================
 echo   NUTRISHARE VIVA DEFENSE -- MODULE 1: LIEW YI LER (25WMR09747)
-echo   Module: Donation Publishing and Notifications
+echo   Module: Donation Publishing and Notification Management
 echo =========================================================================
-echo   [1] LIVE DEMO:      Login donor@nutrishare.com -^> Create Donation -^> View Bell
-echo   [2] DESIGN PATTERN: Observer Pattern (app/Observers/DonationObserver.php)
-echo   [3] SECURITY:       Mass Assignment / BOLA (app/Http/Requests/StoreDonationRequest.php)
-echo   [4] WEB SERVICES:   Donation REST API (app/Http/Controllers/Api/DonationApiController.php)
+echo   [1] LIVE DEMO:       Login donor@nutrishare.com -^> Publish Donation -^> Check Bell
+echo   [2] DESIGN PATTERN:  Observer Pattern (Interface -^> Concrete -^> Queue Dispatch)
+echo   [3] SECURITY:        Synchronizer CSRF Token (@csrf) and Context-Aware Escaping
+echo   [4] WEB SERVICES:    Provide: active() -^> Consume: verifyNgoBeforeClaim()
 echo =========================================================================
 echo.
-echo Opening 4 core viva presentation tabs in VS Code...
+echo Opening 5 presentation tabs in VS Code (matching Viva Guide)...
 
 call "%EDITOR%" -r ^
-  -g "%BASE%app\Observers\DonationObserver.php:30" ^
-  -g "%BASE%app\Jobs\SendDonationNotificationJob.php:36" ^
-  -g "%BASE%app\Http\Requests\StoreDonationRequest.php:25" ^
-  -g "%BASE%app\Http\Controllers\Api\DonationApiController.php:20"
+  -g "%BASE%app\Contracts\DonationObserverInterface.php:12" ^
+  -g "%BASE%app\Observers\DonationObserver.php:28" ^
+  -g "%BASE%resources\views\donations\create.blade.php:12" ^
+  -g "%BASE%app\Http\Controllers\Api\DonationApiController.php:43" ^
+  -g "%BASE%app\Http\Controllers\Api\DonationApiController.php:98"
 
 echo.
-echo [SUCCESS] 4 Module 1 tabs opened cleanly!
+echo [SUCCESS] 5 Module 1 tabs opened cleanly!
 echo.
 pause

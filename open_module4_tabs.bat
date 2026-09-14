@@ -1,6 +1,7 @@
 @echo off
 set "BASE=%~dp0"
 
+:: Auto-detect Editor: Check VS Code full path first, then Antigravity IDE
 set "EDITOR="
 if exist "%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd" (
     set "EDITOR=%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd"
@@ -19,21 +20,22 @@ echo =========================================================================
 echo   NUTRISHARE VIVA DEFENSE -- MODULE 4: WONG MEN JING (25WMR09788)
 echo   Module: Inventory and Food Safety Compliance
 echo =========================================================================
-echo   [1] LIVE DEMO:      Warehouse items -^> Add batch -^> Check temp -^> View Logs
-echo   [2] DESIGN PATTERN: Strategy Pattern (app/Strategies/Notification/NotificationStrategyInterface.php)
-echo   [3] SECURITY:       Audit Log Tampering / Non-Repudiation (app/Models/SystemLog.php)
-echo   [4] WEB SERVICES:   Inventory Stock API (app/Http/Controllers/Api/InventoryApiController.php)
+echo   [1] LIVE DEMO:       Login ngo@nutrishare.com -^> Facilities -^> Allergens -^> Export CSV
+echo   [2] DESIGN PATTERN:  Strategy Pattern (NotificationStrategyInterface -^> Dispatcher)
+echo   [3] SECURITY:        CRLF Sanitization (SecurityHelper) + Cryptographic HMAC Signed URLs
+echo   [4] WEB SERVICES:    Provide: checkSafety() -^> Consume: fetchActiveDonationsForWarehouse()
 echo =========================================================================
 echo.
-echo Opening 4 core viva presentation tabs in VS Code...
+echo Opening 5 presentation tabs in VS Code (matching Viva Guide)...
 
 call "%EDITOR%" -r ^
-  -g "%BASE%app\Strategies\Notification\NotificationStrategyInterface.php:6" ^
-  -g "%BASE%app\Strategies\Notification\NotificationDispatcher.php:20" ^
-  -g "%BASE%app\Models\SystemLog.php:20" ^
-  -g "%BASE%app\Http\Controllers\Api\InventoryApiController.php:18"
+  -g "%BASE%app\Strategies\Notification\NotificationStrategyInterface.php:14" ^
+  -g "%BASE%app\Strategies\Notification\EmailStrategy.php:14" ^
+  -g "%BASE%app\Helpers\SecurityHelper.php:14" ^
+  -g "%BASE%app\Http\Controllers\Api\InventoryApiController.php:80" ^
+  -g "%BASE%app\Http\Controllers\Api\InventoryApiController.php:130"
 
 echo.
-echo [SUCCESS] 4 Module 4 tabs opened cleanly!
+echo [SUCCESS] 5 Module 4 tabs opened cleanly!
 echo.
 pause
