@@ -19,7 +19,7 @@ use Illuminate\Queue\SerializesModels;
  *
  * SendDonationNotificationJob — Queueable Job for Asynchronous Notifications
  *
- * Dispatches notification alerts to NGOs in background queues without blocking HTTP requests.
+ * Dispatches notification alerts to donor and NGOs without blocking HTTP requests.
  */
 class SendDonationNotificationJob implements ShouldQueue
 {
@@ -36,6 +36,20 @@ class SendDonationNotificationJob implements ShouldQueue
     {
         $donation = $this->donation;
 
+        // 1. Notify the Donor (Confirmation Alert in Notifications Tab)
+        $donor = $donation->donor ?? User::find($donation->user_id);
+        if ($donor) {
+            Notification::create([
+                'user_id' => $donor->id,
+                'donation_id' => $donation->id,
+                'title' => 'Donation Published Successfully',
+                'message' => "Your donation '{$donation->title}' ({$donation->quantity} {$donation->unit}) is live. Nearby verified NGOs have been notified.",
+                'channel' => $donor->notification_preference === 'sms' ? 'sms' : 'email',
+                'sent_at' => now(),
+            ]);
+        }
+
+        // 2. Notify Verified NGOs (Broadcast Alert in Notifications Tab)
         $ngoUsers = User::where('role', 'ngo')
             ->where('verification_status', 'approved')
             ->get();
@@ -43,6 +57,11 @@ class SendDonationNotificationJob implements ShouldQueue
         $template = NotificationTemplate::where('name', 'donation_created')->first();
 
         foreach ($ngoUsers as $ngo) {
+            // Avoid duplicate if creator is an NGO user
+            if ($ngo->id === $donation->user_id) {
+                continue;
+            }
+
             $message = $template
                 ? $template->render([
                     'donor_name' => $donation->donor->name ?? 'A donor',
@@ -56,7 +75,7 @@ class SendDonationNotificationJob implements ShouldQueue
                 'user_id' => $ngo->id,
                 'notification_template_id' => $template?->id,
                 'donation_id' => $donation->id,
-                'title' => 'New Donation Available',
+                'title' => $template?->subject ?? 'New Donation Available',
                 'message' => $message,
                 'channel' => $ngo->notification_preference === 'sms' ? 'sms' : 'email',
                 'sent_at' => now(),
@@ -66,7 +85,7 @@ class SendDonationNotificationJob implements ShouldQueue
         SystemLog::create([
             'user_id' => $donation->user_id,
             'action' => 'donation.created',
-            'description' => "Donation '{$donation->title}' created. {$ngoUsers->count()} NGOs notified via async job.",
+            'description' => "Donation '{$donation->title}' created. Donor and {$ngoUsers->count()} NGOs notified via async job.",
             'level' => 'info',
         ]);
     }
