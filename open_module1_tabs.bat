@@ -15,23 +15,26 @@ if exist "%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd" (
     set "EDITOR=code"
 )
 
+cls
 echo =========================================================================
-echo  Opening Module 1: Liew Yi Ler (25WMR09747) Tabs in VS Code / IDE...
-echo  Module: Donation Publishing and Notifications
+echo   NUTRISHARE VIVA DEFENSE -- MODULE 1: LIEW YI LER (25WMR09747)
+echo   Module: Donation Publishing and Notifications
 echo =========================================================================
+echo   [1] LIVE DEMO:      Login donor@nutrishare.com -^> Create Donation -^> View Bell
+echo   [2] DESIGN PATTERN: Observer Pattern (app/Observers/DonationObserver.php)
+echo   [3] SECURITY:       Mass Assignment / BOLA (app/Http/Requests/StoreDonationRequest.php)
+echo   [4] WEB SERVICES:   Donation REST API (app/Http/Controllers/Api/DonationApiController.php)
+echo =========================================================================
+echo.
+echo Opening 4 core viva presentation tabs in VS Code...
 
 call "%EDITOR%" -r ^
-  -g "%BASE%app\Contracts\DonationObserverInterface.php:18" ^
-  -g "%BASE%app\Observers\DonationObserver.php:61" ^
-  -g "%BASE%app\Providers\EventServiceProvider.php:27" ^
-  -g "%BASE%app\Jobs\SendDonationNotificationJob.php:39" ^
-  -g "%BASE%app\Http\Controllers\NotificationController.php:12" ^
-  -g "%BASE%app\Models\Notification.php:17" ^
-  -g "%BASE%resources\views\notifications\index.blade.php:7" ^
-  -g "%BASE%resources\views\donations\create.blade.php:18" ^
-  -g "%BASE%resources\views\donations\show.blade.php:19" ^
-  -g "%BASE%app\Http\Controllers\Api\DonationApiController.php:43"
+  -g "%BASE%app\Observers\DonationObserver.php:30" ^
+  -g "%BASE%app\Jobs\SendDonationNotificationJob.php:36" ^
+  -g "%BASE%app\Http\Requests\StoreDonationRequest.php:25" ^
+  -g "%BASE%app\Http\Controllers\Api\DonationApiController.php:20"
 
 echo.
-echo [SUCCESS] All 10 Module 1 tabs opened successfully in VS Code!
+echo [SUCCESS] 4 Module 1 tabs opened cleanly!
 echo.
+pause

@@ -1,7 +1,6 @@
 @echo off
 set "BASE=%~dp0"
 
-:: Auto-detect Editor: Check VS Code full path first, then Antigravity IDE
 set "EDITOR="
 if exist "%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd" (
     set "EDITOR=%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd"
@@ -15,23 +14,26 @@ if exist "%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd" (
     set "EDITOR=code"
 )
 
+cls
 echo =========================================================================
-echo  Opening Module 4: Wong Men Jing (25WMR09788) Tabs in VS Code / IDE...
-echo  Module: Inventory and Food Safety Compliance
+echo   NUTRISHARE VIVA DEFENSE -- MODULE 4: WONG MEN JING (25WMR09788)
+echo   Module: Inventory and Food Safety Compliance
 echo =========================================================================
+echo   [1] LIVE DEMO:      Warehouse items -^> Add batch -^> Check temp -^> View Logs
+echo   [2] DESIGN PATTERN: Strategy Pattern (app/Strategies/Notification/NotificationStrategyInterface.php)
+echo   [3] SECURITY:       Audit Log Tampering / Non-Repudiation (app/Models/SystemLog.php)
+echo   [4] WEB SERVICES:   Inventory Stock API (app/Http/Controllers/Api/InventoryApiController.php)
+echo =========================================================================
+echo.
+echo Opening 4 core viva presentation tabs in VS Code...
 
 call "%EDITOR%" -r ^
   -g "%BASE%app\Strategies\Notification\NotificationStrategyInterface.php:6" ^
-  -g "%BASE%app\Strategies\Notification\EmailStrategy.php:14" ^
-  -g "%BASE%app\Strategies\Notification\SMSStrategy.php:14" ^
-  -g "%BASE%app\Strategies\Notification\NotificationDispatcher.php:30" ^
-  -g "%BASE%app\Models\FoodItem.php:15" ^
-  -g "%BASE%app\Models\InventoryLocation.php:15" ^
-  -g "%BASE%app\Models\SystemLog.php:48" ^
-  -g "%BASE%app\Http\Controllers\InventoryController.php:149" ^
-  -g "%BASE%app\Http\Controllers\Api\InventoryApiController.php:80" ^
-  -g "%BASE%app\Repositories\InventoryRepository.php:35"
+  -g "%BASE%app\Strategies\Notification\NotificationDispatcher.php:20" ^
+  -g "%BASE%app\Models\SystemLog.php:20" ^
+  -g "%BASE%app\Http\Controllers\Api\InventoryApiController.php:18"
 
 echo.
-echo [SUCCESS] All 10 Module 4 tabs opened successfully in VS Code!
+echo [SUCCESS] 4 Module 4 tabs opened cleanly!
 echo.
+pause

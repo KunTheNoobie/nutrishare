@@ -1,7 +1,6 @@
 @echo off
 set "BASE=%~dp0"
 
-:: Auto-detect Editor: Check VS Code full path first, then Antigravity IDE
 set "EDITOR="
 if exist "%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd" (
     set "EDITOR=%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd"
@@ -15,23 +14,26 @@ if exist "%LOCALAPPDATA%\Programs\Microsoft VS Code\bin\code.cmd" (
     set "EDITOR=code"
 )
 
+cls
 echo =========================================================================
-echo  Opening Module 3: Hiew Li Wei (25WMR09728) Tabs in VS Code / IDE...
-echo  Module: Claims Management and Logistics Distribution
+echo   NUTRISHARE VIVA DEFENSE -- MODULE 3: HIEW LI WEI (25WMR09728)
+echo   Module: Claims Management and Logistics Distribution
 echo =========================================================================
+echo   [1] LIVE DEMO:      NGO claims food -^> Donor approves -^> Logistics -^> Collected
+echo   [2] DESIGN PATTERN: State Pattern (app/States/Claim/ClaimState.php)
+echo   [3] SECURITY:       Race Conditions / IDOR (app/Policies/ClaimPolicy.php)
+echo   [4] WEB SERVICES:   Claims Tracking API (app/Http/Controllers/Api/ClaimApiController.php)
+echo =========================================================================
+echo.
+echo Opening 4 core viva presentation tabs in VS Code...
 
 call "%EDITOR%" -r ^
   -g "%BASE%app\States\Claim\ClaimState.php:18" ^
-  -g "%BASE%app\States\Claim\PendingState.php:12" ^
-  -g "%BASE%app\States\Claim\ApprovedState.php:25" ^
-  -g "%BASE%app\States\Claim\CollectedState.php:12" ^
-  -g "%BASE%app\Models\Claim.php:85" ^
+  -g "%BASE%app\States\Claim\PendingState.php:20" ^
   -g "%BASE%app\Policies\ClaimPolicy.php:25" ^
-  -g "%BASE%app\Http\Controllers\ClaimController.php:115" ^
-  -g "%BASE%app\Models\Vehicle.php:10" ^
-  -g "%BASE%app\Http\Controllers\Api\ClaimApiController.php:36" ^
-  -g "%BASE%app\Services\Clients\SafetyServiceClient.php:20"
+  -g "%BASE%app\Http\Controllers\Api\ClaimApiController.php:18"
 
 echo.
-echo [SUCCESS] All 10 Module 3 tabs opened successfully in VS Code!
+echo [SUCCESS] 4 Module 3 tabs opened cleanly!
 echo.
+pause
