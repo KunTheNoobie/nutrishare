@@ -208,7 +208,7 @@ class DonationController extends Controller
             // Insert UTF-8 Byte Order Mark (BOM) for perfect Microsoft Excel rendering
             fputs($file, "\xEF\xBB\xBF");
 
-            fputcsv($file, ['ID', 'Title', 'Donor Organization', 'Quantity', 'Unit', 'Pickup Address', 'Latitude', 'Longitude', 'Expiry Date', 'Status', 'Published Date']);
+            fputcsv($file, ['ID', 'Title', 'Donor Organization', 'Quantity', 'Unit', 'Pickup Address', 'Latitude', 'Longitude', 'Expiry Date (YYYY-MM-DD)', 'Status', 'Published Date (YYYY-MM-DD)']);
 
             foreach ($donations as $donation) {
                 fputcsv($file, [
